@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dali Geographic Discovery (AMAP English Edition)</title>
+  <meta name="description" content="Interactive Geographic Travel Map of Dali, Yunnan powered by AMAP English Edition. Explore the top 10 attractions with pins, routing, and bilingual guides.">
+  
+  <!-- Google Fonts for Chill Hand-Drawn Travel Infographic Aesthetic -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@600;700&family=Itim&family=Mali:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Patrick+Hand&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Leaflet Map CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  
+  <!-- Application CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="app-container">
+
+    <!-- Top Floating Navigation Bar (Cozy Paper Sketch Style) -->
+    <header class="top-navbar">
+      <!-- Brand Section -->
+      <div class="brand-section" id="brandSection" title="Click to reset map view">
+        <div class="brand-icon">🏔️</div>
+        <div class="brand-text">
+          <h1 id="appTitle">แผนที่ท่องเที่ยวต้าหลี่ (Dali Slow-Life Map)</h1>
+          <p id="appSubtitle">11 จุดเช็คอิน & ศูนย์กลางรถไฟความเร็วสูง โอบกอดทะเลสาบเอ๋อร์ไห่ & ชางซาน · AMAP English</p>
+        </div>
+      </div>
+
+      <!-- Search Input -->
+      <div class="nav-center">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="searchInput" class="search-input" placeholder="ค้นหาจุดเช็คอิน, ชื่อภาษาอังกฤษ, จีน..." autocomplete="off">
+          <button id="clearSearchBtn" class="clear-search-btn" title="Clear search">✕</button>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="nav-actions">
+        <!-- Language Switcher -->
+        <button id="btnLangToggle" class="btn-nav" title="Switch Language (TH / EN)">
+          🇹🇭 TH
+        </button>
+        <!-- Scenic Route Toggle -->
+        <button id="btnScenicRoute" class="btn-nav active" title="Toggle Scenic Travel Trails on map">
+          <span>🚲</span> เส้นทางเที่ยว
+        </button>
+        <!-- Auto Tour -->
+        <button id="btnAutoTour" class="btn-nav btn-tour" title="เปิดทัวร์อัตโนมัติ & ไทม์แลปส์ แผน 1: หุบเขาเสือกระโจน & ต้าหลี่ ซานโตรินี (6 วัน 5 คืน)">
+          <span>🎬</span> ทัวร์แผน 1 (Time-Lapse)
+        </button>
+        <!-- Infographic Image Link -->
+        <a href="dali_travel_infographic.png" target="_blank" class="btn-nav" id="btnInfographicPng" title="เปิดดู / ดาวน์โหลดภาพ Infographic แผนที่ลายเส้น (.PNG)">
+          <span>🖼️</span> ภาพ Infographic
+        </a>
+        <!-- Map Style Switcher -->
+        <button id="btnMapStyle" class="btn-nav" title="Toggle Map Layer (Cozy Paper AMAP / English / Bilingual / Satellite)">
+          <span>🎨</span> แผนที่
+        </button>
+        <!-- Sidebar Toggle -->
+        <button id="btnToggleSidebar" class="btn-nav active" title="Toggle attractions sidebar">
+          <span>📋</span> จุดเช็คอิน
+        </button>
+      </div>
+    </header>
+
+    <!-- Category Filter Bar -->
+    <nav class="filter-bar" aria-label="Attraction Categories">
+      <button class="filter-pill active" data-category="all" id="filterAll">
+        <span>🌟</span> ทั้งหมด (11)
+      </button>
+      <button class="filter-pill" data-category="transit_hub" id="filterTransit">
+        <span>🚅</span> สถานีรถไฟ (HSR Hub)
+      </button>
+      <button class="filter-pill" data-category="ancient_town" id="filterTown">
+        <span>🏯</span> เมืองโบราณ
+      </button>
+      <button class="filter-pill" data-category="nature_lake" id="filterLake">
+        <span>🌊</span> ทะเลสาบ & ซานโตรินี
+      </button>
+      <button class="filter-pill" data-category="mountain_nature" id="filterMountain">
+        <span>🏔️</span> เทือกเขา & ธารน้ำแข็ง
+      </button>
+      <button class="filter-pill" data-category="culture_heritage" id="filterCulture">
+        <span>🪷</span> วัฒนธรรม & วัดเซน
+      </button>
+    </nav>
+
+    <!-- Left Collapsible Sidebar -->
+    <aside class="sidebar-panel" id="sidebarPanel">
+      <div class="sidebar-header">
+        <h2 id="sidebarHeaderTitle">
+          <span>📍</span> Recommended Places
+        </h2>
+        <span class="sidebar-badge" id="attractionCount">11 spots</span>
+        <button class="sidebar-close-btn" id="sidebarCloseBtn" title="Close sidebar">✕</button>
+      </div>
+      <div class="sidebar-content" id="attractionList">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </aside>
+
+    <!-- Main Map Canvas -->
+    <main id="map" aria-label="Interactive Map of Dali"></main>
+
+    <!-- Auto Tour Bottom Player Banner -->
+    <div class="tour-banner" id="tourBanner">
+      <div class="tour-progress-box">
+        <span class="tour-progress-title" id="tourProgressTitle">1. Dali Ancient Town</span>
+        <span class="tour-progress-sub" id="tourProgressSub">Browsing Dali's scenic geography on AMAP...</span>
+      </div>
+      <div class="tour-controls">
+        <button class="tour-btn" id="tourBtnNext" title="Skip to next spot">⏭️</button>
+        <button class="tour-btn" id="tourBtnStop" title="Stop tour">⏹️</button>
+      </div>
+    </div>
+
+    <!-- Cozy Travel Infographic Bottom Banner (Heilongjiang Illustrated Guide Style) -->
+    <div class="travel-guide-banner" id="travelGuideBanner">
+      <div class="guide-banner-header" id="guideBannerToggle" title="คลิกเพื่อย่อ/ขยายคำแนะนำการเดินทาง">
+        <div class="guide-banner-title">
+          <span class="guide-icon">🚲</span>
+          <strong id="guideBannerTitle">การเดินทาง & เส้นทางแนะนำ (Dali Travel Quick Guide)</strong>
+        </div>
+        <button class="guide-collapse-btn" id="btnToggleGuideBanner" title="Toggle guide">▼</button>
+      </div>
+      <div class="guide-banner-body" id="guideBannerBody">
+        <div class="guide-section">
+          <span class="guide-label" id="guideTransportLabel">การเดินทาง :</span>
+          <div class="guide-chips">
+            <span class="guide-chip">🚅 <strong id="chipHsr">รถไฟความเร็วสูง</strong> (คุนหมิง ➔ ต้าหลี่ 2 ชม.)</span>
+            <span class="guide-chip">🚲 <strong id="chipBike">จักรยานริมทะเลสาบ</strong> (เลนสีเขียว 100%)</span>
+            <span class="guide-chip">🚌 <strong id="chipBus">รถบัสนำเที่ยวรอบเอ๋อร์ไห่</strong></span>
+            <span class="guide-chip">🚕 <strong id="chipTaxi">DiDi / แท็กซี่</strong> (สะดวกมาก)</span>
+          </div>
+        </div>
+        <div class="guide-section">
+          <span class="guide-label" id="guideRoutesLabel">เส้นทางแนะนำ :</span>
+          <div class="guide-routes">
+            <div class="guide-route-item">
+              <span class="route-num">1</span>
+              <span class="route-desc" id="route1Desc"><strong>เส้นทางสโลว์ไลฟ์รอบทะเลสาบ (3 วัน 🌊) :</strong> สถานีรถไฟต้าหลี่ ➔ เมืองโบราณต้าหลี่ ➔ อ่าวตัว S ➔ ซีโจว ➔ ซานโตรินี</span>
+            </div>
+            <div class="guide-route-item">
+              <span class="route-num">2</span>
+              <span class="route-desc" id="route2Desc"><strong>เส้นทางคาราวานม้า & ขุนเขา (2 วัน 🐴) :</strong> วัดแม่ชีจี้จาวอัน ➔ เขาชางซาน ➔ โจวเฉิง ➔ ซาซี</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Detailed Modal Popup Window (Travel Diary Scrapbook Style) -->
+    <div class="modal-overlay" id="modalOverlay">
+      <div class="modal-container" id="attractionModal" role="dialog" aria-modal="true">
+        
+        <!-- Hero Header -->
+        <div class="modal-hero">
+          <img id="modalHeroImg" class="modal-hero-img" src="" alt="Attraction" />
+          <div class="modal-hero-overlay"></div>
+          
+          <div class="modal-badges-top">
+            <span class="badge-tag" id="modalOrderBadge" style="background:#0284c7">Spot 1 / 10</span>
+            <span class="badge-tag" id="modalCategoryBadge" style="background:rgba(255,255,255,0.2)">Historic Town</span>
+          </div>
+
+          <button class="modal-close-btn" id="modalCloseBtn" title="Close window">✕</button>
+
+          <div class="modal-hero-content">
+            <h2 class="modal-title-th" id="modalTitleTh">Place Name</h2>
+            <div class="modal-title-sub" id="modalTitleSub">Chinese · Pinyin (English)</div>
+          </div>
+        </div>
+
+        <!-- Modal Body Content -->
+        <div class="modal-body">
+          
+          <!-- Rating Box -->
+          <div class="rating-bar">
+            <div class="rating-score" id="modalRatingScore">⭐ 4.9 / 5.0</div>
+            <div class="rating-desc" id="modalRatingDesc">Highly rated by international travelers</div>
+          </div>
+
+          <!-- Description Section -->
+          <div class="section-block">
+            <p class="desc-text" id="modalDescription"></p>
+          </div>
+
+          <!-- Info Grid -->
+          <div class="info-grid">
+            <div class="info-item">
+              <div class="info-item-label" id="labelHours">⏰ Opening Hours</div>
+              <div class="info-item-value" id="modalHours"></div>
+            </div>
+            <div class="info-item">
+              <div class="info-item-label" id="labelBestTime">🌅 Best Time (Golden Hour)</div>
+              <div class="info-item-value" id="modalBestTime"></div>
+            </div>
+            <div class="info-item">
+              <div class="info-item-label" id="labelTicket">🎫 Admission Fee</div>
+              <div class="info-item-value" id="modalTicket"></div>
+            </div>
+            <div class="info-item">
+              <div class="info-item-label" id="labelTransport">🚕 Getting There</div>
+              <div class="info-item-value" id="modalTransport"></div>
+            </div>
+          </div>
+
+          <!-- Highlights Section -->
+          <div class="section-block">
+            <h3 id="labelHighlights"><span>✨</span> Must-See Highlights</h3>
+            <ul class="highlight-list" id="modalHighlights"></ul>
+          </div>
+
+        </div>
+
+        <!-- Modal Footer Actions -->
+        <div class="modal-footer">
+          <div class="nav-modal-group">
+            <button class="btn-modal-nav" id="btnModalPrev"><span>◀</span> Previous</button>
+            <button class="btn-modal-nav" id="btnModalNext">Next <span>▶</span></button>
+          </div>
+
+          <div class="external-map-group">
+            <button class="btn-map-action btn-copy-gps" id="btnCopyGps" title="Copy GPS Coordinates">
+              <span>📋</span> Copy GPS
+            </button>
+            <a class="btn-map-action btn-gaode" id="btnGaodeMap" target="_blank" rel="noopener noreferrer" title="Open in Gaode Map (Amap)">
+              <span>📍</span> Gaode Map
+            </a>
+            <a class="btn-map-action btn-copy-gps" id="btnGoogleMap" target="_blank" rel="noopener noreferrer" title="Open in Google Maps">
+              <span>🗺️</span> Google Maps
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast-msg" id="toastMsg">Copied!</div>
+
+  </div>
+
+  <!-- Leaflet Map JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  
+  <!-- Data and Application Script -->
+  <script src="data.js"></script>
+  <script src="plan1_data.js"></script>
+  <script src="plan1_tour.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
