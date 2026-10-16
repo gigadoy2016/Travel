@@ -2103,3 +2103,464 @@ body {
     height: 190px;
   }
 }
+
+/* ==========================================================================
+   TIME-LAPSE MODE: Final Fantasy Tactics 3D Diorama & Tactical Mini-Map
+   ========================================================================== */
+
+/* 1. Auto-Collapse All Navbar / Sidebar / Guide Elements */
+body.timelapse-mode-active .top-navbar {
+  transform: translateY(-130%) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+body.timelapse-mode-active .filter-bar {
+  transform: translateY(-130%) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+body.timelapse-mode-active .sidebar-panel {
+  transform: translateX(-140%) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+body.timelapse-mode-active .travel-guide-banner {
+  transform: translateY(140%) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+/* 2. Map Transforms into a Floating Tactical Mini-Map at Top-Right */
+body.timelapse-mode-active #map {
+  position: fixed !important;
+  top: 18px !important;
+  right: 18px !important;
+  width: 320px !important;
+  height: 220px !important;
+  z-index: 2250 !important;
+  border: 3.5px solid #2B2D42 !important;
+  border-radius: 18px !important;
+  box-shadow: 6px 6px 0px rgba(43, 45, 66, 0.95), 0 12px 30px rgba(0, 0, 0, 0.5) !important;
+  overflow: hidden !important;
+  transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+body.timelapse-mode-active .leaflet-control-zoom,
+body.timelapse-mode-active .leaflet-control-attribution {
+  display: none !important;
+}
+
+.minimap-tactical-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 6px 12px;
+  background: rgba(43, 45, 66, 0.94);
+  color: #FEF08A;
+  font-family: var(--font-heading);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 2300;
+  pointer-events: none;
+  border-bottom: 1.5px solid #2B2D42;
+}
+
+body.timelapse-mode-active .minimap-tactical-header {
+  display: flex !important;
+}
+
+/* 3. Final Fantasy Tactics 3D Diorama Theater Stage */
+.fft-diorama-theater {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: radial-gradient(circle at center, #1E1B2E 0%, #0B0A11 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  overflow: hidden;
+}
+
+.fft-diorama-theater.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.fft-stage-3d-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+  transition: transform 0.15s ease-out;
+}
+
+.fft-diorama-card {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.fft-diorama-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  transition: opacity 0.35s ease, transform 0.8s ease;
+  transform: scale(1.02);
+}
+
+.fft-scanline-fx {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 3px,
+    rgba(0, 0, 0, 0.18) 3px,
+    rgba(0, 0, 0, 0.18) 4px
+  );
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.fft-vignette-fx {
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 160px rgba(0, 0, 0, 0.88);
+  pointer-events: none;
+}
+
+.fft-gold-aura {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center 45%, rgba(245, 158, 11, 0.45) 0%, transparent 68%);
+  mix-blend-mode: screen;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+}
+
+.fft-gold-aura.active {
+  opacity: 1;
+  animation: auraPulse 2.5s infinite alternate ease-in-out;
+}
+
+@keyframes auraPulse {
+  0% { opacity: 0.55; transform: scale(1); }
+  100% { opacity: 0.95; transform: scale(1.06); }
+}
+
+/* 4. Active Turn & Unit Card (Top Left) */
+.fft-turn-card {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  z-index: 2010;
+  background: rgba(30, 27, 46, 0.94);
+  backdrop-filter: blur(8px);
+  border: 2px solid #C6A052;
+  border-radius: 12px;
+  padding: 10px 16px;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.8);
+  color: #F8F9FA;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.fft-turn-badge {
+  background: #E07A5F;
+  color: #FFFFFF;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 13px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  letter-spacing: 0.5px;
+  box-shadow: 1.5px 1.5px 0px #2B2D42;
+}
+
+.fft-turn-unit-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fft-swords-icon {
+  font-size: 20px;
+}
+
+.fft-turn-unit-info strong {
+  display: block;
+  font-size: 15px;
+  font-family: var(--font-heading);
+  color: #FEF08A;
+  letter-spacing: 0.3px;
+}
+
+.fft-job-title {
+  display: block;
+  font-size: 11.5px;
+  color: #CBD5E1;
+}
+
+/* 5. Tactical Location Card (Top Center-Left) */
+.fft-location-card {
+  position: absolute;
+  top: 24px;
+  left: 280px;
+  z-index: 2010;
+  background: rgba(30, 27, 46, 0.94);
+  backdrop-filter: blur(8px);
+  border: 2px solid #C6A052;
+  border-radius: 12px;
+  padding: 9px 20px;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.8);
+  color: #F8F9FA;
+}
+
+.fft-location-flag {
+  font-family: var(--font-heading);
+  font-size: 14.5px;
+  font-weight: 800;
+  color: #FEF08A;
+  letter-spacing: 0.5px;
+}
+
+.fft-location-sub {
+  font-size: 11px;
+  color: #94A3B8;
+  margin-top: 2px;
+  font-family: monospace;
+  letter-spacing: 0.5px;
+}
+
+/* 6. Unit Status & Command Box (Bottom Left) */
+.fft-unit-status-panel {
+  position: absolute;
+  bottom: 140px;
+  left: 24px;
+  z-index: 2010;
+  background: rgba(22, 20, 34, 0.95);
+  backdrop-filter: blur(8px);
+  border: 2.5px solid #C6A052;
+  border-radius: 14px;
+  padding: 14px;
+  box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.85);
+  color: #F8F9FA;
+  width: 250px;
+}
+
+.fft-unit-top {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(198, 160, 82, 0.4);
+}
+
+.fft-portrait-box {
+  width: 48px;
+  height: 48px;
+  background: #2D2745;
+  border: 2px solid #C6A052;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  flex-shrink: 0;
+  box-shadow: 2px 2px 0px #0F0E17;
+}
+
+.fft-bars-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+}
+
+.fft-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  font-family: var(--font-heading);
+  font-weight: 700;
+}
+
+.fft-bar-lbl {
+  width: 22px;
+  color: #FEF08A;
+}
+
+.fft-bar-track {
+  flex: 1;
+  height: 8px;
+  background: #111018;
+  border: 1px solid #C6A052;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.fft-bar-fill {
+  height: 100%;
+  background: #10B981;
+  border-radius: 2px;
+}
+
+.mp-track .fft-bar-fill {
+  background: #3B82F6;
+}
+
+.fft-bar-val {
+  font-size: 11px;
+  color: #E2E8F0;
+  font-family: monospace;
+}
+
+.fft-command-menu {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.fft-cmd-item {
+  background: #2D2745;
+  border: 1.5px solid rgba(198, 160, 82, 0.5);
+  border-radius: 6px;
+  padding: 5px 8px;
+  font-family: var(--font-heading);
+  font-size: 12px;
+  font-weight: 700;
+  color: #E2E8F0;
+  text-align: center;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.fft-cmd-item.active, .fft-cmd-item:hover {
+  background: #C6A052;
+  color: #1E1B2E;
+  border-color: #FEF08A;
+  box-shadow: 0 0 8px rgba(254, 240, 138, 0.5);
+}
+
+/* 7. Classic FFT Aged Parchment Dialogue Box (Bottom Center) */
+.fft-parchment-dialogue-box {
+  position: absolute;
+  bottom: 140px;
+  left: 294px;
+  right: 24px;
+  max-width: 680px;
+  z-index: 2010;
+  background: #FDF6E2;
+  border: 3.5px solid #4A2E18;
+  border-radius: 8px;
+  padding: 16px 22px;
+  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.75), inset 0 0 20px rgba(180, 83, 9, 0.15);
+  color: #2B2D42;
+}
+
+.parchment-corner {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #C6A052;
+  border: 1.5px solid #4A2E18;
+  border-radius: 50%;
+}
+
+.parchment-corner.top-left { top: 4px; left: 4px; }
+.parchment-corner.top-right { top: 4px; right: 4px; }
+.parchment-corner.bottom-left { bottom: 4px; left: 4px; }
+.parchment-corner.bottom-right { bottom: 4px; right: 4px; }
+
+.parchment-speaker-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  border-bottom: 1.5px dashed rgba(74, 46, 24, 0.35);
+  padding-bottom: 4px;
+}
+
+.parchment-speaker {
+  font-family: var(--font-heading);
+  font-size: 15px;
+  font-weight: 800;
+  color: #854D0E;
+}
+
+.parchment-step-indicator {
+  font-size: 12px;
+  font-weight: 700;
+  color: #78716C;
+  font-family: monospace;
+}
+
+.parchment-text-th {
+  font-family: var(--font-heading);
+  font-size: 16.5px;
+  font-weight: 700;
+  color: #1F2937;
+  line-height: 1.45;
+  margin-bottom: 4px;
+}
+
+.parchment-text-en {
+  font-size: 13.5px;
+  font-style: italic;
+  color: #4B5563;
+  line-height: 1.35;
+}
+
+/* 8. Responsive Adjustments for Mobile & Tablet */
+@media (max-width: 900px) {
+  body.timelapse-mode-active #map {
+    width: 220px !important;
+    height: 150px !important;
+    top: 10px !important;
+    right: 10px !important;
+  }
+  .fft-location-card {
+    display: none;
+  }
+  .fft-unit-status-panel {
+    display: none;
+  }
+  .fft-parchment-dialogue-box {
+    left: 14px;
+    right: 14px;
+    bottom: 140px;
+    max-width: 100%;
+  }
+  .fft-turn-card {
+    top: 10px;
+    left: 10px;
+    padding: 6px 12px;
+  }
+}
+

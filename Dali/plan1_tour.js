@@ -1,5 +1,5 @@
 // Plan 1 Interactive Tour & Time-Lapse Engine
-// Features: List Mode (6 Days Itinerary) + Time-Lapse Mode (Timeline, SD Character & Animated Mini Bullet Train)
+// Features: List Mode (6 Days Itinerary) + Time-Lapse Mode (Final Fantasy Tactics 3D Diorama + Tactical Mini-Map)
 
 let plan1ActiveStepIndex = 0;
 let plan1IsPlaying = false;
@@ -12,7 +12,6 @@ let plan1AnimFrameId = null;
 
 // Initialize on DOM Ready
 document.addEventListener("DOMContentLoaded", () => {
-  // Allow zooming out to see Kunming, Dali, Lijiang, and Tiger Leaping Gorge
   if (typeof map !== 'undefined' && map) {
     map.setMinZoom(6);
   }
@@ -24,16 +23,14 @@ function setupPlan1TourUI() {
   const btnAutoTour = document.getElementById("btnAutoTour");
   if (btnAutoTour) {
     btnAutoTour.innerHTML = `<span>🎬</span> ทัวร์แผน 1 (Time-Lapse)`;
-    btnAutoTour.title = "เปิดทัวร์อัตโนมัติ & ไทม์แลปส์ แผน 1: หุบเขาเสือกระโจน & ต้าหลี่ ซานโตรินี";
+    btnAutoTour.title = "เปิดทัวร์อัตโนมัติ & ไทม์แลปส์ แผน 1: หุบเขาเสือกระโจน & ต้าหลี่ ซานโตรินี (Final Fantasy Tactics Edition)";
     
-    // Replace old auto tour handler with Plan 1 Tour Center
     btnAutoTour.onclick = (e) => {
       e.preventDefault();
       openPlan1Modal();
     };
   }
 
-  // Create Plan 1 Modal and Cinema Bar if not yet in DOM
   injectPlan1DOMElements();
 }
 
@@ -50,7 +47,7 @@ function injectPlan1DOMElements() {
           <div class="plan1-modal-title-group">
             <div class="plan1-badge-pill">⭐ ตัวเลือกแนะนำอันดับ 1 · แผนปรับปรุงใหม่</div>
             <h2>🎬 ทัวร์แผน 1: มนต์เสน่ห์หุบเขาเสือกระโจน & ต้าหลี่ ซานโตรินี</h2>
-            <p>ทริปสโลว์ไลฟ์ 6 วัน 5 คืน (คุนหมิง ➔ ต้าหลี่ ➔ ลี่เจียง ➔ เสือกระโจน) · ออกซิเจนหนาแน่น 100% ไม่มีปัญหา AMS</p>
+            <p>ทริปสโลว์ไลฟ์ 6 วัน 5 คืน (คุนหมิง ➔ ต้าหลี่ ➔ ลี่เจียง ➔ เสือกระโจน) · Final Fantasy Tactics 3D Animation</p>
           </div>
           <button class="plan1-modal-close" id="plan1ModalCloseBtn" title="ปิดหน้าต่าง">✕</button>
         </div>
@@ -61,7 +58,7 @@ function injectPlan1DOMElements() {
             <span>📋</span> กำหนดการเดินทาง 6 วัน (List Mode)
           </button>
           <button class="plan1-tab-btn" id="tabPlan1Timelapse">
-            <span>⏱️</span> เริ่มดูไทม์แลปส์บนแผนที่ (Time-Lapse Mode)
+            <span>⚔️</span> เริ่มดูไทม์แลปส์ 3D FFT (Time-Lapse Mode)
           </button>
         </div>
 
@@ -77,13 +74,90 @@ function injectPlan1DOMElements() {
             <span>💰 งบประมาณ: ~34,900 – 47,500 บาท/ท่าน</span>
           </div>
           <button class="plan1-btn-launch-timelapse" id="btnLaunchTimelapse">
-            <span>▶️</span> เริ่มเล่นไทม์แลปส์บนแผนที่ (Start Time-Lapse)
+            <span>⚔️</span> เริ่มเล่นไทม์แลปส์ 3D FFT (Start Time-Lapse)
           </button>
         </div>
       </div>
     </div>
 
-    <!-- 2. Floating Time-Lapse Cinema Bar on Map -->
+    <!-- 2. Final Fantasy Tactics 3D Isometric Diorama Stage (Central Stage) -->
+    <div class="fft-diorama-theater" id="fftDioramaTheater">
+      <div class="fft-stage-3d-wrapper" id="fftStage3D">
+        
+        <!-- Background Isometric Diorama Image Layer -->
+        <div class="fft-diorama-card" id="fftDioramaCard">
+          <img id="fftDioramaImg" class="fft-diorama-img" src="assets/fft/airport.jpg" alt="Final Fantasy Tactics Stage" />
+          <div class="fft-scanline-fx"></div>
+          <div class="fft-vignette-fx"></div>
+          <div class="fft-gold-aura" id="fftGoldAura"></div>
+        </div>
+
+        <!-- Active Turn Header (Top Left) -->
+        <div class="fft-turn-card">
+          <div class="fft-turn-badge" id="fftTurnBadge">TURN 01 / 14</div>
+          <div class="fft-turn-unit-info">
+            <span class="fft-swords-icon">⚔️</span>
+            <div>
+              <strong id="fftActiveUnit">Ramza Beoulve</strong>
+              <span class="fft-job-title" id="fftJobTitle">Voyager / นักเดินทาง</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tactical Location Card (Top Center) -->
+        <div class="fft-location-card">
+          <div class="fft-location-flag">📍 <span id="fftLocationName">KUNMING AIRPORT (KMG) · GATE 25</span></div>
+          <div class="fft-location-sub"><span id="fftLocationElev">ELEV: 1,970m</span> · MAP: 16x16 · WEATHER: CLEAR</div>
+        </div>
+
+        <!-- Unit Status & Command Box (Bottom Left) -->
+        <div class="fft-unit-status-panel">
+          <div class="fft-unit-top">
+            <div class="fft-portrait-box">
+              <span class="fft-portrait-emoji">🧑‍🌾</span>
+            </div>
+            <div class="fft-bars-box">
+              <div class="fft-bar-row">
+                <span class="fft-bar-lbl">HP</span>
+                <div class="fft-bar-track hp-track"><div class="fft-bar-fill" style="width: 100%;"></div></div>
+                <span class="fft-bar-val" id="fftHpVal">999/999</span>
+              </div>
+              <div class="fft-bar-row">
+                <span class="fft-bar-lbl">MP</span>
+                <div class="fft-bar-track mp-track"><div class="fft-bar-fill" style="width: 85%;"></div></div>
+                <span class="fft-bar-val" id="fftMpVal">250/250</span>
+              </div>
+            </div>
+          </div>
+          <div class="fft-command-menu">
+            <div class="fft-cmd-item active"><span>👉</span> MOVE</div>
+            <div class="fft-cmd-item">ACTION</div>
+            <div class="fft-cmd-item">WAIT</div>
+            <div class="fft-cmd-item">STATUS</div>
+          </div>
+        </div>
+
+        <!-- Classic FFT Aged Parchment Dialogue Box (Bottom Center) -->
+        <div class="fft-parchment-dialogue-box">
+          <div class="parchment-corner top-left"></div>
+          <div class="parchment-corner top-right"></div>
+          <div class="parchment-corner bottom-left"></div>
+          <div class="parchment-corner bottom-right"></div>
+          
+          <div class="parchment-speaker-row">
+            <span class="parchment-speaker" id="fftParchmentSpeaker">Ramza (นักเดินทาง):</span>
+            <span class="parchment-step-indicator" id="fftParchmentStep">Step 1 of 14</span>
+          </div>
+          <div class="parchment-dialogue-body">
+            <p class="parchment-text-th" id="fftParchmentTh">ออกเดินทางแล้ว! บินตรงจากไทย 2 ชม. ถึงคุนหมิง ฟรีวีซ่าฉลุย~ ✈️</p>
+            <p class="parchment-text-en" id="fftParchmentEn">Touching down in Kunming! Visa-free entry, super smooth! ✈️</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 3. Floating Time-Lapse Cinema Bar on Map -->
     <div class="plan1-cinema-bar" id="plan1CinemaBar">
       <!-- Status Top Row -->
       <div class="cinema-top-row">
@@ -99,7 +173,7 @@ function injectPlan1DOMElements() {
         <div class="cinema-speed-toggle">
           <button class="cinema-btn-speed" id="btnCinemaSpeed" title="ปรับความเร็ว 1x / 2x">1x</button>
           <button class="cinema-btn-list" id="btnCinemaOpenList" title="เปิดดูรายการกำหนดการ">📋 รายการ</button>
-          <button class="cinema-btn-close" id="btnCinemaClose" title="หยุดและปิดทัวร์">✕</button>
+          <button class="cinema-btn-close" id="btnCinemaClose" title="หยุดและออกจาก Time-Lapse">✕ ออก</button>
         </div>
       </div>
 
@@ -152,6 +226,19 @@ function injectPlan1DOMElements() {
   container.innerHTML = modalHtml;
   document.body.appendChild(container);
 
+  // Tactical Header on Mini-Map
+  const mapElement = document.getElementById("map");
+  if (mapElement && !document.getElementById("minimapHeader")) {
+    const miniHeader = document.createElement("div");
+    miniHeader.className = "minimap-tactical-header";
+    miniHeader.id = "minimapHeader";
+    miniHeader.innerHTML = `
+      <span>📡 TACTICAL GPS RADAR</span>
+      <span id="minimapCoords">YUNNAN</span>
+    `;
+    mapElement.appendChild(miniHeader);
+  }
+
   // Hook up Modal Events
   document.getElementById("plan1ModalCloseBtn").onclick = closePlan1Modal;
   document.getElementById("plan1ModalOverlay").onclick = (e) => {
@@ -189,6 +276,21 @@ function injectPlan1DOMElements() {
       }
     };
   });
+
+  // 3D Parallax Tilt on Mouse Move
+  const theater = document.getElementById("fftDioramaTheater");
+  const stage = document.getElementById("fftStage3D");
+  if (theater && stage) {
+    theater.addEventListener("mousemove", (e) => {
+      const rect = theater.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      stage.style.transform = `perspective(1000px) rotateY(${x * 6}deg) rotateX(${-y * 6}deg)`;
+    });
+    theater.addEventListener("mouseleave", () => {
+      stage.style.transform = `perspective(1000px) rotateY(0deg) rotateX(0deg)`;
+    });
+  }
 }
 
 // Open Plan 1 Master Modal
@@ -240,12 +342,10 @@ function renderPlan1List() {
         </div>
 
         <div class="plan1-day-card-body">
-          <!-- Schedule list -->
           <div class="plan1-sched-list">
             ${scheduleItems}
           </div>
 
-          <!-- Stay & Meal Highlights -->
           <div class="plan1-day-meta-grid">
             <div class="meta-box stay-box">
               <span class="meta-icon">🏨</span>
@@ -263,10 +363,9 @@ function renderPlan1List() {
             </div>
           </div>
 
-          <!-- Bottom Action -->
           <div class="plan1-day-action-row">
             <button class="plan1-btn-start-day" onclick="startTimelapseFromDay(${d.day})">
-              ▶️ เล่นไทม์แลปส์เฉพาะวันที่ ${d.day}
+              ⚔️ เริ่มดูไทม์แลปส์ 3D FFT เฉพาะวันที่ ${d.day}
             </button>
           </div>
         </div>
@@ -284,7 +383,6 @@ function renderPlan1List() {
   `;
 }
 
-// Fly map to a specific day's main attraction
 function flyToPlan1Day(day) {
   closePlan1Modal();
   const step = PLAN_1_ITINERARY.timelapseSteps.find(s => s.day === day);
@@ -301,14 +399,24 @@ function startTimelapseFromDay(day) {
 }
 
 // ----------------------------------------------------------------------------------
-// MODE 2: Time-Lapse Cinematic Engine & Animated Mini Bullet Train
+// MODE 2: Time-Lapse Cinematic Engine & Final Fantasy Tactics 3D Diorama
 // ----------------------------------------------------------------------------------
 function startPlan1Timelapse(startStepIndex = 0) {
-  // Stop standard tour if running
   if (typeof stopAutoTour === 'function') stopAutoTour();
+
+  // 1. Enter Timelapse Mode (Minimizes Main Menu, Shrinks Map to Tactical Mini-Map)
+  document.body.classList.add("timelapse-mode-active");
+
+  const theater = document.getElementById("fftDioramaTheater");
+  if (theater) theater.classList.add("active");
 
   const cinemaBar = document.getElementById("plan1CinemaBar");
   if (cinemaBar) cinemaBar.classList.add("active");
+
+  // Invalidate Leaflet Map Size so it scales seamlessly to Tactical Mini-Map
+  setTimeout(() => {
+    if (map) map.invalidateSize();
+  }, 450);
 
   plan1ActiveStepIndex = startStepIndex;
   plan1IsPlaying = true;
@@ -322,10 +430,23 @@ function stopPlan1Timelapse() {
   clearTimeout(plan1Timer);
   cancelAnimationFrame(plan1AnimFrameId);
 
+  // 1. Exit Timelapse Mode (Restores Full Screen Map & Main Navigation)
+  document.body.classList.remove("timelapse-mode-active");
+
+  const theater = document.getElementById("fftDioramaTheater");
+  if (theater) theater.classList.remove("active");
+
   const cinemaBar = document.getElementById("plan1CinemaBar");
   if (cinemaBar) cinemaBar.classList.remove("active");
 
-  // Remove vehicle & chibi markers & railway lines
+  // Restore Leaflet Map to Full Screen
+  setTimeout(() => {
+    if (map) {
+      map.invalidateSize();
+      map.flyTo([25.7500, 100.1800], 11, { duration: 1.2 });
+    }
+  }, 450);
+
   cleanupPlan1Markers();
 }
 
@@ -395,18 +516,27 @@ function jumpToPlan1Step(index) {
 }
 
 // ----------------------------------------------------------------------------------
-// Run a single Time-Lapse Step
+// Run a single Time-Lapse Step (Syncs FFT 3D Diorama & Tactical Mini-Map)
 // ----------------------------------------------------------------------------------
 function runPlan1Step(index) {
   const step = PLAN_1_ITINERARY.timelapseSteps[index];
   if (!step) return;
 
-  // 1. Update Cinema Bar UI
+  // 1. Update Final Fantasy Tactics 3D Diorama Theater Stage
+  updateFFTTheaterStage(step, index);
+
+  // 2. Update Cinema Bar UI
   document.getElementById("cinemaDayBadge").innerText = `Day ${step.day}`;
   document.getElementById("cinemaClock").innerText = `⏰ ${step.time}`;
   document.getElementById("cinemaPhase").innerText = step.phase;
   document.getElementById("cinemaTitle").innerText = step.titleTh;
   document.getElementById("cinemaDesc").innerText = step.descTh;
+
+  // Update Mini-Map GPS text
+  const minimapCoords = document.getElementById("minimapCoords");
+  if (minimapCoords) {
+    minimapCoords.innerText = `${step.coords[0].toFixed(2)}°N, ${step.coords[1].toFixed(2)}°E`;
+  }
 
   // Update Scrubber Progress
   const total = PLAN_1_ITINERARY.timelapseSteps.length;
@@ -418,30 +548,65 @@ function runPlan1Step(index) {
     dot.classList.toggle("active", parseInt(dot.dataset.day) === step.day);
   });
 
-  // 2. Perform Vehicle / Scene Animation
+  // 3. Perform Vehicle Animation on Tactical Mini-Map
   cleanupPlan1Markers();
 
-  const stepDuration = (step.vehicle === 'train' ? 9000 : 6500) / plan1Speed;
+  const stepDuration = (step.vehicle === 'train' ? 9500 : 7000) / plan1Speed;
 
   if (step.vehicle === 'train' && step.railKey && PLAN_1_ITINERARY.railways[step.railKey]) {
-    // Mini Train Animation along Railway Line
     animateMiniTrainAlongRail(step.railKey, step.speechTh, () => {
       scheduleNextStep(stepDuration * 0.3);
     });
   } else if (step.vehicle === 'airplane') {
-    // Mini Airplane Animation
     animateMiniPlane(step.coords, step.speechTh, () => {
       scheduleNextStep(stepDuration * 0.3);
     });
   } else if (step.vehicle === 'suv') {
-    // Mini SUV Climbing to Cloud Way
     animateMiniSUV(step.coords, step.speechTh, () => {
       scheduleNextStep(stepDuration * 0.3);
     });
   } else {
-    // Chibi SD Walking to Attraction with Speech Bubble
-    flyToAttractionWithChibi(step.coords, step.zoom || 13, step.speechTh, step.isSpecialGold);
+    flyToAttractionWithChibi(step.coords, step.zoom || 11, step.speechTh, step.isSpecialGold);
     scheduleNextStep(stepDuration);
+  }
+}
+
+// ----------------------------------------------------------------------------------
+// Update Final Fantasy Tactics 3D Diorama UI
+// ----------------------------------------------------------------------------------
+function updateFFTTheaterStage(step, index) {
+  // Update Stage Image with smooth fade
+  const img = document.getElementById("fftDioramaImg");
+  if (img && step.fftStage) {
+    img.style.opacity = "0.2";
+    setTimeout(() => {
+      img.src = step.fftStage;
+      img.style.opacity = "1";
+    }, 200);
+  }
+
+  // Update Turn & Unit Card
+  document.getElementById("fftTurnBadge").innerText = `TURN ${String(index + 1).padStart(2, '0')} / 14`;
+  document.getElementById("fftActiveUnit").innerText = step.fftUnit || "Ramza Beoulve";
+
+  // Update Location Card
+  document.getElementById("fftLocationName").innerText = step.fftLocation || "YUNNAN";
+  document.getElementById("fftLocationElev").innerText = `ELEV: ${step.elevation || '2,000m'}`;
+
+  // Update Stats
+  document.getElementById("fftHpVal").innerText = step.fftHp || "999/999";
+  document.getElementById("fftMpVal").innerText = step.fftMp || "250/250";
+
+  // Update Aged Parchment Dialogue Box
+  document.getElementById("fftParchmentSpeaker").innerText = `${step.fftUnit || "Ramza (นักเดินทาง)"}:`;
+  document.getElementById("fftParchmentStep").innerText = `Step ${index + 1} of 14`;
+  document.getElementById("fftParchmentTh").innerText = `"${step.speechTh}"`;
+  document.getElementById("fftParchmentEn").innerText = step.speechEn;
+
+  // Gold Aura Effect on Rizhao Jinshan
+  const goldAura = document.getElementById("fftGoldAura");
+  if (goldAura) {
+    goldAura.classList.toggle("active", !!step.isSpecialGold);
   }
 }
 
@@ -457,25 +622,22 @@ function scheduleNextStep(delayMs) {
 }
 
 // ----------------------------------------------------------------------------------
-// Animated Mini Bullet Train along Railway Polyline
+// Mini Bullet Train along Railway on Mini-Map
 // ----------------------------------------------------------------------------------
 function animateMiniTrainAlongRail(railKey, speechText, onComplete) {
   const points = PLAN_1_ITINERARY.railways[railKey];
   if (!points || points.length < 2) return;
 
-  // 1. Draw glowing railway track line on map
   plan1ActiveRouteLine = L.polyline(points, {
     color: '#0284c7',
-    weight: 5,
+    weight: 4.5,
     opacity: 0.85,
-    dashArray: '10, 10',
+    dashArray: '8, 8',
     className: 'railway-track-glow'
   }).addTo(map);
 
-  // Fit bounds to show the whole train journey
-  map.fitBounds(plan1ActiveRouteLine.getBounds(), { padding: [60, 60], duration: 1.2 });
+  map.fitBounds(plan1ActiveRouteLine.getBounds(), { padding: [20, 20], duration: 1.0 });
 
-  // 2. Create Mini CRH Train Marker
   const trainIcon = L.divIcon({
     className: 'mini-train-leaflet-icon',
     html: `
@@ -483,19 +645,17 @@ function animateMiniTrainAlongRail(railKey, speechText, onComplete) {
         <div class="train-smoke">💨</div>
         <div class="train-body-doodle">
           <span class="train-front">🚅</span>
-          <span class="train-name">CRH 高铁</span>
+          <span class="train-name">CRH</span>
         </div>
-        <div class="train-speech-pop">${speechText}</div>
       </div>
     `,
-    iconSize: [120, 60],
-    iconAnchor: [60, 30]
+    iconSize: [90, 45],
+    iconAnchor: [45, 22]
   });
 
   const startPt = points[0];
   plan1VehicleMarker = L.marker(startPt, { icon: trainIcon, zIndexOffset: 2000 }).addTo(map);
 
-  // 3. Interpolate along the polyline segments
   const totalDuration = (6000 / plan1Speed);
   const startTime = performance.now();
 
@@ -519,24 +679,21 @@ function animateMiniTrainAlongRail(railKey, speechText, onComplete) {
 }
 
 // ----------------------------------------------------------------------------------
-// Animated Mini Airplane
+// Mini Airplane on Mini-Map
 // ----------------------------------------------------------------------------------
 function animateMiniPlane(targetCoords, speechText, onComplete) {
-  // Start from southwest of Kunming and fly in
-  const startPt = [targetCoords[0] - 1.2, targetCoords[1] - 1.8];
-  
-  map.flyTo(targetCoords, 10, { duration: 2.0 });
+  const startPt = [targetCoords[0] - 1.0, targetCoords[1] - 1.5];
+  map.flyTo(targetCoords, 9, { duration: 1.5 });
 
   const planeIcon = L.divIcon({
     className: 'mini-plane-leaflet-icon',
     html: `
       <div class="mini-plane-sprite">
         <div class="plane-trail">💨✈️</div>
-        <div class="plane-speech-pop">${speechText}</div>
       </div>
     `,
-    iconSize: [140, 60],
-    iconAnchor: [70, 30]
+    iconSize: [80, 40],
+    iconAnchor: [40, 20]
   });
 
   plan1VehicleMarker = L.marker(startPt, { icon: planeIcon, zIndexOffset: 2000 }).addTo(map);
@@ -564,24 +721,21 @@ function animateMiniPlane(targetCoords, speechText, onComplete) {
 }
 
 // ----------------------------------------------------------------------------------
-// Animated Mini SUV
+// Mini SUV on Mini-Map
 // ----------------------------------------------------------------------------------
 function animateMiniSUV(targetCoords, speechText, onComplete) {
-  // Start from base of gorge and ascend to Cloud Way
   const startPt = [targetCoords[0] - 0.08, targetCoords[1] - 0.06];
-
-  map.flyTo(targetCoords, 12, { duration: 1.5 });
+  map.flyTo(targetCoords, 10, { duration: 1.2 });
 
   const suvIcon = L.divIcon({
     className: 'mini-suv-leaflet-icon',
     html: `
       <div class="mini-suv-sprite">
         <div class="suv-body">🚙💨</div>
-        <div class="suv-speech-pop">${speechText}</div>
       </div>
     `,
-    iconSize: [140, 60],
-    iconAnchor: [70, 30]
+    iconSize: [80, 40],
+    iconAnchor: [40, 20]
   });
 
   plan1VehicleMarker = L.marker(startPt, { icon: suvIcon, zIndexOffset: 2000 }).addTo(map);
@@ -609,7 +763,7 @@ function animateMiniSUV(targetCoords, speechText, onComplete) {
 }
 
 // ----------------------------------------------------------------------------------
-// SD Chibi Traveler Character at Attraction
+// SD Chibi Traveler Character on Mini-Map
 // ----------------------------------------------------------------------------------
 function flyToAttractionWithChibi(coords, zoom, speechText, isGoldHighlight = false) {
   map.flyTo(coords, zoom, { duration: 1.2 });
@@ -620,16 +774,13 @@ function flyToAttractionWithChibi(coords, zoom, speechText, isGoldHighlight = fa
     className: 'chibi-sd-leaflet-icon',
     html: `
       <div class="chibi-sd-marker ${goldClass}">
-        <div class="chibi-sd-bubble">${speechText}</div>
         <div class="chibi-sd-avatar">
           <div class="chibi-head">🧑‍🌾</div>
-          <div class="chibi-accessories">📷🎒</div>
         </div>
-        <div class="chibi-ground-shadow"></div>
       </div>
     `,
-    iconSize: [220, 110],
-    iconAnchor: [110, 100]
+    iconSize: [60, 60],
+    iconAnchor: [30, 30]
   });
 
   plan1ChibiMarker = L.marker(coords, { icon: chibiIcon, zIndexOffset: 2500 }).addTo(map);
@@ -642,15 +793,13 @@ function showChibiSpeech(coords, text) {
     className: 'chibi-sd-leaflet-icon',
     html: `
       <div class="chibi-sd-marker">
-        <div class="chibi-sd-bubble">${text}</div>
         <div class="chibi-sd-avatar">
           <div class="chibi-head">🧑‍🌾</div>
-          <div class="chibi-accessories">📷🎒</div>
         </div>
       </div>
     `,
-    iconSize: [200, 100],
-    iconAnchor: [100, 90]
+    iconSize: [60, 60],
+    iconAnchor: [30, 30]
   });
 
   plan1ChibiMarker = L.marker(coords, { icon: chibiIcon, zIndexOffset: 2500 }).addTo(map);
@@ -665,7 +814,6 @@ function interpolatePolyline(pts, t) {
   if (t <= 0) return pts[0];
   if (t >= 1) return pts[pts.length - 1];
 
-  // Calculate segment lengths
   let totalDist = 0;
   const dists = [];
   for (let i = 0; i < pts.length - 1; i++) {
