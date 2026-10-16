@@ -2271,22 +2271,23 @@ body.timelapse-mode-active .minimap-tactical-header {
   100% { opacity: 0.95; transform: scale(1.06); }
 }
 
-/* 4. Active Turn & Unit Card (Top Left) */
+/* 4. Active Turn & Unit Card (Top Left - Fixed, Never Collides) */
 .fft-turn-card {
-  position: absolute;
-  top: 24px;
-  left: 24px;
-  z-index: 2010;
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  z-index: 2250;
   background: rgba(30, 27, 46, 0.94);
   backdrop-filter: blur(8px);
   border: 2px solid #C6A052;
   border-radius: 12px;
-  padding: 10px 16px;
+  padding: 8px 14px;
   box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.8);
   color: #F8F9FA;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
+  max-width: 280px;
 }
 
 .fft-turn-badge {
@@ -2294,58 +2295,71 @@ body.timelapse-mode-active .minimap-tactical-header {
   color: #FFFFFF;
   font-family: var(--font-heading);
   font-weight: 800;
-  font-size: 13px;
-  padding: 4px 10px;
+  font-size: 12.5px;
+  padding: 3px 8px;
   border-radius: 6px;
   letter-spacing: 0.5px;
   box-shadow: 1.5px 1.5px 0px #2B2D42;
+  white-space: nowrap;
 }
 
 .fft-turn-unit-info {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  overflow: hidden;
 }
 
 .fft-swords-icon {
-  font-size: 20px;
+  font-size: 18px;
+  flex-shrink: 0;
 }
 
 .fft-turn-unit-info strong {
   display: block;
-  font-size: 15px;
+  font-size: 13.5px;
   font-family: var(--font-heading);
   color: #FEF08A;
   letter-spacing: 0.3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .fft-job-title {
   display: block;
-  font-size: 11.5px;
+  font-size: 11px;
   color: #CBD5E1;
+  white-space: nowrap;
 }
 
-/* 5. Tactical Location Card (Top Center-Left) */
+/* 5. Tactical Location Card (Top Center - Perfectly Centered, Independent) */
 .fft-location-card {
-  position: absolute;
-  top: 24px;
-  left: 280px;
-  z-index: 2010;
+  position: fixed;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2250;
   background: rgba(30, 27, 46, 0.94);
   backdrop-filter: blur(8px);
   border: 2px solid #C6A052;
   border-radius: 12px;
-  padding: 9px 20px;
+  padding: 8px 20px;
   box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.8);
   color: #F8F9FA;
+  text-align: center;
+  max-width: 420px;
 }
 
 .fft-location-flag {
   font-family: var(--font-heading);
-  font-size: 14.5px;
+  font-size: 14px;
   font-weight: 800;
   color: #FEF08A;
   letter-spacing: 0.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .fft-location-sub {
@@ -2356,166 +2370,191 @@ body.timelapse-mode-active .minimap-tactical-header {
   letter-spacing: 0.5px;
 }
 
-/* 6. Unit Status & Command Box (Bottom Left) */
-.fft-unit-status-panel {
-  position: absolute;
-  bottom: 140px;
-  left: 24px;
-  z-index: 2010;
-  background: rgba(22, 20, 34, 0.95);
-  backdrop-filter: blur(8px);
-  border: 2.5px solid #C6A052;
-  border-radius: 14px;
-  padding: 14px;
-  box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.85);
-  color: #F8F9FA;
-  width: 250px;
-}
-
-.fft-unit-top {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 12px;
-  padding-bottom: 10px;
-  border-bottom: 1px dashed rgba(198, 160, 82, 0.4);
-}
-
-.fft-portrait-box {
-  width: 48px;
-  height: 48px;
-  background: #2D2745;
-  border: 2px solid #C6A052;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 26px;
-  flex-shrink: 0;
-  box-shadow: 2px 2px 0px #0F0E17;
-}
-
-.fft-bars-box {
-  flex: 1;
+/* 6. Dedicated Bottom Dock Container (Vertically Stacks HUD, Zero Overlap Guaranteed!) */
+.fft-bottom-dock {
+  position: fixed;
+  bottom: 14px;
+  left: 0;
+  right: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 6px;
-}
-
-.fft-bar-row {
-  display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 11.5px;
-  font-family: var(--font-heading);
-  font-weight: 700;
+  gap: 8px;
+  z-index: 2200;
+  pointer-events: none;
+  padding: 0 16px;
+  opacity: 0;
+  transform: translateY(140px);
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.fft-bar-lbl {
-  width: 22px;
-  color: #FEF08A;
+.fft-bottom-dock.active {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.fft-bar-track {
-  flex: 1;
-  height: 8px;
-  background: #111018;
-  border: 1px solid #C6A052;
-  border-radius: 3px;
-  overflow: hidden;
-}
-
-.fft-bar-fill {
-  height: 100%;
-  background: #10B981;
-  border-radius: 2px;
-}
-
-.mp-track .fft-bar-fill {
-  background: #3B82F6;
-}
-
-.fft-bar-val {
-  font-size: 11px;
-  color: #E2E8F0;
-  font-family: monospace;
-}
-
-.fft-command-menu {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6px;
-}
-
-.fft-cmd-item {
-  background: #2D2745;
-  border: 1.5px solid rgba(198, 160, 82, 0.5);
-  border-radius: 6px;
-  padding: 5px 8px;
-  font-family: var(--font-heading);
-  font-size: 12px;
-  font-weight: 700;
-  color: #E2E8F0;
-  text-align: center;
-  transition: all 0.2s;
-  cursor: pointer;
-}
-
-.fft-cmd-item.active, .fft-cmd-item:hover {
-  background: #C6A052;
-  color: #1E1B2E;
-  border-color: #FEF08A;
-  box-shadow: 0 0 8px rgba(254, 240, 138, 0.5);
-}
-
-/* 7. Classic FFT Aged Parchment Dialogue Box (Bottom Center) */
-.fft-parchment-dialogue-box {
-  position: absolute;
-  bottom: 140px;
-  left: 294px;
-  right: 24px;
-  max-width: 680px;
-  z-index: 2010;
-  background: #FDF6E2;
-  border: 3.5px solid #4A2E18;
-  border-radius: 8px;
-  padding: 16px 22px;
-  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.75), inset 0 0 20px rgba(180, 83, 9, 0.15);
-  color: #2B2D42;
-}
-
-.parchment-corner {
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  background: #C6A052;
-  border: 1.5px solid #4A2E18;
-  border-radius: 50%;
-}
-
-.parchment-corner.top-left { top: 4px; left: 4px; }
-.parchment-corner.top-right { top: 4px; right: 4px; }
-.parchment-corner.bottom-left { bottom: 4px; left: 4px; }
-.parchment-corner.bottom-right { bottom: 4px; right: 4px; }
-
-.parchment-speaker-row {
+/* 7. Train Station-to-Station Live Progress Track HUD */
+.fft-train-transit-hud {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 6px;
-  border-bottom: 1.5px dashed rgba(74, 46, 24, 0.35);
-  padding-bottom: 4px;
+  gap: 14px;
+  background: rgba(18, 16, 28, 0.96);
+  border: 2px solid #C6A052;
+  border-radius: 30px;
+  padding: 8px 18px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.7);
+  pointer-events: auto;
+  width: min(940px, calc(100vw - 32px));
+  animation: transitHudPop 0.3s ease;
+}
+
+.transit-station-tag {
+  font-family: var(--font-heading);
+  font-size: 13.5px;
+  font-weight: 800;
+  color: #FEF08A;
+  white-space: nowrap;
+}
+
+.transit-track-line {
+  flex: 1;
+  position: relative;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  margin: 0 10px;
+}
+
+.transit-progress-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #38BDF8, #0284C7);
+  border-radius: 3px;
+  transition: width 0.6s ease;
+}
+
+.transit-train-icon {
+  position: absolute;
+  top: -14px;
+  left: 0%;
+  transform: translateX(-50%);
+  font-size: 22px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8));
+  transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.transit-speed-badge {
+  background: #0284C7;
+  color: #FFFFFF;
+  font-family: var(--font-heading);
+  font-size: 12px;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+  box-shadow: 0 0 10px rgba(2, 132, 199, 0.6);
+}
+
+/* 8. Classic FFT Aged Parchment Dialogue Box (Stacked above Cinema Bar) */
+.fft-parchment-dialogue-box {
+  pointer-events: auto;
+  width: min(940px, calc(100vw - 32px));
+  background: #FDF6E2;
+  border: 3px solid #4A2E18;
+  border-radius: 10px;
+  padding: 10px 16px;
+  box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.8), inset 0 0 18px rgba(180, 83, 9, 0.12);
+  color: #2B2D42;
+  position: relative;
+}
+
+.parchment-inner-layout {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.parchment-unit-avatar-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-right: 14px;
+  border-right: 1.5px dashed rgba(74, 46, 24, 0.35);
+  flex-shrink: 0;
+}
+
+.unit-avatar-face {
+  width: 42px;
+  height: 42px;
+  background: #2D2745;
+  border: 2px solid #C6A052;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  box-shadow: 1.5px 1.5px 0px #0F0E17;
+}
+
+.unit-avatar-stats strong {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 13.5px;
+  font-weight: 800;
+  color: #854D0E;
+  white-space: nowrap;
+}
+
+.avatar-bars {
+  display: flex;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.bar-tag {
+  font-family: monospace;
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 4px;
+  border: 1px solid #4A2E18;
+}
+
+.bar-tag.hp {
+  background: #DCFCE7;
+  color: #166534;
+}
+
+.bar-tag.mp {
+  background: #DBEAFE;
+  color: #1E40AF;
+}
+
+.parchment-dialogue-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.parchment-speaker-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2px;
 }
 
 .parchment-speaker {
   font-family: var(--font-heading);
-  font-size: 15px;
+  font-size: 13.5px;
   font-weight: 800;
-  color: #854D0E;
+  color: #B45309;
 }
 
 .parchment-step-indicator {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
   color: #78716C;
   font-family: monospace;
@@ -2523,44 +2562,91 @@ body.timelapse-mode-active .minimap-tactical-header {
 
 .parchment-text-th {
   font-family: var(--font-heading);
-  font-size: 16.5px;
+  font-size: 15px;
   font-weight: 700;
   color: #1F2937;
-  line-height: 1.45;
-  margin-bottom: 4px;
+  line-height: 1.35;
+  margin-bottom: 2px;
 }
 
 .parchment-text-en {
-  font-size: 13.5px;
+  font-size: 12px;
   font-style: italic;
   color: #4B5563;
-  line-height: 1.35;
+  line-height: 1.25;
 }
 
-/* 8. Responsive Adjustments for Mobile & Tablet */
+/* 9. Cinema Bar inside Bottom Dock (No overlap with Dialogue!) */
+.fft-bottom-dock .plan1-cinema-bar {
+  position: static !important;
+  transform: none !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  width: min(940px, calc(100vw - 32px)) !important;
+  padding: 10px 18px !important;
+  margin: 0 !important;
+}
+
+/* 10. High-Speed Train Cruising Motion & Speed Lines */
+.train-cruising-motion .fft-diorama-img {
+  animation: trainSway 0.35s infinite ease-in-out alternate;
+}
+
+@keyframes trainSway {
+  0% { transform: scale(1.02) translateY(0px) rotate(0deg); }
+  50% { transform: scale(1.02) translateY(-2px) rotate(0.12deg); }
+  100% { transform: scale(1.02) translateY(1.5px) rotate(-0.12deg); }
+}
+
+.fft-speed-lines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0px,
+    transparent 18px,
+    rgba(255, 255, 255, 0.08) 19px,
+    transparent 20px
+  );
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.train-cruising-motion .fft-speed-lines {
+  opacity: 0.9;
+  animation: speedLinesStreak 0.2s linear infinite;
+}
+
+@keyframes speedLinesStreak {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-40px); }
+}
+
+@keyframes transitHudPop {
+  0% { transform: scale(0.95); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* 11. Responsive Breakpoints */
 @media (max-width: 900px) {
   body.timelapse-mode-active #map {
     width: 220px !important;
-    height: 150px !important;
+    height: 140px !important;
     top: 10px !important;
     right: 10px !important;
   }
   .fft-location-card {
-    display: none;
-  }
-  .fft-unit-status-panel {
-    display: none;
-  }
-  .fft-parchment-dialogue-box {
-    left: 14px;
-    right: 14px;
-    bottom: 140px;
-    max-width: 100%;
+    display: none !important;
   }
   .fft-turn-card {
-    top: 10px;
-    left: 10px;
-    padding: 6px 12px;
+    top: 10px !important;
+    left: 10px !important;
+    padding: 6px 10px !important;
+  }
+  .parchment-unit-avatar-box {
+    display: none !important;
   }
 }
+
 

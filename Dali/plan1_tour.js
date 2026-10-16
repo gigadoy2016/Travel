@@ -1,5 +1,5 @@
 // Plan 1 Interactive Tour & Time-Lapse Engine
-// Features: List Mode (6 Days Itinerary) + Time-Lapse Mode (Final Fantasy Tactics 3D Diorama + Tactical Mini-Map)
+// Features: List Mode (6 Days Itinerary) + Time-Lapse Mode (Final Fantasy Tactics 3D Diorama + Tactical Mini-Map + Station-to-Station Train Animation)
 
 let plan1ActiveStepIndex = 0;
 let plan1IsPlaying = false;
@@ -9,6 +9,8 @@ let plan1VehicleMarker = null;
 let plan1ChibiMarker = null;
 let plan1ActiveRouteLine = null;
 let plan1AnimFrameId = null;
+let plan1TrainPhaseTimer1 = null;
+let plan1TrainPhaseTimer2 = null;
 
 // Initialize on DOM Ready
 document.addEventListener("DOMContentLoaded", () => {
@@ -90,10 +92,11 @@ function injectPlan1DOMElements() {
           <div class="fft-scanline-fx"></div>
           <div class="fft-vignette-fx"></div>
           <div class="fft-gold-aura" id="fftGoldAura"></div>
+          <div class="fft-speed-lines" id="fftSpeedLines"></div>
         </div>
 
-        <!-- Active Turn Header (Top Left) -->
-        <div class="fft-turn-card">
+        <!-- Top-Left: Active Turn Header (Never Collides) -->
+        <div class="fft-turn-card" id="fftTurnCard">
           <div class="fft-turn-badge" id="fftTurnBadge">TURN 01 / 14</div>
           <div class="fft-turn-unit-info">
             <span class="fft-swords-icon">⚔️</span>
@@ -104,121 +107,125 @@ function injectPlan1DOMElements() {
           </div>
         </div>
 
-        <!-- Tactical Location Card (Top Center) -->
-        <div class="fft-location-card">
+        <!-- Top-Center: Tactical Location Card (Centered, Never Collides) -->
+        <div class="fft-location-card" id="fftLocationCard">
           <div class="fft-location-flag">📍 <span id="fftLocationName">KUNMING AIRPORT (KMG) · GATE 25</span></div>
           <div class="fft-location-sub"><span id="fftLocationElev">ELEV: 1,970m</span> · MAP: 16x16 · WEATHER: CLEAR</div>
-        </div>
-
-        <!-- Unit Status & Command Box (Bottom Left) -->
-        <div class="fft-unit-status-panel">
-          <div class="fft-unit-top">
-            <div class="fft-portrait-box">
-              <span class="fft-portrait-emoji">🧑‍🌾</span>
-            </div>
-            <div class="fft-bars-box">
-              <div class="fft-bar-row">
-                <span class="fft-bar-lbl">HP</span>
-                <div class="fft-bar-track hp-track"><div class="fft-bar-fill" style="width: 100%;"></div></div>
-                <span class="fft-bar-val" id="fftHpVal">999/999</span>
-              </div>
-              <div class="fft-bar-row">
-                <span class="fft-bar-lbl">MP</span>
-                <div class="fft-bar-track mp-track"><div class="fft-bar-fill" style="width: 85%;"></div></div>
-                <span class="fft-bar-val" id="fftMpVal">250/250</span>
-              </div>
-            </div>
-          </div>
-          <div class="fft-command-menu">
-            <div class="fft-cmd-item active"><span>👉</span> MOVE</div>
-            <div class="fft-cmd-item">ACTION</div>
-            <div class="fft-cmd-item">WAIT</div>
-            <div class="fft-cmd-item">STATUS</div>
-          </div>
-        </div>
-
-        <!-- Classic FFT Aged Parchment Dialogue Box (Bottom Center) -->
-        <div class="fft-parchment-dialogue-box">
-          <div class="parchment-corner top-left"></div>
-          <div class="parchment-corner top-right"></div>
-          <div class="parchment-corner bottom-left"></div>
-          <div class="parchment-corner bottom-right"></div>
-          
-          <div class="parchment-speaker-row">
-            <span class="parchment-speaker" id="fftParchmentSpeaker">Ramza (นักเดินทาง):</span>
-            <span class="parchment-step-indicator" id="fftParchmentStep">Step 1 of 14</span>
-          </div>
-          <div class="parchment-dialogue-body">
-            <p class="parchment-text-th" id="fftParchmentTh">ออกเดินทางแล้ว! บินตรงจากไทย 2 ชม. ถึงคุนหมิง ฟรีวีซ่าฉลุย~ ✈️</p>
-            <p class="parchment-text-en" id="fftParchmentEn">Touching down in Kunming! Visa-free entry, super smooth! ✈️</p>
-          </div>
         </div>
 
       </div>
     </div>
 
-    <!-- 3. Floating Time-Lapse Cinema Bar on Map -->
-    <div class="plan1-cinema-bar" id="plan1CinemaBar">
-      <!-- Status Top Row -->
-      <div class="cinema-top-row">
-        <div class="cinema-info-meta">
-          <span class="cinema-day-badge" id="cinemaDayBadge">Day 1</span>
-          <span class="cinema-clock" id="cinemaClock">⏰ 09:00 น.</span>
-          <span class="cinema-phase" id="cinemaPhase">Day 1 เช้า</span>
+    <!-- 3. Bottom Dock: Vertical Stack (Zero Overlap Guaranteed!) -->
+    <div class="fft-bottom-dock" id="fftBottomDock">
+      
+      <!-- Train Station-to-Station Live Progress Track HUD -->
+      <div class="fft-train-transit-hud" id="fftTrainTransitHud" style="display: none;">
+        <div class="transit-station-tag origin" id="transitOriginStation">🚉 昆明站 (Kunming)</div>
+        <div class="transit-track-line">
+          <div class="transit-progress-fill" id="transitProgressFill"></div>
+          <div class="transit-train-icon" id="transitTrainIcon">🚅</div>
         </div>
-        <div class="cinema-title-box">
-          <strong id="cinemaTitle">กำลังเริ่มต้นการเดินทาง...</strong>
-          <span id="cinemaDesc">เตรียมพร้อมออกเดินทางสู่ยูนนาน</span>
-        </div>
-        <div class="cinema-speed-toggle">
-          <button class="cinema-btn-speed" id="btnCinemaSpeed" title="ปรับความเร็ว 1x / 2x">1x</button>
-          <button class="cinema-btn-list" id="btnCinemaOpenList" title="เปิดดูรายการกำหนดการ">📋 รายการ</button>
-          <button class="cinema-btn-close" id="btnCinemaClose" title="หยุดและออกจาก Time-Lapse">✕ ออก</button>
-        </div>
+        <div class="transit-station-tag dest" id="transitDestStation">🏁 大理站 (Dali)</div>
+        <div class="transit-speed-badge" id="transitSpeedBadge">⚡ 250 km/h</div>
       </div>
 
-      <!-- Timeline Scrubber Track -->
-      <div class="cinema-timeline-wrapper">
-        <div class="cinema-timeline-track" id="cinemaTimelineTrack">
-          <div class="cinema-timeline-progress" id="cinemaTimelineProgress"></div>
-          <!-- 6 Day Checkpoints -->
-          <div class="timeline-dot-group">
-            <button class="timeline-dot active" data-day="1" title="Day 1: คุนหมิง ➔ ต้าหลี่">
-              <span class="dot-num">D1</span>
-              <span class="dot-label">ต้าหลี่</span>
-            </button>
-            <button class="timeline-dot" data-day="2" title="Day 2: อ่าวตัว S ➔ ลี่เจียง">
-              <span class="dot-num">D2</span>
-              <span class="dot-label">ลี่เจียง</span>
-            </button>
-            <button class="timeline-dot" data-day="3" title="Day 3: สู่หุบเขาเสือกระโจน Cloud Way">
-              <span class="dot-num">D3</span>
-              <span class="dot-label">เสือกระโจน</span>
-            </button>
-            <button class="timeline-dot" data-day="4" title="Day 4: แสงทองรื่อจ้าวชินซาน ณ Cloud Way">
-              <span class="dot-num">D4</span>
-              <span class="dot-label">รื่อจ้าวชินซาน</span>
-            </button>
-            <button class="timeline-dot" data-day="5" title="Day 5: เสือกระโจน ➔ คุนหมิง นกนางนวล">
-              <span class="dot-num">D5</span>
-              <span class="dot-label">คุนหมิง</span>
-            </button>
-            <button class="timeline-dot" data-day="6" title="Day 6: ตลาดดอกไม้ ➔ กรุงเทพฯ">
-              <span class="dot-num">D6</span>
-              <span class="dot-label">กลับไทย</span>
-            </button>
+      <!-- Row 1: Classic FFT Aged Parchment Dialogue Box with Integrated Unit Badge -->
+      <div class="fft-parchment-dialogue-box" id="fftParchmentBox">
+        <div class="parchment-corner top-left"></div>
+        <div class="parchment-corner top-right"></div>
+        <div class="parchment-corner bottom-left"></div>
+        <div class="parchment-corner bottom-right"></div>
+        
+        <div class="parchment-inner-layout">
+          <!-- Unit Portrait & Mini Stats (Cleanly on Left) -->
+          <div class="parchment-unit-avatar-box">
+            <div class="unit-avatar-face" id="fftAvatarFace">🧑‍🌾</div>
+            <div class="unit-avatar-stats">
+              <strong id="fftActiveUnitName">Ramza</strong>
+              <div class="avatar-bars">
+                <span class="bar-tag hp">HP <span id="fftHpVal">999/999</span></span>
+                <span class="bar-tag mp">MP <span id="fftMpVal">250/250</span></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dialogue Text (On Right) -->
+          <div class="parchment-dialogue-content">
+            <div class="parchment-speaker-row">
+              <span class="parchment-speaker" id="fftParchmentSpeaker">Ramza (นักเดินทาง):</span>
+              <span class="parchment-step-indicator" id="fftParchmentStep">Step 1 of 14</span>
+            </div>
+            <p class="parchment-text-th" id="fftParchmentTh">ออกเดินทางแล้ว! บินตรงจากไทย 2 ชม. ถึงคุนหมิง ฟรีวีซ่าฉลุย~ ✈️</p>
+            <p class="parchment-text-en" id="fftParchmentEn">Touching down in Kunming! Visa-free entry, super smooth! ✈️</p>
           </div>
         </div>
       </div>
 
-      <!-- Playback Controls Bottom Row -->
-      <div class="cinema-controls-row">
-        <button class="cinema-btn" id="btnCinemaPrev" title="ย้อนกลับ">⏮️ ย้อนกลับ</button>
-        <button class="cinema-btn cinema-btn-play" id="btnCinemaPlayPause" title="เล่น / หยุดชั่วคราว">
-          <span>⏸️</span> หยุดชั่วคราว
-        </button>
-        <button class="cinema-btn" id="btnCinemaNext" title="ถัดไป">ถัดไป ⏭️</button>
+      <!-- Row 2: Cinema Scrubber Bar (Docked directly underneath Row 1) -->
+      <div class="plan1-cinema-bar" id="plan1CinemaBar">
+        <!-- Status Top Row -->
+        <div class="cinema-top-row">
+          <div class="cinema-info-meta">
+            <span class="cinema-day-badge" id="cinemaDayBadge">Day 1</span>
+            <span class="cinema-clock" id="cinemaClock">⏰ 09:00 น.</span>
+            <span class="cinema-phase" id="cinemaPhase">Day 1 เช้า</span>
+          </div>
+          <div class="cinema-title-box">
+            <strong id="cinemaTitle">กำลังเริ่มต้นการเดินทาง...</strong>
+            <span id="cinemaDesc">เตรียมพร้อมออกเดินทางสู่ยูนนาน</span>
+          </div>
+          <div class="cinema-speed-toggle">
+            <button class="cinema-btn-speed" id="btnCinemaSpeed" title="ปรับความเร็ว 1x / 2x">1x</button>
+            <button class="cinema-btn-list" id="btnCinemaOpenList" title="เปิดดูรายการกำหนดการ">📋 รายการ</button>
+            <button class="cinema-btn-close" id="btnCinemaClose" title="หยุดและออกจาก Time-Lapse">✕ ออก</button>
+          </div>
+        </div>
+
+        <!-- Timeline Scrubber Track -->
+        <div class="cinema-timeline-wrapper">
+          <div class="cinema-timeline-track" id="cinemaTimelineTrack">
+            <div class="cinema-timeline-progress" id="cinemaTimelineProgress"></div>
+            <!-- 6 Day Checkpoints -->
+            <div class="timeline-dot-group">
+              <button class="timeline-dot active" data-day="1" title="Day 1: คุนหมิง ➔ ต้าหลี่">
+                <span class="dot-num">D1</span>
+                <span class="dot-label">ต้าหลี่</span>
+              </button>
+              <button class="timeline-dot" data-day="2" title="Day 2: อ่าวตัว S ➔ ลี่เจียง">
+                <span class="dot-num">D2</span>
+                <span class="dot-label">ลี่เจียง</span>
+              </button>
+              <button class="timeline-dot" data-day="3" title="Day 3: สู่หุบเขาเสือกระโจน Cloud Way">
+                <span class="dot-num">D3</span>
+                <span class="dot-label">เสือกระโจน</span>
+              </button>
+              <button class="timeline-dot" data-day="4" title="Day 4: แสงทองรื่อจ้าวชินซาน ณ Cloud Way">
+                <span class="dot-num">D4</span>
+                <span class="dot-label">รื่อจ้าวชินซาน</span>
+              </button>
+              <button class="timeline-dot" data-day="5" title="Day 5: เสือกระโจน ➔ คุนหมิง นกนางนวล">
+                <span class="dot-num">D5</span>
+                <span class="dot-label">คุนหมิง</span>
+              </button>
+              <button class="timeline-dot" data-day="6" title="Day 6: ตลาดดอกไม้ ➔ กรุงเทพฯ">
+                <span class="dot-num">D6</span>
+                <span class="dot-label">กลับไทย</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Playback Controls Bottom Row -->
+        <div class="cinema-controls-row">
+          <button class="cinema-btn" id="btnCinemaPrev" title="ย้อนกลับ">⏮️ ย้อนกลับ</button>
+          <button class="cinema-btn cinema-btn-play" id="btnCinemaPlayPause" title="เล่น / หยุดชั่วคราว">
+            <span>⏸️</span> หยุดชั่วคราว
+          </button>
+          <button class="cinema-btn" id="btnCinemaNext" title="ถัดไป">ถัดไป ⏭️</button>
+        </div>
       </div>
+
     </div>
   `;
 
@@ -410,8 +417,8 @@ function startPlan1Timelapse(startStepIndex = 0) {
   const theater = document.getElementById("fftDioramaTheater");
   if (theater) theater.classList.add("active");
 
-  const cinemaBar = document.getElementById("plan1CinemaBar");
-  if (cinemaBar) cinemaBar.classList.add("active");
+  const bottomDock = document.getElementById("fftBottomDock");
+  if (bottomDock) bottomDock.classList.add("active");
 
   // Invalidate Leaflet Map Size so it scales seamlessly to Tactical Mini-Map
   setTimeout(() => {
@@ -429,6 +436,7 @@ function stopPlan1Timelapse() {
   plan1IsPlaying = false;
   clearTimeout(plan1Timer);
   cancelAnimationFrame(plan1AnimFrameId);
+  clearTrainJourneyTimers();
 
   // 1. Exit Timelapse Mode (Restores Full Screen Map & Main Navigation)
   document.body.classList.remove("timelapse-mode-active");
@@ -436,8 +444,8 @@ function stopPlan1Timelapse() {
   const theater = document.getElementById("fftDioramaTheater");
   if (theater) theater.classList.remove("active");
 
-  const cinemaBar = document.getElementById("plan1CinemaBar");
-  if (cinemaBar) cinemaBar.classList.remove("active");
+  const bottomDock = document.getElementById("fftBottomDock");
+  if (bottomDock) bottomDock.classList.remove("active");
 
   // Restore Leaflet Map to Full Screen
   setTimeout(() => {
@@ -465,6 +473,15 @@ function cleanupPlan1Markers() {
   }
 }
 
+function clearTrainJourneyTimers() {
+  clearTimeout(plan1TrainPhaseTimer1);
+  clearTimeout(plan1TrainPhaseTimer2);
+  const card = document.getElementById("fftDioramaCard");
+  if (card) card.classList.remove("train-cruising-motion");
+  const hud = document.getElementById("fftTrainTransitHud");
+  if (hud) hud.style.display = "none";
+}
+
 function togglePlan1PlayPause() {
   if (plan1IsPlaying) {
     pausePlan1Timelapse();
@@ -477,6 +494,7 @@ function pausePlan1Timelapse() {
   plan1IsPlaying = false;
   clearTimeout(plan1Timer);
   cancelAnimationFrame(plan1AnimFrameId);
+  clearTrainJourneyTimers();
   updatePlayPauseBtnIcon();
 }
 
@@ -502,6 +520,7 @@ function togglePlan1Speed() {
 function stepPlan1Timelapse(direction) {
   clearTimeout(plan1Timer);
   cancelAnimationFrame(plan1AnimFrameId);
+  clearTrainJourneyTimers();
 
   const totalSteps = PLAN_1_ITINERARY.timelapseSteps.length;
   plan1ActiveStepIndex = (plan1ActiveStepIndex + direction + totalSteps) % totalSteps;
@@ -511,6 +530,8 @@ function stepPlan1Timelapse(direction) {
 function jumpToPlan1Step(index) {
   clearTimeout(plan1Timer);
   cancelAnimationFrame(plan1AnimFrameId);
+  clearTrainJourneyTimers();
+
   plan1ActiveStepIndex = index;
   runPlan1Step(plan1ActiveStepIndex);
 }
@@ -522,10 +543,9 @@ function runPlan1Step(index) {
   const step = PLAN_1_ITINERARY.timelapseSteps[index];
   if (!step) return;
 
-  // 1. Update Final Fantasy Tactics 3D Diorama Theater Stage
-  updateFFTTheaterStage(step, index);
+  clearTrainJourneyTimers();
 
-  // 2. Update Cinema Bar UI
+  // 1. Update Cinema Bar UI
   document.getElementById("cinemaDayBadge").innerText = `Day ${step.day}`;
   document.getElementById("cinemaClock").innerText = `⏰ ${step.time}`;
   document.getElementById("cinemaPhase").innerText = step.phase;
@@ -548,16 +568,106 @@ function runPlan1Step(index) {
     dot.classList.toggle("active", parseInt(dot.dataset.day) === step.day);
   });
 
-  // 3. Perform Vehicle Animation on Tactical Mini-Map
+  // 2. Perform Vehicle Animation & FFT Stage Updates
   cleanupPlan1Markers();
 
-  const stepDuration = (step.vehicle === 'train' ? 9500 : 7000) / plan1Speed;
+  if (step.vehicle === 'train') {
+    runTrainStationToStationAnimation(step, index);
+  } else {
+    runScenicAttractionStep(step, index);
+  }
+}
 
-  if (step.vehicle === 'train' && step.railKey && PLAN_1_ITINERARY.railways[step.railKey]) {
-    animateMiniTrainAlongRail(step.railKey, step.speechTh, () => {
-      scheduleNextStep(stepDuration * 0.3);
-    });
-  } else if (step.vehicle === 'airplane') {
+// ----------------------------------------------------------------------------------
+// Station-to-Station Animated Train Travel Engine (Phase 1 -> 2 -> 3)
+// ----------------------------------------------------------------------------------
+function runTrainStationToStationAnimation(step, index) {
+  const transitHud = document.getElementById("fftTrainTransitHud");
+  const originTag = document.getElementById("transitOriginStation");
+  const destTag = document.getElementById("transitDestStation");
+  const progFill = document.getElementById("transitProgressFill");
+  const trainIco = document.getElementById("transitTrainIcon");
+  const speedBdg = document.getElementById("transitSpeedBadge");
+  const card = document.getElementById("fftDioramaCard");
+
+  if (transitHud) transitHud.style.display = "flex";
+  if (originTag) originTag.innerText = step.stationA || "สถานีต้นทาง";
+  if (destTag) destTag.innerText = step.stationB || "สถานีปลายทาง";
+  if (progFill) progFill.style.width = "0%";
+  if (trainIco) trainIco.style.left = "0%";
+  if (speedBdg) speedBdg.innerText = "0 km/h (เตรียมออกเดินทาง)";
+
+  const totalDuration = 10500 / plan1Speed;
+  const phase1Dur = 3200 / plan1Speed;
+  const phase2Dur = 4200 / plan1Speed;
+
+  // --- PHASE 1: DEPARTURE AT STATION A ---
+  setFFTStageImage(step.departureStage || step.fftStage);
+  updateFFTTurnCard(index, step.fftUnit || "Ramza & Squire", "Voyager / นักเดินทาง");
+  updateFFTLocationCard(step.departureLocation || step.fftLocation, step.elevation);
+  updateFFTParchment(step.fftUnit || "Ramza (นักเดินทาง)", index + 1, step.departureSpeechTh || step.speechTh, step.departureSpeechEn || step.speechEn, step.fftHp, step.fftMp);
+
+  // Train starts creeping out of platform
+  setTimeout(() => {
+    if (progFill) progFill.style.width = "20%";
+    if (trainIco) trainIco.style.left = "20%";
+    if (speedBdg) speedBdg.innerText = "80 km/h (ออกจากชานชาลา)";
+  }, 700 / plan1Speed);
+
+  // Mini-map railway track animation
+  if (step.railKey && PLAN_1_ITINERARY.railways[step.railKey]) {
+    animateMiniTrainAlongRail(step.railKey, step.speechTh);
+  }
+
+  // --- PHASE 2: IN-TRANSIT SPEEDING CRUISE (Viaduct through Karst Peaks) ---
+  plan1TrainPhaseTimer1 = setTimeout(() => {
+    setFFTStageImage(step.transitStage || "assets/fft/train.jpg");
+    if (card) card.classList.add("train-cruising-motion");
+
+    updateFFTLocationCard(step.transitLocation || "YUNNAN HIGH SPEED RAIL · 250 KM/H VIADUCT", "1,980m");
+    updateFFTParchment(step.fftUnit || "Ramza (นักเดินทาง)", index + 1, step.transitSpeechTh || step.speechTh, step.transitSpeechEn || step.speechEn, step.fftHp, step.fftMp);
+
+    if (progFill) progFill.style.width = "75%";
+    if (trainIco) trainIco.style.left = "75%";
+    if (speedBdg) speedBdg.innerText = "⚡ 250 km/h (ความเร็วคงที่)";
+  }, phase1Dur);
+
+  // --- PHASE 3: ARRIVAL AT STATION B ---
+  plan1TrainPhaseTimer2 = setTimeout(() => {
+    if (card) card.classList.remove("train-cruising-motion");
+    setFFTStageImage(step.arrivalStage || "assets/fft/dali_station.jpg");
+
+    updateFFTLocationCard(step.arrivalLocation || step.fftLocation, step.elevation);
+    updateFFTParchment(step.fftUnit || "Ramza (นักเดินทาง)", index + 1, step.arrivalSpeechTh || step.speechTh, step.arrivalSpeechEn || step.speechEn, step.fftHp, step.fftMp);
+
+    if (progFill) progFill.style.width = "100%";
+    if (trainIco) trainIco.style.left = "100%";
+    if (speedBdg) speedBdg.innerText = "🏁 เข้าเทียบชานชาลา";
+  }, phase1Dur + phase2Dur);
+
+  scheduleNextStep(totalDuration);
+}
+
+// ----------------------------------------------------------------------------------
+// Scenic Attractions (Dali, Shuhe, Cloud Way, etc.)
+// ----------------------------------------------------------------------------------
+function runScenicAttractionStep(step, index) {
+  const card = document.getElementById("fftDioramaCard");
+  if (card) card.classList.remove("train-cruising-motion");
+  const transitHud = document.getElementById("fftTrainTransitHud");
+  if (transitHud) transitHud.style.display = "none";
+
+  setFFTStageImage(step.fftStage);
+  updateFFTTurnCard(index, step.fftUnit || "Ramza Beoulve", "Voyager / นักเดินทาง");
+  updateFFTLocationCard(step.fftLocation || "YUNNAN", step.elevation);
+  updateFFTParchment(step.fftUnit || "Ramza (นักเดินทาง)", index + 1, step.speechTh, step.speechEn, step.fftHp, step.fftMp);
+
+  const goldAura = document.getElementById("fftGoldAura");
+  if (goldAura) goldAura.classList.toggle("active", !!step.isSpecialGold);
+
+  const stepDuration = 7500 / plan1Speed;
+
+  if (step.vehicle === 'airplane') {
     animateMiniPlane(step.coords, step.speechTh, () => {
       scheduleNextStep(stepDuration * 0.3);
     });
@@ -572,42 +682,51 @@ function runPlan1Step(index) {
 }
 
 // ----------------------------------------------------------------------------------
-// Update Final Fantasy Tactics 3D Diorama UI
+// Helper Functions to Update FFT UI Elements
 // ----------------------------------------------------------------------------------
-function updateFFTTheaterStage(step, index) {
-  // Update Stage Image with smooth fade
+function setFFTStageImage(src) {
   const img = document.getElementById("fftDioramaImg");
-  if (img && step.fftStage) {
+  if (img && src) {
     img.style.opacity = "0.2";
     setTimeout(() => {
-      img.src = step.fftStage;
+      img.src = src;
       img.style.opacity = "1";
-    }, 200);
+    }, 180);
   }
+}
 
-  // Update Turn & Unit Card
-  document.getElementById("fftTurnBadge").innerText = `TURN ${String(index + 1).padStart(2, '0')} / 14`;
-  document.getElementById("fftActiveUnit").innerText = step.fftUnit || "Ramza Beoulve";
+function updateFFTTurnCard(index, unitName, jobTitle) {
+  const turnBadge = document.getElementById("fftTurnBadge");
+  const activeUnit = document.getElementById("fftActiveUnit");
+  const jobTitleEl = document.getElementById("fftJobTitle");
+  if (turnBadge) turnBadge.innerText = `TURN ${String(index + 1).padStart(2, '0')} / 14`;
+  if (activeUnit) activeUnit.innerText = unitName;
+  if (jobTitleEl) jobTitleEl.innerText = jobTitle || "Voyager / นักเดินทาง";
+}
 
-  // Update Location Card
-  document.getElementById("fftLocationName").innerText = step.fftLocation || "YUNNAN";
-  document.getElementById("fftLocationElev").innerText = `ELEV: ${step.elevation || '2,000m'}`;
+function updateFFTLocationCard(locationName, elevation) {
+  const locEl = document.getElementById("fftLocationName");
+  const elevEl = document.getElementById("fftLocationElev");
+  if (locEl) locEl.innerText = locationName || "YUNNAN";
+  if (elevEl) elevEl.innerText = `ELEV: ${elevation || '2,000m'}`;
+}
 
-  // Update Stats
-  document.getElementById("fftHpVal").innerText = step.fftHp || "999/999";
-  document.getElementById("fftMpVal").innerText = step.fftMp || "250/250";
+function updateFFTParchment(speaker, stepNum, thText, enText, hp, mp) {
+  const speakerEl = document.getElementById("fftParchmentSpeaker");
+  const stepEl = document.getElementById("fftParchmentStep");
+  const thEl = document.getElementById("fftParchmentTh");
+  const enEl = document.getElementById("fftParchmentEn");
+  const hpEl = document.getElementById("fftHpVal");
+  const mpEl = document.getElementById("fftMpVal");
+  const unitNameEl = document.getElementById("fftActiveUnitName");
 
-  // Update Aged Parchment Dialogue Box
-  document.getElementById("fftParchmentSpeaker").innerText = `${step.fftUnit || "Ramza (นักเดินทาง)"}:`;
-  document.getElementById("fftParchmentStep").innerText = `Step ${index + 1} of 14`;
-  document.getElementById("fftParchmentTh").innerText = `"${step.speechTh}"`;
-  document.getElementById("fftParchmentEn").innerText = step.speechEn;
-
-  // Gold Aura Effect on Rizhao Jinshan
-  const goldAura = document.getElementById("fftGoldAura");
-  if (goldAura) {
-    goldAura.classList.toggle("active", !!step.isSpecialGold);
-  }
+  if (speakerEl) speakerEl.innerText = `${speaker}:`;
+  if (stepEl) stepEl.innerText = `Step ${stepNum} of 14`;
+  if (thEl) thEl.innerText = `"${thText}"`;
+  if (enEl) enEl.innerText = enText || "";
+  if (hpEl) hpEl.innerText = hp || "999/999";
+  if (mpEl) mpEl.innerText = mp || "250/250";
+  if (unitNameEl) unitNameEl.innerText = (speaker.split(" ")[0] || "Ramza").replace("(", "");
 }
 
 function scheduleNextStep(delayMs) {
