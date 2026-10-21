@@ -47,9 +47,9 @@ function injectPlan1DOMElements() {
         <!-- Modal Header -->
         <div class="plan1-modal-header">
           <div class="plan1-modal-title-group">
-            <div class="plan1-badge-pill">⭐ ตัวเลือกแนะนำอันดับ 1 · แผนปรับปรุงใหม่</div>
-            <h2>🎬 ทัวร์แผน 1: มนต์เสน่ห์หุบเขาเสือกระโจน & ต้าหลี่ ซานโตรินี</h2>
-            <p>ทริปสโลว์ไลฟ์ 6 วัน 5 คืน (คุนหมิง ➔ ต้าหลี่ ➔ ลี่เจียง ➔ เสือกระโจน) · Final Fantasy Tactics 3D Animation</p>
+            <div class="plan1-badge-pill">⭐ ตัวเลือกแนะนำอันดับ 1 · แผนวงรอบปรับปรุงใหม่</div>
+            <h2>🎬 ทัวร์แผน 1: วงรอบยูนนาน ลี่เจียง – เสือกระโจน – ต้าหลี่ ซานโตรินี</h2>
+            <p>ทริปสโลว์ไลฟ์ 6 วัน 5 คืน (BKK ➔ คุนหมิง ➔ ลี่เจียง ➔ เสือกระโจน ➔ Dali ➔ คุนหมิง ➔ BKK) · Final Fantasy Tactics 3D Animation</p>
           </div>
           <button class="plan1-modal-close" id="plan1ModalCloseBtn" title="ปิดหน้าต่าง">✕</button>
         </div>
@@ -95,14 +95,14 @@ function injectPlan1DOMElements() {
           <div class="fft-speed-lines" id="fftSpeedLines"></div>
         </div>
 
-        <!-- Top-Left: Active Turn Header (Never Collides) -->
+        <!-- Top-Left: Active Step Header -->
         <div class="fft-turn-card" id="fftTurnCard">
-          <div class="fft-turn-badge" id="fftTurnBadge">TURN 01 / 14</div>
+          <div class="fft-turn-badge" id="fftTurnBadge">📍 จุดที่ 01 / 14</div>
           <div class="fft-turn-unit-info">
-            <span class="fft-swords-icon">⚔️</span>
+            <span class="fft-swords-icon">🧭</span>
             <div>
-              <strong id="fftActiveUnit">Ramza Beoulve</strong>
-              <span class="fft-job-title" id="fftJobTitle">Voyager / นักเดินทาง</span>
+              <strong id="fftActiveUnit">Ramza</strong>
+              <span class="fft-job-title" id="fftJobTitle">นักเดินทางยูนนาน</span>
             </div>
           </div>
         </div>
@@ -138,14 +138,13 @@ function injectPlan1DOMElements() {
         <div class="parchment-corner bottom-right"></div>
         
         <div class="parchment-inner-layout">
-          <!-- Unit Portrait & Mini Stats (Cleanly on Left) -->
+          <!-- Unit Portrait & Travel Badge (Cleanly on Left) -->
           <div class="parchment-unit-avatar-box">
             <div class="unit-avatar-face" id="fftAvatarFace">🧑‍🌾</div>
             <div class="unit-avatar-stats">
               <strong id="fftActiveUnitName">Ramza</strong>
               <div class="avatar-bars">
-                <span class="bar-tag hp">HP <span id="fftHpVal">999/999</span></span>
-                <span class="bar-tag mp">MP <span id="fftMpVal">250/250</span></span>
+                <span class="bar-tag traveler-role">🎒 ผู้ร่วมเดินทาง</span>
               </div>
             </div>
           </div>
@@ -154,7 +153,11 @@ function injectPlan1DOMElements() {
           <div class="parchment-dialogue-content">
             <div class="parchment-speaker-row">
               <span class="parchment-speaker" id="fftParchmentSpeaker">Ramza (นักเดินทาง):</span>
-              <span class="parchment-step-indicator" id="fftParchmentStep">Step 1 of 14</span>
+              <div class="parchment-actions-group">
+                <button class="parchment-btn-rpg-choice" id="btnReopenRpgChoice" style="display: none;" title="เปิดตัวเลือกวิธีเดินทางอีกครั้ง">⚔️ ตัวเลือกเดินทาง</button>
+                <button class="parchment-btn-transit-guide" id="btnCurrentStepTransit" title="ดูวิธีการต่อรถและตัวเลือกช่วงนี้อย่างละเอียด">🚌 ต่อรถช่วงนี้</button>
+                <span class="parchment-step-indicator" id="fftParchmentStep">Step 1 of 15</span>
+              </div>
             </div>
             <p class="parchment-text-th" id="fftParchmentTh">ออกเดินทางแล้ว! บินตรงจากไทย 2 ชม. ถึงคุนหมิง ฟรีวีซ่าฉลุย~ ✈️</p>
             <p class="parchment-text-en" id="fftParchmentEn">Touching down in Kunming! Visa-free entry, super smooth! ✈️</p>
@@ -186,25 +189,25 @@ function injectPlan1DOMElements() {
         <div class="cinema-timeline-wrapper">
           <div class="cinema-timeline-track" id="cinemaTimelineTrack">
             <div class="cinema-timeline-progress" id="cinemaTimelineProgress"></div>
-            <!-- 6 Day Checkpoints -->
+            <!-- 6 Day Checkpoints (New Grand Loop: Lijiang -> Tiger Leaping -> Dali -> Kunming) -->
             <div class="timeline-dot-group">
-              <button class="timeline-dot active" data-day="1" title="Day 1: คุนหมิง ➔ ต้าหลี่">
+              <button class="timeline-dot active" data-day="1" title="Day 1: คุนหมิง ➔ ลี่เจียง (ซู่เหอ)">
                 <span class="dot-num">D1</span>
-                <span class="dot-label">ต้าหลี่</span>
-              </button>
-              <button class="timeline-dot" data-day="2" title="Day 2: อ่าวตัว S ➔ ลี่เจียง">
-                <span class="dot-num">D2</span>
                 <span class="dot-label">ลี่เจียง</span>
               </button>
-              <button class="timeline-dot" data-day="3" title="Day 3: สู่หุบเขาเสือกระโจน Cloud Way">
-                <span class="dot-num">D3</span>
+              <button class="timeline-dot" data-day="2" title="Day 2: พระจันทร์สีน้ำเงิน ➔ เสือกระโจน">
+                <span class="dot-num">D2</span>
                 <span class="dot-label">เสือกระโจน</span>
               </button>
-              <button class="timeline-dot" data-day="4" title="Day 4: แสงทองรื่อจ้าวชินซาน ณ Cloud Way">
-                <span class="dot-num">D4</span>
+              <button class="timeline-dot" data-day="3" title="Day 3: แสงทองรื่อจ้าวชินซาน ณ Cloud Way">
+                <span class="dot-num">D3</span>
                 <span class="dot-label">รื่อจ้าวชินซาน</span>
               </button>
-              <button class="timeline-dot" data-day="5" title="Day 5: เสือกระโจน ➔ คุนหมิง นกนางนวล">
+              <button class="timeline-dot" data-day="4" title="Day 4: เสือกระโจน ➔ ต้าหลี่ ซานโตรินี">
+                <span class="dot-num">D4</span>
+                <span class="dot-label">ต้าหลี่</span>
+              </button>
+              <button class="timeline-dot" data-day="5" title="Day 5: โค้งตัว S ➔ คุนหมิง นกนางนวล">
                 <span class="dot-num">D5</span>
                 <span class="dot-label">คุนหมิง</span>
               </button>
@@ -226,6 +229,47 @@ function injectPlan1DOMElements() {
         </div>
       </div>
 
+    </div>
+
+    <!-- 4. RPG Tactical Decision Modal (Top-Level Overlay with z-index: 99999) -->
+    <div class="rpg-choice-modal" id="rpgChoiceModal" style="display: none;">
+      <div class="rpg-choice-frame" role="dialog" aria-modal="true" aria-labelledby="rpgChoiceTitle">
+        <div class="rpg-choice-header">
+          <div class="rpg-choice-title-row">
+            <div class="rpg-choice-title" id="rpgChoiceTitle">
+              <span>⚔️</span> TACTICAL DECISION · เควสต์เลือกการเดินทาง
+            </div>
+            <span class="rpg-quest-pill">MAIN QUEST</span>
+          </div>
+          <div class="rpg-choice-prompt">
+            ✈️ <strong>ถึงสนามบินนานาชาติคุนหมิงฉางสุ่ย (KMG) แล้ว!</strong> กรุณาเลือกวิธีเดินทางสู่สถานีรถไฟความเร็วสูงคุนหมิง (昆明站):
+          </div>
+        </div>
+
+        <div class="rpg-choice-list" id="rpgChoiceList">
+          <!-- Dynamically populated from PLAN_1_ITINERARY -->
+        </div>
+
+        <div class="rpg-choice-footer">
+          <span>⌨️ กดปุ่มตัวเลข <strong>[1]</strong>, <strong>[2]</strong>, <strong>[3]</strong> หรือ <strong>[▲/▼] + Enter</strong> หรือคลิกเพื่อเลือก</span>
+          <button class="rpg-choice-btn-skip" id="rpgChoiceSkipBtn" title="เลือกตัวเลือกแนะนำทันที">เลือกแนะนำ ➔</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. Real-World Transit Guide Sheet Modal (For Time-Lapse Inspection) -->
+    <div class="transit-guide-modal" id="transitGuideModal" style="display: none;">
+      <div class="transit-guide-frame" role="dialog" aria-modal="true" aria-labelledby="transitGuideModalTitle">
+        <div class="transit-guide-header">
+          <div class="transit-guide-title">
+            <span>🚌</span> <span id="transitGuideModalTitle">คู่มือการต่อรถ & ยานพาหนะจริงแบบละเอียด</span>
+          </div>
+          <button class="transit-guide-close" id="transitGuideCloseBtn" title="ปิดหน้าต่าง">✕</button>
+        </div>
+        <div class="transit-guide-body" id="transitGuideBody">
+          <!-- Dynamically populated from PLAN_1_ITINERARY.days[x].transfers -->
+        </div>
+      </div>
     </div>
   `;
 
@@ -298,6 +342,30 @@ function injectPlan1DOMElements() {
       stage.style.transform = `perspective(1000px) rotateY(0deg) rotateX(0deg)`;
     });
   }
+
+  // Transit Guide Modal Events
+  const transitGuideCloseBtn = document.getElementById("transitGuideCloseBtn");
+  if (transitGuideCloseBtn) {
+    transitGuideCloseBtn.onclick = closeTransitGuideModal;
+  }
+  const transitGuideModal = document.getElementById("transitGuideModal");
+  if (transitGuideModal) {
+    transitGuideModal.onclick = (e) => {
+      if (e.target.id === "transitGuideModal") closeTransitGuideModal();
+    };
+  }
+
+  // Button in Parchment Box: View Detailed Transit Guide for active step
+  const btnCurrentTransit = document.getElementById("btnCurrentStepTransit");
+  if (btnCurrentTransit) {
+    btnCurrentTransit.onclick = (e) => {
+      e.preventDefault();
+      openCurrentStepTransitModal(plan1ActiveStepIndex);
+    };
+  }
+
+  // Initialize RPG Tactical Transit Choices
+  renderRpgChoices();
 }
 
 // Open Plan 1 Master Modal
@@ -370,6 +438,35 @@ function renderPlan1List() {
             </div>
           </div>
 
+          ${(d.transfers && d.transfers.length > 0) ? `
+            <div class="plan1-transit-guide-section">
+              <div class="transit-guide-badge-title">
+                <span class="transit-badge-icon">🚌</span>
+                <div class="transit-badge-text">
+                  <strong>วิธีการเดินทาง & การต่อรถแบบละเอียด (Real-World Transit Guide)</strong>
+                  <span>ขั้นตอนการต่อรถ ยานพาหนะจริง ทางเลือก และคำแนะนำจริงตลอดทั้งวัน</span>
+                </div>
+              </div>
+              <div class="transit-legs-wrapper">
+                ${d.transfers.map(tr => `
+                  <div class="transit-leg-card">
+                    <div class="transit-leg-top">
+                      <span class="transit-step-pill">ช่วงที่ ${tr.step}</span>
+                      <span class="transit-route-text">${tr.from} ➔ ${tr.to}</span>
+                      <span class="transit-time-pill">⏱️ ${tr.duration}</span>
+                    </div>
+                    <div class="transit-mode-row">
+                      <span class="transit-mode-label">พาหนะ:</span>
+                      <strong>${tr.mode}</strong>
+                    </div>
+                    <div class="transit-detail-text">${tr.detail}</div>
+                    ${tr.tip ? `<div class="transit-tip-box"><span>💡</span> <div><strong>เคล็ดลับของบัง:</strong> ${tr.tip}</div></div>` : ''}
+                  </div>
+                `).join("")}
+              </div>
+            </div>
+          ` : ''}
+
           <div class="plan1-day-action-row">
             <button class="plan1-btn-start-day" onclick="startTimelapseFromDay(${d.day})">
               ⚔️ เริ่มดูไทม์แลปส์ 3D FFT เฉพาะวันที่ ${d.day}
@@ -437,6 +534,8 @@ function stopPlan1Timelapse() {
   clearTimeout(plan1Timer);
   cancelAnimationFrame(plan1AnimFrameId);
   clearTrainJourneyTimers();
+  closeTacticalChoiceModal();
+  closeTransitGuideModal();
 
   // 1. Exit Timelapse Mode (Restores Full Screen Map & Main Navigation)
   document.body.classList.remove("timelapse-mode-active");
@@ -499,15 +598,27 @@ function pausePlan1Timelapse() {
 }
 
 function resumePlan1Timelapse() {
+  const totalSteps = PLAN_1_ITINERARY.timelapseSteps.length;
+  // If at the end, restart from beginning
+  if (plan1ActiveStepIndex >= totalSteps - 1) {
+    plan1ActiveStepIndex = 0;
+  }
   plan1IsPlaying = true;
   updatePlayPauseBtnIcon();
-  stepPlan1Timelapse(1);
+  runPlan1Step(plan1ActiveStepIndex);
 }
 
 function updatePlayPauseBtnIcon() {
   const btn = document.getElementById("btnCinemaPlayPause");
   if (btn) {
-    btn.innerHTML = plan1IsPlaying ? `<span>⏸️</span> พัก` : `<span>▶️</span> เล่น`;
+    const totalSteps = PLAN_1_ITINERARY.timelapseSteps.length;
+    if (plan1ActiveStepIndex >= totalSteps - 1 && !plan1IsPlaying) {
+      btn.innerHTML = `<span>🔄</span> เล่นใหม่อีกครั้ง`;
+      btn.title = "กดเพื่อเล่นทัวร์ตั้งแต่จุดแรก";
+    } else {
+      btn.innerHTML = plan1IsPlaying ? `<span>⏸️</span> พัก` : `<span>▶️</span> เล่น`;
+      btn.title = plan1IsPlaying ? "หยุดชั่วคราว" : "เล่นต่อ";
+    }
   }
 }
 
@@ -523,7 +634,12 @@ function stepPlan1Timelapse(direction) {
   clearTrainJourneyTimers();
 
   const totalSteps = PLAN_1_ITINERARY.timelapseSteps.length;
-  plan1ActiveStepIndex = (plan1ActiveStepIndex + direction + totalSteps) % totalSteps;
+  let newIndex = plan1ActiveStepIndex + direction;
+  // Single play: no looping forward or backward
+  if (newIndex < 0) newIndex = 0;
+  if (newIndex >= totalSteps) newIndex = totalSteps - 1;
+  plan1ActiveStepIndex = newIndex;
+  updatePlayPauseBtnIcon();
   runPlan1Step(plan1ActiveStepIndex);
 }
 
@@ -533,6 +649,7 @@ function jumpToPlan1Step(index) {
   clearTrainJourneyTimers();
 
   plan1ActiveStepIndex = index;
+  updatePlayPauseBtnIcon();
   runPlan1Step(plan1ActiveStepIndex);
 }
 
@@ -552,10 +669,14 @@ function runPlan1Step(index) {
   document.getElementById("cinemaTitle").innerText = step.titleTh;
   document.getElementById("cinemaDesc").innerText = step.descTh;
 
-  // Update Mini-Map GPS text
+  // Update Mini-Map GPS text & Center Map on character
   const minimapCoords = document.getElementById("minimapCoords");
   if (minimapCoords) {
     minimapCoords.innerText = `${step.coords[0].toFixed(2)}°N, ${step.coords[1].toFixed(2)}°E`;
+  }
+  if (map && step.coords) {
+    map.invalidateSize();
+    map.setView(step.coords, step.zoom || 11, { animate: false });
   }
 
   // Update Scrubber Progress
@@ -567,6 +688,34 @@ function runPlan1Step(index) {
   document.querySelectorAll(".timeline-dot").forEach(dot => {
     dot.classList.toggle("active", parseInt(dot.dataset.day) === step.day);
   });
+
+  // Tactical Decision Button visibility (Available on steps with choices)
+  const reopenBtn = document.getElementById("btnReopenRpgChoice");
+  if (reopenBtn) {
+    if (step.hasDecision) {
+      reopenBtn.style.display = "inline-flex";
+      reopenBtn.onclick = (e) => {
+        e.preventDefault();
+        pausePlan1Timelapse();
+        triggerTacticalTransitDecision(step.hasDecision, step, index);
+      };
+    } else {
+      reopenBtn.style.display = "none";
+    }
+  }
+
+  // Hook Transit Guide Button in Dialogue Box for current step
+  const transitBtn = document.getElementById("btnCurrentStepTransit");
+  if (transitBtn) {
+    transitBtn.onclick = (e) => {
+      e.preventDefault();
+      openCurrentStepTransitModal(index);
+    };
+  }
+
+  // Close modals on step transition
+  closeTacticalChoiceModal();
+  closeTransitGuideModal();
 
   // 2. Perform Vehicle Animation & FFT Stage Updates
   cleanupPlan1Markers();
@@ -603,9 +752,9 @@ function runTrainStationToStationAnimation(step, index) {
 
   // --- PHASE 1: DEPARTURE AT STATION A ---
   setFFTStageImage(step.departureStage || step.fftStage);
-  updateFFTTurnCard(index, step.fftUnit || "Ramza & Squire", "Voyager / นักเดินทาง");
+  updateFFTTurnCard(index, step.fftUnit || "Ramza & สหายร่วมทาง", "ผู้โดยสารรถไฟ CRH");
   updateFFTLocationCard(step.departureLocation || step.fftLocation, step.elevation);
-  updateFFTParchment(step.fftUnit || "Ramza (นักเดินทาง)", index + 1, step.departureSpeechTh || step.speechTh, step.departureSpeechEn || step.speechEn, step.fftHp, step.fftMp);
+  updateFFTParchment(step.fftUnit || "Ramza (นักเดินทาง)", index + 1, step.departureSpeechTh || step.speechTh, step.departureSpeechEn || step.speechEn);
 
   // Train starts creeping out of platform
   setTimeout(() => {
@@ -625,7 +774,7 @@ function runTrainStationToStationAnimation(step, index) {
     if (card) card.classList.add("train-cruising-motion");
 
     updateFFTLocationCard(step.transitLocation || "YUNNAN HIGH SPEED RAIL · 250 KM/H VIADUCT", "1,980m");
-    updateFFTParchment(step.fftUnit || "Ramza (นักเดินทาง)", index + 1, step.transitSpeechTh || step.speechTh, step.transitSpeechEn || step.speechEn, step.fftHp, step.fftMp);
+    updateFFTParchment(step.fftUnit || "Ramza (นักเดินทาง)", index + 1, step.transitSpeechTh || step.speechTh, step.transitSpeechEn || step.speechEn);
 
     if (progFill) progFill.style.width = "75%";
     if (trainIco) trainIco.style.left = "75%";
@@ -638,7 +787,7 @@ function runTrainStationToStationAnimation(step, index) {
     setFFTStageImage(step.arrivalStage || "assets/fft/dali_station.jpg");
 
     updateFFTLocationCard(step.arrivalLocation || step.fftLocation, step.elevation);
-    updateFFTParchment(step.fftUnit || "Ramza (นักเดินทาง)", index + 1, step.arrivalSpeechTh || step.speechTh, step.arrivalSpeechEn || step.speechEn, step.fftHp, step.fftMp);
+    updateFFTParchment(step.fftUnit || "Ramza (นักเดินทาง)", index + 1, step.arrivalSpeechTh || step.speechTh, step.arrivalSpeechEn || step.speechEn);
 
     if (progFill) progFill.style.width = "100%";
     if (trainIco) trainIco.style.left = "100%";
@@ -658,9 +807,9 @@ function runScenicAttractionStep(step, index) {
   if (transitHud) transitHud.style.display = "none";
 
   setFFTStageImage(step.fftStage);
-  updateFFTTurnCard(index, step.fftUnit || "Ramza Beoulve", "Voyager / นักเดินทาง");
+  updateFFTTurnCard(index, step.fftUnit || "Ramza", "นักเดินทางยูนนาน");
   updateFFTLocationCard(step.fftLocation || "YUNNAN", step.elevation);
-  updateFFTParchment(step.fftUnit || "Ramza (นักเดินทาง)", index + 1, step.speechTh, step.speechEn, step.fftHp, step.fftMp);
+  updateFFTParchment(step.fftUnit || "Ramza (นักเดินทาง)", index + 1, step.speechTh, step.speechEn);
 
   const goldAura = document.getElementById("fftGoldAura");
   if (goldAura) goldAura.classList.toggle("active", !!step.isSpecialGold);
@@ -669,15 +818,29 @@ function runScenicAttractionStep(step, index) {
 
   if (step.vehicle === 'airplane') {
     animateMiniPlane(step.coords, step.speechTh, () => {
-      scheduleNextStep(stepDuration * 0.3);
+      if (step.hasDecision) {
+        triggerTacticalTransitDecision(step.hasDecision, step, index);
+      } else {
+        scheduleNextStep(stepDuration * 0.3);
+      }
     });
   } else if (step.vehicle === 'suv') {
     animateMiniSUV(step.coords, step.speechTh, () => {
-      scheduleNextStep(stepDuration * 0.3);
+      if (step.hasDecision) {
+        triggerTacticalTransitDecision(step.hasDecision, step, index);
+      } else {
+        scheduleNextStep(stepDuration * 0.3);
+      }
     });
   } else {
     flyToAttractionWithChibi(step.coords, step.zoom || 11, step.speechTh, step.isSpecialGold);
-    scheduleNextStep(stepDuration);
+    if (step.hasDecision) {
+      plan1Timer = setTimeout(() => {
+        triggerTacticalTransitDecision(step.hasDecision, step, index);
+      }, 1400 / plan1Speed);
+    } else {
+      scheduleNextStep(stepDuration);
+    }
   }
 }
 
@@ -699,9 +862,9 @@ function updateFFTTurnCard(index, unitName, jobTitle) {
   const turnBadge = document.getElementById("fftTurnBadge");
   const activeUnit = document.getElementById("fftActiveUnit");
   const jobTitleEl = document.getElementById("fftJobTitle");
-  if (turnBadge) turnBadge.innerText = `TURN ${String(index + 1).padStart(2, '0')} / 14`;
+  if (turnBadge) turnBadge.innerText = `📍 จุดที่ ${String(index + 1).padStart(2, '0')} / 14`;
   if (activeUnit) activeUnit.innerText = unitName;
-  if (jobTitleEl) jobTitleEl.innerText = jobTitle || "Voyager / นักเดินทาง";
+  if (jobTitleEl) jobTitleEl.innerText = jobTitle || "นักเดินทางยูนนาน";
 }
 
 function updateFFTLocationCard(locationName, elevation) {
@@ -711,30 +874,460 @@ function updateFFTLocationCard(locationName, elevation) {
   if (elevEl) elevEl.innerText = `ELEV: ${elevation || '2,000m'}`;
 }
 
-function updateFFTParchment(speaker, stepNum, thText, enText, hp, mp) {
+function updateFFTParchment(speaker, stepNum, thText, enText) {
   const speakerEl = document.getElementById("fftParchmentSpeaker");
   const stepEl = document.getElementById("fftParchmentStep");
   const thEl = document.getElementById("fftParchmentTh");
   const enEl = document.getElementById("fftParchmentEn");
-  const hpEl = document.getElementById("fftHpVal");
-  const mpEl = document.getElementById("fftMpVal");
   const unitNameEl = document.getElementById("fftActiveUnitName");
 
   if (speakerEl) speakerEl.innerText = `${speaker}:`;
-  if (stepEl) stepEl.innerText = `Step ${stepNum} of 14`;
+  if (stepEl) stepEl.innerText = `จุดที่ ${stepNum} จาก 14`;
   if (thEl) thEl.innerText = `"${thText}"`;
   if (enEl) enEl.innerText = enText || "";
-  if (hpEl) hpEl.innerText = hp || "999/999";
-  if (mpEl) mpEl.innerText = mp || "250/250";
-  if (unitNameEl) unitNameEl.innerText = (speaker.split(" ")[0] || "Ramza").replace("(", "");
+  if (unitNameEl) {
+    const rawName = speaker.split("(")[0].trim();
+    unitNameEl.innerText = rawName || "Ramza";
+  }
+}
+
+// ----------------------------------------------------------------------------------
+// Web Audio Synthesizer for Retro RPG Sound Effects (Zero External Dependencies)
+// ----------------------------------------------------------------------------------
+let rpgAudioCtx = null;
+
+function playRpgSound(type) {
+  try {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtx) return;
+    if (!rpgAudioCtx) {
+      rpgAudioCtx = new AudioCtx();
+    }
+    if (rpgAudioCtx.state === 'suspended') {
+      rpgAudioCtx.resume();
+    }
+    const ctx = rpgAudioCtx;
+
+    if (type === 'hover') {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'square';
+      osc.frequency.setValueAtTime(650, ctx.currentTime);
+      gain.gain.setValueAtTime(0.04, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.045);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.045);
+    } else if (type === 'select') {
+      const now = ctx.currentTime;
+      const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6 arpeggio
+      notes.forEach((freq, i) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(freq, now + i * 0.065);
+        gain.gain.setValueAtTime(0.12, now + i * 0.065);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.065 + 0.16);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now + i * 0.065);
+        osc.stop(now + i * 0.065 + 0.16);
+      });
+    } else if (type === 'prompt') {
+      const now = ctx.currentTime;
+      const notes = [440, 880];
+      notes.forEach((freq, i) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, now + i * 0.09);
+        gain.gain.setValueAtTime(0.09, now + i * 0.09);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.09 + 0.14);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now + i * 0.09);
+        osc.stop(now + i * 0.09 + 0.14);
+      });
+    }
+  } catch (e) {
+    // Audio context safety catch
+  }
+}
+
+// ----------------------------------------------------------------------------------
+// Real-World Transit Guide Modal (Active Step or Any Step Inspection)
+// ----------------------------------------------------------------------------------
+function openCurrentStepTransitModal(stepIndex) {
+  const step = PLAN_1_ITINERARY.timelapseSteps[stepIndex] || PLAN_1_ITINERARY.timelapseSteps[0];
+  const dayData = PLAN_1_ITINERARY.days.find(d => d.day === step.day) || PLAN_1_ITINERARY.days[0];
+  const modal = document.getElementById("transitGuideModal");
+  const titleEl = document.getElementById("transitGuideModalTitle");
+  const bodyEl = document.getElementById("transitGuideBody");
+  if (!modal || !bodyEl) return;
+
+  if (titleEl) {
+    titleEl.innerHTML = `<span>🚌</span> แผนต่อรถ & ยานพาหนะจริง: วันที่ ${step.day} · ${step.titleTh}`;
+  }
+
+  const currentStepCard = `
+    <div style="background:#F0F9FF; border:1.8px solid #0284C7; border-radius:10px; padding:12px 16px; margin-bottom:12px; box-shadow:1.5px 1.5px 0 #0284C7;">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:6px;">
+        <span style="font-weight:800; font-size:12px; color:#0369A1; background:#E0F2FE; padding:2px 8px; border-radius:12px;">📍 จุดเดินทางปัจจุบัน (${stepIndex + 1}/15)</span>
+        <span style="font-weight:700; font-size:12px; color:#475569;">⏰ ${step.time}</span>
+      </div>
+      <strong style="display:block; font-size:15px; color:#0F172A; margin-bottom:4px; font-family:var(--font-heading);">${step.titleTh}</strong>
+      <p style="margin:0 0 6px 0; font-size:13px; color:#334155; line-height:1.5;">${step.transitLegInfo || step.descTh}</p>
+      ${step.hasDecision ? `
+        <div style="margin-top:8px; padding-top:8px; border-top:1px dashed #BAE6FD;">
+          <button class="parchment-btn-rpg-choice" style="display:inline-flex; font-size:12px;" onclick="closeTransitGuideModal(); triggerTacticalTransitDecision('${step.hasDecision}', PLAN_1_ITINERARY.timelapseSteps[${stepIndex}], ${stepIndex})">
+            ⚔️ เปิดเควสต์เลือกวิธีเดินทางช่วงนี้ (RPG Decision)
+          </button>
+        </div>
+      ` : ''}
+    </div>
+  `;
+
+  const legsHtml = (dayData.transfers && dayData.transfers.length > 0) ? `
+    <div style="margin-bottom:8px;">
+      <h4 style="margin:0 0 8px 0; font-size:14px; font-weight:800; color:#1E293B; font-family:var(--font-heading);">
+        🛣️ ขั้นตอนการต่อรถจริงตลอดทั้งวันที่ ${dayData.day} (${dayData.titleTh}):
+      </h4>
+      <div class="transit-legs-wrapper">
+        ${dayData.transfers.map(tr => `
+          <div class="transit-leg-card">
+            <div class="transit-leg-top">
+              <span class="transit-step-pill">ช่วงที่ ${tr.step}</span>
+              <span class="transit-route-text">${tr.from} ➔ ${tr.to}</span>
+              <span class="transit-time-pill">⏱️ ${tr.duration}</span>
+            </div>
+            <div class="transit-mode-row">
+              <span class="transit-mode-label">พาหนะ:</span>
+              <strong>${tr.mode}</strong>
+            </div>
+            <div class="transit-detail-text">${tr.detail}</div>
+            ${tr.tip ? `<div class="transit-tip-box"><span>💡</span> <div><strong>เคล็ดลับของบัง:</strong> ${tr.tip}</div></div>` : ''}
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  ` : '';
+
+  bodyEl.innerHTML = `
+    ${currentStepCard}
+    ${legsHtml}
+  `;
+
+  modal.style.display = "flex";
+  setTimeout(() => modal.classList.add("active"), 10);
+}
+
+function closeTransitGuideModal() {
+  const modal = document.getElementById("transitGuideModal");
+  if (modal) {
+    modal.classList.remove("active");
+    setTimeout(() => {
+      modal.style.display = "none";
+    }, 200);
+  }
+}
+
+// ----------------------------------------------------------------------------------
+// Universal Tactical Decision Engine (All 6 Real-World Dilemmas Supported)
+// ----------------------------------------------------------------------------------
+let currentTacticalDecisionKey = "airportTransit";
+let rpgChoiceActiveIndex = 0;
+let rpgChoiceKeydownHandler = null;
+
+function renderRpgChoices(decisionKey = "airportTransit") {
+  currentTacticalDecisionKey = decisionKey;
+  const decision = (PLAN_1_ITINERARY.transitDecisions && PLAN_1_ITINERARY.transitDecisions[decisionKey]) ||
+                   (PLAN_1_ITINERARY.transitDecisions && PLAN_1_ITINERARY.transitDecisions.airportTransit);
+  if (!decision) return;
+
+  const titleEl = document.getElementById("rpgChoiceTitle");
+  if (titleEl) {
+    titleEl.innerHTML = `<span>⚔️</span> ${decision.titleTh}`;
+  }
+
+  const promptEl = document.querySelector(".rpg-choice-prompt");
+  if (promptEl) {
+    promptEl.innerHTML = `<strong>${decision.promptTh}</strong>`;
+  }
+
+  const container = document.getElementById("rpgChoiceList");
+  if (!container) return;
+
+  container.innerHTML = decision.options.map((opt, idx) => `
+    <div class="rpg-choice-item ${idx === 0 ? 'keyboard-focus' : ''}" data-choice-id="${opt.id}" data-index="${idx}" tabindex="0">
+      <div class="rpg-cursor">👉</div>
+      <div class="rpg-choice-icon-wrap ${opt.id}">
+        ${opt.icon}
+      </div>
+      <div class="rpg-choice-info">
+        <div class="rpg-choice-name-row">
+          <span class="rpg-choice-name">${opt.num}. ${opt.nameTh}</span>
+          <span class="rpg-choice-badge" style="background:${opt.badgeColor || '#ea580c'}; color:#FFF;">${opt.badgeTh}</span>
+        </div>
+        <div class="rpg-choice-desc">${opt.descTh}</div>
+        <div class="rpg-choice-stats">
+          <span>⏱️ ${opt.time}</span>
+          <span>💰 ${opt.cost}</span>
+          <span>💡 ${opt.suitableFor}</span>
+        </div>
+      </div>
+      <button class="rpg-select-btn" onclick="event.stopPropagation(); chooseTacticalTransit('${decisionKey}', '${opt.id}')">
+        เลือก <span>[${opt.num}]</span>
+      </button>
+    </div>
+  `).join("");
+
+  // Attach hover & click listeners
+  container.querySelectorAll(".rpg-choice-item").forEach((el, idx) => {
+    el.addEventListener("mouseenter", () => {
+      setRpgChoiceFocus(idx);
+      playRpgSound("hover");
+    });
+    el.addEventListener("click", () => {
+      const choiceId = el.getAttribute("data-choice-id");
+      chooseTacticalTransit(decisionKey, choiceId);
+    });
+  });
+
+  const skipBtn = document.getElementById("rpgChoiceSkipBtn");
+  if (skipBtn) {
+    skipBtn.onclick = (e) => {
+      e.stopPropagation();
+      chooseTacticalTransit(decisionKey, decision.options[0].id);
+    };
+  }
+}
+
+function setRpgChoiceFocus(index) {
+  const items = document.querySelectorAll(".rpg-choice-item");
+  if (!items.length) return;
+  rpgChoiceActiveIndex = (index + items.length) % items.length;
+  items.forEach((item, idx) => {
+    item.classList.toggle("keyboard-focus", idx === rpgChoiceActiveIndex);
+    if (idx === rpgChoiceActiveIndex) {
+      item.focus();
+    }
+  });
+}
+
+function triggerTacticalTransitDecision(decisionKey = "airportTransit", step, index) {
+  clearTimeout(plan1Timer);
+  renderRpgChoices(decisionKey);
+
+  const modal = document.getElementById("rpgChoiceModal");
+  if (!modal) return;
+
+  document.body.classList.add("rpg-modal-open");
+  modal.style.display = "flex";
+  setTimeout(() => modal.classList.add("active"), 10);
+  playRpgSound("prompt");
+
+  // Show "เปลี่ยนวิธีเดินทาง" button in parchment
+  const reopenBtn = document.getElementById("btnReopenRpgChoice");
+  if (reopenBtn) {
+    reopenBtn.style.display = "inline-flex";
+    reopenBtn.onclick = (e) => {
+      e.preventDefault();
+      triggerTacticalTransitDecision(decisionKey, step, index);
+    };
+  }
+
+  setRpgChoiceFocus(0);
+
+  // Setup Keydown Listener for RPG Navigation
+  if (rpgChoiceKeydownHandler) {
+    window.removeEventListener("keydown", rpgChoiceKeydownHandler);
+  }
+
+  rpgChoiceKeydownHandler = (e) => {
+    if (!modal.classList.contains("active")) return;
+    const currentDecision = (PLAN_1_ITINERARY.transitDecisions && PLAN_1_ITINERARY.transitDecisions[currentTacticalDecisionKey]);
+    if (!currentDecision) return;
+
+    if (e.key === "1" && currentDecision.options[0]) {
+      e.preventDefault();
+      chooseTacticalTransit(currentTacticalDecisionKey, currentDecision.options[0].id);
+    } else if (e.key === "2" && currentDecision.options[1]) {
+      e.preventDefault();
+      chooseTacticalTransit(currentTacticalDecisionKey, currentDecision.options[1].id);
+    } else if (e.key === "3" && currentDecision.options[2]) {
+      e.preventDefault();
+      chooseTacticalTransit(currentTacticalDecisionKey, currentDecision.options[2].id);
+    } else if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setRpgChoiceFocus(rpgChoiceActiveIndex + 1);
+      playRpgSound("hover");
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setRpgChoiceFocus(rpgChoiceActiveIndex - 1);
+      playRpgSound("hover");
+    } else if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      const items = document.querySelectorAll(".rpg-choice-item");
+      if (items[rpgChoiceActiveIndex]) {
+        const choiceId = items[rpgChoiceActiveIndex].getAttribute("data-choice-id");
+        chooseTacticalTransit(currentTacticalDecisionKey, choiceId);
+      }
+    }
+  };
+
+  window.addEventListener("keydown", rpgChoiceKeydownHandler);
+}
+
+function closeTacticalChoiceModal() {
+  document.body.classList.remove("rpg-modal-open");
+  const modal = document.getElementById("rpgChoiceModal");
+  if (modal) {
+    modal.classList.remove("active");
+    setTimeout(() => {
+      modal.style.display = "none";
+    }, 280);
+  }
+  if (rpgChoiceKeydownHandler) {
+    window.removeEventListener("keydown", rpgChoiceKeydownHandler);
+    rpgChoiceKeydownHandler = null;
+  }
+}
+
+function chooseTacticalTransit(decisionKey, choiceId) {
+  const decision = (PLAN_1_ITINERARY.transitDecisions && PLAN_1_ITINERARY.transitDecisions[decisionKey]) ||
+                   (PLAN_1_ITINERARY.transitDecisions && PLAN_1_ITINERARY.transitDecisions.airportTransit);
+  if (!decision) return;
+
+  const option = decision.options.find(o => o.id === choiceId) || decision.options[0];
+  if (!option) return;
+
+  playRpgSound("select");
+
+  const targetItem = document.querySelector(`.rpg-choice-item[data-choice-id="${choiceId}"]`);
+  if (targetItem) targetItem.classList.add("selected");
+
+  setTimeout(() => {
+    closeTacticalChoiceModal();
+
+    // 1. Update location card & parchment with the chosen travel method
+    updateFFTLocationCard(`TRANSIT: ${option.nameEn || option.nameTh}`, "YUNNAN");
+    updateFFTParchment("Ramza (นักเดินทาง)", plan1ActiveStepIndex + 1, option.speechTh, option.speechEn);
+
+    // Special animation for airport transit route
+    if (decisionKey === "airportTransit") {
+      animateAirportTransitAlongRoute(option, () => {
+        updateFFTParchment(
+          "Ramza (นักเดินทาง)",
+          1,
+          "🏁 ถึงสถานีรถไฟคุนหมิง (昆明站) แล้ว! ตรวจความปลอดภัยและสแกนพาสปอร์ตเข้าชานชาลา CRH เตรียมออกเดินทางสู่ลี่เจียงกันเลย! 🚅",
+          "Arrived at Kunming Railway Station! Security check done, ready to board CRH to Lijiang! 🚅"
+        );
+        const reopenBtn = document.getElementById("btnReopenRpgChoice");
+        if (reopenBtn) reopenBtn.style.display = "none";
+
+        if (plan1IsPlaying) {
+          scheduleNextStep(1800 / plan1Speed);
+        }
+      });
+    } else {
+      // General feedback for other decisions
+      if (plan1IsPlaying) {
+        scheduleNextStep(2800 / plan1Speed);
+      }
+    }
+  }, 260);
+}
+
+// Backward compatibility wrappers
+function triggerKunmingAirportChoice(step, index) {
+  triggerTacticalTransitDecision("airportTransit", step, index);
+}
+
+function closeKunmingAirportChoice() {
+  closeTacticalChoiceModal();
+}
+
+function chooseAirportTransit(choiceId) {
+  chooseTacticalTransit("airportTransit", choiceId);
+}
+
+function animateAirportTransitAlongRoute(option, onComplete) {
+  cleanupPlan1Markers();
+
+  const points = PLAN_1_ITINERARY.routes && PLAN_1_ITINERARY.routes.kmgAirportToStation;
+  if (!points || points.length < 2) {
+    if (onComplete) onComplete();
+    return;
+  }
+
+  plan1ActiveRouteLine = L.polyline(points, {
+    color: option.badgeColor || '#ea580c',
+    weight: 4.5,
+    opacity: 0.9,
+    dashArray: '6, 6',
+    className: 'transit-route-line-glow'
+  }).addTo(map);
+
+  const startPt = points[0];
+  if (map) {
+    map.setView(startPt, 10, { animate: false });
+  }
+
+  const transitIcon = L.divIcon({
+    className: 'mini-transit-leaflet-icon',
+    html: `
+      <div class="mini-transit-sprite" title="${option.nameTh}">
+        ${option.vehicleSprite}
+      </div>
+    `,
+    iconSize: [60, 34],
+    iconAnchor: [30, 17]
+  });
+
+  plan1VehicleMarker = L.marker(startPt, { icon: transitIcon, zIndexOffset: 2200 }).addTo(map);
+
+  const duration = 3200 / plan1Speed;
+  const startTime = performance.now();
+
+  function animateTransit(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+
+    const currentPos = interpolatePolyline(points, progress);
+    if (plan1VehicleMarker) plan1VehicleMarker.setLatLng(currentPos);
+
+    if (map) {
+      map.setView(currentPos, 10, { animate: false });
+    }
+
+    const coordsEl = document.getElementById("minimapCoords");
+    if (coordsEl) {
+      coordsEl.innerText = `${currentPos[0].toFixed(2)}°N, ${currentPos[1].toFixed(2)}°E`;
+    }
+
+    if (progress < 1) {
+      plan1AnimFrameId = requestAnimationFrame(animateTransit);
+    } else {
+      if (onComplete) onComplete();
+    }
+  }
+
+  plan1AnimFrameId = requestAnimationFrame(animateTransit);
 }
 
 function scheduleNextStep(delayMs) {
   if (!plan1IsPlaying) return;
   plan1Timer = setTimeout(() => {
     if (plan1IsPlaying) {
-      const nextIndex = (plan1ActiveStepIndex + 1) % PLAN_1_ITINERARY.timelapseSteps.length;
-      plan1ActiveStepIndex = nextIndex;
+      const totalSteps = PLAN_1_ITINERARY.timelapseSteps.length;
+      // Single play only: stop upon finishing last step (no loop)
+      if (plan1ActiveStepIndex >= totalSteps - 1) {
+        pausePlan1Timelapse();
+        updatePlayPauseBtnIcon();
+        return;
+      }
+      plan1ActiveStepIndex += 1;
       runPlan1Step(plan1ActiveStepIndex);
     }
   }, delayMs);
@@ -755,7 +1348,10 @@ function animateMiniTrainAlongRail(railKey, speechText, onComplete) {
     className: 'railway-track-glow'
   }).addTo(map);
 
-  map.fitBounds(plan1ActiveRouteLine.getBounds(), { padding: [20, 20], duration: 1.0 });
+  const startPt = points[0];
+  if (map) {
+    map.setView(startPt, 9, { animate: false });
+  }
 
   const trainIcon = L.divIcon({
     className: 'mini-train-leaflet-icon',
@@ -772,7 +1368,6 @@ function animateMiniTrainAlongRail(railKey, speechText, onComplete) {
     iconAnchor: [45, 22]
   });
 
-  const startPt = points[0];
   plan1VehicleMarker = L.marker(startPt, { icon: trainIcon, zIndexOffset: 2000 }).addTo(map);
 
   const totalDuration = (6000 / plan1Speed);
@@ -785,6 +1380,15 @@ function animateMiniTrainAlongRail(railKey, speechText, onComplete) {
     const currentCoords = interpolatePolyline(points, progress);
     if (plan1VehicleMarker) {
       plan1VehicleMarker.setLatLng(currentCoords);
+    }
+
+    // Keep character/vehicle centered in mini-map at all times
+    if (map) {
+      map.setView(currentCoords, 9, { animate: false });
+    }
+    const coordsEl = document.getElementById("minimapCoords");
+    if (coordsEl) {
+      coordsEl.innerText = `${currentCoords[0].toFixed(2)}°N, ${currentCoords[1].toFixed(2)}°E`;
     }
 
     if (progress < 1) {
@@ -802,7 +1406,9 @@ function animateMiniTrainAlongRail(railKey, speechText, onComplete) {
 // ----------------------------------------------------------------------------------
 function animateMiniPlane(targetCoords, speechText, onComplete) {
   const startPt = [targetCoords[0] - 1.0, targetCoords[1] - 1.5];
-  map.flyTo(targetCoords, 9, { duration: 1.5 });
+  if (map) {
+    map.setView(startPt, 9, { animate: false });
+  }
 
   const planeIcon = L.divIcon({
     className: 'mini-plane-leaflet-icon',
@@ -826,8 +1432,18 @@ function animateMiniPlane(targetCoords, speechText, onComplete) {
 
     const lat = startPt[0] + (targetCoords[0] - startPt[0]) * progress;
     const lng = startPt[1] + (targetCoords[1] - startPt[1]) * progress;
+    const currentPos = [lat, lng];
 
-    if (plan1VehicleMarker) plan1VehicleMarker.setLatLng([lat, lng]);
+    if (plan1VehicleMarker) plan1VehicleMarker.setLatLng(currentPos);
+
+    // Keep character/vehicle centered in mini-map at all times
+    if (map) {
+      map.setView(currentPos, 9, { animate: false });
+    }
+    const coordsEl = document.getElementById("minimapCoords");
+    if (coordsEl) {
+      coordsEl.innerText = `${lat.toFixed(2)}°N, ${lng.toFixed(2)}°E`;
+    }
 
     if (progress < 1) {
       plan1AnimFrameId = requestAnimationFrame(animatePlane);
@@ -844,7 +1460,9 @@ function animateMiniPlane(targetCoords, speechText, onComplete) {
 // ----------------------------------------------------------------------------------
 function animateMiniSUV(targetCoords, speechText, onComplete) {
   const startPt = [targetCoords[0] - 0.08, targetCoords[1] - 0.06];
-  map.flyTo(targetCoords, 10, { duration: 1.2 });
+  if (map) {
+    map.setView(startPt, 11, { animate: false });
+  }
 
   const suvIcon = L.divIcon({
     className: 'mini-suv-leaflet-icon',
@@ -868,8 +1486,18 @@ function animateMiniSUV(targetCoords, speechText, onComplete) {
 
     const lat = startPt[0] + (targetCoords[0] - startPt[0]) * progress;
     const lng = startPt[1] + (targetCoords[1] - startPt[1]) * progress;
+    const currentPos = [lat, lng];
 
-    if (plan1VehicleMarker) plan1VehicleMarker.setLatLng([lat, lng]);
+    if (plan1VehicleMarker) plan1VehicleMarker.setLatLng(currentPos);
+
+    // Keep character/vehicle centered in mini-map at all times
+    if (map) {
+      map.setView(currentPos, 11, { animate: false });
+    }
+    const coordsEl = document.getElementById("minimapCoords");
+    if (coordsEl) {
+      coordsEl.innerText = `${lat.toFixed(2)}°N, ${lng.toFixed(2)}°E`;
+    }
 
     if (progress < 1) {
       plan1AnimFrameId = requestAnimationFrame(animateSUV);
@@ -885,7 +1513,14 @@ function animateMiniSUV(targetCoords, speechText, onComplete) {
 // SD Chibi Traveler Character on Mini-Map
 // ----------------------------------------------------------------------------------
 function flyToAttractionWithChibi(coords, zoom, speechText, isGoldHighlight = false) {
-  map.flyTo(coords, zoom, { duration: 1.2 });
+  if (map && coords) {
+    map.setView(coords, zoom || 13, { animate: false });
+  }
+
+  const coordsEl = document.getElementById("minimapCoords");
+  if (coordsEl && coords) {
+    coordsEl.innerText = `${coords[0].toFixed(2)}°N, ${coords[1].toFixed(2)}°E`;
+  }
 
   const goldClass = isGoldHighlight ? 'gold-shimmer-highlight' : '';
 
@@ -907,6 +1542,9 @@ function flyToAttractionWithChibi(coords, zoom, speechText, isGoldHighlight = fa
 
 function showChibiSpeech(coords, text) {
   if (plan1ChibiMarker && map) map.removeLayer(plan1ChibiMarker);
+  if (map && coords) {
+    map.setView(coords, map.getZoom() || 13, { animate: false });
+  }
 
   const chibiIcon = L.divIcon({
     className: 'chibi-sd-leaflet-icon',

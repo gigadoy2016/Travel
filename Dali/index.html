@@ -23,12 +23,46 @@
 
     <!-- Top Floating Navigation Bar (Cozy Paper Sketch Style) -->
     <header class="top-navbar">
-      <!-- Brand Section -->
-      <div class="brand-section" id="brandSection" title="Click to reset map view">
-        <div class="brand-icon">🏔️</div>
+      <!-- Brand Section & City Switcher -->
+      <div class="brand-section" id="brandSection">
+        <div class="brand-icon" id="brandIcon" title="คลิกเพื่อรีเซ็ตมุมมองแผนที่">🏔️</div>
         <div class="brand-text">
-          <h1 id="appTitle">แผนที่ท่องเที่ยวต้าหลี่ (Dali Slow-Life Map)</h1>
-          <p id="appSubtitle">11 จุดเช็คอิน & ศูนย์กลางรถไฟความเร็วสูง โอบกอดทะเลสาบเอ๋อร์ไห่ & ชางซาน · AMAP English</p>
+          <div class="brand-header-row">
+            <!-- City Switcher Dropdown -->
+            <div class="city-selector-wrapper" id="citySelectorWrapper">
+              <button class="city-selector-btn" id="citySelectorBtn" type="button" aria-haspopup="true" aria-expanded="false" title="เลือกเมืองท่องเที่ยว (Switch City)">
+                <span class="city-btn-icon" id="cityBtnIcon">🏔️</span>
+                <span class="city-btn-name" id="cityBtnName">ต้าหลี่ (Dali)</span>
+                <span class="city-select-arrow">▾</span>
+              </button>
+              <div class="city-dropdown-menu" id="cityDropdownMenu">
+                <button class="city-dropdown-item active" data-city-id="dali">
+                  <span class="city-opt-icon">🏔️</span>
+                  <div class="city-opt-info">
+                    <span class="city-opt-title">ต้าหลี่ (Dali · 大理)</span>
+                    <span class="city-opt-desc">ทะเลสาบเอ๋อร์ไห่ & เขาชางซาน (11 จุด)</span>
+                  </div>
+                </button>
+                <button class="city-dropdown-item" data-city-id="lijiang">
+                  <span class="city-opt-icon">🏮</span>
+                  <div class="city-opt-info">
+                    <span class="city-opt-title">ลี่เจียง (Lijiang · 丽江)</span>
+                    <span class="city-opt-desc">เมืองโบราณมรดกโลก & ภูเขาหิมะมังกรหยก (11 จุด)</span>
+                  </div>
+                </button>
+                <button class="city-dropdown-item" data-city-id="shangrila">
+                  <span class="city-opt-icon">🛕</span>
+                  <div class="city-opt-info">
+                    <span class="city-opt-title">แชงกรีล่า (Shangri-La · 香格里拉)</span>
+                    <span class="city-opt-desc">วัดซงจ้านหลิน & ผู่ต๋าชั่ว แดนสวรรค์ทิเบต (9 จุด)</span>
+                  </div>
+                </button>
+              </div>
+            </div>
+            <span class="brand-title-divider">·</span>
+            <h1 id="appTitle">แผนที่ท่องเที่ยวต้าหลี่ (Dali Slow-Life Map)</h1>
+          </div>
+          <p id="appSubtitle">11 จุดเช็คอิน · ชุมทางรถไฟความเร็วสูง · เอ๋อร์ไห่ & ชางซาน · AMAP</p>
         </div>
       </div>
 
@@ -36,7 +70,7 @@
       <div class="nav-center">
         <div class="search-box">
           <span class="search-icon">🔍</span>
-          <input type="text" id="searchInput" class="search-input" placeholder="ค้นหาจุดเช็คอิน, ชื่อภาษาอังกฤษ, จีน..." autocomplete="off">
+          <input type="text" id="searchInput" class="search-input" placeholder="ค้นหาจุดเช็คอิน..." autocomplete="off">
           <button id="clearSearchBtn" class="clear-search-btn" title="Clear search">✕</button>
         </div>
       </div>
@@ -49,15 +83,15 @@
         </button>
         <!-- Scenic Route Toggle -->
         <button id="btnScenicRoute" class="btn-nav active" title="Toggle Scenic Travel Trails on map">
-          <span>🚲</span> เส้นทางเที่ยว
+          <span>🚲</span> เส้นทาง
         </button>
         <!-- Auto Tour -->
         <button id="btnAutoTour" class="btn-nav btn-tour" title="เปิดทัวร์อัตโนมัติ & ไทม์แลปส์ แผน 1: หุบเขาเสือกระโจน & ต้าหลี่ ซานโตรินี (6 วัน 5 คืน)">
-          <span>🎬</span> ทัวร์แผน 1 (Time-Lapse)
+          <span>🎬</span> ทัวร์แผน 1
         </button>
         <!-- Infographic Image Link -->
         <a href="dali_travel_infographic.png" target="_blank" class="btn-nav" id="btnInfographicPng" title="เปิดดู / ดาวน์โหลดภาพ Infographic แผนที่ลายเส้น (.PNG)">
-          <span>🖼️</span> ภาพ Infographic
+          <span>🖼️</span> Infographic
         </a>
         <!-- Map Style Switcher -->
         <button id="btnMapStyle" class="btn-nav" title="Toggle Map Layer (Cozy Paper AMAP / English / Bilingual / Satellite)">
@@ -121,14 +155,24 @@
       </div>
     </div>
 
+    <!-- Floating Side Tab for Quick Guide (Appears on right screen edge when guide is folded to the side) -->
+    <button class="guide-side-tab" id="btnGuideSideTab" title="คลิกเพื่อเปิดดูการเดินทาง & เส้นทางแนะนำ (Expand Quick Guide)">
+      <span class="guide-side-tab-arrow">◀</span>
+      <span class="guide-side-tab-icon">🚲</span>
+      <span class="guide-side-tab-label" id="guideSideTabLabel">การเดินทาง & เส้นทางแนะนำ</span>
+    </button>
+
     <!-- Cozy Travel Infographic Bottom Banner (Heilongjiang Illustrated Guide Style) -->
     <div class="travel-guide-banner" id="travelGuideBanner">
-      <div class="guide-banner-header" id="guideBannerToggle" title="คลิกเพื่อย่อ/ขยายคำแนะนำการเดินทาง">
+      <div class="guide-banner-header" id="guideBannerToggle" title="คลิกเพื่อหุบเก็บเข้าด้านข้าง">
         <div class="guide-banner-title">
           <span class="guide-icon">🚲</span>
           <strong id="guideBannerTitle">การเดินทาง & เส้นทางแนะนำ (Dali Travel Quick Guide)</strong>
         </div>
-        <button class="guide-collapse-btn" id="btnToggleGuideBanner" title="Toggle guide">▼</button>
+        <button class="guide-collapse-btn" id="btnToggleGuideBanner" title="หุบเก็บเข้าด้านข้าง">
+          <span class="collapse-btn-text">หุบเข้าข้าง</span>
+          <span class="collapse-btn-icon">▶</span>
+        </button>
       </div>
       <div class="guide-banner-body" id="guideBannerBody">
         <div class="guide-section">
@@ -158,88 +202,187 @@
 
     <!-- Detailed Modal Popup Window (Travel Diary Scrapbook Style) -->
     <div class="modal-overlay" id="modalOverlay">
-      <div class="modal-container" id="attractionModal" role="dialog" aria-modal="true">
+      <div class="modal-dialog-duo" id="modalDialogDuo">
         
-        <!-- Hero Header -->
-        <div class="modal-hero">
-          <img id="modalHeroImg" class="modal-hero-img" src="" alt="Attraction" />
-          <div class="modal-hero-overlay"></div>
+        <!-- Left Column: The Main Attraction Detail Card -->
+        <div class="modal-container" id="attractionModal" role="dialog" aria-modal="true">
           
-          <div class="modal-badges-top">
-            <span class="badge-tag" id="modalOrderBadge" style="background:#0284c7">Spot 1 / 10</span>
-            <span class="badge-tag" id="modalCategoryBadge" style="background:rgba(255,255,255,0.2)">Historic Town</span>
+          <!-- Hero Header -->
+          <div class="modal-hero">
+            <img id="modalHeroImg" class="modal-hero-img" src="" alt="Attraction" />
+            <div class="modal-hero-overlay"></div>
+            
+            <div class="modal-badges-top">
+              <span class="badge-tag" id="modalOrderBadge" style="background:#0284c7">Spot 1 / 10</span>
+              <span class="badge-tag" id="modalCategoryBadge" style="background:rgba(255,255,255,0.2)">Historic Town</span>
+            </div>
+
+            <button class="modal-close-btn" id="modalCloseBtn" title="Close window">✕</button>
+
+            <div class="modal-hero-content">
+              <h2 class="modal-title-th" id="modalTitleTh">Place Name</h2>
+              <div class="modal-title-sub" id="modalTitleSub">Chinese · Pinyin (English)</div>
+            </div>
           </div>
 
-          <button class="modal-close-btn" id="modalCloseBtn" title="Close window">✕</button>
+          <!-- Modal Body Content -->
+          <div class="modal-body">
+            
+            <!-- Rating Box -->
+            <div class="rating-bar">
+              <div class="rating-score" id="modalRatingScore">⭐ 4.9 / 5.0</div>
+              <div class="rating-desc" id="modalRatingDesc">Highly rated by international travelers</div>
+            </div>
 
-          <div class="modal-hero-content">
-            <h2 class="modal-title-th" id="modalTitleTh">Place Name</h2>
-            <div class="modal-title-sub" id="modalTitleSub">Chinese · Pinyin (English)</div>
+            <!-- Description Section -->
+            <div class="section-block">
+              <p class="desc-text" id="modalDescription"></p>
+            </div>
+
+            <!-- Info Grid -->
+            <div class="info-grid">
+              <div class="info-item">
+                <div class="info-item-label" id="labelHours">⏰ Opening Hours</div>
+                <div class="info-item-value" id="modalHours"></div>
+              </div>
+              <div class="info-item">
+                <div class="info-item-label" id="labelBestTime">🌅 Best Time (Golden Hour)</div>
+                <div class="info-item-value" id="modalBestTime"></div>
+              </div>
+              <div class="info-item">
+                <div class="info-item-label" id="labelTicket">🎫 Admission Fee</div>
+                <div class="info-item-value" id="modalTicket"></div>
+              </div>
+              <div class="info-item">
+                <div class="info-item-label" id="labelTransport">🚕 Getting There</div>
+                <div class="info-item-value" id="modalTransport"></div>
+              </div>
+            </div>
+
+            <!-- Highlights Section -->
+            <div class="section-block">
+              <h3 id="labelHighlights"><span>✨</span> Must-See Highlights</h3>
+              <ul class="highlight-list" id="modalHighlights"></ul>
+            </div>
+
           </div>
+
+          <!-- Modal Footer Actions -->
+          <div class="modal-footer">
+            <div class="nav-modal-group">
+              <button class="btn-modal-nav" id="btnModalPrev"><span>◀</span> Previous</button>
+              <button class="btn-modal-nav" id="btnModalNext">Next <span>▶</span></button>
+            </div>
+
+            <div class="external-map-group">
+              <button class="btn-map-action btn-copy-gps" id="btnCopyGps" title="Copy GPS Coordinates">
+                <span>📋</span> Copy GPS
+              </button>
+              <a class="btn-map-action btn-gaode" id="btnGaodeMap" target="_blank" rel="noopener noreferrer" title="Open in Gaode Map (Amap)">
+                <span>📍</span> Gaode Map
+              </a>
+              <a class="btn-map-action btn-copy-gps" id="btnGoogleMap" target="_blank" rel="noopener noreferrer" title="Open in Google Maps">
+                <span>🗺️</span> Google Maps
+              </a>
+            </div>
+          </div>
+
         </div>
 
-        <!-- Modal Body Content -->
-        <div class="modal-body">
-          
-          <!-- Rating Box -->
-          <div class="rating-bar">
-            <div class="rating-score" id="modalRatingScore">⭐ 4.9 / 5.0</div>
-            <div class="rating-desc" id="modalRatingDesc">Highly rated by international travelers</div>
+        <!-- Right Column: Sample Photos Gallery & TikTok Video Hub (Fills the circled area!) -->
+        <aside class="modal-media-showcase" id="modalMediaShowcase" aria-label="Sample Photos and TikTok Video Hub">
+          <!-- Washi tape decoration -->
+          <div class="media-washi-tape"></div>
+
+          <!-- Header -->
+          <div class="media-header">
+            <div class="media-header-left">
+              <span class="media-header-icon">📸</span>
+              <div class="media-header-titles">
+                <h3 id="mediaTitleText">ตัวอย่างภาพ & วิดีโอ TikTok</h3>
+                <p id="mediaSubtitleText">ไฮไลท์มุมถ่ายรูป & บรรยากาศจริง</p>
+              </div>
+            </div>
+            <button class="modal-close-btn media-close-btn" id="mediaCloseBtn" title="Close window">✕</button>
           </div>
 
-          <!-- Description Section -->
-          <div class="section-block">
-            <p class="desc-text" id="modalDescription"></p>
-          </div>
+          <!-- Media Body: Scrollable -->
+          <div class="media-body">
+            
+            <!-- Section 1: Photo Gallery Grid (ตัวอย่างภาพ) -->
+            <div class="media-section">
+              <div class="media-section-head">
+                <span class="section-badge-pill" id="gallerySectionLabel">📷 ตัวอย่างภาพสถานที่</span>
+                <span class="photo-counter-badge" id="photoCounterBadge">4 มุมแนะนำ</span>
+              </div>
+              <div class="sample-photos-grid" id="samplePhotosGrid">
+                <!-- Injected dynamically by app.js -->
+              </div>
+            </div>
 
-          <!-- Info Grid -->
-          <div class="info-grid">
-            <div class="info-item">
-              <div class="info-item-label" id="labelHours">⏰ Opening Hours</div>
-              <div class="info-item-value" id="modalHours"></div>
-            </div>
-            <div class="info-item">
-              <div class="info-item-label" id="labelBestTime">🌅 Best Time (Golden Hour)</div>
-              <div class="info-item-value" id="modalBestTime"></div>
-            </div>
-            <div class="info-item">
-              <div class="info-item-label" id="labelTicket">🎫 Admission Fee</div>
-              <div class="info-item-value" id="modalTicket"></div>
-            </div>
-            <div class="info-item">
-              <div class="info-item-label" id="labelTransport">🚕 Getting There</div>
-              <div class="info-item-value" id="modalTransport"></div>
-            </div>
-          </div>
+            <!-- Section 2: TikTok & Short Video Hub (link ดู tiktok) -->
+            <div class="media-section">
+              <div class="media-section-head">
+                <span class="section-badge-pill tiktok-pill" id="videoSectionLabel">🎵 วิดีโอ TikTok & Douyin</span>
+                <span class="viral-fire-badge">🔥 ไวรัลรีวิว</span>
+              </div>
 
-          <!-- Highlights Section -->
-          <div class="section-block">
-            <h3 id="labelHighlights"><span>✨</span> Must-See Highlights</h3>
-            <ul class="highlight-list" id="modalHighlights"></ul>
-          </div>
+              <!-- TikTok Card -->
+              <div class="tiktok-card">
+                <div class="tiktok-card-glow-bar"></div>
+                
+                <!-- Reel Video Mockup Preview -->
+                <a href="#" target="_blank" rel="noopener noreferrer" class="tiktok-reel-mock" id="tiktokReelMock" title="คลิกเพื่อเปิดดูคลิปจริงบน TikTok">
+                  <img id="tiktokCoverImg" class="reel-cover-img" src="" alt="TikTok Preview" />
+                  <div class="reel-dark-overlay"></div>
+                  <div class="reel-play-circle">
+                    <span class="play-triangle">▶</span>
+                  </div>
+                  <div class="reel-top-badge">
+                    <span class="tiktok-note-icon">🎵</span>
+                    <span>TikTok Reels</span>
+                  </div>
+                  <div class="reel-bottom-info">
+                    <span class="reel-hashtags" id="tiktokReelHashtags">#Dali #ErhaiLake</span>
+                    <span class="reel-views-pill" id="tiktokReelViews">🔥 2.1M+ Views</span>
+                  </div>
+                </a>
 
+                <!-- Primary TikTok CTA Button -->
+                <a href="#" target="_blank" rel="noopener noreferrer" class="btn-tiktok-cta" id="btnTiktokMain">
+                  <span class="tiktok-symbol">🎵</span>
+                  <span id="btnTiktokLabel">ดูคลิปรีวิวบน TikTok</span>
+                  <span class="cta-arrow">↗</span>
+                </a>
+
+                <!-- Alternative Social Discovery Buttons -->
+                <div class="social-links-grid">
+                  <a href="#" target="_blank" rel="noopener noreferrer" class="btn-social-alt btn-douyin" id="btnDouyin" title="ค้นหาคลิปบน Douyin (TikTok จีน)">
+                    <span>🎥</span> Douyin (TikTok จีน) ↗
+                  </a>
+                  <a href="#" target="_blank" rel="noopener noreferrer" class="btn-social-alt btn-redbook" id="btnRedbook" title="ค้นหารีวิวมุมถ่ายรูปบน Xiaohongshu (เสี่ยวหงซู)">
+                    <span>📕</span> Xiaohongshu ↗
+                  </a>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </aside>
+
+      </div>
+    </div>
+
+    <!-- Lightbox Zoom Overlay for Sample Photos -->
+    <div class="lightbox-overlay" id="lightboxOverlay">
+      <div class="lightbox-box">
+        <button class="lightbox-close-btn" id="lightboxCloseBtn" title="Close preview">✕</button>
+        <img id="lightboxImg" class="lightbox-img" src="" alt="Full view" />
+        <div class="lightbox-meta">
+          <h4 id="lightboxTitle">Photo Title</h4>
+          <span class="lightbox-tag" id="lightboxTag">มุมถ่ายรูป</span>
         </div>
-
-        <!-- Modal Footer Actions -->
-        <div class="modal-footer">
-          <div class="nav-modal-group">
-            <button class="btn-modal-nav" id="btnModalPrev"><span>◀</span> Previous</button>
-            <button class="btn-modal-nav" id="btnModalNext">Next <span>▶</span></button>
-          </div>
-
-          <div class="external-map-group">
-            <button class="btn-map-action btn-copy-gps" id="btnCopyGps" title="Copy GPS Coordinates">
-              <span>📋</span> Copy GPS
-            </button>
-            <a class="btn-map-action btn-gaode" id="btnGaodeMap" target="_blank" rel="noopener noreferrer" title="Open in Gaode Map (Amap)">
-              <span>📍</span> Gaode Map
-            </a>
-            <a class="btn-map-action btn-copy-gps" id="btnGoogleMap" target="_blank" rel="noopener noreferrer" title="Open in Google Maps">
-              <span>🗺️</span> Google Maps
-            </a>
-          </div>
-        </div>
-
       </div>
     </div>
 

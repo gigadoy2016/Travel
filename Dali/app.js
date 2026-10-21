@@ -1,13 +1,15 @@
-// Dali Geographic Discovery - Interactive Web Application Logic
+// China Geographic Discovery - Interactive Web Application Logic
 // Cozy Hand-Drawn Travel Infographic Theme (AMAP Edition)
+// Multi-City Architecture supporting Dali, Shangri-La & more!
 
 // Current Application State
 let map;
 let markers = [];
 let scenicRouteLayers = [];
 let isScenicRouteVisible = true;
+let currentCityKey = "dali"; // Default: Dali ('dali' or 'shangrila')
 let currentAttractionIndex = 0;
-let filteredAttractions = [...DALI_ATTRACTIONS];
+let filteredAttractions = [];
 let currentCategory = "all";
 let isTourRunning = false;
 let tourInterval = null;
@@ -86,24 +88,16 @@ const TILE_LAYERS = {
 // UI Localization Dictionaries
 const UI_TEXTS = {
   th: {
-    appTitle: "แผนที่ท่องเที่ยวต้าหลี่ (Dali Slow-Life Map)",
-    appSubtitle: "11 จุดเช็คอิน & ศูนย์กลางรถไฟความเร็วสูง โอบกอดทะเลสาบเอ๋อร์ไห่ & ชางซาน · AMAP English",
-    searchPlaceholder: "ค้นหาจุดเช็คอิน, ชื่ออังกฤษ, จีน, พินอิน...",
-    btnTourStart: "<span>🎬</span> ทัวร์แผน 1 (Time-Lapse)",
+    searchPlaceholder: "ค้นหาจุดเช็คอิน...",
+    btnTourStart: "<span>🎬</span> ทัวร์แผน 1",
     btnTourStop: "<span>⏹️</span> หยุดทัวร์",
     btnMapStyle: "<span>🎨</span> แผนที่",
     btnSidebar: "<span>📋</span> จุดเช็คอิน",
-    btnRoute: "<span>🚲</span> เส้นทางเที่ยว",
-    btnInfographic: "<span>🖼️</span> ภาพ Infographic",
+    btnRoute: "<span>🚲</span> เส้นทาง",
+    btnInfographic: "<span>🖼️</span> Infographic",
     sidebarTitle: "สมุดบันทึกสถานที่แนะนำ",
     countUnit: "แห่ง",
     emptySearch: "ไม่พบสถานที่ที่ตรงกับคำค้นหา",
-    catAll: "🌟 ทั้งหมด (11)",
-    catTransit: "🚅 สถานีรถไฟ (HSR Hub)",
-    catTown: "🏯 เมืองโบราณ",
-    catLake: "🌊 ทะเลสาบ & ซานโตรินี",
-    catMountain: "🏔️ เทือกเขา & ธารน้ำแข็ง",
-    catCulture: "🪷 วัฒนธรรม & วัดเซน",
     pointLabel: "จุดที่",
     hoursLabel: "⏰ เวลาเปิด - ปิด",
     bestTimeLabel: "🌅 ช่วงเวลาแสงสวยที่สุด",
@@ -115,33 +109,26 @@ const UI_TEXTS = {
     btnCopyGps: "คัดลอก GPS",
     toastCopy: "คัดลอกพิกัด GPS แล้ว!",
     tourBrowsing: "กำลังพาชมทัศนียภาพเชิงภูมิศาสตร์บนแผนที่...",
-    guideTitle: "การเดินทาง & เส้นทางแนะนำ (Dali Travel Quick Guide)",
-    transportHeader: "การเดินทาง :",
-    routesHeader: "เส้นทางแนะนำ :",
-    route1Desc: "<strong>เส้นทางสโลว์ไลฟ์รอบทะเลสาบ (3 วัน 🌊) :</strong> สถานีรถไฟต้าหลี่ ➔ เมืองโบราณต้าหลี่ ➔ อ่าวตัว S ➔ ซีโจว ➔ ซานโตรินี",
-    route2Desc: "<strong>เส้นทางคาราวานม้า & ขุนเขา (2 วัน 🐴) :</strong> วัดแม่ชีจี้จาวอัน ➔ เขาชางซาน ➔ โจวเฉิง ➔ ซาซี",
     routeVisibleToast: "แสดงเส้นทางท่องเที่ยวบนแผนที่แล้ว",
-    routeHiddenToast: "ซ่อนเส้นทางท่องเที่ยวแล้ว"
+    routeHiddenToast: "ซ่อนเส้นทางท่องเที่ยวแล้ว",
+    mediaTitle: "ตัวอย่างภาพ & วิดีโอ TikTok",
+    mediaSubtitle: "ไฮไลท์มุมถ่ายรูป & บรรยากาศจริง",
+    gallerySectionLabel: "📷 ตัวอย่างภาพสถานที่",
+    photoCounterLabel: "4 มุมแนะนำ",
+    videoSectionLabel: "🎵 วิดีโอ TikTok & Douyin",
+    btnTiktokLabel: "ดูคลิปรีวิวบน TikTok"
   },
   en: {
-    appTitle: "Dali Cozy Travel Map Guide",
-    appSubtitle: "11 Slow-Life Destinations & HSR Gateway around Erhai Lake & Mount Cangshan · AMAP",
-    searchPlaceholder: "Search attractions, English, Pinyin, Chinese...",
-    btnTourStart: "<span>🎬</span> Plan 1 Tour (Time-Lapse)",
+    searchPlaceholder: "Search spots, English, Chinese...",
+    btnTourStart: "<span>🎬</span> Plan 1 Tour",
     btnTourStop: "<span>⏹️</span> Stop Tour",
     btnMapStyle: "<span>🎨</span> Map Style",
     btnSidebar: "<span>📋</span> Places",
     btnRoute: "<span>🚲</span> Routes",
-    btnInfographic: "<span>🖼️</span> Infographic PNG",
+    btnInfographic: "<span>🖼️</span> Infographic",
     sidebarTitle: "Travel Journal Places",
     countUnit: "spots",
     emptySearch: "No attractions matching your search",
-    catAll: "🌟 All (11)",
-    catTransit: "🚅 High-Speed Rail Hub",
-    catTown: "🏯 Ancient Towns",
-    catLake: "🌊 Lakes & Views",
-    catMountain: "🏔️ Mountains & Alpine",
-    catCulture: "🪷 Heritage & Zen",
     pointLabel: "Spot",
     hoursLabel: "⏰ Opening Hours",
     bestTimeLabel: "🌅 Best Time (Golden Hour)",
@@ -152,14 +139,15 @@ const UI_TEXTS = {
     btnNext: "Next ▶",
     btnCopyGps: "Copy GPS",
     toastCopy: "Copied GPS Coordinates!",
-    tourBrowsing: "Exploring Dali's slow-life geography...",
-    guideTitle: "Travel Logistics & Recommended Routes",
-    transportHeader: "Getting Around :",
-    routesHeader: "Suggested Itineraries :",
-    route1Desc: "<strong>Slow-Life Lakeside Loop (3 Days 🌊) :</strong> Dali Railway Station ➔ Dali Old Town ➔ Panxi S-Bay ➔ Xizhou ➔ Santorini",
-    route2Desc: "<strong>Tea Horse Caravan & Alpine (2 Days 🐴) :</strong> Jizhao Nunnery ➔ Cangshan ➔ Zhoucheng ➔ Shaxi",
+    tourBrowsing: "Exploring slow-life geography...",
     routeVisibleToast: "Scenic routes shown on map",
-    routeHiddenToast: "Scenic routes hidden"
+    routeHiddenToast: "Scenic routes hidden",
+    mediaTitle: "Sample Photos & TikTok Clips",
+    mediaSubtitle: "Photo spots & authentic vibes",
+    gallerySectionLabel: "📷 Photo Showcase",
+    photoCounterLabel: "4 Curated Angles",
+    videoSectionLabel: "🎵 TikTok & Douyin Videos",
+    btnTiktokLabel: "Watch Reviews on TikTok"
   }
 };
 
@@ -209,12 +197,16 @@ function getEffectiveCoords(item) {
 
 // ----------------------------------------------------------------------------------
 // Initialize Leaflet Map
-// ------------------------------------------------------------------
+// ----------------------------------------------------------------------------------
 document.addEventListener("DOMContentLoaded", () => {
+  const activeCity = CITIES[currentCityKey];
+  filteredAttractions = [...activeCity.attractions];
   initMap();
+  renderCategoryFilterPills();
   renderSidebarList();
   renderMarkers();
   renderScenicRoutes();
+  renderQuickGuideBanner();
   setupEventListeners();
   updateUIStrings();
   adjustHeaderOffsets();
@@ -229,24 +221,23 @@ function adjustHeaderOffsets() {
   if (navbar && filterBar) {
     const navHeight = navbar.offsetHeight;
     const navTop = parseInt(window.getComputedStyle(navbar).top) || 14;
-    const filterTop = navTop + navHeight + 10;
+    const filterTop = navTop + navHeight + 8;
     filterBar.style.top = `${filterTop}px`;
     
     if (sidebar) {
       const filterHeight = filterBar.offsetHeight;
-      sidebar.style.top = `${filterTop + filterHeight + 10}px`;
+      sidebar.style.top = `${filterTop + filterHeight + 8}px`;
     }
   }
 }
 
 function initMap() {
-  // Center of Erhai Lake Valley (Dali Ancient Town & Erhai basin)
-  const daliCenter = [25.7500, 100.1800];
+  const city = CITIES[currentCityKey];
 
   map = L.map("map", {
-    center: daliCenter,
-    zoom: 11,
-    minZoom: 9,
+    center: city.center,
+    zoom: city.defaultZoom,
+    minZoom: 6,
     maxZoom: 18,
     zoomControl: false
   });
@@ -283,8 +274,98 @@ function setTileLayer(key) {
 }
 
 // ----------------------------------------------------------------------------------
+// City Switching Logic (Dali <-> Shangri-La)
+// ----------------------------------------------------------------------------------
+function switchCity(cityKey) {
+  if (!CITIES[cityKey]) return;
+  currentCityKey = cityKey;
+  const city = CITIES[cityKey];
+
+  // Update City Selector Button UI
+  const cityBtnName = document.getElementById("cityBtnName");
+  if (cityBtnName) {
+    cityBtnName.innerText = currentLang === 'en' ? city.nameEn : city.nameTh;
+  }
+  const cityBtnIcon = document.getElementById("cityBtnIcon");
+  if (cityBtnIcon) {
+    cityBtnIcon.innerText = city.icon;
+  }
+  const brandIcon = document.getElementById("brandIcon");
+  if (brandIcon) {
+    brandIcon.innerText = city.icon;
+  }
+
+  // Update active state in dropdown menu
+  document.querySelectorAll(".city-dropdown-item").forEach(item => {
+    item.classList.toggle("active", item.dataset.cityId === cityKey);
+  });
+  
+  // Close dropdown menu
+  const wrapper = document.getElementById("citySelectorWrapper");
+  if (wrapper) wrapper.classList.remove("open");
+
+  // Reset category filter & search
+  currentCategory = "all";
+  const searchInput = document.getElementById("searchInput");
+  if (searchInput) searchInput.value = "";
+  const clearBtn = document.getElementById("clearSearchBtn");
+  if (clearBtn) clearBtn.style.display = "none";
+
+  // Update active city data
+  filteredAttractions = [...city.attractions];
+  currentAttractionIndex = 0;
+
+  // Fly map to new city center
+  if (map) {
+    map.flyTo(city.center, city.defaultZoom, {
+      duration: 1.5,
+      easeLinearity: 0.25
+    });
+  }
+
+  // Re-render all city-dependent UI elements
+  renderCategoryFilterPills();
+  renderMarkers();
+  renderScenicRoutes();
+  renderSidebarList();
+  renderQuickGuideBanner();
+  updateUIStrings();
+  adjustHeaderOffsets();
+
+  // Informative toast
+  const cityName = currentLang === 'en' ? city.nameEn : city.nameTh;
+  showToast(currentLang === 'en' ? `Switched to ${cityName}` : `เปลี่ยนเป็นเมือง: ${cityName}`);
+}
+
+// ----------------------------------------------------------------------------------
+// Rendering Dynamic Category Filter Pills
+// ------------------------------------------------------------------
+function renderCategoryFilterPills() {
+  const filterBar = document.getElementById("filterBar");
+  if (!filterBar) return;
+  const city = CITIES[currentCityKey];
+  if (!city || !city.categories) return;
+
+  filterBar.innerHTML = "";
+  city.categories.forEach(cat => {
+    const btn = document.createElement("button");
+    btn.className = `filter-pill ${currentCategory === cat.id ? 'active' : ''}`;
+    btn.dataset.category = cat.id;
+    btn.id = `filter-${cat.id}`;
+    const label = currentLang === 'en' ? cat.labelEn : cat.labelTh;
+    btn.innerHTML = `<span>${cat.icon}</span> ${label}`;
+
+    btn.addEventListener("click", () => {
+      filterByCategory(cat.id);
+    });
+
+    filterBar.appendChild(btn);
+  });
+}
+
+// ----------------------------------------------------------------------------------
 // Rendering Custom Cozy Hand-Drawn Marker Pins on Map
-// Exact Mathematical Needle Tip Alignment Anchored at [110, 56]
+// Exact Mathematical Needle Tip Alignment Anchored at [125, 60]
 // ----------------------------------------------------------------------------------
 function renderMarkers() {
   markers.forEach(m => map.removeLayer(m.marker));
@@ -347,54 +428,35 @@ function renderMarkers() {
 
 // ----------------------------------------------------------------------------------
 // Rendering Scenic Travel Route (Dashed Hand-Drawn Polyline)
-// ------------------------------------------------------------------
+// ----------------------------------------------------------------------------------
 function renderScenicRoutes() {
   scenicRouteLayers.forEach(l => map.removeLayer(l));
   scenicRouteLayers = [];
 
   if (!isScenicRouteVisible) return;
+  const city = CITIES[currentCityKey];
+  if (!city || !city.scenicRoutes) return;
 
-  // Route 1: Erhai Lake Loop starting from Dali Railway Station (0 -> 1 -> 5 -> 4 -> 2 -> 9 -> 7 -> 6 -> 0)
-  const route1Ids = [0, 1, 5, 4, 2, 9, 7, 6, 0];
-  const route1Points = route1Ids.map(id => {
-    const spot = DALI_ATTRACTIONS.find(a => a.id === id);
-    return getEffectiveCoords(spot);
+  city.scenicRoutes.forEach(route => {
+    const routePoints = route.spotIds.map(id => {
+      const spot = city.attractions.find(a => a.id === id);
+      return spot ? getEffectiveCoords(spot) : null;
+    }).filter(Boolean);
+
+    if (routePoints.length < 2) return;
+
+    const line = L.polyline(routePoints, {
+      color: route.color || '#E07A5F',
+      weight: 3.5,
+      opacity: 0.85,
+      dashArray: route.dashArray || '8, 8',
+      className: 'scenic-route-dash'
+    }).addTo(map);
+
+    const tooltipName = currentLang === 'en' ? route.nameEn : route.nameTh;
+    line.bindTooltip(tooltipName, { sticky: true, className: 'custom-leaflet-tooltip' });
+    scenicRouteLayers.push(line);
   });
-
-  const line1 = L.polyline(route1Points, {
-    color: '#E07A5F',
-    weight: 3.5,
-    opacity: 0.85,
-    dashArray: '8, 8',
-    className: 'scenic-route-dash'
-  }).addTo(map);
-
-  line1.bindTooltip(
-    currentLang === 'en' ? "🌊 Erhai Lake Scenic Greenway Loop" : "🌊 เส้นทางสโลว์ไลฟ์รอบทะเลสาบเอ๋อร์ไห่",
-    { sticky: true, className: 'custom-leaflet-tooltip' }
-  );
-  scenicRouteLayers.push(line1);
-
-  // Route 2: Ancient Caravan & Mountain Trail (10 -> 8 -> 1 -> 3)
-  const route2Ids = [10, 8, 1, 3];
-  const route2Points = route2Ids.map(id => {
-    const spot = DALI_ATTRACTIONS.find(a => a.id === id);
-    return getEffectiveCoords(spot);
-  });
-
-  const line2 = L.polyline(route2Points, {
-    color: '#5B8266',
-    weight: 3.5,
-    opacity: 0.85,
-    dashArray: '6, 8',
-    className: 'scenic-route-dash'
-  }).addTo(map);
-
-  line2.bindTooltip(
-    currentLang === 'en' ? "🐴 Cangshan & Tea Horse Road Trail" : "🐴 เส้นทางขุนเขาชางซาน & คาราวานม้าซาซี",
-    { sticky: true, className: 'custom-leaflet-tooltip' }
-  );
-  scenicRouteLayers.push(line2);
 }
 
 function toggleScenicRoutes() {
@@ -404,11 +466,14 @@ function toggleScenicRoutes() {
   renderScenicRoutes();
   const t = UI_TEXTS[currentLang];
   showToast(isScenicRouteVisible ? t.routeVisibleToast : t.routeHiddenToast);
+  if (isScenicRouteVisible) {
+    expandGuideBanner();
+  }
 }
 
 // ----------------------------------------------------------------------------------
 // Rendering Sidebar List (Travel Scrapbook Index Cards)
-// ------------------------------------------------------------------
+// ----------------------------------------------------------------------------------
 function renderSidebarList() {
   const container = document.getElementById("attractionList");
   container.innerHTML = "";
@@ -473,17 +538,21 @@ function renderSidebarList() {
     container.appendChild(card);
   });
 
-  document.getElementById("attractionCount").innerText = `${filteredAttractions.length} ${t.countUnit}`;
+  const countEl = document.getElementById("attractionCount");
+  if (countEl) {
+    countEl.innerText = `${filteredAttractions.length} ${t.countUnit}`;
+  }
 }
 
 // ----------------------------------------------------------------------------------
 // Selecting an Attraction
-// ------------------------------------------------------------------
+// ----------------------------------------------------------------------------------
 function selectAttraction(id, openModal = true) {
-  const item = DALI_ATTRACTIONS.find(a => a.id === id);
+  const city = CITIES[currentCityKey];
+  const item = city.attractions.find(a => a.id === id);
   if (!item) return;
 
-  currentAttractionIndex = DALI_ATTRACTIONS.findIndex(a => a.id === id);
+  currentAttractionIndex = city.attractions.findIndex(a => a.id === id);
   const targetCoords = getEffectiveCoords(item);
 
   // Smooth FlyTo
@@ -516,6 +585,7 @@ function selectAttraction(id, openModal = true) {
 function openAttractionModal(item) {
   const modalOverlay = document.getElementById("modalOverlay");
   const t = UI_TEXTS[currentLang];
+  const city = CITIES[currentCityKey];
   
   // Titles and Subtitles
   document.getElementById("modalHeroImg").src = item.image;
@@ -524,7 +594,8 @@ function openAttractionModal(item) {
   
   // Badges
   const orderBadge = document.getElementById("modalOrderBadge");
-  orderBadge.innerText = item.id === 0 ? (currentLang === 'en' ? 'HSR Gateway' : 'ประตูสู่ต้าหลี่ 🚅') : `${t.pointLabel} ${item.id} / 10`;
+  const totalSpots = city.attractions.length - 1;
+  orderBadge.innerText = item.id === 0 ? (currentLang === 'en' ? 'HSR Gateway' : 'ประตูสู่เมือง 🚅') : `${t.pointLabel} ${item.id} / ${totalSpots}`;
   orderBadge.style.background = item.pastelBg || '#FFFDF8';
   orderBadge.style.color = item.categoryColor;
   
@@ -546,7 +617,7 @@ function openAttractionModal(item) {
   const trans = currentLang === 'en' ? item.transportEn : item.transportTh;
   document.getElementById("modalTransport").innerHTML = `
     <strong>${currentLang === 'en' ? 'From Station:' : 'จากสถานีรถไฟ:'}</strong> ${trans.fromStation}<br>
-    <strong>${currentLang === 'en' ? 'From Old Town:' : 'จากเมืองเก่า:'}</strong> ${trans.fromOldTown || trans.fromAirport || trans.inside}
+    <strong>${currentLang === 'en' ? 'From Old Town / City:' : 'จากเมืองโบราณ / ใจกลางเมือง:'}</strong> ${trans.fromOldTown || trans.fromAirport || trans.inside}
   `;
 
   // Highlights
@@ -572,7 +643,114 @@ function openAttractionModal(item) {
   const btnGaodeMap = document.getElementById("btnGaodeMap");
   btnGaodeMap.href = `https://uri.amap.com/marker?position=${item.coords[1].toFixed(6)},${item.coords[0].toFixed(6)}&name=${encodeURIComponent(item.nameZh)}`;
 
+  // Update Media Showcase (Sample Photos & TikTok Hub)
+  renderMediaShowcase(item);
+
   modalOverlay.classList.add("active");
+}
+
+// ----------------------------------------------------------------------------------
+// Media Showcase: Sample Photos & TikTok / Social Discovery Hub
+// ----------------------------------------------------------------------------------
+function renderMediaShowcase(item) {
+  const mediaKey = `${currentCityKey}_${item.id}`;
+  const media = (typeof ATTRACTION_MEDIA_DATA !== 'undefined' && ATTRACTION_MEDIA_DATA[mediaKey]) 
+    ? ATTRACTION_MEDIA_DATA[mediaKey] 
+    : {
+        tiktokQuery: `${item.nameZh} ${item.nameEn} Yunnan China`,
+        hashtags: `#${item.nameEn.replace(/[^a-zA-Z0-9]/g, '')} #YunnanTravel`,
+        views: '2.0M+ Views',
+        douyinQuery: item.nameZh,
+        redbookQuery: item.nameZh,
+        cover: item.image,
+        photos: [
+          { url: item.image, titleTh: item.nameTh, titleEn: item.nameEn, tagTh: 'ภาพหลัก', tagEn: 'Main View' }
+        ]
+      };
+
+  // 1. Render Sample Photos (4 items with zoom icon)
+  const gridEl = document.getElementById("samplePhotosGrid");
+  if (gridEl && media.photos) {
+    gridEl.innerHTML = media.photos.map((p, idx) => `
+      <div class="sample-photo-card" data-idx="${idx}" title="${currentLang === 'en' ? p.titleEn : p.titleTh}">
+        <img src="${p.url}" alt="${currentLang === 'en' ? p.titleEn : p.titleTh}" loading="lazy" onerror="this.src='${item.image}'" />
+        <div class="sample-photo-zoom-icon">🔍</div>
+        <div class="sample-photo-overlay">
+          <span class="sample-photo-title">${currentLang === 'en' ? p.titleEn : p.titleTh}</span>
+        </div>
+      </div>
+    `).join("");
+
+    // Click to open Lightbox
+    gridEl.querySelectorAll(".sample-photo-card").forEach((card, idx) => {
+      card.addEventListener("click", () => {
+        const photo = media.photos[idx];
+        openLightbox(
+          photo, 
+          currentLang === 'en' ? photo.titleEn : photo.titleTh, 
+          currentLang === 'en' ? photo.tagEn : photo.tagTh
+        );
+      });
+    });
+  }
+
+  // 2. Render TikTok Card & Links
+  const tiktokCover = document.getElementById("tiktokCoverImg");
+  if (tiktokCover) {
+    tiktokCover.src = media.cover || item.image;
+    tiktokCover.onerror = () => { tiktokCover.src = item.image; };
+  }
+
+  const reelHashtags = document.getElementById("tiktokReelHashtags");
+  if (reelHashtags) reelHashtags.innerText = media.hashtags || `#${item.nameEn.replace(/[^a-zA-Z0-9]/g, '')}`;
+
+  const reelViews = document.getElementById("tiktokReelViews");
+  if (reelViews) reelViews.innerText = `🔥 ${media.views || '2.0M+ Views'}`;
+
+  // TikTok Search URL
+  const tiktokQuery = media.tiktokQuery || `${item.nameEn} ${item.nameZh} Yunnan China`;
+  const tiktokSearchUrl = `https://www.tiktok.com/search?q=${encodeURIComponent(tiktokQuery)}`;
+  
+  const btnTiktokMain = document.getElementById("btnTiktokMain");
+  if (btnTiktokMain) {
+    btnTiktokMain.href = tiktokSearchUrl;
+  }
+  
+  const tiktokReelMock = document.getElementById("tiktokReelMock");
+  if (tiktokReelMock) {
+    tiktokReelMock.href = tiktokSearchUrl;
+  }
+
+  // Douyin & Xiaohongshu Links
+  const douyinQuery = media.douyinQuery || item.nameZh;
+  const btnDouyin = document.getElementById("btnDouyin");
+  if (btnDouyin) {
+    btnDouyin.href = `https://www.douyin.com/search/${encodeURIComponent(douyinQuery)}`;
+  }
+
+  const redbookQuery = media.redbookQuery || item.nameZh;
+  const btnRedbook = document.getElementById("btnRedbook");
+  if (btnRedbook) {
+    btnRedbook.href = `https://www.xiaohongshu.com/search_result?keyword=${encodeURIComponent(redbookQuery)}`;
+  }
+}
+
+// Lightbox Zoom Overlay
+function openLightbox(photoObj, title, tag) {
+  const lightbox = document.getElementById("lightboxOverlay");
+  if (!lightbox) return;
+  const imgEl = document.getElementById("lightboxImg");
+  if (imgEl) imgEl.src = photoObj.url;
+  const titleEl = document.getElementById("lightboxTitle");
+  if (titleEl) titleEl.innerText = title || "";
+  const tagEl = document.getElementById("lightboxTag");
+  if (tagEl) tagEl.innerText = tag || (currentLang === 'en' ? 'Photo Spot' : 'มุมถ่ายรูป');
+  lightbox.classList.add("active");
+}
+
+function closeLightbox() {
+  const lightbox = document.getElementById("lightboxOverlay");
+  if (lightbox) lightbox.classList.remove("active");
 }
 
 function closeAttractionModal() {
@@ -580,14 +758,15 @@ function closeAttractionModal() {
 }
 
 function navigateModal(direction) {
-  currentAttractionIndex = (currentAttractionIndex + direction + DALI_ATTRACTIONS.length) % DALI_ATTRACTIONS.length;
-  const nextItem = DALI_ATTRACTIONS[currentAttractionIndex];
+  const city = CITIES[currentCityKey];
+  currentAttractionIndex = (currentAttractionIndex + direction + city.attractions.length) % city.attractions.length;
+  const nextItem = city.attractions[currentAttractionIndex];
   selectAttraction(nextItem.id, true);
 }
 
 // ----------------------------------------------------------------------------------
 // Category Filters & Search
-// ------------------------------------------------------------------
+// ----------------------------------------------------------------------------------
 function filterByCategory(category) {
   currentCategory = category;
 
@@ -603,9 +782,10 @@ function handleSearch(query) {
 }
 
 function applyFilters(searchQuery = "") {
+  const city = CITIES[currentCityKey];
   const currentSearch = searchQuery || document.getElementById("searchInput").value.trim().toLowerCase();
 
-  filteredAttractions = DALI_ATTRACTIONS.filter(item => {
+  filteredAttractions = city.attractions.filter(item => {
     const matchCategory = (currentCategory === "all") || (item.category === currentCategory);
     const matchSearch = !currentSearch || (
       item.nameTh.toLowerCase().includes(currentSearch) ||
@@ -629,7 +809,7 @@ function applyFilters(searchQuery = "") {
 
 // ----------------------------------------------------------------------------------
 // Auto Tour Mode
-// ------------------------------------------------------------------
+// ----------------------------------------------------------------------------------
 function toggleAutoTour() {
   if (isTourRunning) {
     stopAutoTour();
@@ -649,14 +829,16 @@ function startAutoTour() {
   currentAttractionIndex = 0;
   runTourStep();
 
+  const city = CITIES[currentCityKey];
   tourInterval = setInterval(() => {
-    currentAttractionIndex = (currentAttractionIndex + 1) % DALI_ATTRACTIONS.length;
+    currentAttractionIndex = (currentAttractionIndex + 1) % city.attractions.length;
     runTourStep();
   }, 6500);
 }
 
 function runTourStep() {
-  const item = DALI_ATTRACTIONS[currentAttractionIndex];
+  const city = CITIES[currentCityKey];
+  const item = city.attractions[currentAttractionIndex];
   selectAttraction(item.id, false);
 
   const title = currentLang === 'en' ? `${item.id}. ${item.doodleIcon || ''} ${item.nameEn} (${item.nameZh})` : `${item.id}. ${item.doodleIcon || ''} ${item.nameTh} (${item.nameZh})`;
@@ -678,7 +860,7 @@ function stopAutoTour() {
 
 // ----------------------------------------------------------------------------------
 // Language Toggle (TH / EN)
-// ------------------------------------------------------------------
+// ----------------------------------------------------------------------------------
 function toggleLanguage() {
   currentLang = currentLang === "en" ? "th" : "en";
   updateUIStrings();
@@ -688,64 +870,171 @@ function toggleLanguage() {
 
   // If modal is currently open, refresh it
   if (document.getElementById("modalOverlay").classList.contains("active")) {
-    const currentItem = DALI_ATTRACTIONS[currentAttractionIndex];
-    openAttractionModal(currentItem);
+    const city = CITIES[currentCityKey];
+    const currentItem = city.attractions[currentAttractionIndex];
+    if (currentItem) openAttractionModal(currentItem);
   }
 
   showToast(currentLang === 'en' ? "Language: English" : "เปลี่ยนภาษา: ไทย");
 }
 
 function updateUIStrings() {
+  const city = CITIES[currentCityKey];
   const t = UI_TEXTS[currentLang];
 
-  document.getElementById("appTitle").innerText = t.appTitle;
-  document.getElementById("appSubtitle").innerText = t.appSubtitle;
-  document.getElementById("searchInput").placeholder = t.searchPlaceholder;
+  // Dynamic City Titles
+  const appTitle = document.getElementById("appTitle");
+  if (appTitle) {
+    appTitle.innerText = currentLang === 'en' ? city.appTitleEn : city.appTitleTh;
+  }
+  const appSubtitle = document.getElementById("appSubtitle");
+  if (appSubtitle) {
+    appSubtitle.innerText = currentLang === 'en' ? city.appSubtitleEn : city.appSubtitleTh;
+  }
+
+  // City Selector Button Label
+  const cityBtnName = document.getElementById("cityBtnName");
+  if (cityBtnName) {
+    cityBtnName.innerText = currentLang === 'en' ? city.nameEn : city.nameTh;
+  }
+
+  // Search Placeholder
+  const searchInput = document.getElementById("searchInput");
+  if (searchInput) {
+    searchInput.placeholder = t.searchPlaceholder;
+  }
   
   if (!isTourRunning) {
-    document.getElementById("btnAutoTour").innerHTML = t.btnTourStart;
+    const btnAutoTour = document.getElementById("btnAutoTour");
+    if (btnAutoTour) btnAutoTour.innerHTML = t.btnTourStart;
   }
-  document.getElementById("btnMapStyle").innerHTML = t.btnMapStyle;
-  document.getElementById("btnToggleSidebar").innerHTML = t.btnSidebar;
-  document.getElementById("btnScenicRoute").innerHTML = t.btnRoute;
+  
+  const btnMapStyle = document.getElementById("btnMapStyle");
+  if (btnMapStyle) btnMapStyle.innerHTML = t.btnMapStyle;
+
+  const btnToggleSidebar = document.getElementById("btnToggleSidebar");
+  if (btnToggleSidebar) btnToggleSidebar.innerHTML = t.btnSidebar;
+
+  const btnScenicRoute = document.getElementById("btnScenicRoute");
+  if (btnScenicRoute) btnScenicRoute.innerHTML = t.btnRoute;
+
   const btnInfographic = document.getElementById("btnInfographicPng");
   if (btnInfographic) btnInfographic.innerHTML = t.btnInfographic;
-  document.getElementById("sidebarHeaderTitle").innerHTML = `<span>📍</span> ${t.sidebarTitle}`;
 
-  // Filter Pills
-  document.getElementById("filterAll").innerHTML = t.catAll;
-  const filterTransit = document.getElementById("filterTransit");
-  if (filterTransit) filterTransit.innerHTML = t.catTransit;
-  document.getElementById("filterTown").innerHTML = t.catTown;
-  document.getElementById("filterLake").innerHTML = t.catLake;
-  document.getElementById("filterMountain").innerHTML = t.catMountain;
-  document.getElementById("filterCulture").innerHTML = t.catCulture;
+  const sidebarHeaderTitle = document.getElementById("sidebarHeaderTitle");
+  if (sidebarHeaderTitle) sidebarHeaderTitle.innerHTML = `<span>📍</span> ${t.sidebarTitle}`;
+
+  // Re-render categories with new language
+  renderCategoryFilterPills();
 
   // Modal Labels
-  document.getElementById("labelHours").innerHTML = t.hoursLabel;
-  document.getElementById("labelBestTime").innerHTML = t.bestTimeLabel;
-  document.getElementById("labelTicket").innerHTML = t.ticketLabel;
-  document.getElementById("labelTransport").innerHTML = t.transportLabel;
-  document.getElementById("labelHighlights").innerHTML = `<span>✨</span> ${t.highlightsTitle}`;
+  const labelHours = document.getElementById("labelHours");
+  if (labelHours) labelHours.innerHTML = t.hoursLabel;
+  const labelBestTime = document.getElementById("labelBestTime");
+  if (labelBestTime) labelBestTime.innerHTML = t.bestTimeLabel;
+  const labelTicket = document.getElementById("labelTicket");
+  if (labelTicket) labelTicket.innerHTML = t.ticketLabel;
+  const labelTransport = document.getElementById("labelTransport");
+  if (labelTransport) labelTransport.innerHTML = t.transportLabel;
+  const labelHighlights = document.getElementById("labelHighlights");
+  if (labelHighlights) labelHighlights.innerHTML = `<span>✨</span> ${t.highlightsTitle}`;
 
-  document.getElementById("btnModalPrev").innerHTML = t.btnPrev;
-  document.getElementById("btnModalNext").innerHTML = t.btnNext;
-  document.getElementById("btnCopyGps").innerHTML = `<span>📋</span> ${t.btnCopyGps}`;
+  const btnModalPrev = document.getElementById("btnModalPrev");
+  if (btnModalPrev) btnModalPrev.innerHTML = t.btnPrev;
+  const btnModalNext = document.getElementById("btnModalNext");
+  if (btnModalNext) btnModalNext.innerHTML = t.btnNext;
+  const btnCopyGps = document.getElementById("btnCopyGps");
+  if (btnCopyGps) btnCopyGps.innerHTML = `<span>📋</span> ${t.btnCopyGps}`;
   
   // Language button label
-  document.getElementById("btnLangToggle").innerHTML = currentLang === "en" ? "🇹🇭 TH" : "🇬🇧 EN";
+  const btnLangToggle = document.getElementById("btnLangToggle");
+  if (btnLangToggle) btnLangToggle.innerHTML = currentLang === "en" ? "🇹🇭 TH" : "🇬🇧 EN";
 
-  // Guide Banner
-  document.getElementById("guideBannerTitle").innerText = t.guideTitle;
-  document.getElementById("guideTransportLabel").innerText = t.transportHeader;
-  document.getElementById("guideRoutesLabel").innerText = t.routesHeader;
-  document.getElementById("route1Desc").innerHTML = t.route1Desc;
-  document.getElementById("route2Desc").innerHTML = t.route2Desc;
+  const collapseBtnText = document.querySelector(".guide-collapse-btn .collapse-btn-text");
+  if (collapseBtnText) {
+    collapseBtnText.innerText = currentLang === 'en' ? "Collapse" : "หุบเข้าข้าง";
+  }
+
+  // Media Showcase Labels
+  const mediaTitleText = document.getElementById("mediaTitleText");
+  if (mediaTitleText) mediaTitleText.innerText = t.mediaTitle;
+  const mediaSubtitleText = document.getElementById("mediaSubtitleText");
+  if (mediaSubtitleText) mediaSubtitleText.innerText = t.mediaSubtitle;
+  const gallerySectionLabel = document.getElementById("gallerySectionLabel");
+  if (gallerySectionLabel) gallerySectionLabel.innerText = t.gallerySectionLabel;
+  const photoCounterBadge = document.getElementById("photoCounterBadge");
+  if (photoCounterBadge) photoCounterBadge.innerText = t.photoCounterLabel;
+  const videoSectionLabel = document.getElementById("videoSectionLabel");
+  if (videoSectionLabel) videoSectionLabel.innerText = t.videoSectionLabel;
+  const btnTiktokLabel = document.getElementById("btnTiktokLabel");
+  if (btnTiktokLabel) btnTiktokLabel.innerText = t.btnTiktokLabel;
+
+  // Re-render travel guide banner
+  renderQuickGuideBanner();
+}
+
+// ----------------------------------------------------------------------------------
+// Rendering Quick Guide Banner based on active City
+// ----------------------------------------------------------------------------------
+function renderQuickGuideBanner() {
+  const city = CITIES[currentCityKey];
+  if (!city || !city.guide) return;
+
+  const titleEl = document.getElementById("guideBannerTitle");
+  if (titleEl) {
+    titleEl.innerText = currentLang === 'en' ? city.guide.titleEn : city.guide.titleTh;
+  }
+
+  const sideTabLabel = document.getElementById("guideSideTabLabel");
+  if (sideTabLabel) {
+    if (currentCityKey === 'shangrila') {
+      sideTabLabel.innerText = currentLang === 'en' ? "Shangri-La Guide" : "เส้นทางแนะนำแชงกรีล่า";
+    } else if (currentCityKey === 'lijiang') {
+      sideTabLabel.innerText = currentLang === 'en' ? "Lijiang Travel Guide" : "การเดินทาง & เส้นทางแนะนำลี่เจียง";
+    } else {
+      sideTabLabel.innerText = currentLang === 'en' ? "Dali Travel Guide" : "การเดินทาง & เส้นทางแนะนำต้าหลี่";
+    }
+  }
+
+  const chipsContainer = document.querySelector(".guide-chips");
+  if (chipsContainer && city.guide.chips) {
+    chipsContainer.innerHTML = city.guide.chips.map(chip => {
+      const text = currentLang === 'en' ? chip.textEn : chip.textTh;
+      return `<span class="guide-chip">${chip.icon} ${text}</span>`;
+    }).join("");
+  }
+
+  const routesContainer = document.querySelector(".guide-routes");
+  if (routesContainer && city.guide.routes) {
+    routesContainer.innerHTML = city.guide.routes.map(r => {
+      const desc = currentLang === 'en' ? r.descEn : r.descTh;
+      return `
+        <div class="guide-route-item">
+          <span class="route-num">${r.num}</span>
+          <span class="route-desc">${desc}</span>
+        </div>
+      `;
+    }).join("");
+  }
+}
+
+function minimizeGuideBanner() {
+  const guideBanner = document.getElementById("travelGuideBanner");
+  const guideSideTab = document.getElementById("btnGuideSideTab");
+  if (guideBanner) guideBanner.classList.add("minimized");
+  if (guideSideTab) guideSideTab.classList.add("visible");
+}
+
+function expandGuideBanner() {
+  const guideBanner = document.getElementById("travelGuideBanner");
+  const guideSideTab = document.getElementById("btnGuideSideTab");
+  if (guideBanner) guideBanner.classList.remove("minimized");
+  if (guideSideTab) guideSideTab.classList.remove("visible");
 }
 
 // ----------------------------------------------------------------------------------
 // Map Layer Switcher
-// ------------------------------------------------------------------
+// ----------------------------------------------------------------------------------
 function cycleMapStyle() {
   const keys = Object.keys(TILE_LAYERS);
   const nextIndex = (keys.indexOf(currentLayerKey) + 1) % keys.length;
@@ -754,7 +1043,7 @@ function cycleMapStyle() {
 
 // ----------------------------------------------------------------------------------
 // Toast Notification
-// ------------------------------------------------------------------
+// ----------------------------------------------------------------------------------
 function showToast(text) {
   const toast = document.getElementById("toastMsg");
   toast.innerText = text;
@@ -764,14 +1053,47 @@ function showToast(text) {
 
 // ----------------------------------------------------------------------------------
 // Event Listeners Setup
-// ------------------------------------------------------------------
+// ----------------------------------------------------------------------------------
 function setupEventListeners() {
-  // Category Pills
-  document.querySelectorAll(".filter-pill").forEach(pill => {
-    pill.addEventListener("click", () => {
-      filterByCategory(pill.dataset.category);
+  // City Selector Dropdown Toggle
+  const citySelectorBtn = document.getElementById("citySelectorBtn");
+  const citySelectorWrapper = document.getElementById("citySelectorWrapper");
+  if (citySelectorBtn && citySelectorWrapper) {
+    citySelectorBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      citySelectorWrapper.classList.toggle("open");
     });
-  });
+
+    // Close dropdown on click outside
+    document.addEventListener("click", (e) => {
+      if (!citySelectorWrapper.contains(e.target)) {
+        citySelectorWrapper.classList.remove("open");
+      }
+    });
+
+    // City Dropdown Item Clicks
+    document.querySelectorAll(".city-dropdown-item").forEach(item => {
+      item.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const cityId = item.dataset.cityId;
+        if (cityId && cityId !== currentCityKey) {
+          switchCity(cityId);
+        } else {
+          citySelectorWrapper.classList.remove("open");
+        }
+      });
+    });
+  }
+
+  // Brand icon reset view
+  const brandIcon = document.getElementById("brandIcon");
+  if (brandIcon) {
+    brandIcon.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const city = CITIES[currentCityKey];
+      map.flyTo(city.center, city.defaultZoom, { duration: 1.2 });
+    });
+  }
 
   // Search Input
   const searchInput = document.getElementById("searchInput");
@@ -797,12 +1119,32 @@ function setupEventListeners() {
 
   // Modal Controls
   document.getElementById("modalCloseBtn").addEventListener("click", closeAttractionModal);
+  const mediaCloseBtn = document.getElementById("mediaCloseBtn");
+  if (mediaCloseBtn) mediaCloseBtn.addEventListener("click", closeAttractionModal);
+
   document.getElementById("modalOverlay").addEventListener("click", (e) => {
-    if (e.target.id === "modalOverlay") closeAttractionModal();
+    if (e.target.id === "modalOverlay" || e.target.id === "modalDialogDuo") closeAttractionModal();
   });
 
+  // Lightbox Close Controls
+  const lightboxCloseBtn = document.getElementById("lightboxCloseBtn");
+  if (lightboxCloseBtn) lightboxCloseBtn.addEventListener("click", closeLightbox);
+  const lightboxOverlay = document.getElementById("lightboxOverlay");
+  if (lightboxOverlay) {
+    lightboxOverlay.addEventListener("click", (e) => {
+      if (e.target.id === "lightboxOverlay") closeLightbox();
+    });
+  }
+
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") closeAttractionModal();
+    if (e.key === "Escape") {
+      const lb = document.getElementById("lightboxOverlay");
+      if (lb && lb.classList.contains("active")) {
+        closeLightbox();
+      } else {
+        closeAttractionModal();
+      }
+    }
   });
 
   document.getElementById("btnModalPrev").addEventListener("click", () => navigateModal(-1));
@@ -818,7 +1160,8 @@ function setupEventListeners() {
   });
   document.getElementById("tourBtnStop").addEventListener("click", stopAutoTour);
   document.getElementById("tourBtnNext").addEventListener("click", () => {
-    currentAttractionIndex = (currentAttractionIndex + 1) % DALI_ATTRACTIONS.length;
+    const city = CITIES[currentCityKey];
+    currentAttractionIndex = (currentAttractionIndex + 1) % city.attractions.length;
     runTourStep();
   });
 
@@ -834,15 +1177,42 @@ function setupEventListeners() {
     sidebar.classList.add("collapsed");
   });
 
-  // Travel Guide Banner Minimize Toggle
-  const guideBanner = document.getElementById("travelGuideBanner");
-  document.getElementById("guideBannerToggle").addEventListener("click", () => {
-    guideBanner.classList.toggle("minimized");
+  // Travel Guide Banner Slide-to-Side Collapse & Expand ("หุบเข้าด้านข้าง")
+  const guideToggleHeader = document.getElementById("guideBannerToggle");
+  if (guideToggleHeader) {
+    guideToggleHeader.addEventListener("click", () => {
+      minimizeGuideBanner();
+    });
+  }
+
+  const collapseBtn = document.getElementById("btnToggleGuideBanner");
+  if (collapseBtn) {
+    collapseBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      minimizeGuideBanner();
+    });
+  }
+
+  const guideSideTab = document.getElementById("btnGuideSideTab");
+  if (guideSideTab) {
+    guideSideTab.addEventListener("click", (e) => {
+      e.stopPropagation();
+      expandGuideBanner();
+    });
+  }
+
+  // Delegated fallback listener to ensure 100% click capture on the side tab
+  document.addEventListener("click", (e) => {
+    if (e.target.closest("#btnGuideSideTab")) {
+      expandGuideBanner();
+    }
   });
 
-  // Reset Bounds on Brand Click
-  document.getElementById("brandSection").addEventListener("click", () => {
-    const effectivePoints = DALI_ATTRACTIONS.map(a => getEffectiveCoords(a));
+  // Reset Bounds on Brand Section Click (excluding dropdown)
+  document.getElementById("brandSection").addEventListener("click", (e) => {
+    if (e.target.closest("#citySelectorWrapper")) return;
+    const city = CITIES[currentCityKey];
+    const effectivePoints = city.attractions.map(a => getEffectiveCoords(a));
     const bounds = L.latLngBounds(effectivePoints);
     map.fitBounds(bounds, { padding: [60, 60], duration: 1.0 });
   });
