@@ -7,7 +7,7 @@ let map;
 let markers = [];
 let scenicRouteLayers = [];
 let isScenicRouteVisible = true;
-let currentCityKey = "dali"; // Default: Dali ('dali' or 'shangrila')
+let currentCityKey = "harbin"; // Default: Harbin ('harbin', 'dali', 'lijiang', 'shangrila')
 let currentAttractionIndex = 0;
 let filteredAttractions = [];
 let currentCategory = "all";
@@ -991,6 +991,8 @@ function renderQuickGuideBanner() {
       sideTabLabel.innerText = currentLang === 'en' ? "Shangri-La Guide" : "เส้นทางแนะนำแชงกรีล่า";
     } else if (currentCityKey === 'lijiang') {
       sideTabLabel.innerText = currentLang === 'en' ? "Lijiang Travel Guide" : "การเดินทาง & เส้นทางแนะนำลี่เจียง";
+    } else if (currentCityKey === 'harbin') {
+      sideTabLabel.innerText = currentLang === 'en' ? "Harbin Travel Guide" : "การเดินทาง & เส้นทางแนะนำฮาร์บิน";
     } else {
       sideTabLabel.innerText = currentLang === 'en' ? "Dali Travel Guide" : "การเดินทาง & เส้นทางแนะนำต้าหลี่";
     }
