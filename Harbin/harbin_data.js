@@ -1760,17 +1760,92 @@ const HARBIN_ATTRACTIONS = [
 ];
 
 // Default 6-Day Harbin Slow-Life Timeline Itinerary (Walk, Eat, Visit, Transit)
+// Includes Confirmed Flight Schedule from 1/S__27820034.jpg (Booking: 1622932337344364)
 const DEFAULT_HARBIN_TIMELINE = {
   day1: {
     labelTh: "Day 1 (4 ธ.ค.)",
     labelEn: "Day 1 (Dec 4)",
-    titleTh: "บินถึงฮาร์บิน • ถนนคนเดินจงหยาง • ไอศกรีม & หม้อไฟ",
-    titleEn: "Arrival in Harbin • Zhongyang Walk • Popsicle & Hot Pot",
+    titleTh: "Bangkok (BKK) ➔ เซี่ยงไฮ้ (PVG) ➔ ฮาร์บิน (HRB) • ถนนจงหยาง",
+    titleEn: "Bangkok (BKK) ➔ Shanghai (PVG) ➔ Harbin (HRB) • Zhongyang St.",
     items: [
-      { uid: "d1-1", spotId: 11, time: "17:00", duration: 45, actType: "transit", noteTh: "เดินทางถึงสนามบินฮาร์บินไท่ผิง T2 รับกระเป๋าและขึ้นรถตู้ VIP", noteEn: "Arrive at Harbin Taiping Airport T2, board heated VIP van" },
-      { uid: "d1-2", spotId: 2, time: "19:00", duration: 60, actType: "walk", noteTh: "เดินเล่นรับลมหนาวชมตึกยุโรปไฟสีทองบนถนนหินร้อยปีจงหยาง", noteEn: "Evening winter stroll along illuminated cobblestone Zhongyang Street" },
-      { uid: "d1-3", spotId: 24, time: "20:00", duration: 30, actType: "eat", noteTh: "ชิมไอศกรีมแท่งหม่าเตี๋ยเอ่อร์ท้าความหนาว -15°C และไส้กรอกแดงร้อนๆ", noteEn: "Taste iconic 1906 Madieer vanilla popsicle in -15°C snow" },
-      { uid: "d1-4", spotId: 25, time: "20:30", duration: 75, actType: "eat", noteTh: "มื้อค่ำหม้อไฟทองเหลืองตงเป่ย เนื้อแกะสไลซ์และซุปผักกาดดองคลายหนาว", noteEn: "Warming Dongbei charcoal copper pot lamb hot pot dinner" }
+      {
+        uid: "d1-bkk",
+        spotId: null,
+        customNameTh: "Bangkok - BKK (ท่าอากาศยานสุวรรณภูมิ)",
+        customNameEn: "Bangkok - BKK (Suvarnabhumi Airport)",
+        time: "05:05",
+        timeLabel: "05:05 น.",
+        duration: 255,
+        actType: "transit",
+        isFlightStep: true,
+        flightBadge: "✈️ MU8654 (FM848) · บิน 4 ชม. 15 นาที",
+        noteTh: "ออกเดินทางจาก BKK สู่เซี่ยงไฮ้ (China Eastern MU8654 ดำเนินการโดย Shanghai Airlines FM848 | บริการอาหาร)",
+        noteEn: "Depart Bangkok BKK to Shanghai PVG T1 (MU8654 / FM848 · 4h 15m · Meal included)"
+      },
+      {
+        uid: "d1-pvg",
+        spotId: null,
+        customNameTh: "เซี่ยงไฮ้ - PVG T1 (ท่าอากาศยานซ่างไห่ผู่ตง T1)",
+        customNameEn: "Shanghai - PVG T1 (Transit 3h 35m · Check-Through)",
+        time: "10:20",
+        timeLabel: "10:20 - 13:55 น.",
+        duration: 215,
+        actType: "transit",
+        isFlightStep: true,
+        flightBadge: "🔄 ต่อเครื่อง 3 ชม. 35 นาที · MU330 (FM9063)",
+        noteTh: "ถึงเซี่ยงไฮ้ 10:20 น. (✓ ไม่ต้องรับสัมภาระและโหลดใหม่) · ออกเดินทางต่อ 13:55 น. ด้วยเที่ยวบิน MU330 / FM9063 (บิน 3 ชม. 5 นาที)",
+        noteEn: "Arrive PVG T1 10:20 (Baggage check-through) · Depart 13:55 on MU330 / FM9063 to Harbin (3h 05m)"
+      },
+      {
+        uid: "d1-hrb",
+        spotId: 11,
+        customNameTh: "ฮาร์บิน - HRB T2 (ท่าอากาศยานนานาชาติไท่ผิง T2)",
+        customNameEn: "Harbin - HRB T2 (Taiping Intl Airport Arrival)",
+        time: "17:00",
+        timeLabel: "17:00 น.",
+        duration: 60,
+        actType: "transit",
+        isFlightStep: true,
+        flightBadge: "🛬 ถึงฮาร์บิน 17:00 น. (รวม 10 ชม. 55 นาที)",
+        noteTh: "เดินทางถึงสนามบินฮาร์บินไท่ผิง T2 เวลา 17:00 น. รับสัมภาระ เปลี่ยนชุดกันหนาว และนั่งรถตู้เข้าเมือง",
+        noteEn: "Touch down at Harbin Taiping Airport T2 at 17:00, collect baggage & transfer to downtown hotel"
+      },
+      {
+        uid: "d1-2",
+        spotId: 2,
+        customNameTh: "ถนนคนเดินหินร้อยปีจงหยาง",
+        customNameEn: "Zhongyang Pedestrian Street",
+        time: "19:00",
+        timeLabel: "19:00 - 20:00 น.",
+        duration: 60,
+        actType: "walk",
+        noteTh: "เดินเล่นรับลมหนาวชมตึกยุโรปไฟสีทองบนถนนหินร้อยปีจงหยาง",
+        noteEn: "Evening winter stroll along illuminated cobblestone Zhongyang Street"
+      },
+      {
+        uid: "d1-3",
+        spotId: 24,
+        customNameTh: "ไอศกรีมหม่าเตี๋ยเอ่อร์ (ถนนจงหยาง)",
+        customNameEn: "Madieer Ice Popsicle (1906)",
+        time: "20:00",
+        timeLabel: "20:00 - 20:30 น.",
+        duration: 30,
+        actType: "eat",
+        noteTh: "ชิมไอศกรีมแท่งหม่าเตี๋ยเอ่อร์ท้าความหนาว -15°C และไส้กรอกแดงร้อนๆ",
+        noteEn: "Taste iconic 1906 Madieer vanilla popsicle in -15°C snow"
+      },
+      {
+        uid: "d1-4",
+        spotId: 25,
+        customNameTh: "หม้อไฟทองเหลืองตงเป่ย & เนื้อแกะสไลซ์",
+        customNameEn: "Dongbei Copper Pot Hot Pot",
+        time: "20:30",
+        timeLabel: "20:30 - 21:45 น.",
+        duration: 75,
+        actType: "eat",
+        noteTh: "มื้อค่ำหม้อไฟทองเหลืองตงเป่ย เนื้อแกะสไลซ์และซุปผักกาดดองคลายหนาว",
+        noteEn: "Warming Dongbei charcoal copper pot lamb hot pot dinner"
+      }
     ]
   },
   day2: {
@@ -1779,22 +1854,22 @@ const DEFAULT_HARBIN_TIMELINE = {
     titleTh: "ตลาดเช้า • โบสถ์เซนต์โซเฟีย • อาหารรัสเซีย • สะพานรถไฟ",
     titleEn: "Morning Market • St. Sophia • Russian Lunch • Railway Bridge",
     items: [
-      { uid: "d2-1", spotId: 15, time: "07:30", duration: 60, actType: "eat", noteTh: "เดินตลาดเช้าหงจวน ชมไอควันยามเช้า ชิมซาลาเปาทอดและน้ำเต้าหู้ร้อน", noteEn: "Walk & eat through steaming Hongzhuan Morning Street Food Market" },
-      { uid: "d2-2", spotId: 1, time: "09:30", duration: 90, actType: "visit", noteTh: "ถ่ายรูปมหาวิหารเซนต์โซเฟีย ฝูงนกพิราบสีขาว และจิบกาแฟคาเฟ่วินเทจ", noteEn: "Visit Saint Sophia Cathedral, feed white doves & sip vintage coffee" },
-      { uid: "d2-3", spotId: 22, time: "12:00", duration: 90, actType: "eat", noteTh: "มื้อกลางวันอาหารรัสเซียคลาสสิก ร้านหัวเหมย (ซุปบอร์ชต์ & เนื้ออบโถขนมปัง)", noteEn: "Classic 1925 Russian lunch at Huamei Restaurant (Borsch & beef pot)" },
-      { uid: "d2-4", spotId: 10, time: "14:30", duration: 60, actType: "walk", noteTh: "เดินทอดน่องสวนสตาลินและอนุสาวรีย์ควบคุมอุทกภัยริมแม่น้ำซงฮัว", noteEn: "Scenic riverside walk through Stalin Park & Flood Control Monument" },
-      { uid: "d2-5", spotId: 6, time: "15:30", duration: 75, actType: "walk", noteTh: "เดินข้ามสะพานรถไฟโบราณปินโจว ชมพื้นกระจกและพระอาทิตย์ตกเหนือธารน้ำแข็ง", noteEn: "Walk across 1900 Binzhou Railway Bridge for golden sunset over frozen river" }
+      { uid: "d2-1", spotId: 15, time: "07:30", timeLabel: "07:30 - 08:30 น.", duration: 60, actType: "eat", noteTh: "เดินตลาดเช้าหงจวน ชมไอควันยามเช้า ชิมซาลาเปาทอดและน้ำเต้าหู้ร้อน", noteEn: "Walk & eat through steaming Hongzhuan Morning Street Food Market" },
+      { uid: "d2-2", spotId: 1, time: "09:30", timeLabel: "09:30 - 11:00 น.", duration: 90, actType: "visit", noteTh: "ถ่ายรูปมหาวิหารเซนต์โซเฟีย ฝูงนกพิราบสีขาว และจิบกาแฟคาเฟ่วินเทจ", noteEn: "Visit Saint Sophia Cathedral, feed white doves & sip vintage coffee" },
+      { uid: "d2-3", spotId: 22, time: "12:00", timeLabel: "12:00 - 13:30 น.", duration: 90, actType: "eat", noteTh: "มื้อกลางวันอาหารรัสเซียคลาสสิก ร้านหัวเหมย (ซุปบอร์ชต์ & เนื้ออบโถขนมปัง)", noteEn: "Classic 1925 Russian lunch at Huamei Restaurant (Borsch & beef pot)" },
+      { uid: "d2-4", spotId: 10, time: "14:30", timeLabel: "14:30 - 15:30 น.", duration: 60, actType: "walk", noteTh: "เดินทอดน่องสวนสตาลินและอนุสาวรีย์ควบคุมอุทกภัยริมแม่น้ำซงฮัว", noteEn: "Scenic riverside walk through Stalin Park & Flood Control Monument" },
+      { uid: "d2-5", spotId: 6, time: "15:30", timeLabel: "15:30 - 16:45 น.", duration: 75, actType: "walk", noteTh: "เดินข้ามสะพานรถไฟโบราณปินโจว ชมพื้นกระจกและพระอาทิตย์ตกเหนือธารน้ำแข็ง", noteEn: "Walk across 1900 Binzhou Railway Bridge for golden sunset over frozen river" }
     ]
   },
   day3: {
     labelTh: "Day 3 (6 ธ.ค.)",
     labelEn: "Day 3 (Dec 6)",
-    titleTh: "ปราสาทรัสเซีย คฤหาสน์วอลกา • ถนนกัวโกรี่",
-    titleEn: "Volga Manor Russian Fairytale • Gogol Street",
+    titleTh: "ปราสาทรัสเซีย คฤหาสน์วอลกา • ถนนกัวโกรี่ • หอคอยมังกร",
+    titleEn: "Volga Manor Russian Fairytale • Gogol Street • Dragon Tower",
     items: [
-      { uid: "d3-1", spotId: 3, time: "09:30", duration: 240, actType: "visit", noteTh: "เที่ยวคฤหาสน์รัสเซียวอลกา ชมโบสถ์เซนต์นิโคลัส สไลเดอร์หิมะ และวอดก้าแก้วน้ำแข็ง", noteEn: "Explore Volga Manor Russian castles, snow tubing & ice-glass vodka" },
-      { uid: "d3-2", spotId: 13, time: "15:30", duration: 90, actType: "walk", noteTh: "เดินเล่นถนนกัวโกรี่ ชมโบสถ์เซนต์อเล็กเซเยฟสีแดง และร้านหนังสือยุโรป", noteEn: "Stroll Gogol Street, Saint Alekseyev Church & vintage bookstore" },
-      { uid: "d3-3", spotId: 17, time: "17:30", duration: 75, actType: "visit", noteTh: "ขึ้นหอคอยมังกรหลงถ่า เดินพื้นกระจกลอยฟ้าและชมไฟเมืองฮาร์บิน 360 องศา", noteEn: "Ascend Dragon Tower (Long Ta) glass skywalk for night views" }
+      { uid: "d3-1", spotId: 3, time: "09:30", timeLabel: "09:30 - 13:30 น.", duration: 240, actType: "visit", noteTh: "เที่ยวคฤหาสน์รัสเซียวอลกา ชมโบสถ์เซนต์นิโคลัส สไลเดอร์หิมะ และวอดก้าแก้วน้ำแข็ง", noteEn: "Explore Volga Manor Russian castles, snow tubing & ice-glass vodka" },
+      { uid: "d3-2", spotId: 13, time: "15:30", timeLabel: "15:30 - 17:00 น.", duration: 90, actType: "walk", noteTh: "เดินเล่นถนนกัวโกรี่ ชมโบสถ์เซนต์อเล็กเซเยฟสีแดง และร้านหนังสือยุโรป", noteEn: "Stroll Gogol Street, Saint Alekseyev Church & vintage bookstore" },
+      { uid: "d3-3", spotId: 17, time: "17:30", timeLabel: "17:30 - 18:45 น.", duration: 75, actType: "visit", noteTh: "ขึ้นหอคอยมังกรหลงถ่า เดินพื้นกระจกลอยฟ้าและชมไฟเมืองฮาร์บิน 360 องศา", noteEn: "Ascend Dragon Tower (Long Ta) glass skywalk for night views" }
     ]
   },
   day4: {
@@ -1803,11 +1878,11 @@ const DEFAULT_HARBIN_TIMELINE = {
     titleTh: "สวนเสือไซบีเรีย • ปลากระทะเหล็ก • เกาะพระอาทิตย์ & แม่น้ำน้ำแข็ง",
     titleEn: "Siberian Tigers • Iron Pot Fish • Sun Island & Ice River",
     items: [
-      { uid: "d4-1", spotId: 4, time: "09:30", duration: 120, actType: "visit", noteTh: "นั่งรถบัสกรงนิรภัยชมและป้อนอาหารพญาเสือไซบีเรียกลางทุ่งหิมะ", noteEn: "Ride safari bus through snowy enclosures at Siberian Tiger Park" },
-      { uid: "d4-2", spotId: 26, time: "12:00", duration: 80, actType: "eat", noteTh: "มื้อเที่ยงปลาแม่น้ำซงฮัวตุ๋นหม้อไฟกระทะเหล็ก (เที่ยกัวตุน) แปะขนมปังข้าวโพด", noteEn: "Hearty Songhua River fish braised in giant iron cauldron (Tieguo Dun)" },
-      { uid: "d4-3", spotId: 5, time: "13:45", duration: 105, actType: "visit", noteTh: "ชมงานประติมากรรมแกะสลักหิมะขาวบริสุทธิ์ขนาดยักษ์ ณ สวนเกาะพระอาทิตย์", noteEn: "Admire colossal snow sculptures at Sun Island Scenic Area" },
-      { uid: "d4-4", spotId: 14, time: "15:45", duration: 45, actType: "transit", noteTh: "นั่งกระเช้าลอยฟ้าข้ามแม่น้ำซงฮัวชมวิวมุมสูงธารน้ำแข็ง", noteEn: "Ride Songhua River Sightseeing Ropeway across the frozen river" },
-      { uid: "d4-5", spotId: 7, time: "16:30", duration: 75, actType: "walk", noteTh: "ลงเดินบนแม่น้ำซงฮัวที่เป็นน้ำแข็ง เล่นแคร่เลื่อนหิมะ และชม Ice and Snow World", noteEn: "Walk on frozen Songhua River Ice Carnival & play snow sleds" }
+      { uid: "d4-1", spotId: 4, time: "09:30", timeLabel: "09:30 - 11:30 น.", duration: 120, actType: "visit", noteTh: "นั่งรถบัสกรงนิรภัยชมและป้อนอาหารพญาเสือไซบีเรียกลางทุ่งหิมะ", noteEn: "Ride safari bus through snowy enclosures at Siberian Tiger Park" },
+      { uid: "d4-2", spotId: 26, time: "12:00", timeLabel: "12:00 - 13:20 น.", duration: 80, actType: "eat", noteTh: "มื้อเที่ยงปลาแม่น้ำซงฮัวตุ๋นหม้อไฟกระทะเหล็ก (เที่ยกัวตุน) แปะขนมปังข้าวโพด", noteEn: "Hearty Songhua River fish braised in giant iron cauldron (Tieguo Dun)" },
+      { uid: "d4-3", spotId: 5, time: "13:45", timeLabel: "13:45 - 15:30 น.", duration: 105, actType: "visit", noteTh: "ชมงานประติมากรรมแกะสลักหิมะขาวบริสุทธิ์ขนาดยักษ์ ณ สวนเกาะพระอาทิตย์", noteEn: "Admire colossal snow sculptures at Sun Island Scenic Area" },
+      { uid: "d4-4", spotId: 14, time: "15:45", timeLabel: "15:45 - 16:30 น.", duration: 45, actType: "transit", noteTh: "นั่งกระเช้าลอยฟ้าข้ามแม่น้ำซงฮัวชมวิวมุมสูงธารน้ำแข็ง", noteEn: "Ride Songhua River Sightseeing Ropeway across the frozen river" },
+      { uid: "d4-5", spotId: 7, time: "16:30", timeLabel: "16:30 - 17:45 น.", duration: 75, actType: "walk", noteTh: "ลงเดินบนแม่น้ำซงฮัวที่เป็นน้ำแข็ง เล่นแคร่เลื่อนหิมะ และชม Ice and Snow World", noteEn: "Walk on frozen Songhua River Ice Carnival & play snow sleds" }
     ]
   },
   day5: {
@@ -1816,22 +1891,62 @@ const DEFAULT_HARBIN_TIMELINE = {
     titleTh: "ย่านบาโรกจีน • กัวเปาโร่ว 100 ปี • โรงอุปรากร & ตุ๊กตาหิมะยักษ์",
     titleEn: "Chinese Baroque • 100-Yr Guobaorou • Opera House & Snowman",
     items: [
-      { uid: "d5-1", spotId: 8, time: "09:30", duration: 120, actType: "walk", noteTh: "เดินชมและถ่ายภาพตึกโบราณย่านวัฒนธรรมบาโรกจีน (เหล่าเต้าว่าย)", noteEn: "Architectural walk through Chinese Baroque Historic Block courtyards" },
-      { uid: "d5-2", spotId: 23, time: "11:45", duration: 75, actType: "eat", noteTh: "ทานมื้อเที่ยงร้านเหล่าฉูเจีย ชิมหมูทอดเปรี้ยวหวาน 'กัวเปาโร่ว' ต้นกำเนิด 100 ปี", noteEn: "Lunch at Laochushi, birthplace of crispy sweet & sour Guobaorou" },
-      { uid: "d5-3", spotId: 9, time: "14:00", duration: 90, actType: "visit", noteTh: "ชมสถาปัตยกรรมระดับโลก โรงอุปรากรฮาร์บิน เดินขึ้นดาดฟ้าชมวิวทุ่งหิมะ", noteEn: "Visit futuristic Harbin Grand Opera House rooftop snow walk" },
-      { uid: "d5-4", spotId: 19, time: "16:00", duration: 60, actType: "walk", noteTh: "แวะถ่ายรูปคู่กับตุ๊กตาหิมะยักษ์สูง 18 เมตร ที่สวนดนตรีริมแม่น้ำซงฮัว", noteEn: "Take photos with the famous 18m Giant Snowman at Harbin Music Park" }
+      { uid: "d5-1", spotId: 8, time: "09:30", timeLabel: "09:30 - 11:30 น.", duration: 120, actType: "walk", noteTh: "เดินชมและถ่ายภาพตึกโบราณย่านวัฒนธรรมบาโรกจีน (เหล่าเต้าว่าย)", noteEn: "Architectural walk through Chinese Baroque Historic Block courtyards" },
+      { uid: "d5-2", spotId: 23, time: "11:45", timeLabel: "11:45 - 13:00 น.", duration: 75, actType: "eat", noteTh: "ทานมื้อเที่ยงร้านเหล่าฉูเจีย ชิมหมูทอดเปรี้ยวหวาน 'กัวเปาโร่ว' ต้นกำเนิด 100 ปี", noteEn: "Lunch at Laochushi, birthplace of crispy sweet & sour Guobaorou" },
+      { uid: "d5-3", spotId: 9, time: "14:00", timeLabel: "14:00 - 15:30 น.", duration: 90, actType: "visit", noteTh: "ชมสถาปัตยกรรมระดับโลก โรงอุปรากรฮาร์บิน เดินขึ้นดาดฟ้าชมวิวทุ่งหิมะ", noteEn: "Visit futuristic Harbin Grand Opera House rooftop snow walk" },
+      { uid: "d5-4", spotId: 19, time: "16:00", timeLabel: "16:00 - 17:00 น.", duration: 60, actType: "walk", noteTh: "แวะถ่ายรูปคู่กับตุ๊กตาหิมะยักษ์สูง 18 เมตร ที่สวนดนตรีริมแม่น้ำซงฮัว", noteEn: "Take photos with the famous 18m Giant Snowman at Harbin Music Park" }
     ]
   },
   day6: {
     labelTh: "Day 6 (9 ธ.ค.)",
     labelEn: "Day 6 (Dec 9)",
-    titleTh: "พิพิธภัณฑ์ • ช้อปของฝากขนมปังรัสเซีย • บินกลับกรุงเทพฯ",
-    titleEn: "Museum • Russian Bakery Souvenirs • Fly Home",
+    titleTh: "ของฝากฮาร์บิน • ฮาร์บิน (HRB) ➔ เซี่ยงไฮ้ (PVG) ➔ Bangkok (BKK)",
+    titleEn: "Souvenirs • Harbin (HRB) ➔ Shanghai (PVG) ➔ Bangkok (BKK)",
     items: [
-      { uid: "d6-1", spotId: 16, time: "09:15", duration: 60, actType: "visit", noteTh: "ชมโครงกระดูกช้างแมมมอธไซบีเรีย ณ พิพิธภัณฑ์มณฑลเฮยหลงเจียง", noteEn: "See woolly mammoth fossils at Heilongjiang Provincial Museum" },
-      { uid: "d6-2", spotId: 27, time: "10:30", duration: 75, actType: "eat", noteTh: "แวะห้างชิวหลิน 1900 ซื้อขนมปังรัสเซียต้าเลี่ยปา ไส้กรอกแดง และช็อกโกแลต", noteEn: "Shop for giant Dalieba bread & Red Sausages at Churin 1900 Bakery" },
-      { uid: "d6-3", spotId: 0, time: "11:50", duration: 30, actType: "visit", noteTh: "แวะถ่ายรูปด้านหน้าสถานีรถไฟฮาร์บินสไตล์อาร์ตนูโวยุโรปก่อนไปสนามบิน", noteEn: "Photo stop at European Art Nouveau Harbin Railway Station" },
-      { uid: "d6-4", spotId: 11, time: "13:00", duration: 130, actType: "transit", noteTh: "เดินทางถึงสนามบินฮาร์บินไท่ผิง T2 เช็คอินไฟลท์ 15:10 น. กลับกรุงเทพฯ", noteEn: "Depart from Harbin Taiping Airport T2 at 15:10 for Bangkok" }
+      { uid: "d6-1", spotId: 16, time: "09:15", timeLabel: "09:15 - 10:15 น.", duration: 60, actType: "visit", noteTh: "ชมโครงกระดูกช้างแมมมอธไซบีเรีย ณ พิพิธภัณฑ์มณฑลเฮยหลงเจียง", noteEn: "See woolly mammoth fossils at Heilongjiang Provincial Museum" },
+      { uid: "d6-2", spotId: 27, time: "10:30", timeLabel: "10:30 - 11:45 น.", duration: 75, actType: "eat", noteTh: "แวะห้างชิวหลิน 1900 ซื้อขนมปังรัสเซียต้าเลี่ยปา ไส้กรอกแดง และช็อกโกแลต", noteEn: "Shop for giant Dalieba bread & Red Sausages at Churin 1900 Bakery" },
+      {
+        uid: "d6-hrb",
+        spotId: 11,
+        customNameTh: "ฮาร์บิน - HRB T2 (ท่าอากาศยานนานาชาติไท่ผิง T2)",
+        customNameEn: "Harbin - HRB T2 (Departure 15:10)",
+        time: "15:10",
+        timeLabel: "15:10 น.",
+        duration: 195,
+        actType: "transit",
+        isFlightStep: true,
+        flightBadge: "🛫 ขากลับ 15:10 น. (HRB T2 ➔ PVG)",
+        noteTh: "ถึงสนามบิน 12:45 น. เช็คอินโหลดกระเป๋าตรงถึงไทย · ออกเดินทางจากฮาร์บินเวลา 15:10 น.",
+        noteEn: "Depart Harbin Taiping Airport T2 at 15:10 (Baggage checked through to BKK)"
+      },
+      {
+        uid: "d6-pvg",
+        spotId: null,
+        customNameTh: "เซี่ยงไฮ้ - PVG (แวะเปลี่ยนเครื่องขากลับ)",
+        customNameEn: "Shanghai - PVG (Transit · Check-Through)",
+        time: "18:30",
+        timeLabel: "ต่อเครื่องเซี่ยงไฮ้",
+        duration: 150,
+        actType: "transit",
+        isFlightStep: true,
+        flightBadge: "🔄 เปลี่ยนเครื่องเซี่ยงไฮ้ (ไม่ต้องโหลดกระเป๋าใหม่)",
+        noteTh: "เปลี่ยนเครื่องที่เซี่ยงไฮ้: ✓ ไม่ต้องรับสัมภาระและโหลดใหม่ เดินไปรอขึ้นเครื่องกลับกรุงเทพฯ ได้เลย",
+        noteEn: "Transit in Shanghai PVG: No need to re-claim or re-check baggage"
+      },
+      {
+        uid: "d6-bkk",
+        spotId: null,
+        customNameTh: "Bangkok - BKK (ท่าอากาศยานสุวรรณภูมิ)",
+        customNameEn: "Bangkok - BKK (Arrive 00:55 +1)",
+        time: "00:55",
+        timeLabel: "00:55 (+1) น.",
+        duration: 30,
+        actType: "transit",
+        isFlightStep: true,
+        flightBadge: "🛬 ถึงสุวรรณภูมิ 00:55 (+1) น.",
+        noteTh: "เดินทางถึงท่าอากาศยานสุวรรณภูมิ (BKK) เวลา 00:55 (+1) น. โดยสวัสดิภาพ",
+        noteEn: "Arrive safely at Bangkok Suvarnabhumi Airport (BKK) at 00:55 (+1)"
+      }
     ]
   }
 };

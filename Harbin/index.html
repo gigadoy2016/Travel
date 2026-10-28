@@ -40,14 +40,17 @@
 
     <!-- Header Quick Links & Controls -->
     <div class="header-actions">
+      <button id="btnViewFlightTicket" class="btn-action flight-btn" title="ดูรูปตารางบินจริงจากโฟลเดอร์ 1 (1/S__27820034.jpg)">
+        <span>✈️</span> ตารางบิน (Flight Ticket)
+      </button>
       <button id="btnAddCustomModal" class="btn-action primary" title="Add Custom Walking / Dining / Sightseeing Activity">
         <span>➕</span> เพิ่มกิจกรรม / ปักหมุดใหม่
       </button>
       <button id="btnAutoTime" class="btn-action" title="Recalculate sequential times automatically">
         <span>⏱️</span> จัดเวลาอัตโนมัติ
       </button>
-      <button id="btnResetDay" class="btn-action" title="Reset current day timeline to default plan">
-        <span>🔄</span> รีเซ็ตวันนี้
+      <button id="btnResetDay" class="btn-action" title="Reset timeline to default plan with flights">
+        <span>🔄</span> รีเซ็ตแผนเริ่มต้น
       </button>
       <a href="Plan_05_Harbin.md" target="_blank" class="btn-action link" title="Open Full 6-Day Plan Markdown">
         <span>📄</span> แผน 6 วัน
@@ -87,8 +90,9 @@
         <p class="col-subtitle">ลากสถานที่จากส่วนที่ 2 มาแทรกคิวไหนก็ได้ หรือสลับลำดับคิวแล้วดูเส้นทางบนแผนที่</p>
 
         <!-- Day Selector Tabs -->
-        <div class="day-tabs" id="dayTabsContainer" role="tablist">
-          <button class="day-tab active" data-day="day1">Day 1<span>4 Dec</span></button>
+        <div class="day-tabs seven-tabs" id="dayTabsContainer" role="tablist">
+          <button class="day-tab active" data-day="all">ทั้งหมด<span>Day 1-6</span></button>
+          <button class="day-tab" data-day="day1">Day 1<span>4 Dec</span></button>
           <button class="day-tab" data-day="day2">Day 2<span>5 Dec</span></button>
           <button class="day-tab" data-day="day3">Day 3<span>6 Dec</span></button>
           <button class="day-tab" data-day="day4">Day 4<span>7 Dec</span></button>
@@ -96,14 +100,21 @@
           <button class="day-tab" data-day="day6">Day 6<span>9 Dec</span></button>
         </div>
 
-        <!-- Day Title & Activity Type Legend -->
+        <!-- Day Title, View Mode Switcher & Flight Quick Banner -->
         <div class="day-info-bar">
-          <div class="day-title-text" id="currentDayTitle">Day 1: Arrival in Harbin • Zhongyang Walk • Popsicle &amp; Hot Pot</div>
+          <div class="day-info-top-row">
+            <div class="day-title-text" id="currentDayTitle">Day 1: Bangkok - BKK ➔ เซี่ยงไฮ้ ➔ ฮาร์บิน</div>
+            <div class="tl-mode-switch">
+              <button class="tl-mode-btn active" id="btnModeTable" title="แสดงแบบตารางขั้นตอน (Day | สถานที่ | เวลา)">📊 ตาราง</button>
+              <button class="tl-mode-btn" id="btnModeCard" title="แสดงแบบการ์ดละเอียด">🃏 การ์ด</button>
+            </div>
+          </div>
           <div class="activity-type-legend">
-            <span class="act-dot walk">🚶 เดิน (Walk)</span>
-            <span class="act-dot eat">🍲 กิน (Eat)</span>
-            <span class="act-dot visit">📸 เที่ยว (Visit)</span>
-            <span class="act-dot transit">🚕 เดินทาง (Transit)</span>
+            <span class="act-dot walk">🚶 เดิน</span>
+            <span class="act-dot eat">🍲 กิน</span>
+            <span class="act-dot visit">📸 เที่ยว</span>
+            <span class="act-dot transit">✈️ เดินทาง</span>
+            <button type="button" class="btn-inline-flight" id="btnInlineFlight">🎫 ดูรูปตั๋วบิน (Folder 1)</button>
           </div>
         </div>
       </div>
@@ -229,6 +240,11 @@
           <button id="btnLocateMe" class="map-tool-btn" title="Show My Position / Center on Harbin Downtown">
             <span>📡</span> Locate
           </button>
+
+          <!-- Fullscreen Map Toggle (ขยายแผนที่เต็มจอ) -->
+          <button id="btnFullscreenMap" class="map-tool-btn fullscreen-btn" title="ขยายแผนที่เต็มจอ / ย่อกลับ (Toggle Fullscreen Map)">
+            <span>⛶</span> เต็มจอ (Fullscreen)
+          </button>
         </div>
       </div>
 
@@ -241,6 +257,11 @@
       <!-- Main Map Canvas -->
       <div class="map-canvas-wrapper">
         <div id="map" aria-label="AMAP English Map of Harbin"></div>
+
+        <!-- Floating Fullscreen Quick Toggle Button on Map Canvas -->
+        <button id="btnFloatingFullscreen" class="map-floating-fullscreen-btn" title="ขยายแผนที่เต็มจอ / ย่อกลับ (Toggle Fullscreen Map)">
+          <span>⛶</span> ขยายเต็มจอ
+        </button>
 
         <!-- Floating Map Legend & Live Coordinates (English) -->
         <div class="map-floating-legend" id="mapLegend">
@@ -407,6 +428,74 @@
         <a id="detailModalDocLink" href="#" target="_blank" class="btn-modal secondary">📖 อ่านไฟล์คู่มือฉบับเต็ม (.MD)</a>
         <button type="button" id="btnDetailFlyTo" class="btn-modal secondary">📍 ดูหมุดบนแผนที่ (Focus Pin)</button>
         <button type="button" id="btnDetailAddTimeline" class="btn-modal submit">➕ แทรกลง Timeline วันนี้</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL 3: CONFIRMED FLIGHT SCHEDULE IMAGE FROM FOLDER 1 (1/S__27820034.jpg)
+       ========================================================================= -->
+  <div class="modal-backdrop" id="flightModalBackdrop" hidden>
+    <div class="modal-card detail-modal-card" role="dialog" aria-labelledby="flightModalTitle">
+      <div class="modal-header">
+        <div>
+          <span class="col-part-pill">✈️ CONFIRMED FLIGHT TICKET · FOLDER 1</span>
+          <h3 id="flightModalTitle">ตารางบินจริง (หมายเลขการจอง: 1622932337344364)</h3>
+        </div>
+        <button class="modal-close" id="btnCloseFlightModal">✕</button>
+      </div>
+      <div class="modal-body" style="align-items:center; background:#f8fafc;">
+        <div class="flight-summary-mini-table">
+          <table>
+            <thead>
+              <tr>
+                <th>วัน</th>
+                <th>เส้นทาง / สนามบิน</th>
+                <th>เวลาท้องถิ่น</th>
+                <th>เที่ยวบิน &amp; หมายเหตุ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td rowspan="3"><strong>Day 1</strong><br>(4 ธ.ค.)</td>
+                <td><strong>Bangkok - BKK</strong> (สุวรรณภูมิ)</td>
+                <td><strong>05:05 น.</strong></td>
+                <td>MU8654 / FM848 (บิน 4 ชม. 15 นาที · บริการอาหาร)</td>
+              </tr>
+              <tr>
+                <td><strong>เซี่ยงไฮ้ - PVG T1</strong> (ซ่างไห่ผู่ตง T1)</td>
+                <td><strong>10:20 - 13:55 น.</strong></td>
+                <td>เปลี่ยนเครื่อง 3 ชม. 35 นาที (✓ ไม่ต้องรับกระเป๋าโหลดใหม่) ➔ MU330 / FM9063</td>
+              </tr>
+              <tr>
+                <td><strong>ฮาร์บิน - HRB T2</strong> (ไท่ผิง T2)</td>
+                <td><strong>17:00 น.</strong></td>
+                <td>เดินทางถึงฮาร์บิน T2 (รวมเวลาเดินทาง 10 ชม. 55 นาที)</td>
+              </tr>
+              <tr>
+                <td rowspan="3"><strong>Day 6</strong><br>(9 ธ.ค.)</td>
+                <td><strong>ฮาร์บิน - HRB T2</strong></td>
+                <td><strong>15:10 น.</strong></td>
+                <td>ออกเดินทางขากลับ (เช็คทรูสัมภาระถึงไทย)</td>
+              </tr>
+              <tr>
+                <td><strong>เซี่ยงไฮ้ - PVG</strong></td>
+                <td><strong>แวะเปลี่ยนเครื่อง</strong></td>
+                <td>✓ ไม่ต้องรับสัมภาระและโหลดใหม่</td>
+              </tr>
+              <tr>
+                <td><strong>Bangkok - BKK</strong> (สุวรรณภูมิ)</td>
+                <td><strong>00:55 (+1) น.</strong></td>
+                <td>เดินทางถึงกรุงเทพฯ โดยสวัสดิภาพ</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <img src="1/S__27820034.jpg" alt="Confirmed Flight Schedule 1/S__27820034.jpg" style="max-width:100%; border-radius:12px; border:1px solid #cbd5e1; box-shadow:0 4px 16px rgba(0,0,0,0.12);">
+      </div>
+      <div class="modal-footer">
+        <a href="1/S__27820034.jpg" target="_blank" class="btn-modal secondary">🔍 เปิดดูรูปขนาดเต็ม (1/S__27820034.jpg)</a>
+        <button type="button" id="btnCloseFlightModalBottom" class="btn-modal submit">ปิดหน้าต่าง</button>
       </div>
     </div>
   </div>
