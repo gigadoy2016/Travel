@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Harbin (哈尔滨) Smart Trip Planner & AMAP Interactive Map</title>
+  <meta name="description" content="4-Column Responsive Trip Planner for Harbin (哈尔滨): Activity Timeline (Walk/Eat/Visit), Drag-and-Drop Attraction Chooses, and AMAP English Interactive Map with Pinning & Routing.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Leaflet Map CSS (Rendering AMAP AutoNavi GCJ-02 Tiles & English Vector Overlays) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+
+  <!-- AMAP Web Service / Tile Integration Reference -->
+  <link rel="dns-prefetch" href="https://wprd01.is.autonavi.com">
+  <link rel="dns-prefetch" href="https://wprd02.is.autonavi.com">
+  <link rel="dns-prefetch" href="https://webapi.amap.com">
+
+  <!-- Application Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Top Application Header -->
+  <header class="app-header">
+    <div class="header-brand">
+      <div class="brand-logo" id="btnResetHarbinView" title="Reset Map to Harbin (哈尔滨) Center">❄️</div>
+      <div class="brand-titles">
+        <div class="brand-title-row">
+          <h1>Harbin (哈尔滨) Trip Planner &amp; AMAP</h1>
+          <span class="header-badge">4-Vertical Columns</span>
+          <span class="header-badge weather">❄️ -15°C ~ -22°C</span>
+        </div>
+        <p>Col 1: Timeline (เดิน/กิน/เที่ยว) · Col 2: Drag &amp; Drop Chooses · Col 3 &amp; 4: AMAP Harbin Map (English)</p>
+      </div>
+    </div>
+
+    <!-- Header Quick Links & Controls -->
+    <div class="header-actions">
+      <button id="btnAddCustomModal" class="btn-action primary" title="Add Custom Walking / Dining / Sightseeing Activity">
+        <span>➕</span> เพิ่มกิจกรรม / ปักหมุดใหม่
+      </button>
+      <button id="btnAutoTime" class="btn-action" title="Recalculate sequential times automatically">
+        <span>⏱️</span> จัดเวลาอัตโนมัติ
+      </button>
+      <button id="btnResetDay" class="btn-action" title="Reset current day timeline to default plan">
+        <span>🔄</span> รีเซ็ตวันนี้
+      </button>
+      <a href="Plan_05_Harbin.md" target="_blank" class="btn-action link" title="Open Full 6-Day Plan Markdown">
+        <span>📄</span> แผน 6 วัน
+      </a>
+      <a href="README.md" target="_blank" class="btn-action link" title="Open Harbin 20+ Spots Guide">
+        <span>📖</span> คู่มือฮาร์บิน
+      </a>
+    </div>
+  </header>
+
+  <!-- Mobile / Tablet Responsive Section Switcher Bar (Visible on smaller screens) -->
+  <nav class="mobile-view-tabs" id="mobileViewTabs" aria-label="Responsive View Switcher">
+    <button class="mobile-tab active" data-view="all">📱 แสดงทั้งหมด (All 4 Parts)</button>
+    <button class="mobile-tab" data-view="col1">🕒 1. Timeline (<span id="mobTimelineCount">4</span>)</button>
+    <button class="mobile-tab" data-view="col2">📍 2. Chooses (28)</button>
+    <button class="mobile-tab" data-view="col34">🗺️ 3-4. AMAP Map (EN)</button>
+  </nav>
+
+  <!-- =========================================================================
+       4-VERTICAL-SECTION MAIN WORKSPACE (แบ่งหน้าจอ 4 ส่วนในแนวตั้ง)
+       - Col 1 (25%): Activity Timeline (การเดิน, การกิน, การเที่ยว เรียงตามเวลา)
+       - Col 2 (25%): Chooses (ตัวเลือกสถานที่ท่องเที่ยว ลากแทรกคิวไหนก็ได้)
+       - Col 3 & Col 4 (50% / 2 Columns): AMAP Harbin Map in English (ปักหมุด + เส้นทาง)
+       ========================================================================= -->
+  <main class="four-col-workspace" id="mainWorkspace">
+
+    <!-- =======================================================================
+         SECTION 1 (COLUMN 1): ACTIVITY TIMELINE (เรียงลำดับกิจกรรม เดิน/กิน/เที่ยว)
+         ======================================================================= -->
+    <section class="vertical-col col-1-timeline" id="sectionTimeline" aria-label="Section 1: Activity Timeline">
+      <div class="col-header">
+        <div class="col-header-top">
+          <span class="col-part-pill">ส่วนที่ 1 · TIMELINE</span>
+          <span class="col-stat-badge" id="timelineSummaryBadge">4 คิว · 5.5 ชม.</span>
+        </div>
+        <h2>🕒 ลำดับกิจกรรม (เดิน · กิน · เที่ยว)</h2>
+        <p class="col-subtitle">ลากสถานที่จากส่วนที่ 2 มาแทรกคิวไหนก็ได้ หรือสลับลำดับคิวแล้วดูเส้นทางบนแผนที่</p>
+
+        <!-- Day Selector Tabs -->
+        <div class="day-tabs" id="dayTabsContainer" role="tablist">
+          <button class="day-tab active" data-day="day1">Day 1<span>4 Dec</span></button>
+          <button class="day-tab" data-day="day2">Day 2<span>5 Dec</span></button>
+          <button class="day-tab" data-day="day3">Day 3<span>6 Dec</span></button>
+          <button class="day-tab" data-day="day4">Day 4<span>7 Dec</span></button>
+          <button class="day-tab" data-day="day5">Day 5<span>8 Dec</span></button>
+          <button class="day-tab" data-day="day6">Day 6<span>9 Dec</span></button>
+        </div>
+
+        <!-- Day Title & Activity Type Legend -->
+        <div class="day-info-bar">
+          <div class="day-title-text" id="currentDayTitle">Day 1: Arrival in Harbin • Zhongyang Walk • Popsicle &amp; Hot Pot</div>
+          <div class="activity-type-legend">
+            <span class="act-dot walk">🚶 เดิน (Walk)</span>
+            <span class="act-dot eat">🍲 กิน (Eat)</span>
+            <span class="act-dot visit">📸 เที่ยว (Visit)</span>
+            <span class="act-dot transit">🚕 เดินทาง (Transit)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scrollable Timeline Queue Container (Supports Drag & Drop Insertion at ANY index) -->
+      <div class="col-body timeline-scroll-area" id="timelineListContainer">
+        <!-- Populated dynamically by app.js with Drop Zones between every item -->
+      </div>
+
+      <!-- Timeline Footer Actions -->
+      <div class="col-footer">
+        <button id="btnQuickAddWalk" class="btn-footer-quick walk" title="Insert a Walking activity">
+          🚶 +แทรกการเดิน
+        </button>
+        <button id="btnQuickAddEat" class="btn-footer-quick eat" title="Insert a Dining/Food activity">
+          🍲 +แทรกมื้ออาหาร
+        </button>
+        <button id="btnClearTimeline" class="btn-footer-quick danger" title="Clear all items in this day">
+          🗑️ ล้างคิว
+        </button>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         SECTION 2 (COLUMN 2): CHOOSES (ตัวเลือกสถานที่ท่องเที่ยว & ของกิน ลากใส่ส่วนที่ 1)
+         ======================================================================= -->
+    <section class="vertical-col col-2-chooses" id="sectionChooses" aria-label="Section 2: Attraction Choices">
+      <div class="col-header">
+        <div class="col-header-top">
+          <span class="col-part-pill part-2">ส่วนที่ 2 · CHOOSES</span>
+          <span class="col-stat-badge" id="choosesCountBadge">28 สถานที่</span>
+        </div>
+        <h2>📍 ตัวเลือกสถานที่ &amp; ร้านเด็ดฮาร์บิน</h2>
+        <p class="col-subtitle">หยิบจับ (Drag &amp; Drop) โยนใส่ส่วนที่ 1 หรือกดปุ่ม <strong>+แทรกคิว</strong> เพื่อแทรกตำแหน่งใดก็ได้</p>
+
+        <!-- Search Box inside Column 2 -->
+        <div class="chooses-search-row">
+          <div class="search-input-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="choosesSearchInput" placeholder="ค้นหาสถานที่, ของกิน, English, 中文..." autocomplete="off">
+            <button id="btnClearChoosesSearch" class="btn-clear-input" title="Clear search">✕</button>
+          </div>
+          <!-- Target Queue Position Selector for 1-Click Insertion -->
+          <div class="insert-pos-selector" title="เลือกตำแหน่งคิวเมื่อกดปุ่ม +แทรกคิว">
+            <label for="selectInsertIndex">แทรกที่:</label>
+            <select id="selectInsertIndex">
+              <option value="end">ท้ายคิว (End)</option>
+              <option value="0">คิวแรก (#1)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Category Filter Pills -->
+        <div class="chooses-filter-bar" id="choosesFilterBar">
+          <button class="filter-chip active" data-cat="all">🌟 ทั้งหมด (28)</button>
+          <button class="filter-chip" data-cat="food_dining">🍲 การกิน/ร้านเด็ด (6)</button>
+          <button class="filter-chip" data-cat="walk_street">🚶 การเดิน/ย่านเก่า (5)</button>
+          <button class="filter-chip" data-cat="russian_heritage">🏰 โบสถ์/รัสเซีย (3)</button>
+          <button class="filter-chip" data-cat="ice_snow">❄️ หิมะ &amp; น้ำแข็ง (5)</button>
+          <button class="filter-chip" data-cat="culture_wildlife">🐅 เสือ/พิพิธภัณฑ์/วิว (7)</button>
+          <button class="filter-chip" data-cat="transit_hub">🚅 สนามบิน/สถานี (2)</button>
+        </div>
+      </div>
+
+      <!-- Scrollable Attraction Cards List (Draggable items) -->
+      <div class="col-body chooses-scroll-area" id="choosesListContainer">
+        <!-- Populated dynamically by app.js -->
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         SECTIONS 3 & 4 (COLUMNS 3 & 4): AMAP HARBIN INTERACTIVE MAP (ENGLISH)
+         ======================================================================= -->
+    <section class="vertical-col col-3-4-map" id="sectionMap" aria-label="Sections 3 and 4: AMAP Harbin Interactive Map in English">
+      <!-- Visual 2-Column Split Indicator Header for Sections 3 & 4 -->
+      <div class="map-top-bar">
+        <div class="map-section-headers">
+          <div class="map-part-tag">
+            <span class="col-part-pill part-3">ส่วนที่ 3 · AMAP PINS &amp; ATTRACTIONS</span>
+            <span class="col-part-pill part-4">ส่วนที่ 4 · ROUTE &amp; NAVIGATION (EN)</span>
+          </div>
+          <div class="map-title-row">
+            <h2>🗺️ Harbin (哈尔滨) AMAP Interactive Map <span class="en-tag">ENGLISH EDITION</span></h2>
+          </div>
+        </div>
+
+        <!-- Map Interactive Controls (All in English for Map Usability) -->
+        <div class="map-toolbar">
+          <!-- Pin Mode Toggle (ปักหมุดบนแผนที่ได้) -->
+          <button id="btnPinMode" class="map-tool-btn pin-mode-btn" title="Click anywhere on the map to drop a new custom pin in Harbin">
+            <span>📌</span> Pin Mode: OFF
+          </button>
+
+          <!-- Toggle Route Line -->
+          <button id="btnToggleRoute" class="map-tool-btn active" title="Show/Hide Timeline Route Line & Directions">
+            <span>🧭</span> Route Path: ON
+          </button>
+
+          <!-- Toggle All Pins vs Timeline Pins -->
+          <button id="btnToggleAllPins" class="map-tool-btn active" title="Show All 28 Harbin Pins or Timeline Pins Only">
+            <span>📍</span> All Pins (28)
+          </button>
+
+          <!-- Toggle English Labels on Map -->
+          <button id="btnToggleEnLabels" class="map-tool-btn active" title="Show Permanent English Labels on Map Markers">
+            <span>🔤</span> EN Labels
+          </button>
+
+          <!-- Map Tile Layer Selector (AMAP English / Satellite / Street) -->
+          <select id="selectMapLayer" class="map-layer-select" title="Select AMAP / English Map Tile Style">
+            <option value="amap_en_hybrid">🗺️ AMAP Road + English Labels (Default)</option>
+            <option value="carto_en">🌐 English Clean Map (Latin Script)</option>
+            <option value="amap_sat_en">🛰️ AMAP Satellite + English Pins</option>
+            <option value="amap_bilingual">🇨🇳 AMAP Bilingual (EN / 中文)</option>
+          </select>
+
+          <!-- Fit Route Bounds -->
+          <button id="btnFitRoute" class="map-tool-btn" title="Zoom to fit current Timeline route">
+            <span>🎯</span> Fit Route
+          </button>
+
+          <!-- My Location / Center Harbin -->
+          <button id="btnLocateMe" class="map-tool-btn" title="Show My Position / Center on Harbin Downtown">
+            <span>📡</span> Locate
+          </button>
+        </div>
+      </div>
+
+      <!-- Pin Mode Active Banner -->
+      <div class="pin-mode-banner" id="pinModeBanner" hidden>
+        <span>📌 <strong>PIN MODE ACTIVE:</strong> Click anywhere on the Harbin (哈尔滨) map to drop a custom pin and insert it into your Timeline or Chooses!</span>
+        <button id="btnCancelPinMode" class="btn-cancel-pin">Cancel (ESC)</button>
+      </div>
+
+      <!-- Main Map Canvas -->
+      <div class="map-canvas-wrapper">
+        <div id="map" aria-label="AMAP English Map of Harbin"></div>
+
+        <!-- Floating Map Legend & Live Coordinates (English) -->
+        <div class="map-floating-legend" id="mapLegend">
+          <div class="legend-title">HARBIN (哈尔滨) AMAP LEGEND</div>
+          <div class="legend-items">
+            <span class="legend-item"><i class="dot active-stop">1</i> Active Timeline Stop</span>
+            <span class="legend-item"><i class="dot other-spot">•</i> Harbin Attraction Pin</span>
+            <span class="legend-item"><i class="dot custom-pin">★</i> User Pinned Location</span>
+            <span class="legend-item"><i class="line-sample"></i> Timeline Route &amp; Direction</span>
+          </div>
+          <div class="legend-coords" id="mapLiveCoords">AMAP GCJ-02: 45.7725° N, 126.6250° E</div>
+        </div>
+      </div>
+
+      <!-- Bottom English Route Sequence & Distance Bar (ส่วนแสดงเส้นทางและตำแหน่งที่ตั้ง) -->
+      <div class="map-route-bar">
+        <div class="route-stats-summary">
+          <div class="route-stat">
+            <span class="stat-label">ACTIVE ROUTE</span>
+            <strong class="stat-val" id="routeDayLabel">Day 1 (Dec 4)</strong>
+          </div>
+          <div class="route-stat">
+            <span class="stat-label">STOPS</span>
+            <strong class="stat-val" id="routeStopsCount">4 Pins</strong>
+          </div>
+          <div class="route-stat">
+            <span class="stat-label">TOTAL DISTANCE</span>
+            <strong class="stat-val" id="routeTotalDist">42.5 km</strong>
+          </div>
+          <div class="route-stat">
+            <span class="stat-label">EST. TRAVEL</span>
+            <strong class="stat-val" id="routeTotalTime">~1h 15m</strong>
+          </div>
+        </div>
+        <div class="route-chain-scroll" id="routeChainContainer">
+          <!-- Rendered dynamically in English: #1 Airport T2 ➔ #2 Zhongyang St. ➔ ... -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =========================================================================
+       MODAL 1: ADD / EDIT TIMELINE ACTIVITY OR CUSTOM MAP PIN
+       ========================================================================= -->
+  <div class="modal-backdrop" id="activityModalBackdrop" hidden>
+    <div class="modal-card" role="dialog" aria-labelledby="modalTitle">
+      <div class="modal-header">
+        <h3 id="modalTitle">➕ เพิ่มกิจกรรม / ปักหมุดสถานที่ใหม่ (Add Activity / Custom Pin)</h3>
+        <button class="modal-close" id="btnCloseActivityModal">✕</button>
+      </div>
+      <form id="activityForm" class="modal-body">
+        <input type="hidden" id="formEditUid" value="">
+        <input type="hidden" id="formSpotId" value="">
+
+        <div class="form-row two-col">
+          <div class="form-group">
+            <label for="formNameEn">English Name (Shown on Map) *</label>
+            <input type="text" id="formNameEn" required placeholder="e.g. St. Sophia Coffee Break / Custom Pin">
+          </div>
+          <div class="form-group">
+            <label for="formNameTh">ชื่อกิจกรรม / สถานที่ (ภาษาไทย) *</label>
+            <input type="text" id="formNameTh" required placeholder="เช่น เดินเล่นถ่ายรูป / แวะจิบกาแฟ">
+          </div>
+        </div>
+
+        <div class="form-row three-col">
+          <div class="form-group">
+            <label for="formActType">ประเภทกิจกรรม (Type)</label>
+            <select id="formActType">
+              <option value="walk">🚶 การเดิน (Walking / Stroll)</option>
+              <option value="eat">🍲 การกิน (Dining / Street Food)</option>
+              <option value="visit">📸 เที่ยวชม (Sightseeing)</option>
+              <option value="transit">🚕 เดินทาง (Transit / Transfer)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="formTime">เวลาเริ่ม (Start Time)</label>
+            <input type="time" id="formTime" value="10:00" required>
+          </div>
+          <div class="form-group">
+            <label for="formDuration">ระยะเวลา (นาที / Mins)</label>
+            <input type="number" id="formDuration" value="60" min="10" max="600" step="5" required>
+          </div>
+        </div>
+
+        <div class="form-row three-col">
+          <div class="form-group">
+            <label for="formLat">Latitude (AMAP Harbin)</label>
+            <input type="number" id="formLat" step="0.0001" value="45.7725" required>
+          </div>
+          <div class="form-group">
+            <label for="formLng">Longitude (AMAP Harbin)</label>
+            <input type="number" id="formLng" step="0.0001" value="126.6208" required>
+          </div>
+          <div class="form-group">
+            <label for="formQueuePos">แทรกที่ลำดับคิว (Queue Position)</label>
+            <select id="formQueuePos">
+              <option value="end">ต่อท้ายคิว (End of Timeline)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="formNote">รายละเอียดเพิ่มเติม (Notes / Tips)</label>
+          <textarea id="formNote" rows="2" placeholder="ระบุรายละเอียด เช่น เมนูที่ต้องสั่ง, จุดถ่ายรูป, หรือการเดินทาง..."></textarea>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-modal cancel" id="btnCancelModal">ยกเลิก</button>
+          <button type="submit" class="btn-modal submit">💾 บันทึกลง Timeline &amp; ปักหมุดแผนที่</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL 2: ATTRACTION DETAIL DRAWER / MODAL (English + Thai + Markdown Link)
+       ========================================================================= -->
+  <div class="modal-backdrop" id="detailModalBackdrop" hidden>
+    <div class="modal-card detail-modal-card" role="dialog" aria-labelledby="detailModalTitle">
+      <div class="modal-header">
+        <div>
+          <span class="detail-badge" id="detailModalCat">Category</span>
+          <h3 id="detailModalTitle">Attraction Name</h3>
+          <p id="detailModalSub" class="detail-sub">Chinese &amp; Pinyin</p>
+        </div>
+        <button class="modal-close" id="btnCloseDetailModal">✕</button>
+      </div>
+      <div class="modal-body detail-modal-body">
+        <div class="detail-hero">
+          <img id="detailModalImg" src="" alt="Harbin attraction">
+          <div class="detail-hero-overlay">
+            <span id="detailModalRating">⭐⭐⭐⭐⭐ 4.9</span>
+            <span id="detailModalCoords">📍 45.7686, 126.6278</span>
+          </div>
+        </div>
+        <div class="detail-meta-grid">
+          <div class="meta-box">
+            <span>⏰ Opening Hours</span>
+            <strong id="detailModalHours">-</strong>
+          </div>
+          <div class="meta-box">
+            <span>🌅 Best Time</span>
+            <strong id="detailModalBestTime">-</strong>
+          </div>
+          <div class="meta-box full">
+            <span>🎫 Admission / Cost</span>
+            <strong id="detailModalTicket">-</strong>
+          </div>
+        </div>
+        <div class="detail-desc-box">
+          <h4>🇬🇧 English Overview &amp; Highlights</h4>
+          <p id="detailModalDescEn"></p>
+          <ul id="detailModalHighlightsEn" class="detail-list"></ul>
+        </div>
+        <div class="detail-desc-box">
+          <h4>🇹🇭 รายละเอียดและจุดเด่น (ภาษาไทย)</h4>
+          <p id="detailModalDescTh"></p>
+          <ul id="detailModalHighlightsTh" class="detail-list"></ul>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a id="detailModalDocLink" href="#" target="_blank" class="btn-modal secondary">📖 อ่านไฟล์คู่มือฉบับเต็ม (.MD)</a>
+        <button type="button" id="btnDetailFlyTo" class="btn-modal secondary">📍 ดูหมุดบนแผนที่ (Focus Pin)</button>
+        <button type="button" id="btnDetailAddTimeline" class="btn-modal submit">➕ แทรกลง Timeline วันนี้</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast-notification" id="toastNotification" aria-live="polite"></div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <!-- Harbin Attractions & Default Timeline Data -->
+  <script src="harbin_data.js"></script>
+
+  <!-- Main Planner & AMAP Application Logic -->
+  <script src="app.js"></script>
+</body>
+</html>

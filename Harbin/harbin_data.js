@@ -1260,8 +1260,582 @@ const HARBIN_ATTRACTIONS = [
     ],
     descriptionTh: "สวนดนตรีฮาร์บิน (Harbin Music Park) ตั้งอยู่ริมฝั่งใต้ของแม่น้ำซงฮัว เพื่อเฉลิมฉลองการได้รับการยกย่องจาก UNESCO ให้เป็น 'เมืองแห่งดนตรี' (City of Music) ในช่วงฤดูหนาว ที่นี่จะกลายเป็นบ้านของ 'ตุ๊กตาหิมะยักษ์' ที่มีชื่อเสียงโด่งดังไปทั่วโลก พร้อมทั้งเชื่อมโยงกับโบสถ์ยิวโบราณที่สะท้อนประวัติศาสตร์อันหลากหลายทางวัฒนธรรมของฮาร์บิน",
     descriptionEn: "Harbin Music Park stretches along the southern shore of the Songhua River celebrating Harbin's distinguished status as a UNESCO City of Music. In winter, it draws worldwide acclaim as the home of Harbin's viral Giant Snowman, accompanied by the nearby Jewish Synagogue museum."
+  },
+
+  {
+    id: 20,
+    nameTh: "หมู่บ้านหิมะจีน เสวี่ยเซียง",
+    nameZh: "中国雪乡 (双峰林场)",
+    pinyin: "Zhōngguó Xuěxiāng",
+    nameEn: "China Snow Town (Xuexiang)",
+    category: "ice_snow",
+    activityType: "visit",
+    defaultDuration: 180,
+    categoryLabelTh: "อาณาจักรเห็ดหิมะ & เทพนิยาย",
+    categoryLabelEn: "Snow Mushroom Fairytale Village",
+    categoryColor: "#0284c7",
+    pastelBg: "#e0f2fe",
+    badgeColor: "#bae6fd",
+    doodleBorderColor: "#0369a1",
+    doodleIcon: "🍄",
+    rating: 4.9,
+    ratingStars: "⭐⭐⭐⭐⭐",
+    ratingDescTh: "หมู่บ้านเห็ดหิมะธรรมชาติหนา 2 เมตร โคมไฟสีแดงสว่างไสวยามค่ำคืนบนถนนเสวี่ยยวิ่น และจุดชมวิวมุมสูง",
+    ratingDescEn: "Famous fairytale wooden village blanketed in 2-meter-thick natural 'snow mushrooms' and glowing red lanterns",
+    coords: [44.3936, 128.2588],
+    image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80",
+    tags: ["หมู่บ้านหิมะ", "เสวี่ยเซียง", "เห็ดหิมะ", "Snow Town", "Xuexiang"],
+    shortBulletsTh: [
+      "ปรากฏการณ์เห็ดหิมะธรรมชาติ (Snow Mushrooms) หนานุ่มปกคลุมหลังคาบ้านไม้",
+      "เดินเล่นถนนเสวี่ยยวิ่น (Xueyun Street) ชมโคมแดงและขบวนพาเหรดยามค่ำคืน",
+      "ทางเดินไม้ชมวิวเขาปั้งฉุย (Bangchui Boardwalk) มองเห็นหมู่บ้านหิมะมุมสูง"
+    ],
+    shortBulletsEn: [
+      "Iconic natural 'Snow Mushrooms' formed by 7 months of abundant mountain snowfall",
+      "Stroll Xueyun Street lined with glowing red lanterns and evening folk parades",
+      "3.2km Bangchui Mountain wooden boardwalk offering aerial fairytale village views"
+    ],
+    openingHoursTh: "เปิดบริการ 24 ชั่วโมง (พ.ย. - มี.ค.)",
+    openingHoursEn: "Open 24 hours daily (Nov - Mar)",
+    bestTimeTh: "16:00 - 20:00 น. (ช่วงเปิดโคมไฟสีแดงตัดกับหิมะสีน้ำเงินเข้มยามพลบค่ำ)",
+    bestTimeEn: "16:00 - 20:00 (Blue hour when red lanterns illuminate snowy rooftops)",
+    ticketPriceTh: "บัตรเข้าชม 120 หยวน (รวมรถชัทเทิลบัสอุทยาน 48 ชม.)",
+    ticketPriceEn: "120 RMB admission (includes park shuttle bus valid for 48h)",
+    transportTh: {
+      fromStation: "นั่งรถไฟความเร็วสูงไปลงสถานี Yabuli West (1.2 ชม.) แล้วต่อรถบัสทางหลวงหิมะอีก 1.5 ชม.",
+      fromAirport: "รถตู้ VIP ส่วนตัวประมาณ 4.5 ชม.",
+      inside: "ทางเดินเท้าและรถชัทเทิลบัสไฟฟ้าภายในหมู่บ้าน"
+    },
+    transportEn: {
+      fromStation: "HSR to Yabuli West (1h 15m) + scenic highway shuttle (1.5h)",
+      fromAirport: "Private van ~4.5 hours",
+      inside: "100% pedestrianized snow streets & park electric shuttles"
+    },
+    highlightsTh: [
+      "บ้านในฝัน (Dream Home) จุดถ่ายภาพเห็ดหิมะที่สมบูรณ์ที่สุด",
+      "ถนนคนเดินเสวี่ยยวิ่นและลานกองไฟเต้นระบำพื้นเมือง",
+      "ทางเดินไม้ชมวิวมุมสูงยาว 3.2 กิโลเมตร"
+    ],
+    highlightsEn: [
+      "Dream Home courtyard featuring world-famous snow mushroom cottages",
+      "Xueyun Pedestrian Street bonfire party and Yangge folk dance",
+      "Bangchui Mountain panoramic elevated wooden walkway"
+    ],
+    descriptionTh: "หมู่บ้านหิมะจีน (China Snow Town - เสวี่ยเซียง) คือดินแดนหิมะอันดับ 1 ของประเทศจีน ด้วยหิมะที่ตกยาวนานถึง 7 เดือนและมีความหนานุ่มเกาะตัวเป็นรูปเห็ดหิมะบนหลังคาบ้านไม้ ยามค่ำคืนโคมไฟสีแดงจะส่องสว่างสร้างบรรยากาศดั่งเทพนิยาย",
+    descriptionEn: "China Snow Town (Xuexiang) is celebrated for China's deepest and most picturesque snowfall, where sticky snow clings to wooden eaves forming whimsical 'snow mushrooms' illuminated by crimson lanterns at night."
+  },
+
+  {
+    id: 21,
+    nameTh: "หุบเขาหิมะจีน เสวี่ยกู่",
+    nameZh: "中国雪谷 (东升林场)",
+    pinyin: "Zhōngguó Xuěgǔ",
+    nameEn: "China Snow Valley (Xuegu)",
+    category: "ice_snow",
+    activityType: "walk",
+    defaultDuration: 240,
+    categoryLabelTh: "ชนบทดั้งเดิม & เดินป่าหิมะข้ามเขา",
+    categoryLabelEn: "Rustic Snow Village & Alpine Trek",
+    categoryColor: "#059669",
+    pastelBg: "#d1fae5",
+    badgeColor: "#a7f3d0",
+    doodleBorderColor: "#047857",
+    doodleIcon: "🌲",
+    rating: 4.8,
+    ratingStars: "⭐⭐⭐⭐⭐",
+    ratingDescTh: "หมู่บ้านชนบทตงเป่ยแท้ไร้แสงสีพาณิชย์ จุดเริ่มต้นเดินป่าหิมะข้ามเขาหยางเฉ่าซาน 15 กม. สู่ Snow Town",
+    ratingDescEn: "Authentic rustic forestry village & starting point of the legendary 15km Mount Yangcao snow trek to Snow Town",
+    coords: [44.4530, 128.1650],
+    image: "https://images.unsplash.com/photo-1491557345352-5929e343eb89?auto=format&fit=crop&w=600&q=80",
+    tags: ["หุบเขาหิมะ", "เสวี่ยกู่", "เดินป่าหิมะ", "Snow Valley", "Xuegu"],
+    shortBulletsTh: [
+      "หมู่บ้านป่าไม้ดั้งเดิม เงียบสงบ อบอุ่นด้วยวิถีชีวิตชาวตงเป่ยแท้ๆ",
+      "จุดเริ่มต้นเส้นทางเดินป่าหิมะข้ามเขาหยางเฉ่าซาน (Yangcaoshan Trek 15 กม.)",
+      "สนุกกับกิจกรรมสาดน้ำร้อนกลายเป็นน้ำแข็ง (泼水成冰) ยามเช้า"
+    ],
+    shortBulletsEn: [
+      "Uncommercialized traditional Dongbei forestry village on the north slope of Mt. Yangcao",
+      "Trailhead for the iconic 15km alpine snow forest traverse to China Snow Town",
+      "Experience freezing boiling water into instant ice crystals in -30°C morning air"
+    ],
+    openingHoursTh: "เปิดบริการ 24 ชั่วโมง (พ.ย. - มี.ค.)",
+    openingHoursEn: "Open 24 hours daily (Nov - Mar)",
+    bestTimeTh: "07:30 - 14:00 น. (ช่วงเวลาเดินป่าหิมะข้ามเขาชมป่าสนน้ำค้างแข็ง)",
+    bestTimeEn: "07:30 - 14:00 (Best window for the scenic alpine snow forest hike)",
+    ticketPriceTh: "เข้าหมู่บ้านฟรี (ตั๋วผ่านเส้นทางเดินเขาหยางเฉ่าซาน ~40 หยวน)",
+    ticketPriceEn: "Free village access (Mt. Yangcao trail ticket ~40 RMB)",
+    transportTh: {
+      fromStation: "นั่งรถตู้จากฮาร์บินประมาณ 4 - 4.5 ชั่วโมง",
+      fromAirport: "รถตู้ส่วนตัวประมาณ 4.5 ชั่วโมง",
+      inside: "เดินเท้าและเลื่อนม้าลากพื้นบ้าน"
+    },
+    transportEn: {
+      fromStation: "Private van or tourist shuttle from Harbin ~4 - 4.5 hours",
+      fromAirport: "Private van ~4.5 hours",
+      inside: "Walking trails, horse-drawn sleds, and snowmobiles"
+    },
+    highlightsTh: [
+      "เส้นทางเดินป่าหิมะข้ามเขาหยางเฉ่าซาน (ความสูง 1,235 เมตร)",
+      "นอนเตียงคั่งอุ่นแบบโบราณ (Traditional Heated Kang Bed)",
+      "สาดน้ำร้อนกลายเป็นเกล็ดน้ำแข็งกลางแจ้ง"
+    ],
+    highlightsEn: [
+      "15km Mount Yangcao snow forest trek (summit 1,235m)",
+      "Authentic heated brick Kang beds & iron-pot stews",
+      "Splash-water-into-ice winter photography experience"
+    ],
+    descriptionTh: "หุบเขาหิมะจีน (China Snow Valley - เสวี่ยกู่) ตั้งอยู่ฝั่งทิศเหนือของเขาหยางเฉ่าซาน เป็นหมู่บ้านชนบทที่ยังคงความบริสุทธิ์ดั้งเดิม และเป็นจุดเริ่มต้นของการเดินป่าหิมะข้ามเขาสู่หมู่บ้านหิมะ Snow Town",
+    descriptionEn: "China Snow Valley (Xuegu) offers a serene, authentic Dongbei rural winter experience and serves as the basecamp for the famous 15km overland snow trek across Mount Yangcao into Snow Town."
+  },
+
+  {
+    id: 22,
+    nameTh: "ภัตตาคารอาหารรัสเซีย หัวเหมย (1925)",
+    nameZh: "华梅西餐厅 (中央大街店)",
+    pinyin: "Huáméi Xīcāntīng",
+    nameEn: "Huamei Western Restaurant (Russian Cuisine)",
+    category: "food_dining",
+    activityType: "eat",
+    defaultDuration: 75,
+    categoryLabelTh: "อาหารรัสเซียคลาสสิก (การกิน)",
+    categoryLabelEn: "Historic Russian Dining",
+    categoryColor: "#e11d48",
+    pastelBg: "#ffe4e6",
+    badgeColor: "#fecdd3",
+    doodleBorderColor: "#be123c",
+    doodleIcon: "🍲",
+    rating: 4.8,
+    ratingStars: "⭐⭐⭐⭐⭐",
+    ratingDescTh: "ภัตตาคารอาหารรัสเซียเก่าแก่ตั้งแต่ปี 1925 บนถนนจงหยาง ซุปบอร์ชต์เนื้อตุ๋น สตูว์เนื้ออบโถขนมปัง และขนมปังต้าเลี่ยปา",
+    ratingDescEn: "Legendary 1925 Russian restaurant on Zhongyang St. famous for Borsch soup, pot-baked beef, and Dalieba bread",
+    coords: [45.7718, 126.6202],
+    image: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80",
+    tags: ["อาหารรัสเซีย", "ร้านหัวเหมย", "ซุปบอร์ชต์", "Huamei", "Russian Food"],
+    shortBulletsTh: [
+      "ภัตตาคารอาหารตะวันตกสไตล์รัสเซียที่เก่าแก่ที่สุดในฮาร์บิน ก่อตั้งปี 1925",
+      "เมนูซิกเนเจอร์: ซุปบีทรัตรัสเซีย (Borsch), เนื้อตุ๋นอบในโถขนมปัง, กุ้งทอดซอสครีม",
+      "ด้านหน้ามีเคาน์เตอร์ขายขนมปังรัสเซียอบสดใหม่คิวยาวทุกวัน"
+    ],
+    shortBulletsEn: [
+      "Harbin's oldest and most iconic Russian restaurant founded in 1925 on Zhongyang Street",
+      "Signature dishes: Russian Borsch soup, braised beef in bread pot, and Olivier salad",
+      "Features a famous street-level Russian bakery selling warm sourdough bread"
+    ],
+    openingHoursTh: "ทุกวัน 11:00 - 21:00 น. (ร้านขนมปังด้านหน้าเปิด 09:00 น.)",
+    openingHoursEn: "Daily 11:00 - 21:00 (Bakery counter opens 09:00)",
+    bestTimeTh: "11:30 - 13:30 น. (มื้อกลางวัน) หรือ 17:30 - 19:30 น. (มื้อค่ำ)",
+    bestTimeEn: "11:30 - 13:30 (Lunch) or 17:30 - 19:30 (Dinner)",
+    ticketPriceTh: "ค่าอาหารเฉลี่ย 100-160 หยวน/ท่าน (~500-800 บาท)",
+    ticketPriceEn: "Average meal ~100-160 RMB per person",
+    transportTh: {
+      fromStation: "ตั้งอยู่ใจกลางถนนคนเดินจงหยาง เลขที่ 112",
+      fromAirport: "นั่งรถตู้ 45 นาที",
+      inside: "ห้องอาหาร 3 ชั้น ตกแต่งสไตล์พระราชวังรัสเซียคลาสสิก"
+    },
+    transportEn: {
+      fromStation: "Located at No. 112 Zhongyang Pedestrian Street",
+      fromAirport: "Taxi ~45 mins",
+      inside: "3-story dining halls decorated in classic Imperial Russian style"
+    },
+    highlightsTh: [
+      "ซุปบอร์ชต์ (红菜汤) รสชาติเข้มข้นกลมกล่อม เสิร์ฟร้อนๆ คลายหนาว",
+      "เนื้อวัวตุ๋นเครื่องเทศรัสเซียในหม้อดินปิดหน้าด้วยแป้งขนมปังอบกรอบ",
+      "สถาปัตยกรรมภายในแบบรัสเซียดั้งเดิม"
+    ],
+    highlightsEn: [
+      "Authentic rich Russian Borsch soup served piping hot",
+      "Casserole beef stew sealed under a golden baked pastry dome",
+      "Historic Kremlin-inspired interior design"
+    ],
+    descriptionTh: "ภัตตาคารหัวเหมย (Huamei Western Restaurant) เปิดให้บริการมาตั้งแต่ปี 1925 บนถนนคนเดินจงหยาง เป็นสัญลักษณ์แห่งวัฒนธรรมอาหารรัสเซียในฮาร์บิน",
+    descriptionEn: "Established in 1925, Huamei Western Restaurant is an culinary institution on Zhongyang Street serving classic Russian fare in opulent heritage dining rooms."
+  },
+
+  {
+    id: 23,
+    nameTh: "ร้านเหล่าฉูเจีย ต้นกำเนิดกัวเปาโร่ว 100 ปี",
+    nameZh: "老厨家 (道台食府 - 锅包肉创始店)",
+    pinyin: "Lǎochújiā (Guōbāoròu)",
+    nameEn: "Laochushi Restaurant (Birthplace of Guobaorou)",
+    category: "food_dining",
+    activityType: "eat",
+    defaultDuration: 75,
+    categoryLabelTh: "อาหารตงเป่ยระดับตำนาน (การกิน)",
+    categoryLabelEn: "100-Year Dongbei Culinary Legend",
+    categoryColor: "#e11d48",
+    pastelBg: "#ffe4e6",
+    badgeColor: "#fecdd3",
+    doodleBorderColor: "#be123c",
+    doodleIcon: "🍖",
+    rating: 4.9,
+    ratingStars: "⭐⭐⭐⭐⭐",
+    ratingDescTh: "ร้านผู้คิดค้นเมนู 'กัวเปาโร่ว' (หมูทอดกรอบซอสเปรี้ยวหวานตงเป่ย) แห่งแรกของโลกตั้งแต่สมัยราชวงศ์ชิง",
+    ratingDescEn: "Original creator of Harbin's famous Guobaorou (crispy sweet & sour pork) dating back over 100 years",
+    coords: [45.7872, 126.6628],
+    image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=600&q=80",
+    tags: ["กัวเปาโร่ว", "เหล่าฉูเจีย", "อาหารตงเป่ย", "Guobaorou", "Laochushi"],
+    shortBulletsTh: [
+      "ต้นกำเนิดเมนูประจำเมืองฮาร์บิน 'กัวเปาโร่ว' (หมูทอดซอสเปรี้ยวหวานกรอบนอกนุ่มใน)",
+      "สืบทอดสูตรลับพ่อครัวประจำจวนข้าหลวงสมัยราชวงศ์ชิงมากว่า 4 รุ่น",
+      "มีพิพิธภัณฑ์อาหารฮาร์บินขนาดย่อมจัดแสดงอยู่ภายในร้าน"
+    ],
+    shortBulletsEn: [
+      "Historical birthplace of Guobaorou (Harbin crispy sweet-and-sour pork tenderloin)",
+      "4th-generation Qing dynasty official chef heritage recipe",
+      "Located right inside the Chinese Baroque Historic Block & Zhongyang Street"
+    ],
+    openingHoursTh: "ทุกวัน 10:30 - 21:00 น.",
+    openingHoursEn: "Daily 10:30 - 21:00",
+    bestTimeTh: "11:30 - 13:00 น. หรือ 17:30 - 19:30 น.",
+    bestTimeEn: "11:30 - 13:00 or 17:30 - 19:30",
+    ticketPriceTh: "ค่าอาหารเฉลี่ย 70-110 หยวน/ท่าน (~350-550 บาท)",
+    ticketPriceEn: "Average meal ~70-110 RMB per person",
+    transportTh: {
+      fromStation: "สาขา Chinese Baroque (Lao Daowai) หรือสาขาถนนคนเดินจงหยาง",
+      fromAirport: "นั่งรถตู้ 45 นาที",
+      inside: "บรรยากาศโรงเตี๊ยมย้อนยุค มีฮีตเตอร์อุ่นสบาย"
+    },
+    transportEn: {
+      fromStation: "Located in Chinese Baroque Block (and branch on Zhongyang St.)",
+      fromAirport: "Taxi ~45 mins",
+      inside: "Retro Republican-era dining hall with culinary museum exhibits"
+    },
+    highlightsTh: [
+      "กัวเปาโร่วสูตรต้นตำรับ แป้งบางกรอบ ซอสเปรี้ยวหวานหอมกลิ่นขิงซอย",
+      "ของหวานเมฆหิมะทอดไส้ถั่วแดง (เสวี่ยเมี่ยนโต้วซา - 雪绵豆沙) นุ่มฟูเหมือนปุยหิมะ"
+    ],
+    highlightsEn: [
+      "Signature crispy Guobaorou with amber sweet-vinegar glaze",
+      "Snow-Cotton Red Bean Puff (Xuemiandousha), a cloud-like winter dessert"
+    ],
+    descriptionTh: "ร้านเหล่าฉูเจีย (Laochushi) คือร้านอาหารประวัติศาสตร์ที่คิดค้นเมนูกัวเปาโร่วเป็นแห่งแรกเมื่อกว่า 100 ปีก่อน เพื่อรับรองแขกชาวรัสเซียและขุนนางในฮาร์บิน",
+    descriptionEn: "Laochushi is the celebrated birthplace of Guobaorou, invented in the late Qing Dynasty by Chef Zheng Xingwen by adapting Beijing salty stir-fry into a sweet-and-sour crispy delicacy for Russian guests."
+  },
+
+  {
+    id: 24,
+    nameTh: "ไอศกรีมหม่าเตี๋ยเอ่อร์ & โรงแรมโมเดิร์น (1906)",
+    nameZh: "马迭尔冷饮厅 (马迭尔冰棍)",
+    pinyin: "Mǎdié'ěr Bīnggùn",
+    nameEn: "Madieer Ice Popsicle & Modern Hotel (1906)",
+    category: "food_dining",
+    activityType: "eat",
+    defaultDuration: 30,
+    categoryLabelTh: "ของหวาน & สตรีทฟู้ดห้ามพลาด",
+    categoryLabelEn: "Iconic Winter Street Treat",
+    categoryColor: "#e11d48",
+    pastelBg: "#ffe4e6",
+    badgeColor: "#fecdd3",
+    doodleBorderColor: "#be123c",
+    doodleIcon: "🍦",
+    rating: 4.9,
+    ratingStars: "⭐⭐⭐⭐⭐",
+    ratingDescTh: "ธรรมเนียมปฏิบัติอันดับ 1 ของฮาร์บิน: กินไอศกรีมแท่งนมสดวานิลลาสูตรปี 1906 เดินท้าความหนาว -15°C บนถนนจงหยาง",
+    ratingDescEn: "Harbin's #1 winter ritual: eating a rich 1906 recipe Madieer vanilla milk popsicle outdoors in -15°C snow",
+    coords: [45.7712, 126.6205],
+    image: "https://images.unsplash.com/photo-1501443762994-82bd5dace89a?auto=format&fit=crop&w=600&q=80",
+    tags: ["ไอศกรีมหม่าเตี๋ยเอ่อร์", "ถนนจงหยาง", "ของกินฮาร์บิน", "Madieer", "Popsicle"],
+    shortBulletsTh: [
+      "ไอศกรีมแท่งรสนมวานิลลาเข้มข้นสูตรดั้งเดิมตั้งแต่ปี 1906 ไม่ใส่บรรจุภัณฑ์",
+      "วางขายในลังเปิดโล่งริมถนนจงหยาง เพราะอากาศข้างนอกเย็นกว่าช่องฟรีซ!",
+      "แวะชิมคู่กับไส้กรอกแดงฮาร์บินย่างร้อนๆ และโยเกิร์ตหม่าเตี๋ยเอ่อร์"
+    ],
+    shortBulletsEn: [
+      "Unwrapped creamy vanilla milk popsicle crafted since 1906 at the historic Modern Hotel",
+      "Sold from open-air tubs on Zhongyang Street since winter air is colder than a freezer",
+      "Pair with hot grilled Harbin red sausages and freshly baked Russian pastries"
+    ],
+    openingHoursTh: "ทุกวัน 09:00 - 22:30 น.",
+    openingHoursEn: "Daily 09:00 - 22:30",
+    bestTimeTh: "ตลอดทั้งวันและช่วงค่ำขณะเดินเล่นถนนคนเดินจงหยาง",
+    bestTimeEn: "Anytime while strolling Zhongyang Pedestrian Street",
+    ticketPriceTh: "แท่งละ 5 หยวน (~25 บาท)",
+    ticketPriceEn: "5 RMB per popsicle (~25 THB)",
+    transportTh: {
+      fromStation: "ตั้งอยู่กลางถนนคนเดินจงหยาง หน้าโรงแรม Modern Hotel",
+      fromAirport: "นั่งรถตู้ 45 นาที",
+      inside: "ซุ้มจำหน่ายริมถนนคนเดิน ซื้อแล้วเดินทานชมไฟประดับได้ทันที"
+    },
+    transportEn: {
+      fromStation: "Mid-section of Zhongyang Pedestrian Street outside Modern Hotel",
+      fromAirport: "Taxi ~45 mins",
+      inside: "Walk-up street kiosk window along the cobblestone boulevard"
+    },
+    highlightsTh: [
+      "ไอศกรีมแท่งรสนมสดแท้ หอมหวานละมุนละไม",
+      "ตึกโรงแรม Modern Hotel สถาปัตยกรรมอาร์ตนูโวปี 1906"
+    ],
+    highlightsEn: [
+      "Original 1906 creamy milk popsicle recipe",
+      "Historic 1906 Art Nouveau Modern Hotel backdrop"
+    ],
+    descriptionTh: "มาถึงฮาร์บินแล้วไม่ได้กินไอศกรีมหม่าเตี๋ยเอ่อร์ (Madieer Popsicle) ท่ามกลางหิมะ ถือว่ายังมาไม่ถึง! ความพิเศษคือการกินไอศกรีมหอมมันขณะสวมเสื้อขนเป็ดท่ามกลางอากาศติดลบ",
+    descriptionEn: "No trip to Harbin is complete without biting into a famous Madieer vanilla popsicle while strolling the snowy cobblestones of Zhongyang Street in sub-zero weather."
+  },
+
+  {
+    id: 25,
+    nameTh: "หม้อไฟทองเหลืองตงเป่ย & เนื้อแกะสไลซ์",
+    nameZh: "东北老北京铜锅涮肉 / 老昌春饼",
+    pinyin: "Tóngguō Shuànròu",
+    nameEn: "Dongbei Copper Pot Hot Pot & Spring Pancakes",
+    category: "food_dining",
+    activityType: "eat",
+    defaultDuration: 90,
+    categoryLabelTh: "หม้อไฟคลายหนาว (การกิน)",
+    categoryLabelEn: "Winter Warming Hot Pot",
+    categoryColor: "#e11d48",
+    pastelBg: "#ffe4e6",
+    badgeColor: "#fecdd3",
+    doodleBorderColor: "#be123c",
+    doodleIcon: "🥘",
+    rating: 4.8,
+    ratingStars: "⭐⭐⭐⭐⭐",
+    ratingDescTh: "หม้อไฟทองเหลืองถ่านไม้ร้อนกรุ่น เนื้อแกะและเนื้อวัวสไลซ์ลวกในซุปกระดูกผักกาดดอง ทานคู่ซอสงาเข้มข้นคลายหนาว -20°C",
+    ratingDescEn: "Charcoal-heated traditional copper pot hot pot with tender lamb, pickled cabbage broth, and sesame dip",
+    coords: [45.7695, 126.6225],
+    image: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=600&q=80",
+    tags: ["หม้อไฟตงเป่ย", "หม้อไฟทองเหลือง", "ผักกาดดอง", "Hot Pot", "Dongbei Food"],
+    shortBulletsTh: [
+      "หม้อไฟทองเหลืองโบราณใส่ถ่านไม้ตรงกลาง น้ำซุปเดือดปุดๆ ให้ความอบอุ่นสูงสุด",
+      "ไฮไลท์คือน้ำซุปผักกาดดองตงเป่ย (Suan Cai) รสกลมกล่อมตัดเลี่ยน",
+      "เนื้อแกะมองโกเลียในและเนื้อวัวสไลซ์บางเฉียบ จิ้มซอสงาสูตรพิเศษ"
+    ],
+    shortBulletsEn: [
+      "Traditional charcoal-fired brass chimney hot pot ideal for -20°C evenings",
+      "Signature Dongbei fermented pickled cabbage (Suan Cai) & bone marrow broth",
+      "Hand-sliced Inner Mongolian lamb and beef with rich sesame-peanut sauce"
+    ],
+    openingHoursTh: "ทุกวัน 11:00 - 22:30 น.",
+    openingHoursEn: "Daily 11:00 - 22:30",
+    bestTimeTh: "18:00 - 20:30 น. (มื้อค่ำเติมความอบอุ่นหลังเดินเล่นหิมะ)",
+    bestTimeEn: "18:00 - 20:30 (Cozy dinner after outdoor winter sightseeing)",
+    ticketPriceTh: "เฉลี่ย 80-120 หยวน/ท่าน (~400-600 บาท)",
+    ticketPriceEn: "Average ~80-120 RMB per person",
+    transportTh: {
+      fromStation: "ตั้งอยู่ใกล้ถนนคนเดินจงหยางและโบสถ์เซนต์โซเฟีย เดินเพียง 5 นาที",
+      fromAirport: "นั่งรถตู้ 45 นาที",
+      inside: "ห้องอาหารติดฮีตเตอร์อุ่นสบาย บริการประทับใจ"
+    },
+    transportEn: {
+      fromStation: "5 mins walk from Zhongyang Street & St. Sophia Cathedral",
+      fromAirport: "Taxi ~45 mins",
+      inside: "Warm indoor dining rooms with private booths"
+    },
+    highlightsTh: [
+      "หม้อไฟทองเหลืองซุปใสและซุปผักกาดดอง",
+      "แป้งปิ่งบางนุ่มห่อหมูผัดซอสและถั่วงอก (Laochang Spring Pancakes)"
+    ],
+    highlightsEn: [
+      "Brass chimney hot pot with pickled cabbage & clear bone broth",
+      "Paper-thin spring pancakes wrapped with Peking-style shredded pork"
+    ],
+    descriptionTh: "มื้อค่ำในฤดูหนาวของฮาร์บินไม่มีอะไรฟินไปกว่าการล้อมวงทานหม้อไฟทองเหลืองร้อนๆ น้ำซุปต้มกระดูกใส่ผักกาดดองเปรี้ยวกำลังดี ลวกเนื้อแกะนุ่มๆ คลายความหนาวได้ทันที",
+    descriptionEn: "Nothing beats Harbin's sub-zero evening chill like gathering around a steaming charcoal copper hot pot brimming with pickled cabbage broth and tender lamb slices."
+  },
+
+  {
+    id: 26,
+    nameTh: "ปลาแม่น้ำซงฮัวตุ๋นหม้อไฟกระทะเหล็ก (เที่ยกัวตุน)",
+    nameZh: "江北老院子铁锅炖江鱼",
+    pinyin: "Tiěguō Dùn Jiāngyú",
+    nameEn: "Tieguo Dun (Songhua River Iron Cauldron Fish Stew)",
+    category: "food_dining",
+    activityType: "eat",
+    defaultDuration: 80,
+    categoryLabelTh: "หม้อไฟกระทะเหล็กโบราณ (การกิน)",
+    categoryLabelEn: "Traditional Iron Cauldron Stew",
+    categoryColor: "#e11d48",
+    pastelBg: "#ffe4e6",
+    badgeColor: "#fecdd3",
+    doodleBorderColor: "#be123c",
+    doodleIcon: "🐟",
+    rating: 4.8,
+    ratingStars: "⭐⭐⭐⭐⭐",
+    ratingDescTh: "อาหารพื้นบ้านตงเป่ยขนานแท้ กระทะเหล็กใบยักษ์ฝังในโต๊ะ ตุ๋นปลาแม่น้ำซงฮัวสดๆ แปะแผ่นแป้งข้าวโพดรอบขอบกระทะ",
+    ratingDescEn: "Authentic Dongbei wood-fired giant iron cauldron built into the table, braising fresh Songhua River fish & cornbread",
+    coords: [45.8020, 126.6150],
+    image: "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=600&q=80",
+    tags: ["เที่ยกัวตุน", "ปลากระทะเหล็ก", "อาหารตงเป่ย", "Tieguo Dun", "Iron Pot Stew"],
+    shortBulletsTh: [
+      "กระทะเหล็กใบใหญ่ฝังอยู่กลางโต๊ะอาหาร ตุ๋นด้วยความร้อนสม่ำเสมอ",
+      "ปลาแม่น้ำซงฮัวเนื้อแน่นหวาน ตุ๋นกับเต้าหู้ วุ้นเส้นมันเทศ และเห็ดป่า",
+      "แปะแผ่นแป้งข้าวโพด (Tiebingzi) รอบขอบกระทะ ด้านล่างกรอบ ด้านบนนุ่มหอม"
+    ],
+    shortBulletsEn: [
+      "Giant cast-iron cauldron embedded directly inside the dining table",
+      "Fresh Songhua River fish slow-braised with frozen tofu, wide vermicelli, and wild mushrooms",
+      "Sweet golden cornbread patties (Tiebingzi) baked right onto the hot iron rim"
+    ],
+    openingHoursTh: "ทุกวัน 10:30 - 21:30 น.",
+    openingHoursEn: "Daily 10:30 - 21:30",
+    bestTimeTh: "12:00 - 14:00 น. (แวะทานมื้อเที่ยงระหว่างเที่ยวสวนเสือไซบีเรียและเกาะพระอาทิตย์)",
+    bestTimeEn: "12:00 - 14:00 (Ideal lunch stop between Siberian Tiger Park & Sun Island)",
+    ticketPriceTh: "เฉลี่ย 70-100 หยวน/ท่าน (~350-500 บาท)",
+    ticketPriceEn: "Average ~70-100 RMB per person",
+    transportTh: {
+      fromStation: "ตั้งอยู่ฝั่งเหนือแม่น้ำซงฮัว ระหว่างทางไปสวนเสือไซบีเรียและเกาะพระอาทิตย์",
+      fromAirport: "นั่งรถตู้ 45 นาที",
+      inside: "ตกแต่งสไตล์บ้านชนบทตงเป่ยอบอุ่น โต๊ะกว้างขวาง"
+    },
+    transportEn: {
+      fromStation: "North bank of Songhua River between Sun Island and Siberian Tiger Park",
+      fromAirport: "Taxi ~45 mins",
+      inside: "Cozy rustic Dongbei courtyard decor with heated dining rooms"
+    },
+    highlightsTh: [
+      "ปลาแม่น้ำซงฮัวตุ๋นซอสเต้าเจี้ยวสูตรตงเป่ย",
+      "แผ่นแป้งข้าวโพดอบขอบกระทะจิ้มน้ำซุปปลาเข้มข้น"
+    ],
+    highlightsEn: [
+      "Slow-simmered Songhua River fish in savory soybean sauce",
+      "Crispy-bottomed cornbread cakes baked on the cauldron wall"
+    ],
+    descriptionTh: "เที่ยกัวตุน (Tieguo Dun) คือวัฒนธรรมอาหารตงเป่ยที่อบอุ่นและสนุกสนานที่สุด โดยใช้กระทะเหล็กขนาดใหญ่ตุ๋นปลาแม่น้ำซงฮัวหรือไก่บ้านเห็ดป่ากลางโต๊ะอาหาร",
+    descriptionEn: "Tieguo Dun (Iron Pot Stew) is the ultimate hearty Northeast Chinese comfort meal, cooked tableside in a massive cast-iron pot rimmed with golden cornbread."
+  },
+
+  {
+    id: 27,
+    nameTh: "ห้างชิวหลิน 1900 & ขนมปังรัสเซียต้าเลี่ยปา",
+    nameZh: "秋林公司 (秋林里道斯红肠 & 大列巴)",
+    pinyin: "Qiūlín Gōngsī (Dàlièbā)",
+    nameEn: "Churin (Qiulin) 1900 Bakery & Harbin Red Sausage",
+    category: "food_dining",
+    activityType: "eat",
+    defaultDuration: 60,
+    categoryLabelTh: "ช้อปของฝาก & เบเกอรี่รัสเซีย",
+    categoryLabelEn: "Russian Bakery & Souvenirs",
+    categoryColor: "#e11d48",
+    pastelBg: "#ffe4e6",
+    badgeColor: "#fecdd3",
+    doodleBorderColor: "#be123c",
+    doodleIcon: "🥖",
+    rating: 4.8,
+    ratingStars: "⭐⭐⭐⭐⭐",
+    ratingDescTh: "ห้างสรรพสินค้าเก่าแก่ที่ก่อตั้งโดยพ่อค้ารัสเซียปี 1900 แหล่งซื้อของฝากอันดับ 1 ไส้กรอกแดงชิวหลิน และขนมปังต้าเลี่ยปาลูกยักษ์",
+    ratingDescEn: "Historic 1900 Russian department store famous for giant Dalieba sourdough loaves, Kvass, and smoked Red Sausages",
+    coords: [45.7582, 126.6410],
+    image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80",
+    tags: ["ชิวหลิน", "ไส้กรอกแดง", "ต้าเลี่ยปา", "ของฝากฮาร์บิน", "Qiulin", "Dalieba"],
+    shortBulletsTh: [
+      "ห้างสรรพสินค้าแห่งแรกในฮาร์บิน ก่อตั้งโดยชาวรัสเซีย Ivan Churin ในปี 1900",
+      "ต้นตำรับขนมปังรัสเซียก้อนยักษ์ 'ต้าเลี่ยปา' (Dalieba) หนักถึง 2 กิโลกรัม อบด้วยฟืนไม้เบิร์ช",
+      "ไส้กรอกแดงฮาร์บิน (Qiulin Lidaosi Red Sausage) แพ็กสุญญากาศพร้อมซื้อเป็นของฝาก"
+    ],
+    shortBulletsEn: [
+      "Harbin's oldest department store founded in 1900 by Russian entrepreneur Ivan Churin",
+      "Home of the famous 2kg round Russian Dalieba sourdough bread baked in birch-wood ovens",
+      " #1 spot to buy vacuum-packed Qiulin Lidaosi smoked Harbin Red Sausages & Russian chocolate"
+    ],
+    openingHoursTh: "ทุกวัน 09:00 - 20:30 น.",
+    openingHoursEn: "Daily 09:00 - 20:30",
+    bestTimeTh: "09:30 - 11:30 น. (แวะซื้อของฝากสดใหม่ก่อนเดินทางไปสนามบิน)",
+    bestTimeEn: "09:30 - 11:30 (Morning shopping for fresh bakery items and gifts)",
+    ticketPriceTh: "เข้าชมฟรี (ไส้กรอกแดงและขนมปังราคาตามน้ำหนัก)",
+    ticketPriceEn: "Free entry (Bakery and delicacies priced per item)",
+    transportTh: {
+      fromStation: "ห่างจากสถานีฮาร์บิน 1.2 กม. ติดกับพิพิธภัณฑ์มณฑลเฮยหลงเจียง (Metro Line 1/2)",
+      fromAirport: "นั่งรถตู้ 45 นาที",
+      inside: "ชั้นใต้ดินเป็นโซนอาหารและเบเกอรี่รัสเซียหอมกรุ่นทั้งชั้น"
+    },
+    transportEn: {
+      fromStation: "1.2 km from Harbin Station next to Provincial Museum (Metro Line 1 & 2)",
+      fromAirport: "Taxi ~45 mins",
+      inside: "Famous basement food hall filled with Russian bakeries and smokehouse counters"
+    },
+    highlightsTh: [
+      "ขนมปังรัสเซียต้าเลี่ยปาขนาดเส้นผ่านศูนย์กลาง 25 ซม.",
+      "ไส้กรอกแดงรมควันสูตรลิทัวเนีย-รัสเซียกว่า 120 ปี",
+      "เครื่องดื่มมอลต์ขนมปังรัสเซีย 'ควาส' (Kvass / 格瓦斯)"
+    ],
+    highlightsEn: [
+      "Giant 25cm-wide traditional Dalieba sourdough bread loaves",
+      "120-year-old Lithuanian-Russian recipe smoked Red Sausages",
+      "Authentic Russian fermented bread beverage 'Kvass'"
+    ],
+    descriptionTh: "ห้างชิวหลิน (Qiulin Company) ก่อตั้งตั้งแต่ปี 1900 เป็นสวรรค์ของคนรักขนมปังรัสเซียและของฝากประจำเมืองฮาร์บิน โดยเฉพาะขนมปังก้อนโตต้าเลี่ยปาและไส้กรอกแดงรมควัน",
+    descriptionEn: "Founded in 1900 as Churin & Co., this historic department store is Harbin's premier culinary souvenir destination for giant Dalieba bread and wood-smoked red sausages."
   }
 ];
+
+// Default 6-Day Harbin Slow-Life Timeline Itinerary (Walk, Eat, Visit, Transit)
+const DEFAULT_HARBIN_TIMELINE = {
+  day1: {
+    labelTh: "Day 1 (4 ธ.ค.)",
+    labelEn: "Day 1 (Dec 4)",
+    titleTh: "บินถึงฮาร์บิน • ถนนคนเดินจงหยาง • ไอศกรีม & หม้อไฟ",
+    titleEn: "Arrival in Harbin • Zhongyang Walk • Popsicle & Hot Pot",
+    items: [
+      { uid: "d1-1", spotId: 11, time: "17:00", duration: 45, actType: "transit", noteTh: "เดินทางถึงสนามบินฮาร์บินไท่ผิง T2 รับกระเป๋าและขึ้นรถตู้ VIP", noteEn: "Arrive at Harbin Taiping Airport T2, board heated VIP van" },
+      { uid: "d1-2", spotId: 2, time: "19:00", duration: 60, actType: "walk", noteTh: "เดินเล่นรับลมหนาวชมตึกยุโรปไฟสีทองบนถนนหินร้อยปีจงหยาง", noteEn: "Evening winter stroll along illuminated cobblestone Zhongyang Street" },
+      { uid: "d1-3", spotId: 24, time: "20:00", duration: 30, actType: "eat", noteTh: "ชิมไอศกรีมแท่งหม่าเตี๋ยเอ่อร์ท้าความหนาว -15°C และไส้กรอกแดงร้อนๆ", noteEn: "Taste iconic 1906 Madieer vanilla popsicle in -15°C snow" },
+      { uid: "d1-4", spotId: 25, time: "20:30", duration: 75, actType: "eat", noteTh: "มื้อค่ำหม้อไฟทองเหลืองตงเป่ย เนื้อแกะสไลซ์และซุปผักกาดดองคลายหนาว", noteEn: "Warming Dongbei charcoal copper pot lamb hot pot dinner" }
+    ]
+  },
+  day2: {
+    labelTh: "Day 2 (5 ธ.ค.)",
+    labelEn: "Day 2 (Dec 5)",
+    titleTh: "ตลาดเช้า • โบสถ์เซนต์โซเฟีย • อาหารรัสเซีย • สะพานรถไฟ",
+    titleEn: "Morning Market • St. Sophia • Russian Lunch • Railway Bridge",
+    items: [
+      { uid: "d2-1", spotId: 15, time: "07:30", duration: 60, actType: "eat", noteTh: "เดินตลาดเช้าหงจวน ชมไอควันยามเช้า ชิมซาลาเปาทอดและน้ำเต้าหู้ร้อน", noteEn: "Walk & eat through steaming Hongzhuan Morning Street Food Market" },
+      { uid: "d2-2", spotId: 1, time: "09:30", duration: 90, actType: "visit", noteTh: "ถ่ายรูปมหาวิหารเซนต์โซเฟีย ฝูงนกพิราบสีขาว และจิบกาแฟคาเฟ่วินเทจ", noteEn: "Visit Saint Sophia Cathedral, feed white doves & sip vintage coffee" },
+      { uid: "d2-3", spotId: 22, time: "12:00", duration: 90, actType: "eat", noteTh: "มื้อกลางวันอาหารรัสเซียคลาสสิก ร้านหัวเหมย (ซุปบอร์ชต์ & เนื้ออบโถขนมปัง)", noteEn: "Classic 1925 Russian lunch at Huamei Restaurant (Borsch & beef pot)" },
+      { uid: "d2-4", spotId: 10, time: "14:30", duration: 60, actType: "walk", noteTh: "เดินทอดน่องสวนสตาลินและอนุสาวรีย์ควบคุมอุทกภัยริมแม่น้ำซงฮัว", noteEn: "Scenic riverside walk through Stalin Park & Flood Control Monument" },
+      { uid: "d2-5", spotId: 6, time: "15:30", duration: 75, actType: "walk", noteTh: "เดินข้ามสะพานรถไฟโบราณปินโจว ชมพื้นกระจกและพระอาทิตย์ตกเหนือธารน้ำแข็ง", noteEn: "Walk across 1900 Binzhou Railway Bridge for golden sunset over frozen river" }
+    ]
+  },
+  day3: {
+    labelTh: "Day 3 (6 ธ.ค.)",
+    labelEn: "Day 3 (Dec 6)",
+    titleTh: "ปราสาทรัสเซีย คฤหาสน์วอลกา • ถนนกัวโกรี่",
+    titleEn: "Volga Manor Russian Fairytale • Gogol Street",
+    items: [
+      { uid: "d3-1", spotId: 3, time: "09:30", duration: 240, actType: "visit", noteTh: "เที่ยวคฤหาสน์รัสเซียวอลกา ชมโบสถ์เซนต์นิโคลัส สไลเดอร์หิมะ และวอดก้าแก้วน้ำแข็ง", noteEn: "Explore Volga Manor Russian castles, snow tubing & ice-glass vodka" },
+      { uid: "d3-2", spotId: 13, time: "15:30", duration: 90, actType: "walk", noteTh: "เดินเล่นถนนกัวโกรี่ ชมโบสถ์เซนต์อเล็กเซเยฟสีแดง และร้านหนังสือยุโรป", noteEn: "Stroll Gogol Street, Saint Alekseyev Church & vintage bookstore" },
+      { uid: "d3-3", spotId: 17, time: "17:30", duration: 75, actType: "visit", noteTh: "ขึ้นหอคอยมังกรหลงถ่า เดินพื้นกระจกลอยฟ้าและชมไฟเมืองฮาร์บิน 360 องศา", noteEn: "Ascend Dragon Tower (Long Ta) glass skywalk for night views" }
+    ]
+  },
+  day4: {
+    labelTh: "Day 4 (7 ธ.ค.)",
+    labelEn: "Day 4 (Dec 7)",
+    titleTh: "สวนเสือไซบีเรีย • ปลากระทะเหล็ก • เกาะพระอาทิตย์ & แม่น้ำน้ำแข็ง",
+    titleEn: "Siberian Tigers • Iron Pot Fish • Sun Island & Ice River",
+    items: [
+      { uid: "d4-1", spotId: 4, time: "09:30", duration: 120, actType: "visit", noteTh: "นั่งรถบัสกรงนิรภัยชมและป้อนอาหารพญาเสือไซบีเรียกลางทุ่งหิมะ", noteEn: "Ride safari bus through snowy enclosures at Siberian Tiger Park" },
+      { uid: "d4-2", spotId: 26, time: "12:00", duration: 80, actType: "eat", noteTh: "มื้อเที่ยงปลาแม่น้ำซงฮัวตุ๋นหม้อไฟกระทะเหล็ก (เที่ยกัวตุน) แปะขนมปังข้าวโพด", noteEn: "Hearty Songhua River fish braised in giant iron cauldron (Tieguo Dun)" },
+      { uid: "d4-3", spotId: 5, time: "13:45", duration: 105, actType: "visit", noteTh: "ชมงานประติมากรรมแกะสลักหิมะขาวบริสุทธิ์ขนาดยักษ์ ณ สวนเกาะพระอาทิตย์", noteEn: "Admire colossal snow sculptures at Sun Island Scenic Area" },
+      { uid: "d4-4", spotId: 14, time: "15:45", duration: 45, actType: "transit", noteTh: "นั่งกระเช้าลอยฟ้าข้ามแม่น้ำซงฮัวชมวิวมุมสูงธารน้ำแข็ง", noteEn: "Ride Songhua River Sightseeing Ropeway across the frozen river" },
+      { uid: "d4-5", spotId: 7, time: "16:30", duration: 75, actType: "walk", noteTh: "ลงเดินบนแม่น้ำซงฮัวที่เป็นน้ำแข็ง เล่นแคร่เลื่อนหิมะ และชม Ice and Snow World", noteEn: "Walk on frozen Songhua River Ice Carnival & play snow sleds" }
+    ]
+  },
+  day5: {
+    labelTh: "Day 5 (8 ธ.ค.)",
+    labelEn: "Day 5 (Dec 8)",
+    titleTh: "ย่านบาโรกจีน • กัวเปาโร่ว 100 ปี • โรงอุปรากร & ตุ๊กตาหิมะยักษ์",
+    titleEn: "Chinese Baroque • 100-Yr Guobaorou • Opera House & Snowman",
+    items: [
+      { uid: "d5-1", spotId: 8, time: "09:30", duration: 120, actType: "walk", noteTh: "เดินชมและถ่ายภาพตึกโบราณย่านวัฒนธรรมบาโรกจีน (เหล่าเต้าว่าย)", noteEn: "Architectural walk through Chinese Baroque Historic Block courtyards" },
+      { uid: "d5-2", spotId: 23, time: "11:45", duration: 75, actType: "eat", noteTh: "ทานมื้อเที่ยงร้านเหล่าฉูเจีย ชิมหมูทอดเปรี้ยวหวาน 'กัวเปาโร่ว' ต้นกำเนิด 100 ปี", noteEn: "Lunch at Laochushi, birthplace of crispy sweet & sour Guobaorou" },
+      { uid: "d5-3", spotId: 9, time: "14:00", duration: 90, actType: "visit", noteTh: "ชมสถาปัตยกรรมระดับโลก โรงอุปรากรฮาร์บิน เดินขึ้นดาดฟ้าชมวิวทุ่งหิมะ", noteEn: "Visit futuristic Harbin Grand Opera House rooftop snow walk" },
+      { uid: "d5-4", spotId: 19, time: "16:00", duration: 60, actType: "walk", noteTh: "แวะถ่ายรูปคู่กับตุ๊กตาหิมะยักษ์สูง 18 เมตร ที่สวนดนตรีริมแม่น้ำซงฮัว", noteEn: "Take photos with the famous 18m Giant Snowman at Harbin Music Park" }
+    ]
+  },
+  day6: {
+    labelTh: "Day 6 (9 ธ.ค.)",
+    labelEn: "Day 6 (Dec 9)",
+    titleTh: "พิพิธภัณฑ์ • ช้อปของฝากขนมปังรัสเซีย • บินกลับกรุงเทพฯ",
+    titleEn: "Museum • Russian Bakery Souvenirs • Fly Home",
+    items: [
+      { uid: "d6-1", spotId: 16, time: "09:15", duration: 60, actType: "visit", noteTh: "ชมโครงกระดูกช้างแมมมอธไซบีเรีย ณ พิพิธภัณฑ์มณฑลเฮยหลงเจียง", noteEn: "See woolly mammoth fossils at Heilongjiang Provincial Museum" },
+      { uid: "d6-2", spotId: 27, time: "10:30", duration: 75, actType: "eat", noteTh: "แวะห้างชิวหลิน 1900 ซื้อขนมปังรัสเซียต้าเลี่ยปา ไส้กรอกแดง และช็อกโกแลต", noteEn: "Shop for giant Dalieba bread & Red Sausages at Churin 1900 Bakery" },
+      { uid: "d6-3", spotId: 0, time: "11:50", duration: 30, actType: "visit", noteTh: "แวะถ่ายรูปด้านหน้าสถานีรถไฟฮาร์บินสไตล์อาร์ตนูโวยุโรปก่อนไปสนามบิน", noteEn: "Photo stop at European Art Nouveau Harbin Railway Station" },
+      { uid: "d6-4", spotId: 11, time: "13:00", duration: 130, actType: "transit", noteTh: "เดินทางถึงสนามบินฮาร์บินไท่ผิง T2 เช็คอินไฟลท์ 15:10 น. กลับกรุงเทพฯ", noteEn: "Depart from Harbin Taiping Airport T2 at 15:10 for Bangkok" }
+    ]
+  }
+};
+
 
 // Media and Social Gallery for Harbin Attractions
 const HARBIN_MEDIA = {

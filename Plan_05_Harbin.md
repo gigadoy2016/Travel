@@ -267,3 +267,14 @@ graph TD
   * โรงอุปรากรฮาร์บิน: 哈尔滨大剧院 (Harbin Grand Opera House)
 * **การชำระเงิน**: ใช้ **Alipay** (ผูกบัตรเครดิตไทย / YouTrip / TrueMoney) ใช้งานได้ 100% ทุกร้านค้าแม้แต่ร้านรถเข็นริมทาง
 * **การสื่อสาร**: ซิม Roaming ไม่บล็อกโซเชียลมีเดีย + Google Translate (ดาวน์โหลดภาษาจีนออฟไลน์ไว้ล่วงหน้า)
+
+---
+
+## ❄️ ทางเลือกเสริมพิเศษ: ต่อขยายทริปสู่ หมู่บ้านหิมะ (Snow Town) & หุบเขาหิมะ (Snow Valley)
+
+หากท่านต้องการขยายโปรแกรมเดินทางจากฮาร์บิน ออกไปสัมผัส **"อาณาจักรหิมะอันดับ 1 ของจีน"** ชมปรากฏการณ์เห็ดหิมะ และสัมผัสประสบการณ์เดินป่าหิมะข้ามขุนเขาหยางเฉ่าซาน (The Yangcaoshan Snow Traverse 15 กม.):
+
+* 📖 **คู่มือเจาะลึกฉบับสมบูรณ์**: [Snow_Town_and_Snow_Valley_Guide.md](file:///d:/01_DOCKER/cakephp2/www/Travel/Harbin/Snow_Town_and_Snow_Valley_Guide.md)
+* 🍄 **เอกสารเจาะลึกหมู่บ้านหิมะ**: [20_China_Snow_Town_Xuexiang.md](file:///d:/01_DOCKER/cakephp2/www/Travel/Harbin/20_China_Snow_Town_Xuexiang.md)
+* 🌲 **เอกสารเจาะลึกหุบเขาหิมะ**: [21_China_Snow_Valley_Xuegu.md](file:///d:/01_DOCKER/cakephp2/www/Travel/Harbin/21_China_Snow_Valley_Xuegu.md)
+

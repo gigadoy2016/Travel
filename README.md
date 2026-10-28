@@ -33,3 +33,6 @@
 5. **[Plan_05_Harbin.md](file:///d:/01_DOCKER/cakephp2/www/Travel/Plan_05_Harbin.md)**: แผนที่ 5 มนต์เสน่ห์นครน้ำแข็งฮาร์บิน & เทพนิยายรัสเซีย
 6. **[SKILL.md](file:///d:/01_DOCKER/cakephp2/www/Travel/SKILL.md)**: คู่มือและบทบาทการทำงานของ "บัง" ในฐานะ China Travel Planner
 7. **[Dali/README.md](file:///d:/01_DOCKER/cakephp2/www/Travel/Dali/README.md)**: 🗺️ คู่มือเจาะลึก 10 สถานที่ท่องเที่ยวเมืองต้าหลี่ (Dali Top 10 Attractions Guide)
+8. **[Harbin/README.md](file:///d:/01_DOCKER/cakephp2/www/Travel/Harbin/README.md)**: ❄️ คู่มือเจาะลึก 20 สถานที่ท่องเที่ยวนครฮาร์บิน (Harbin Top 20 Attractions Guide)
+9. **[Harbin/Snow_Town_and_Snow_Valley_Guide.md](file:///d:/01_DOCKER/cakephp2/www/Travel/Harbin/Snow_Town_and_Snow_Valley_Guide.md)**: 🏔️ คู่มือเจาะลึกหมู่บ้านหิมะ (Snow Town) & หุบเขาหิมะ (Snow Valley) และการเดินป่าข้ามเขาหยางเฉ่าซาน
+

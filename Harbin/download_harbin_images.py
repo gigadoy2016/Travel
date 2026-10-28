@@ -5,7 +5,7 @@ import os
 import sys
 import time
 
-DEST_DIR = r"d:\01_DOCKER\cakephp2\www\Travel\Dali\assets\places"
+DEST_DIR = r"d:\01_DOCKER\cakephp2\www\Travel\Harbin\assets\places"
 os.makedirs(DEST_DIR, exist_ok=True)
 
 # Custom User-Agent with contact info per Wikimedia policy
