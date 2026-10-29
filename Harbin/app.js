@@ -293,305 +293,280 @@ function renderAll() {
   renderMapMarkersAndRoute();
 }
 
-function renderDayTabs() {
-  const dayObj = timelineState[currentDayKey];
-  document.querySelectorAll(".day-tab").forEach(btn => {
-    btn.classList.toggle("active", btn.dataset.day === selectedDayTab);
-  });
-  const titleEl = document.getElementById("currentDayTitle");
-  if (titleEl) {
-    if (selectedDayTab === "all") {
-      titleEl.textContent = `แผนการเดินทางครบ 6 วัน (คลิกเลือกวันเพื่อดูเส้นทางบนแผนที่ · กำลังแสดง: ${dayObj ? dayObj.labelTh : "Day 1"})`;
-    } else if (dayObj) {
-      titleEl.textContent = `${dayObj.labelTh}: ${dayObj.titleTh}`;
-    }
-  }
+const DAY_COLORS = ["#e4572e", "#2a9d8f", "#6a4c93", "#f4a300", "#1d70b8", "#b5179e", "#059669", "#e11d48"];
 
-  document.getElementById("btnModeTable")?.classList.toggle("active", timelineViewMode === "table");
-  document.getElementById("btnModeCard")?.classList.toggle("active", timelineViewMode === "card");
+// Tooltip Helpers (Matching Downloads/index.html)
+function showFloatingTip(e, title, detail) {
+  const tip = document.getElementById("floatingTip");
+  if (!tip) return;
+  tip.innerHTML = "<b></b>";
+  tip.firstChild.textContent = title || "";
+  tip.append(detail || "");
+  tip.style.display = "block";
+  moveFloatingTip(e);
+}
+
+function moveFloatingTip(e) {
+  const tip = document.getElementById("floatingTip");
+  if (!tip || tip.style.display === "none") return;
+  const w = tip.offsetWidth;
+  const h = tip.offsetHeight;
+  let x = e.clientX + 14;
+  let y = e.clientY + 14;
+  if (x + w > window.innerWidth) x = e.clientX - w - 14;
+  if (y + h > window.innerHeight) y = e.clientY - h - 14;
+  tip.style.left = x + "px";
+  tip.style.top = y + "px";
+}
+
+function hideFloatingTip() {
+  const tip = document.getElementById("floatingTip");
+  if (tip) tip.style.display = "none";
+}
+
+function clearDragOverStates() {
+  document.querySelectorAll(".tl-day.over, .tl-row.before").forEach(el => {
+    el.classList.remove("over", "before");
+  });
+}
+
+function renderDayTabs() {
+  const container = document.getElementById("dayTabsContainer");
+  if (!container) return;
+
+  const dayKeys = Object.keys(timelineState);
+  let html = `<button class="clean-day-pill ${selectedDayTab === "all" ? "active" : ""}" data-day="all">ทั้งหมด (${dayKeys.length} วัน)</button>`;
+
+  dayKeys.forEach((dk, idx) => {
+    const c = DAY_COLORS[idx % DAY_COLORS.length];
+    const isAct = selectedDayTab === dk;
+    html += `
+      <button class="clean-day-pill ${isAct ? "active" : ""}" data-day="${dk}">
+        <i style="background:${c}"></i>วันที่ ${idx + 1}
+      </button>
+    `;
+  });
+
+  container.innerHTML = html;
+
+  container.querySelectorAll(".clean-day-pill").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const targetDay = btn.dataset.day;
+      selectedDayTab = targetDay;
+      if (targetDay !== "all") {
+        currentDayKey = targetDay;
+      }
+      renderAll();
+      fitCurrentTimelineRoute();
+    });
+  });
 }
 
 // ============================================================================
-// 4. SECTION 1: TIMELINE RENDERING (STEP-BY-STEP TABLE & CARDS + DRAG & DROP)
+// 4. SECTION 1: CLEAN VERTICAL DOT-AND-LINE TIMELINE (① แผนการเดินทาง)
 // ============================================================================
 function renderTimelineSection() {
   const container = document.getElementById("timelineListContainer");
   if (!container) return;
 
+  const allDayKeys = Object.keys(timelineState);
   const dayKeysToRender = selectedDayTab === "all"
-    ? Object.keys(timelineState)
+    ? allDayKeys
     : [currentDayKey];
 
-  let totalItemsCount = 0;
-  let totalDurationMins = 0;
-  dayKeysToRender.forEach(dk => {
-    const dItems = timelineState[dk]?.items || [];
-    totalItemsCount += dItems.length;
-    dItems.forEach(it => {
-      totalDurationMins += Number(it.duration || 60);
-    });
+  let totalAllItems = 0;
+  allDayKeys.forEach(dk => {
+    totalAllItems += (timelineState[dk]?.items || []).length;
   });
 
-  // Update summary badges
+  // Update header count "(X รายการ)" matching screenshot
   const summaryBadge = document.getElementById("timelineSummaryBadge");
   if (summaryBadge) {
-    const hrs = (totalDurationMins / 60).toFixed(1);
-    summaryBadge.textContent = `${totalItemsCount} ขั้นตอน · ${hrs} ชม.`;
+    summaryBadge.textContent = `(${totalAllItems} รายการ)`;
   }
   const mobCount = document.getElementById("mobTimelineCount");
-  if (mobCount) mobCount.textContent = totalItemsCount;
+  if (mobCount) mobCount.textContent = totalAllItems;
 
   container.innerHTML = "";
 
-  if (timelineViewMode === "table") {
-    renderStepTableMode(container, dayKeysToRender);
-  } else {
-    renderCardDetailMode(container, dayKeysToRender);
-  }
-}
-
-// Mode A: Step-by-Step Yellow Itinerary Table (Day | สถานที่ / ขั้นตอนการเดินทาง | เวลา)
-function renderStepTableMode(container, dayKeysToRender) {
   dayKeysToRender.forEach(dayKey => {
     const dayObj = timelineState[dayKey];
     if (!dayObj) return;
+    const dayIdx = allDayKeys.indexOf(dayKey);
+    const c = DAY_COLORS[(dayIdx >= 0 ? dayIdx : 0) % DAY_COLORS.length];
     const items = dayObj.items || [];
-    const isFocusedDay = dayKey === currentDayKey;
 
-    const dayBlock = document.createElement("div");
-    dayBlock.className = `step-day-block ${isFocusedDay ? "active-day-focus" : ""}`;
+    const dayEl = document.createElement("div");
+    dayEl.className = `tl-day ${dayKey === currentDayKey ? "focused-day" : ""}`;
+    dayEl.dataset.dayKey = dayKey;
 
-    // Table Header Bar for this Day block
-    const headerBar = document.createElement("div");
-    headerBar.className = "step-table-header";
-    headerBar.style.cursor = "pointer";
-    headerBar.title = "คลิกเพื่อแสดงเส้นทางของวันนี้บนแผนที่ AMAP";
-    headerBar.innerHTML = `
-      <span>${dayObj.labelTh.split(" ")[0]} ${dayObj.labelTh.split(" ")[1] || ""}</span>
-      <span>ขั้นตอนการเดินทาง / สถานที่</span>
-      <span>เวลา</span>
+    // Extract optional date subtitle e.g. "4 ธ.ค."
+    const dateSubMatch = (dayObj.labelTh || "").match(/\((.*?)\)/);
+    const dateSubText = dateSubMatch ? ` · ${dateSubMatch[1]}` : "";
+
+    const dh = document.createElement("div");
+    dh.className = "tl-dh";
+    dh.innerHTML = `
+      <i style="background:${c}"></i>
+      <span>วันที่ ${dayIdx + 1}<span class="tl-day-sub">${dateSubText}</span></span>
+      ${allDayKeys.length > 1 ? `<button type="button" class="tl-del-day" title="ลบวันที่ ${dayIdx + 1}">🗑️</button>` : ""}
     `;
-    headerBar.addEventListener("click", () => {
+
+    // Clicking Day Header focuses this day on the map
+    dh.addEventListener("click", e => {
+      if (e.target.closest(".tl-del-day")) {
+        delete timelineState[dayKey];
+        const remaining = Object.keys(timelineState);
+        if (currentDayKey === dayKey) currentDayKey = remaining[0] || "day1";
+        if (selectedDayTab === dayKey) selectedDayTab = "all";
+        saveState();
+        renderAll();
+        return;
+      }
       currentDayKey = dayKey;
       renderAll();
       fitCurrentTimelineRoute();
     });
-    dayBlock.appendChild(headerBar);
 
-    // Top Drop Zone for inserting at index 0 of this day
-    dayBlock.appendChild(createTimelineDropZone(0, dayKey));
+    dayEl.appendChild(dh);
+
+    const listEl = document.createElement("div");
+    listEl.className = "tl-list";
+    listEl.style.setProperty("--c", c);
 
     if (items.length === 0) {
-      const emptyRow = document.createElement("div");
-      emptyRow.style.cssText = "padding:14px 10px; text-align:center; font-size:0.74rem; color:#854d0e;";
-      emptyRow.textContent = "ยังไม่มีรายการ — ลากสถานที่จากส่วนที่ 2 มาวางแทรกที่นี่ได้ทันที";
-      dayBlock.appendChild(emptyRow);
+      listEl.innerHTML = `<div class="tl-empty">ลากสถานที่มาวางที่นี่</div>`;
     }
 
     items.forEach((item, index) => {
       const spot = getSpotById(item.spotId);
-      const actType = item.actType || (spot ? spot.activityType : "visit") || "visit";
-      const actMeta = ACTIVITY_META[actType] || ACTIVITY_META.visit;
 
-      const placeTitleTh = item.customNameTh || (spot ? spot.nameTh : "กิจกรรมกำหนดเอง");
-      const placeSubText = item.noteTh || (spot ? `${spot.nameEn} (${spot.nameZh})` : item.customNameEn || "");
-      const displayTime = item.timeLabel || `${item.time} น.`;
+      // Format display title like "哈尔滨站 สถานีรถไฟฮาร์บิน" or flight step
+      let displayTitle = "";
+      if (item.isFlightStep) {
+        displayTitle = `✈️ ${item.customNameTh || item.customNameEn}`;
+      } else if (spot) {
+        const zhPart = spot.nameZh ? `${spot.nameZh.split(" ")[0]} ` : "";
+        displayTitle = `${zhPart}${item.customNameTh || spot.nameTh}`;
+      } else {
+        displayTitle = item.customNameTh || item.customNameEn || "กิจกรรมกำหนดเอง";
+      }
 
-      // Show "Day X" in the first column ONLY on the first row of each day (matching user's image!)
-      const dayColHtml = index === 0
-        ? `<strong>${dayObj.labelEn.split(" (")[0]}</strong><span class="day-sub-date">${(dayObj.labelTh.match(/\((.*?)\)/) || ["", ""])[1]}</span>`
-        : ``;
+      const tipDetail = item.noteTh || (spot ? spot.ratingDescTh : "") || "";
 
       const row = document.createElement("div");
-      row.className = `step-row ${item.isFlightStep ? "is-flight-row" : ""}`;
+      row.className = "tl-row";
       row.draggable = true;
       row.dataset.dayKey = dayKey;
       row.dataset.index = index;
-
-      const stepIcon = item.isFlightStep
-        ? "✈️"
-        : (spot && spot.doodleIcon ? spot.doodleIcon : actMeta.icon);
+      row.dataset.uid = item.uid;
 
       row.innerHTML = `
-        <div class="step-col-day">${dayColHtml}</div>
-        <div class="step-col-place">
-          <div class="step-place-title" data-action="map">
-            <span>${stepIcon}</span>
-            <span>${placeTitleTh}</span>
-          </div>
-          ${item.flightBadge ? `<span class="step-flight-pill">${item.flightBadge}</span>` : ""}
-          <div class="step-place-sub">${placeSubText}</div>
-        </div>
-        <div class="step-col-time">
-          <span class="step-time-val">${displayTime}</span>
-          <div class="step-row-actions">
-            <button class="tl-btn" data-action="up" title="เลื่อนขึ้น" ${index === 0 ? "disabled" : ""}>▲</button>
-            <button class="tl-btn" data-action="down" title="เลื่อนลง" ${index === items.length - 1 ? "disabled" : ""}>▼</button>
-            <button class="tl-btn" data-action="edit" title="แก้ไขเวลา/รายละเอียด">✏️</button>
-            <button class="tl-btn delete" data-action="delete" title="ลบ">🗑️</button>
-          </div>
-        </div>
+        <span class="t" title="คลิกเพื่อเปลี่ยนเวลา">${item.time || "09:00"}</span>
+        <span class="n">${displayTitle}</span>
+        <button type="button" class="edit-btn" title="แก้ไขรายละเอียด">✎</button>
+        <button type="button" class="x" title="เอาออก">×</button>
       `;
 
-      // Drag events for reordering rows
+      // Click time (.t) -> prompt for quick time change (just like Downloads/index.html)
+      row.querySelector(".t").addEventListener("click", e => {
+        e.stopPropagation();
+        const v = prompt("เวลา (HH:MM)", item.time || "09:00");
+        if (v && /^\d{1,2}:\d{2}$/.test(v.trim())) {
+          const formatted = v.trim().padStart(5, "0");
+          item.time = formatted;
+          const endMins = timeToMinutes(formatted) + Number(item.duration || 60);
+          item.timeLabel = `${formatted} - ${minutesToTime(endMins)} น.`;
+          saveState();
+          renderAll();
+        }
+      });
+
+      // Click edit button (.edit-btn) -> open full edit modal
+      row.querySelector(".edit-btn").addEventListener("click", e => {
+        e.stopPropagation();
+        openEditTimelineModal(index, dayKey);
+      });
+
+      // Click remove button (.x) -> remove item from day
+      row.querySelector(".x").addEventListener("click", e => {
+        e.stopPropagation();
+        removeTimelineItem(index, dayKey);
+      });
+
+      // Click place name (.n) -> focus on map (or open flight ticket modal if flight leg)
+      row.querySelector(".n").addEventListener("click", () => {
+        currentDayKey = dayKey;
+        renderAll();
+        focusTimelineItemOnMap(index, dayKey);
+      });
+
+      // Hover tooltip & highlight pin on map
+      row.addEventListener("mouseenter", e => {
+        showFloatingTip(e, displayTitle, tipDetail);
+      });
+      row.addEventListener("mousemove", moveFloatingTip);
+      row.addEventListener("mouseleave", hideFloatingTip);
+
+      // Drag start on timeline row
       row.addEventListener("dragstart", e => {
+        hideFloatingTip();
         draggedPayload = {
           source: "timeline",
           dayKey,
           timelineIndex: index,
           uid: item.uid
         };
-        row.classList.add("dragging");
-        document.body.classList.add("is-dragging");
         e.dataTransfer.effectAllowed = "move";
         e.dataTransfer.setData("text/plain", JSON.stringify(draggedPayload));
       });
 
       row.addEventListener("dragend", () => {
-        row.classList.remove("dragging");
-        document.body.classList.remove("is-dragging");
-        document.querySelectorAll(".timeline-dropzone.drag-over").forEach(el => el.classList.remove("drag-over"));
+        draggedPayload = null;
+        clearDragOverStates();
       });
 
+      // Drag over row -> show orange top insertion line (.before)
       row.addEventListener("dragover", e => {
         e.preventDefault();
-        const rect = row.getBoundingClientRect();
-        const isBottomHalf = e.clientY > rect.top + rect.height / 2;
-        const targetZoneIndex = isBottomHalf ? index + 1 : index;
-        document.querySelectorAll(".timeline-dropzone").forEach(dz => {
-          dz.classList.toggle(
-            "drag-over",
-            dz.dataset.dayKey === dayKey && Number(dz.dataset.insertIndex) === targetZoneIndex
-          );
-        });
+        e.stopPropagation();
+        clearDragOverStates();
+        row.classList.add("before");
       });
 
+      // Drop onto row -> insert before this row
       row.addEventListener("drop", e => {
         e.preventDefault();
-        const rect = row.getBoundingClientRect();
-        const isBottomHalf = e.clientY > rect.top + rect.height / 2;
-        const targetZoneIndex = isBottomHalf ? index + 1 : index;
-        handleDropAtTimelineIndex(targetZoneIndex, dayKey);
+        e.stopPropagation();
+        clearDragOverStates();
+        handleDropAtTimelineIndex(index, dayKey);
       });
 
-      row.addEventListener("click", e => {
-        const btn = e.target.closest("[data-action]");
-        if (!btn) {
-          if (currentDayKey !== dayKey) {
-            currentDayKey = dayKey;
-            renderAll();
-          }
-          return;
-        }
-        const action = btn.dataset.action;
-        currentDayKey = dayKey;
-        if (action === "up") moveTimelineItem(index, index - 1, dayKey);
-        else if (action === "down") moveTimelineItem(index, index + 1, dayKey);
-        else if (action === "delete") removeTimelineItem(index, dayKey);
-        else if (action === "edit") openEditTimelineModal(index, dayKey);
-        else if (action === "map") {
-          renderAll();
-          focusTimelineItemOnMap(index, dayKey);
-        }
-      });
-
-      dayBlock.appendChild(row);
-      dayBlock.appendChild(createTimelineDropZone(index + 1, dayKey));
+      listEl.appendChild(row);
     });
 
-    container.appendChild(dayBlock);
-  });
-}
+    dayEl.appendChild(listEl);
 
-// Mode B: Detailed Timeline Cards
-function renderCardDetailMode(container, dayKeysToRender) {
-  dayKeysToRender.forEach(dayKey => {
-    const dayObj = timelineState[dayKey];
-    if (!dayObj) return;
-    const items = dayObj.items || [];
-
-    if (dayKeysToRender.length > 1) {
-      const dayBanner = document.createElement("div");
-      dayBanner.style.cssText = "background:#0284c7; color:#fff; padding:5px 10px; border-radius:7px; font-size:0.76rem; font-weight:800; margin:8px 0 4px; cursor:pointer;";
-      dayBanner.textContent = `${dayObj.labelTh} — ${dayObj.titleTh}`;
-      dayBanner.addEventListener("click", () => {
-        currentDayKey = dayKey;
-        renderAll();
-      });
-      container.appendChild(dayBanner);
-    }
-
-    container.appendChild(createTimelineDropZone(0, dayKey));
-
-    items.forEach((item, index) => {
-      const spot = getSpotById(item.spotId);
-      const actType = item.actType || (spot ? spot.activityType : "visit") || "visit";
-      const actMeta = ACTIVITY_META[actType] || ACTIVITY_META.visit;
-
-      const startMins = timeToMinutes(item.time);
-      const endMins = startMins + Number(item.duration || 60);
-      const endTimeStr = minutesToTime(endMins);
-      const timeBadgeText = item.timeLabel || `${item.time} - ${endTimeStr} (${item.duration}m)`;
-
-      const nameEn = item.customNameEn || (spot ? spot.nameEn : "Custom Activity");
-      const nameTh = item.customNameTh || (spot ? spot.nameTh : "กิจกรรมกำหนดเอง");
-      const nameZh = spot ? spot.nameZh : "哈尔滨";
-      const noteText = item.noteTh || item.noteEn || (spot ? spot.ratingDescTh : "");
-
-      const card = document.createElement("div");
-      card.className = `timeline-card act-${actType}`;
-      card.draggable = true;
-      card.dataset.index = index;
-      card.dataset.dayKey = dayKey;
-
-      card.innerHTML = `
-        <div class="tl-card-top">
-          <div class="tl-time-group">
-            <span class="tl-queue-num">${index + 1}</span>
-            <span class="tl-time-badge">${timeBadgeText}</span>
-            <span class="tl-act-badge ${actType}">${actMeta.icon} ${actMeta.labelTh}</span>
-          </div>
-          <div class="tl-card-actions">
-            <button class="tl-btn" data-action="up" ${index === 0 ? "disabled" : ""}>▲</button>
-            <button class="tl-btn" data-action="down" ${index === items.length - 1 ? "disabled" : ""}>▼</button>
-            <button class="tl-btn" data-action="map">📍</button>
-            <button class="tl-btn" data-action="edit">✏️</button>
-            <button class="tl-btn delete" data-action="delete">🗑️</button>
-          </div>
-        </div>
-        <div class="tl-card-title" data-action="map">${nameTh}</div>
-        <div class="tl-card-sub">${nameEn} · <span style="color:#0284c7;">${nameZh}</span></div>
-        ${noteText ? `<div class="tl-card-note">${noteText}</div>` : ""}
-      `;
-
-      card.addEventListener("dragstart", e => {
-        draggedPayload = { source: "timeline", dayKey, timelineIndex: index, uid: item.uid };
-        card.classList.add("dragging");
-        document.body.classList.add("is-dragging");
-        e.dataTransfer.setData("text/plain", JSON.stringify(draggedPayload));
-      });
-      card.addEventListener("dragend", () => {
-        card.classList.remove("dragging");
-        document.body.classList.remove("is-dragging");
-      });
-      card.addEventListener("click", e => {
-        const btn = e.target.closest("[data-action]");
-        if (!btn) return;
-        currentDayKey = dayKey;
-        const action = btn.dataset.action;
-        if (action === "up") moveTimelineItem(index, index - 1, dayKey);
-        else if (action === "down") moveTimelineItem(index, index + 1, dayKey);
-        else if (action === "delete") removeTimelineItem(index, dayKey);
-        else if (action === "edit") openEditTimelineModal(index, dayKey);
-        else if (action === "map") {
-          renderAll();
-          focusTimelineItemOnMap(index, dayKey);
-        }
-      });
-
-      container.appendChild(card);
-      container.appendChild(createTimelineDropZone(index + 1, dayKey));
+    // Drag over Day container -> show dashed outline (.over) and drop at end of day
+    dayEl.addEventListener("dragover", e => {
+      e.preventDefault();
+      clearDragOverStates();
+      dayEl.classList.add("over");
     });
+
+    dayEl.addEventListener("dragleave", e => {
+      if (!dayEl.contains(e.relatedTarget)) {
+        dayEl.classList.remove("over");
+      }
+    });
+
+    dayEl.addEventListener("drop", e => {
+      e.preventDefault();
+      clearDragOverStates();
+      handleDropAtTimelineIndex(items.length, dayKey);
+    });
+
+    container.appendChild(dayEl);
   });
 }
 
@@ -874,6 +849,7 @@ function renderChoosesSection() {
 
     // Drag events from Section 2 (Chooses) to Section 1 (Timeline)
     card.addEventListener("dragstart", e => {
+      hideFloatingTip();
       draggedPayload = {
         source: "chooses",
         spotId: spot.id
@@ -885,8 +861,18 @@ function renderChoosesSection() {
 
     card.addEventListener("dragend", () => {
       document.body.classList.remove("is-dragging");
-      document.querySelectorAll(".timeline-dropzone.drag-over").forEach(el => el.classList.remove("drag-over"));
+      clearDragOverStates();
     });
+
+    card.addEventListener("mouseenter", e => {
+      showFloatingTip(e, spot, {
+        title: `${spot.nameZh || ""} ${spot.nameTh}`,
+        sub: `${spot.nameEn} · ${spot.categoryLabelTh || ""}`,
+        desc: spot.ratingDescTh || spot.descriptionTh || ""
+      });
+    });
+    card.addEventListener("mousemove", moveFloatingTip);
+    card.addEventListener("mouseleave", hideFloatingTip);
 
     // Button clicks on Choose Card
     card.addEventListener("click", e => {
@@ -1390,18 +1376,47 @@ function openSpotDetailModal(spotId) {
 // 8. EVENT LISTENERS
 // ============================================================================
 function setupEventListeners() {
-  // Day Selector Tabs (Supports "all" or "day1".."day6")
-  document.querySelectorAll(".day-tab").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const targetDay = btn.dataset.day;
-      selectedDayTab = targetDay;
-      if (targetDay !== "all") {
-        currentDayKey = targetDay;
-      }
-      renderAll();
-      fitCurrentTimelineRoute();
-    });
+  // "+ วัน" Button in Section 1 Header (matches screenshot design)
+  document.getElementById("btnAddDay")?.addEventListener("click", () => {
+    const existingKeys = Object.keys(timelineState);
+    const nextDayNum = existingKeys.length + 1;
+    const newDayKey = `day${nextDayNum}`;
+    timelineState[newDayKey] = {
+      dayNumber: nextDayNum,
+      labelTh: `วันที่ ${nextDayNum}`,
+      labelEn: `Day ${nextDayNum}: Harbin Custom Day`,
+      themeTh: `จัดตารางอิสระ — ลากสถานที่จากส่วนที่ 2 มาวางที่นี่`,
+      items: []
+    };
+    currentDayKey = newDayKey;
+    selectedDayTab = "all";
+    saveState();
+    renderAll();
+    const container = document.getElementById("timelineListContainer");
+    if (container) {
+      setTimeout(() => {
+        container.scrollTo({ top: container.scrollHeight, behavior: "smooth" });
+      }, 60);
+    }
+    showToast(`➕ เพิ่ม "วันที่ ${nextDayNum}" เรียบร้อยแล้ว — ลากสถานที่มาวางได้เลย`);
   });
+
+  // Allow dragging a timeline row back to Section 2 (Chooses) to remove it
+  const choosesSec = document.getElementById("sectionChooses");
+  if (choosesSec) {
+    choosesSec.addEventListener("dragover", e => {
+      if (draggedPayload && draggedPayload.source === "timeline") {
+        e.preventDefault();
+      }
+    });
+    choosesSec.addEventListener("drop", e => {
+      if (draggedPayload && draggedPayload.source === "timeline") {
+        e.preventDefault();
+        removeTimelineItem(draggedPayload.fromIndex, draggedPayload.fromDayKey || currentDayKey);
+        draggedPayload = null;
+      }
+    });
+  }
 
   // Timeline Display Mode Switcher (Table vs Card)
   document.getElementById("btnModeTable")?.addEventListener("click", () => {
