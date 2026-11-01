@@ -1913,23 +1913,47 @@ const DEFAULT_HARBIN_TIMELINE = {
       {
         uid: "d1-4",
         spotId: 25,
-        customNameTh: "หม้อไฟทองเหลืองตงเป่ย & เดินกลับ LIZZY • Ritz Hotel (นอนคืนที่ 1)",
-        customNameEn: "Dongbei Copper Pot Hot Pot & Return to LIZZY • Ritz Hotel (Night 1)",
+        customNameTh: "หม้อไฟทองเหลืองตงเป่ย (มื้อค่ำคลายหนาว)",
+        customNameEn: "Dongbei Copper Pot Hot Pot Dinner",
         time: "20:30",
-        timeLabel: "20:30 - 22:00 น.",
-        duration: 90,
+        timeLabel: "20:30 - 21:45 น.",
+        duration: 75,
         actType: "eat",
-        noteTh: "มื้อค่ำหม้อไฟทองเหลืองตงเป่ย เนื้อแกะสไลซ์และซุปผักกาดดองคลายหนาว อิ่มแล้วเดินกลับเข้าที่พัก LIZZY • Ritz Hotel on Harbin Central Street · 🛌 พักคืนที่ 1 (4 ธ.ค.)",
-        noteEn: "Warming Dongbei copper pot hot pot dinner, then walk back to LIZZY • Ritz Hotel on Harbin Central Street (Night 1)"
+        noteTh: "มื้อค่ำหม้อไฟทองเหลืองตงเป่ย เนื้อแกะสไลซ์และซุปผักกาดดองร้อนๆ คลายหนาว",
+        noteEn: "Warming Dongbei charcoal copper pot hot pot dinner"
+      },
+      {
+        uid: "d1-hotel-night1",
+        spotId: 28,
+        customNameTh: "กลับเข้าที่พัก LIZZY • Ritz Hotel ถนนจงหยาง (พักค้างคืนที่ 1)",
+        customNameEn: "LIZZY • Ritz Hotel on Harbin Central Street (Return & Stay Night 1)",
+        time: "22:00",
+        timeLabel: "22:00 น. (พักคืนที่ 1)",
+        duration: 60,
+        actType: "visit",
+        noteTh: "🏨 เดินกลับเข้าโรงแรม LIZZY • Ritz Hotel on Harbin Central Street (哈尔滨大洋丽兹酒店 · 道里区西三道街19号) พักผ่อนอย่างอบอุ่น · 🛌 พักค้างคืนที่ 1 (4 ธ.ค. 2026)",
+        noteEn: "Walk back to LIZZY • Ritz Hotel on Harbin Central Street (No. 19 West 3rd St) for a warm night's rest · Overnight Stay Night 1 (Dec 4)"
       }
     ]
   },
   day2: {
     labelTh: "Day 2 (5 ธ.ค.)",
     labelEn: "Day 2 (Dec 5)",
-    titleTh: "เดินเที่ยวจาก LIZZY • Ritz Hotel: ตลาดเช้าหงจวน • โบสถ์เซนต์โซเฟีย • หัวเหมย • ริมน้ำซงฮัว (พักคืนที่ 2)",
-    titleEn: "Walk from LIZZY • Ritz Hotel: Morning Market • St. Sophia • Huamei • Songhua River (Night 2)",
+    titleTh: "เริ่มจาก LIZZY • Ritz Hotel ➔ ตลาดเช้าหงจวน • โบสถ์เซนต์โซเฟีย • หัวเหมย • ริมน้ำซงฮัว ➔ กลับพัก LIZZY • Ritz Hotel (คืนที่ 2)",
+    titleEn: "Start at LIZZY • Ritz Hotel ➔ Morning Market • St. Sophia • Huamei • Songhua River ➔ LIZZY • Ritz Hotel (Night 2)",
     items: [
+      {
+        uid: "d2-hotel-start",
+        spotId: 28,
+        customNameEn: "LIZZY • Ritz Hotel on Harbin Central Street (Start Day 2)",
+        customNameTh: "จุดเริ่มต้นวันที่ 2: ออกจากโรงแรม LIZZY • Ritz Hotel ถนนจงหยาง",
+        time: "07:15",
+        timeLabel: "07:15 - 07:30 น.",
+        duration: 15,
+        actType: "visit",
+        noteTh: "🏨 ออกเดินทางยามเช้าจากโรงแรม LIZZY • Ritz Hotel on Harbin Central Street (道里区西三道街19号) เตรียมเดินไปตลาดเช้าถนนหงจวนที่อยู่ห่างออกไปเพียง ~5 นาที",
+        noteEn: "Start Day 2 morning from LIZZY • Ritz Hotel on Harbin Central Street (No. 19 West 3rd St) and walk 5 mins to Hongzhuan Morning Market"
+      },
       {
         uid: "d2-1",
         spotId: 15,
@@ -1993,13 +2017,13 @@ const DEFAULT_HARBIN_TIMELINE = {
       {
         uid: "d2-hotel",
         spotId: 28,
-        customNameEn: "Return to LIZZY • Ritz Hotel on Harbin Central Street (Stay Night 2)",
-        customNameTh: "พักผ่อนที่โรงแรม LIZZY • Ritz Hotel ถนนจงหยาง (คืนที่ 2 · จัดกระเป๋าไป Snow Town)",
-        time: "18:00",
-        timeLabel: "18:00 - 21:30 น.",
+        customNameEn: "LIZZY • Ritz Hotel on Harbin Central Street (Return & Stay Night 2)",
+        customNameTh: "กลับเข้าที่พัก LIZZY • Ritz Hotel ถนนจงหยาง (พักค้างคืนที่ 2 · จัดกระเป๋าไป Snow Town)",
+        time: "18:30",
+        timeLabel: "18:30 น. (พักคืนที่ 2)",
         duration: 120,
         actType: "visit",
-        noteTh: "🏨 เดินกลับโรงแรม LIZZY • Ritz Hotel (道里区西三道街19号) · 💡 เคล็ดลับ: จัดกระเป๋าใบเล็กสำหรับไปนอน Snow Town 2 คืน และเตรียมฝากกระเป๋าเดินทางใบใหญ่ไว้ที่เคาน์เตอร์โรงแรมในเช้าวันรุ่งขึ้น · 🛌 พักคืนที่ 2 (5 ธ.ค.)",
+        noteTh: "🏨 เดินกลับโรงแรม LIZZY • Ritz Hotel (道里区西三道街19号) · 💡 เคล็ดลับ: จัดกระเป๋าใบเล็กสำหรับไปนอน Snow Town 2 คืน และเตรียมฝากกระเป๋าเดินทางใบใหญ่ไว้ที่เคาน์เตอร์โรงแรมในเช้าวันรุ่งขึ้น · 🛌 พักค้างคืนที่ 2 (5 ธ.ค. 2026)",
         noteEn: "Return to LIZZY • Ritz Hotel on Harbin Central Street (Night 2) · Pack a 2-night bag for Snow Town & prepare to store big suitcases"
       }
     ]
@@ -2011,16 +2035,28 @@ const DEFAULT_HARBIN_TIMELINE = {
     titleEn: "Check-out LIZZY • Ritz Hotel ➔ Harbin Station ➔ China Snow Town • Night 1 in Snow Town",
     items: [
       {
+        uid: "d3-hotel-checkout",
+        spotId: 28,
+        customNameEn: "LIZZY • Ritz Hotel on Harbin Central Street (Check-out 6 Dec & Store Luggage)",
+        customNameTh: "จุดเริ่มต้นวันที่ 3: เช็คเอาท์ LIZZY • Ritz Hotel & ฝากกระเป๋าเดินทางใบใหญ่",
+        time: "07:00",
+        timeLabel: "07:00 - 07:30 น.",
+        duration: 30,
+        actType: "visit",
+        noteTh: "🏨 เช็คเอาท์ออกจากโรงแรม LIZZY • Ritz Hotel วันที่ 6 ธ.ค. ฝากกระเป๋าเดินทางใบใหญ่ไว้ที่โรงแรม แล้วเรียกรถ DiDi หน้าซอย West 3rd St. มุ่งหน้าไปสถานีรถไฟฮาร์บิน",
+        noteEn: "Check out of LIZZY • Ritz Hotel on Dec 6, leave large suitcases at hotel storage, and take DiDi to Harbin Railway Station"
+      },
+      {
         uid: "d3-1",
         spotId: 0,
-        customNameEn: "Check-out LIZZY • Ritz Hotel (6 Dec) ➔ Harbin Station ➔ China Snow Town",
-        customNameTh: "เช็คเอาท์ LIZZY • Ritz Hotel (ฝากกระเป๋าใบใหญ่) ➔ สถานีรถไฟฮาร์บิน ➔ Snow Town",
+        customNameEn: "Harbin Railway Station ➔ HSR / Snow Highway to China Snow Town",
+        customNameTh: "สถานีรถไฟฮาร์บิน (哈尔滨站) ➔ รถไฟความเร็วสูง/รถบัสสู่หมู่บ้านหิมะ Snow Town",
         time: "07:30",
         timeLabel: "07:30 - 11:45 น.",
         duration: 255,
         actType: "transit",
-        noteTh: "เช็คเอาท์โรงแรม LIZZY • Ritz Hotel วันที่ 6 ธ.ค. (ฝากกระเป๋าเดินทางใบใหญ่ไว้ที่โรงแรม) นั่ง DiDi ~8 นาที ไปสถานีรถไฟฮาร์บิน (哈尔滨站) เพื่อเดินทางสู่หมู่บ้านหิมะ Snow Town",
-        noteEn: "Check out of LIZZY • Ritz Hotel on Dec 6 (store big luggage); short DiDi ride to Harbin Station, then HSR/Bus to China Snow Town"
+        noteTh: "นั่ง DiDi จากโรงแรม LIZZY • Ritz Hotel เพียง ~8 นาที ถึงสถานีรถไฟฮาร์บิน (哈尔滨站) เพื่อขึ้นรถไฟความเร็วสูง/รถบัสสู่หมู่บ้านหิมะ Snow Town",
+        noteEn: "8-min DiDi ride from LIZZY • Ritz Hotel to Harbin Station, then HSR/Bus to China Snow Town"
       },
       {
         uid: "d3-2",

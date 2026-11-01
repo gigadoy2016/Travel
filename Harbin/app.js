@@ -5,8 +5,8 @@
 // - Sections 3 & 4: AMAP Harbin Interactive Map (English Labels, Pinning, Route Lines)
 // ============================================================================
 
-const STORAGE_KEY_TIMELINE = "harbin_planner_timeline_v6";
-const STORAGE_KEY_CUSTOM_SPOTS = "harbin_planner_custom_spots_v6";
+const STORAGE_KEY_TIMELINE = "harbin_planner_timeline_v8";
+const STORAGE_KEY_CUSTOM_SPOTS = "harbin_planner_custom_spots_v8";
 
 // Detail Markdown File Mapping (for the original 22 Harbin docs)
 const SPOT_MD_FILES = {
@@ -2100,7 +2100,14 @@ function renderEnglishGeoLabels() {
 function getTimelineItemCoords(item) {
   if (!item) return null;
   const spot = getSpotById(item.spotId);
-  return item.customCoords || (spot ? spot.coords : null);
+  if (item.customCoords) return item.customCoords;
+  if (spot && spot.coords) return spot.coords;
+  // Fallback for flight steps without spotId (e.g. BKK / PVG transit steps) -> Harbin Taiping Airport T2
+  if (item.isFlightStep) {
+    const airportSpot = getSpotById(11);
+    return airportSpot ? airportSpot.coords : [45.6234, 126.2503];
+  }
+  return [45.7748, 126.6176];
 }
 
 function getPreviousTimelineItemInfo(index, dayKey = currentDayKey) {
@@ -2149,14 +2156,19 @@ function renderMapMarkersAndRoute() {
     dayItems[activeTimelineSelection.index];
 
   const currFocusIdx = hasActiveFocusInDay ? Number(activeTimelineSelection.index) : -1;
+  const currFocusItem = currFocusIdx >= 0 ? dayItems[currFocusIdx] : null;
   const prevFocusInfo = hasActiveFocusInDay ? getPreviousTimelineItemInfo(currFocusIdx, currentDayKey) : null;
   const prevFocusIdx = (prevFocusInfo && prevFocusInfo.dayKey === currentDayKey) ? Number(prevFocusInfo.index) : -1;
 
-  const currFocusSpotId = currFocusIdx >= 0 && dayItems[currFocusIdx]?.spotId !== undefined && dayItems[currFocusIdx]?.spotId !== ""
-    ? Number(dayItems[currFocusIdx].spotId)
+  const currFocusSpotId = currFocusItem
+    ? (currFocusItem.spotId !== undefined && currFocusItem.spotId !== null && currFocusItem.spotId !== ""
+        ? Number(currFocusItem.spotId)
+        : (currFocusItem.isFlightStep ? 11 : null))
     : null;
-  const prevFocusSpotId = prevFocusIdx >= 0 && dayItems[prevFocusIdx]?.spotId !== undefined && dayItems[prevFocusIdx]?.spotId !== ""
-    ? Number(dayItems[prevFocusIdx].spotId)
+  const prevFocusSpotId = prevFocusInfo?.item
+    ? (prevFocusInfo.item.spotId !== undefined && prevFocusInfo.item.spotId !== null && prevFocusInfo.item.spotId !== ""
+        ? Number(prevFocusInfo.item.spotId)
+        : (prevFocusInfo.item.isFlightStep ? 11 : null))
     : null;
 
   // Map spotId -> array of 1-based queue numbers in current timeline
@@ -2177,13 +2189,14 @@ function renderMapMarkersAndRoute() {
     const isCurrFocusedSpot = currFocusSpotId !== null && sid === currFocusSpotId;
     const isPrevFocusedSpot = prevFocusSpotId !== null && sid === prevFocusSpotId && !isCurrFocusedSpot;
 
-    if (!showAllHarbinPins && !isActiveInQueue) return;
+    if (!showAllHarbinPins && !isActiveInQueue && !isCurrFocusedSpot && !isPrevFocusedSpot) return;
 
     const displayPos = getDisplayCoords(spot.coords);
+    const prevBadgeNum = prevFocusIdx >= 0 ? (prevFocusIdx + 1) : (prevFocusInfo?.queueNum || "•");
     const badgeText = isCurrFocusedSpot
       ? (currFocusIdx + 1)
       : isPrevFocusedSpot
-      ? (prevFocusIdx + 1)
+      ? prevBadgeNum
       : isActiveInQueue
       ? queueNums.join(",")
       : (spot.doodleIcon || "•");
@@ -2205,7 +2218,7 @@ function renderMapMarkersAndRoute() {
       labelHtml = `<div class="pin-en-label">🎯 ถึง #${currFocusIdx + 1}: ${shortEnName}</div>`;
     } else if (isPrevFocusedSpot) {
       roleClass = "is-active-queue is-prev-stop";
-      labelHtml = `<div class="pin-en-label">🟢 จาก #${prevFocusIdx + 1}: ${shortEnName}</div>`;
+      labelHtml = `<div class="pin-en-label">🟢 จาก #${prevBadgeNum}: ${shortEnName}</div>`;
     } else if (hasActiveFocusInDay) {
       roleClass = `${isActiveInQueue ? "is-active-queue" : ""} is-dimmed-pin`;
       labelHtml = showPermanentEnLabels ? `<div class="pin-en-label">${isActiveInQueue ? `#${queueNums[0]} ` : ""}${shortEnName}</div>` : "";
@@ -2373,7 +2386,7 @@ function renderTimelineRouteAndSummary(dayItems) {
       }).addTo(routeLayerGroup);
     }
 
-    // Calculate segment distances and highlight the ACTIVE segment (จุดก่อนหน้า -> จุดนี้)
+    // Calculate segment distances for day summary
     for (let i = 0; i < routeNodes.length - 1; i++) {
       const a = routeNodes[i];
       const b = routeNodes[i + 1];
@@ -2384,156 +2397,7 @@ function renderTimelineRouteAndSummary(dayItems) {
         totalTravelMins += leg.mins;
       }
 
-      const isFocusedSegment = b.index === currFocusIdx;
-
-      if (isRouteVisible && isFocusedSegment) {
-        const prevItemObj = dayItems[a.index];
-        const currItemObj = dayItems[b.index];
-        const prevSpotObj = prevItemObj ? getSpotById(prevItemObj.spotId) : null;
-        const currSpotObj = currItemObj ? getSpotById(currItemObj.spotId) : null;
-
-        const bundle = (prevItemObj && currItemObj && !currItemObj.isFlightStep)
-          ? buildMultiModalPlansForStop(prevItemObj, currItemObj, a.gcjCoords, b.gcjCoords, prevSpotObj, currSpotObj)
-          : null;
-
-        const activeModeKey = bundle
-          ? (selectedTransitMode === "auto"
-              ? bundle.defaultMode
-              : (bundle.plansByKey?.[selectedTransitMode] ? selectedTransitMode : bundle.defaultMode))
-          : null;
-
-        const activePlan = (bundle && activeModeKey && bundle.plansByKey) ? bundle.plansByKey[activeModeKey] : null;
-
-        if (activePlan && activePlan.legs && activePlan.legs.length > 0) {
-          // Render each leg of the selected transit mode (e.g., Walk -> Metro/Bus -> Walk to destination)
-          activePlan.legs.forEach((planLeg, legIdx) => {
-            const rawCoords = planLeg.pathCoords || [];
-            if (rawCoords.length < 2) return;
-            const legLatLngs = rawCoords.map(c => getDisplayCoords(c));
-            const fromDisp = legLatLngs[0];
-            const toDisp = legLatLngs[legLatLngs.length - 1];
-
-            // 1. White High-Contrast Outer Road Casing
-            L.polyline(legLatLngs, {
-              color: "#ffffff",
-              weight: 12,
-              opacity: 0.96,
-              lineCap: "round",
-              lineJoin: "round"
-            }).addTo(routeLayerGroup);
-
-            // 2. Mode-Specific Core Line (Purple=#7c3aed for Rail/Metro, Cyan=#0891b2 for Bus, Green=#10b981 for Walk, Orange=#e4572e for Taxi)
-            L.polyline(legLatLngs, {
-              color: planLeg.color || "#e4572e",
-              weight: planLeg.type === "walk" ? 6 : 7.5,
-              opacity: 1,
-              dashArray: planLeg.dashArray || null,
-              lineCap: "round",
-              lineJoin: "round"
-            }).addTo(routeLayerGroup);
-
-            // 3. Animated Flow Dashes showing direction along each leg
-            L.polyline(legLatLngs, {
-              color: planLeg.flowColor || "#fde047",
-              weight: 3.2,
-              opacity: 0.95,
-              dashArray: planLeg.type === "walk" ? "4, 10" : "10, 12",
-              lineCap: "round",
-              className: "active-segment-flow-line"
-            }).addTo(routeLayerGroup);
-
-            // 4. Directional Arrow Marker along leg
-            const dLat = toDisp[0] - fromDisp[0];
-            const dLng = toDisp[1] - fromDisp[1];
-            const angleDeg = Math.atan2(-dLat, dLng) * (180 / Math.PI);
-            const arrowPoints = activePlan.legs.length === 1 ? [0.3, 0.7] : [0.55];
-
-            arrowPoints.forEach(t => {
-              const arrowLat = fromDisp[0] + dLat * t;
-              const arrowLng = fromDisp[1] + dLng * t;
-              const arrowIcon = L.divIcon({
-                className: "route-seg-wrapper",
-                html: `<div class="active-segment-arrow-icon" style="border-color:${planLeg.color || "#e4572e"}; color:${planLeg.color || "#c2410c"}; transform: rotate(${angleDeg.toFixed(1)}deg);">➤</div>`,
-                iconSize: [22, 22],
-                iconAnchor: [11, 11]
-              });
-              L.marker([arrowLat, arrowLng], { icon: arrowIcon, interactive: false, zIndexOffset: 2600 }).addTo(routeLayerGroup);
-            });
-
-            // 5. Callout Pill at the midpoint of each leg (shows Step # + Mode + Dist/Time)
-            const midIdx = Math.floor(legLatLngs.length / 2);
-            const midLat = legLatLngs.length === 2
-              ? (fromDisp[0] + toDisp[0]) / 2
-              : legLatLngs[midIdx][0];
-            const midLng = legLatLngs.length === 2
-              ? (fromDisp[1] + toDisp[1]) / 2
-              : legLatLngs[midIdx][1];
-            const legBadgeIcon = L.divIcon({
-              className: "route-seg-wrapper",
-              html: `<div class="active-segment-badge" style="border-color:${planLeg.color || "#fde047"};">${planLeg.badgeTh || ""}</div>`,
-              iconSize: [230, 28],
-              iconAnchor: [115, legIdx % 2 === 0 ? -8 : 26]
-            });
-            L.marker([midLat, midLng], { icon: legBadgeIcon, interactive: false, zIndexOffset: 2800 + legIdx }).addTo(routeLayerGroup);
-          });
-
-          // 6. Render Transfer Station / Hub Pins (e.g. Metro Station / Bus Stop where user switches from Rail/Bus to Walk)
-          if (activePlan.transferHubs && activePlan.transferHubs.length > 0) {
-            activePlan.transferHubs.forEach((hub, hIdx) => {
-              if (!hub.coords) return;
-              const hubDisp = getDisplayCoords(hub.coords);
-              const hubIcon = L.divIcon({
-                className: "route-seg-wrapper",
-                html: `<div class="transfer-hub-pin">${hub.label || hub.nameTh || "🚇 จุดเชื่อมต่อ"}</div>`,
-                iconSize: [210, 32],
-                iconAnchor: [105, 16]
-              });
-              L.marker(hubDisp, { icon: hubIcon, interactive: false, zIndexOffset: 2750 + hIdx }).addTo(routeLayerGroup);
-            });
-          }
-        } else {
-          const segLatLngs = [a.displayCoords, b.displayCoords];
-
-          // Fallback single active segment line
-          L.polyline(segLatLngs, {
-            color: "#ffffff",
-            weight: 12,
-            opacity: 0.96,
-            lineCap: "round",
-            lineJoin: "round"
-          }).addTo(routeLayerGroup);
-
-          L.polyline(segLatLngs, {
-            color: "#e4572e",
-            weight: 7,
-            opacity: 1,
-            lineCap: "round",
-            lineJoin: "round"
-          }).addTo(routeLayerGroup);
-
-          L.polyline(segLatLngs, {
-            color: "#fde047",
-            weight: 3.5,
-            opacity: 1,
-            dashArray: "10, 12",
-            lineCap: "round",
-            className: "active-segment-flow-line"
-          }).addTo(routeLayerGroup);
-
-          const midLat = (a.displayCoords[0] + b.displayCoords[0]) / 2;
-          const midLng = (a.displayCoords[1] + b.displayCoords[1]) / 2;
-          const distLabel = segKm < 1
-            ? `${Math.max(50, Math.round(segKm * 1000))} ม. (~${leg.mins} นาที)`
-            : `${segKm.toFixed(1)} กม. (~${leg.mins} นาที)`;
-          const segIcon = L.divIcon({
-            className: "route-seg-wrapper",
-            html: `<div class="active-segment-badge">${leg.mode.split(" ")[0]} #${a.queueNum} ➔ #${b.queueNum} · ${distLabel}</div>`,
-            iconSize: [200, 28],
-            iconAnchor: [100, -8]
-          });
-          L.marker([midLat, midLng], { icon: segIcon, interactive: false, zIndexOffset: 2800 }).addTo(routeLayerGroup);
-        }
-      } else if (isRouteVisible && !hasActiveFocusInDay && segKm < 400) {
+      if (isRouteVisible && !hasActiveFocusInDay && segKm < 400) {
         const midLat = (a.displayCoords[0] + b.displayCoords[0]) / 2;
         const midLng = (a.displayCoords[1] + b.displayCoords[1]) / 2;
         const segIcon = L.divIcon({
@@ -2543,6 +2407,142 @@ function renderTimelineRouteAndSummary(dayItems) {
           iconAnchor: [70, 10]
         });
         L.marker([midLat, midLng], { icon: segIcon, interactive: false }).addTo(routeLayerGroup);
+      }
+    }
+  }
+
+  // Highlight the ACTIVE focused segment for EVERY stop in the day (including stop #1 or flight steps)
+  if (isRouteVisible && hasActiveFocusInDay && currFocusIdx >= 0) {
+    const currItemObj = dayItems[currFocusIdx];
+    const prevInfo = getPreviousTimelineItemInfo(currFocusIdx, currentDayKey);
+    const fallbackAirportSpot = getSpotById(11);
+    const fallbackHotelSpot = getSpotById(28) || getSpotById(2);
+
+    let effPrevItem = currItemObj.isFlightStep
+      ? { spotId: 11 }
+      : (prevInfo?.item || { spotId: 11 });
+    let effCurrItem = currItemObj.isFlightStep
+      ? (dayItems.find(x => !x.isFlightStep) || { spotId: 28 })
+      : currItemObj;
+
+    let effPrevCoords = currItemObj.isFlightStep
+      ? (fallbackAirportSpot ? fallbackAirportSpot.coords : [45.6234, 126.2503])
+      : (getTimelineItemCoords(effPrevItem) || [45.6234, 126.2503]);
+    let effCurrCoords = getTimelineItemCoords(effCurrItem) || [45.7748, 126.6176];
+
+    // If clicking #1 morning hotel start (same spot as last night's hotel), show the departure route to #2
+    if (currFocusIdx === 0 && calcDistanceKm(effPrevCoords, effCurrCoords) < 0.01 && dayItems[1]) {
+      effPrevItem = currItemObj;
+      effCurrItem = dayItems[1];
+      effPrevCoords = getTimelineItemCoords(effPrevItem) || effPrevCoords;
+      effCurrCoords = getTimelineItemCoords(effCurrItem) || effCurrCoords;
+    }
+
+    const effPrevSpot = getSpotById(effPrevItem.spotId) || fallbackAirportSpot;
+    const effCurrSpot = getSpotById(effCurrItem.spotId) || fallbackHotelSpot;
+
+    const bundle = buildMultiModalPlansForStop(
+      effPrevItem,
+      effCurrItem,
+      effPrevCoords,
+      effCurrCoords,
+      effPrevSpot,
+      effCurrSpot
+    );
+
+    const activeModeKey = bundle
+      ? (selectedTransitMode === "auto"
+          ? bundle.defaultMode
+          : (bundle.plansByKey?.[selectedTransitMode] ? selectedTransitMode : bundle.defaultMode))
+      : null;
+
+    const activePlan = (bundle && activeModeKey && bundle.plansByKey) ? bundle.plansByKey[activeModeKey] : null;
+
+    if (activePlan && activePlan.legs && activePlan.legs.length > 0) {
+      activePlan.legs.forEach((planLeg, legIdx) => {
+        const rawCoords = planLeg.pathCoords || [];
+        if (rawCoords.length < 2) return;
+        const legLatLngs = rawCoords.map(c => getDisplayCoords(c));
+        const fromDisp = legLatLngs[0];
+        const toDisp = legLatLngs[legLatLngs.length - 1];
+
+        // 1. White High-Contrast Outer Road Casing
+        L.polyline(legLatLngs, {
+          color: "#ffffff",
+          weight: 12,
+          opacity: 0.96,
+          lineCap: "round",
+          lineJoin: "round"
+        }).addTo(routeLayerGroup);
+
+        // 2. Mode-Specific Core Line
+        L.polyline(legLatLngs, {
+          color: planLeg.color || "#e4572e",
+          weight: planLeg.type === "walk" ? 6 : 7.5,
+          opacity: 1,
+          dashArray: planLeg.dashArray || null,
+          lineCap: "round",
+          lineJoin: "round"
+        }).addTo(routeLayerGroup);
+
+        // 3. Animated Flow Dashes showing direction along each leg
+        L.polyline(legLatLngs, {
+          color: planLeg.flowColor || "#fde047",
+          weight: 3.2,
+          opacity: 0.95,
+          dashArray: planLeg.type === "walk" ? "4, 10" : "10, 12",
+          lineCap: "round",
+          className: "active-segment-flow-line"
+        }).addTo(routeLayerGroup);
+
+        // 4. Directional Arrow Marker along leg
+        const dLat = toDisp[0] - fromDisp[0];
+        const dLng = toDisp[1] - fromDisp[1];
+        const angleDeg = Math.atan2(-dLat, dLng) * (180 / Math.PI);
+        const arrowPoints = activePlan.legs.length === 1 ? [0.3, 0.7] : [0.55];
+
+        arrowPoints.forEach(t => {
+          const arrowLat = fromDisp[0] + dLat * t;
+          const arrowLng = fromDisp[1] + dLng * t;
+          const arrowIcon = L.divIcon({
+            className: "route-seg-wrapper",
+            html: `<div class="active-segment-arrow-icon" style="border-color:${planLeg.color || "#e4572e"}; color:${planLeg.color || "#c2410c"}; transform: rotate(${angleDeg.toFixed(1)}deg);">➤</div>`,
+            iconSize: [22, 22],
+            iconAnchor: [11, 11]
+          });
+          L.marker([arrowLat, arrowLng], { icon: arrowIcon, interactive: false, zIndexOffset: 2600 }).addTo(routeLayerGroup);
+        });
+
+        // 5. Callout Pill at the midpoint of each leg
+        const midIdx = Math.floor(legLatLngs.length / 2);
+        const midLat = legLatLngs.length === 2
+          ? (fromDisp[0] + toDisp[0]) / 2
+          : legLatLngs[midIdx][0];
+        const midLng = legLatLngs.length === 2
+          ? (fromDisp[1] + toDisp[1]) / 2
+          : legLatLngs[midIdx][1];
+        const legBadgeIcon = L.divIcon({
+          className: "route-seg-wrapper",
+          html: `<div class="active-segment-badge" style="border-color:${planLeg.color || "#fde047"};">${planLeg.badgeTh || ""}</div>`,
+          iconSize: [230, 28],
+          iconAnchor: [115, legIdx % 2 === 0 ? -8 : 26]
+        });
+        L.marker([midLat, midLng], { icon: legBadgeIcon, interactive: false, zIndexOffset: 2800 + legIdx }).addTo(routeLayerGroup);
+      });
+
+      // 6. Render Transfer Station / Hub Pins
+      if (activePlan.transferHubs && activePlan.transferHubs.length > 0) {
+        activePlan.transferHubs.forEach((hub, hIdx) => {
+          if (!hub.coords) return;
+          const hubDisp = getDisplayCoords(hub.coords);
+          const hubIcon = L.divIcon({
+            className: "route-seg-wrapper",
+            html: `<div class="transfer-hub-pin">${hub.label || hub.nameTh || "🚇 จุดเชื่อมต่อ"}</div>`,
+            iconSize: [210, 32],
+            iconAnchor: [105, 16]
+          });
+          L.marker(hubDisp, { icon: hubIcon, interactive: false, zIndexOffset: 2750 + hIdx }).addTo(routeLayerGroup);
+        });
       }
     }
   }
@@ -2607,24 +2607,45 @@ function focusTimelineItemOnMap(index, dayKey = currentDayKey) {
   // Close any open popup so the highlighted route and pins are completely unobstructed
   map.closePopup();
 
-  const currCoords = getTimelineItemCoords(item);
-  if (!currCoords) {
-    if (item.isFlightStep) {
-      document.getElementById("flightModalBackdrop").hidden = false;
-    }
+  const fallbackAirportCoords = getSpotById(11)?.coords || [45.6234, 126.2503];
+  const fallbackHotelCoords = getSpotById(28)?.coords || [45.7748, 126.6176];
+
+  if (item.isFlightStep) {
+    // For any flight step, zoom clearly to show Harbin Airport T2 <-> Hotel transfer route on the map
+    const ptAirport = getDisplayCoords(fallbackAirportCoords);
+    const ptHotel = getDisplayCoords(fallbackHotelCoords);
+    const bounds = L.latLngBounds([ptAirport, ptHotel]).pad(0.28);
+    map.flyToBounds(bounds, {
+      paddingTopLeft: [70, 75],
+      paddingBottomRight: [70, 75],
+      maxZoom: 16,
+      duration: 0.85
+    });
     return;
   }
 
+  const currCoords = getTimelineItemCoords(item);
+  if (!currCoords) return;
+
   // Check if there is a Previous Stop in the timeline to zoom & frame the route segment [prev -> curr]
   const prevInfo = getPreviousTimelineItemInfo(index, dayKey);
-  const prevCoords = prevInfo ? getTimelineItemCoords(prevInfo.item) : null;
+  let prevCoords = prevInfo ? getTimelineItemCoords(prevInfo.item) : fallbackAirportCoords;
+  let targetCoords = currCoords;
+
+  // If clicking #1 morning hotel start (same coordinates as last night's hotel), frame [#1 Hotel -> #2 First Stop]
+  if (index === 0 && prevCoords && calcDistanceKm(prevCoords, currCoords) < 0.01 && items[1]) {
+    const nextCoords = getTimelineItemCoords(items[1]);
+    if (nextCoords) {
+      prevCoords = currCoords;
+      targetCoords = nextCoords;
+    }
+  }
 
   if (prevCoords) {
-    const segDistKm = calcDistanceKm(prevCoords, currCoords);
-    // If previous stop and current stop are in the same region (< 380 km) and not identical coordinates
+    const segDistKm = calcDistanceKm(prevCoords, targetCoords);
     if (segDistKm > 0.005 && segDistKm < 380) {
       const ptPrev = getDisplayCoords(prevCoords);
-      const ptCurr = getDisplayCoords(currCoords);
+      const ptCurr = getDisplayCoords(targetCoords);
       const bounds = L.latLngBounds([ptPrev, ptCurr]).pad(0.32);
       map.flyToBounds(bounds, {
         paddingTopLeft: [70, 75],
@@ -2636,7 +2657,6 @@ function focusTimelineItemOnMap(index, dayKey = currentDayKey) {
     }
   }
 
-  // Fallback if first stop of trip or coming from an international flight leg: zoom clearly onto the current stop
   const pos = getDisplayCoords(currCoords);
   map.flyTo(pos, 16, { duration: 0.85 });
 }
@@ -2787,6 +2807,14 @@ function openSpotDetailModal(spotId) {
 // 8. EVENT LISTENERS
 // ============================================================================
 function setupEventListeners() {
+  // Export to Excel (.xlsx) Buttons (Top Header + Column 1 Header)
+  document.getElementById("btnExportXlsx")?.addEventListener("click", () => {
+    exportTripToXlsx();
+  });
+  document.getElementById("btnInlineExportXlsx")?.addEventListener("click", () => {
+    exportTripToXlsx();
+  });
+
   // "+ วัน" Button in Section 1 Header (matches screenshot design)
   document.getElementById("btnAddDay")?.addEventListener("click", () => {
     const existingKeys = Object.keys(timelineState);
@@ -3230,4 +3258,196 @@ function showToast(msg) {
   toast._timer = setTimeout(() => {
     toast.classList.remove("show");
   }, 3000);
+}
+
+// ============================================================================
+// 8. EXPORT TO EXCEL (.XLSX) — แสดงลิสต์สถานที่และแผนการเดินทางแยกเป็นข้อๆ
+// ============================================================================
+function exportTripToXlsx() {
+  const allDayKeys = Object.keys(timelineState);
+  const timelineRows = [];
+  let globalItemNum = 1;
+  let prevGlobalItem = null;
+  let prevGlobalSpot = null;
+  let prevGlobalCoords = null;
+
+  allDayKeys.forEach((dayKey, dayIdx) => {
+    const dayObj = timelineState[dayKey];
+    const items = dayObj?.items || [];
+    const dayLabel = dayObj?.labelTh || `วันที่ ${dayIdx + 1}`;
+
+    items.forEach((item, idx) => {
+      const spot = getSpotById(item.spotId);
+      const actType = item.actType || (spot ? spot.activityType : "visit") || "visit";
+      const actMeta = ACTIVITY_META[actType] || ACTIVITY_META.visit;
+
+      const nameEn = item.customNameEn || spot?.nameEn || `Stop #${idx + 1}`;
+      const nameTh = item.customNameTh || spot?.nameTh || nameEn;
+      const nameZh = spot?.nameZh || (item.isFlightStep ? "哈尔滨太平国际机场 / 浦东国际机场" : "哈尔滨景点");
+      const pinyin = spot?.pinyin || "";
+      const currCoords = getTimelineItemCoords(item) || [45.7748, 126.6176];
+
+      const prevNameEn = prevGlobalItem
+        ? (prevGlobalItem.customNameEn || prevGlobalSpot?.nameEn || "")
+        : "จุดเริ่มต้นของทริป (Suvarnabhumi BKK)";
+      const prevNameTh = prevGlobalItem
+        ? (prevGlobalItem.customNameTh || prevGlobalSpot?.nameTh || prevNameEn)
+        : "ท่าอากาศยานสุวรรณภูมิ (BKK)";
+
+      const distKm = (prevGlobalCoords && currCoords && !item.isFlightStep)
+        ? calcDistanceKm(prevGlobalCoords, currCoords)
+        : 0;
+
+      // Build itemized transit steps (แยกเป็นข้อๆ 1, 2, 3)
+      let transitStepsList = "";
+      if (item.isFlightStep) {
+        transitStepsList = `1) ✈️ เที่ยวบินตามตาราง (Booking: 1622932337344364)\n2) 🚌 เข้าเมืองด้วย Airport Bus สาย 3 ลงถนนจงหยาง (20 หยวน) หรือ 🚕 DiDi (~45 นาที)`;
+      } else {
+        const bundle = buildMultiModalPlansForStop(
+          prevGlobalItem || { spotId: 11 },
+          item,
+          prevGlobalCoords || [45.6234, 126.2503],
+          currCoords,
+          prevGlobalSpot || getSpotById(11),
+          spot
+        );
+        if (bundle && bundle.orderedPlans) {
+          transitStepsList = bundle.orderedPlans
+            .map((p, pIdx) => {
+              const legLines = (p.legs || []).map((l, lIdx) => `   ${pIdx + 1}.${lIdx + 1}) ${l.stepTextTh || l.badgeTh}`).join("\n");
+              return `ทางเลือกที่ ${pIdx + 1}: ${p.titleTh}\n${legLines}`;
+            })
+            .join("\n");
+        }
+      }
+
+      // Build itemized highlights & notes (แยกเป็นข้อๆ 1, 2, 3)
+      const bulletItems = [];
+      if (item.noteTh) bulletItems.push(`บันทึกตาราง: ${item.noteTh}`);
+      if (spot?.shortBulletsTh) bulletItems.push(...spot.shortBulletsTh);
+      if (spot?.highlightsTh) bulletItems.push(...spot.highlightsTh);
+      const uniqueBulletItems = [...new Set(bulletItems)];
+      const itemizedPointsText = uniqueBulletItems
+        .map((b, bIdx) => `${bIdx + 1}. ${b}`)
+        .join("\n");
+
+      const weatherInfo = getWeatherForSelection(dayKey, item);
+      const amapUrl = `https://uri.amap.com/marker?position=${currCoords[1].toFixed(4)},${currCoords[0].toFixed(4)}&name=${encodeURIComponent(nameZh || nameEn)}`;
+
+      timelineRows.push({
+        "ข้อที่ (No.)": globalItemNum,
+        "วันที่ (Day)": dayLabel,
+        "คิวที่ (Queue)": `#${idx + 1}/${items.length}`,
+        "เวลา (Time)": item.time || "09:00",
+        "ระยะเวลา (นาที)": Number(item.duration || 60),
+        "ประเภทกิจกรรม": `${actMeta.icon} ${actMeta.labelTh}`,
+        "1. ชื่ออังกฤษ (English Name)": nameEn,
+        "2. ชื่อไทย (Thai Name)": nameTh,
+        "3. ชื่อจีน (Chinese Name / ยื่นให้แท็กซี่)": nameZh,
+        "พินอิน (Pinyin)": pinyin,
+        "เดินทางจากจุดก่อนหน้า": `${prevNameEn} (${prevNameTh})`,
+        "ระยะทางจากจุดก่อนหน้า (กม.)": item.isFlightStep ? "เที่ยวบิน" : Number(distKm.toFixed(2)),
+        "วิธีเดินทางแยกเป็นข้อๆ (รถไฟ/รถบัส/เดินเท้า/DiDi)": transitStepsList,
+        "รายละเอียด & จุดเด่นของสถานที่ (แยกเป็นข้อๆ)": itemizedPointsText,
+        "เวลาเปิด-ปิด": spot?.openingHoursTh || "-",
+        "ค่าเข้าชม / ค่าใช้จ่าย": spot?.ticketPriceTh || "-",
+        "อุณหภูมิคาดการณ์ (°C)": `${weatherInfo.tempC}°C (ช่วงวัน ${weatherInfo.lowC}°C ~ ${weatherInfo.highC}°C)`,
+        "พิกัด AMAP (Lat, Lng)": `${currCoords[0].toFixed(4)}, ${currCoords[1].toFixed(4)}`,
+        "ลิงก์จอง / แผนที่นำทาง": spot?.bookingUrl || amapUrl
+      });
+
+      globalItemNum++;
+      prevGlobalItem = item;
+      prevGlobalSpot = spot;
+      prevGlobalCoords = currCoords;
+    });
+  });
+
+  // Sheet 2: Itemized List of All Harbin Places (รวมสถานที่ทั้งหมดแยกเป็นข้อๆ)
+  const allSpotsRows = allSpots.map((spot, idx) => {
+    const bullets = [
+      ...(spot.shortBulletsTh || []),
+      ...(spot.highlightsTh || [])
+    ];
+    const uniqueBullets = [...new Set(bullets)];
+    const numberedHighlights = uniqueBullets.map((b, i) => `${i + 1}. ${b}`).join("\n");
+
+    const transitBullets = [];
+    if (spot.transportTh?.fromStation) transitBullets.push(`1. รถไฟใต้ดิน/จากสถานี: ${spot.transportTh.fromStation}`);
+    if (spot.transportTh?.fromAirport) transitBullets.push(`2. จากสนามบิน: ${spot.transportTh.fromAirport}`);
+    if (spot.transportTh?.inside) transitBullets.push(`3. การเดินภายในพื้นที่: ${spot.transportTh.inside}`);
+
+    return {
+      "ข้อที่ (No.)": idx + 1,
+      "รหัสหมุด (Spot ID)": spot.id,
+      "1. ชื่อสถานที่ (อังกฤษ - EN)": spot.nameEn || "",
+      "2. ชื่อสถานที่ (ไทย - TH)": spot.nameTh || "",
+      "3. ชื่อสถานที่ (จีน - 中文)": spot.nameZh || "",
+      "พินอิน (Pinyin)": spot.pinyin || "",
+      "หมวดหมู่": `${spot.doodleIcon || "📍"} ${spot.categoryLabelTh || ""}`,
+      "คะแนนรีวิว": spot.rating ? `${spot.rating} (${spot.ratingStars || "⭐⭐⭐⭐⭐"})` : "-",
+      "ไฮไลท์ & รายละเอียด (แยกเป็นข้อๆ)": numberedHighlights || spot.descriptionTh || "",
+      "วิธีเดินทาง (แยกเป็นข้อๆ)": transitBullets.join("\n"),
+      "เวลาเปิด-ปิด": spot.openingHoursTh || "-",
+      "ช่วงเวลาแนะนำ": spot.bestTimeTh || "-",
+      "ค่าเข้าชม / ค่าใช้จ่าย": spot.ticketPriceTh || "-",
+      "พิกัด AMAP (Lat, Lng)": spot.coords ? `${spot.coords[0].toFixed(4)}, ${spot.coords[1].toFixed(4)}` : "-",
+      "ลิงก์จอง / ข้อมูลเพิ่ม": spot.bookingUrl || (SPOT_MD_FILES[spot.id] || "-")
+    };
+  });
+
+  const fileName = `Harbin_Trip_Plan_List_${new Date().toISOString().slice(0, 10)}.xlsx`;
+
+  if (typeof XLSX !== "undefined") {
+    const wb = XLSX.utils.book_new();
+
+    const wsTimeline = XLSX.utils.json_to_sheet(timelineRows);
+    wsTimeline["!cols"] = [
+      { wch: 10 }, // ข้อที่
+      { wch: 16 }, // วันที่
+      { wch: 10 }, // คิวที่
+      { wch: 10 }, // เวลา
+      { wch: 14 }, // ระยะเวลา
+      { wch: 18 }, // ประเภท
+      { wch: 42 }, // ชื่ออังกฤษ
+      { wch: 42 }, // ชื่อไทย
+      { wch: 36 }, // ชื่อจีน
+      { wch: 24 }, // พินอิน
+      { wch: 38 }, // เดินทางจากจุดก่อนหน้า
+      { wch: 16 }, // ระยะทาง
+      { wch: 58 }, // วิธีเดินทางแยกเป็นข้อๆ
+      { wch: 62 }, // รายละเอียดแยกเป็นข้อๆ
+      { wch: 26 }, // เวลาเปิด-ปิด
+      { wch: 28 }, // ค่าเข้าชม
+      { wch: 28 }, // อุณหภูมิ
+      { wch: 22 }, // พิกัด
+      { wch: 45 }  // ลิงก์
+    ];
+    XLSX.utils.book_append_sheet(wb, wsTimeline, "1_แผนเดินทางรายข้อ");
+
+    const wsSpots = XLSX.utils.json_to_sheet(allSpotsRows);
+    wsSpots["!cols"] = [
+      { wch: 10 }, // ข้อที่
+      { wch: 12 }, // รหัสหมุด
+      { wch: 38 }, // ชื่ออังกฤษ
+      { wch: 38 }, // ชื่อไทย
+      { wch: 36 }, // ชื่อจีน
+      { wch: 24 }, // พินอิน
+      { wch: 26 }, // หมวดหมู่
+      { wch: 18 }, // คะแนน
+      { wch: 65 }, // ไฮไลท์แยกเป็นข้อๆ
+      { wch: 55 }, // วิธีเดินทางแยกเป็นข้อๆ
+      { wch: 26 }, // เวลาเปิด-ปิด
+      { wch: 26 }, // ช่วงเวลาแนะนำ
+      { wch: 28 }, // ค่าเข้าชม
+      { wch: 22 }, // พิกัด
+      { wch: 45 }  // ลิงก์
+    ];
+    XLSX.utils.book_append_sheet(wb, wsSpots, "2_ลิสต์สถานที่ทั้งหมด");
+
+    XLSX.writeFile(wb, fileName);
+    showToast(`📊 ดาวน์โหลดไฟล์ "${fileName}" (${timelineRows.length} รายการเดินทาง + ${allSpotsRows.length} สถานที่) เรียบร้อยแล้ว!`);
+  } else {
+    showToast("⚠️ ไม่พบไลบรารี XLSX กรุณาเชื่อมต่ออินเทอร์เน็ตแล้วรีเฟรชหน้าเว็บ");
+  }
 }
