@@ -31,10 +31,16 @@
       <div class="brand-titles">
         <div class="brand-title-row">
           <h1>Harbin (哈尔滨) Trip Planner &amp; AMAP</h1>
-          <span class="header-badge">4-Vertical Columns</span>
-          <span class="header-badge weather">❄️ -15°C ~ -22°C</span>
+          <a id="headerWeatherBadge"
+             href="https://www.accuweather.com/th/cn/harbin/103326/weather-forecast/103326"
+             target="_blank"
+             rel="noopener noreferrer"
+             class="header-badge weather-link"
+             title="คลิกเพื่อเปิดเว็บไซต์พยากรณ์อากาศฮาร์บิน (AccuWeather Harbin)">
+            <span id="headerWeatherText">❄️ -16°C (-11°C ~ -22°C) · 📅 4 ธ.ค. 19:00 น.</span>
+            <span class="weather-src-tag">AccuWeather ↗</span>
+          </a>
         </div>
-        <p>Col 1: Timeline (เดิน/กิน/เที่ยว) · Col 2: Drag &amp; Drop Chooses · Col 3 &amp; 4: AMAP Harbin Map (English)</p>
       </div>
     </div>
 
@@ -64,8 +70,8 @@
   <!-- Mobile / Tablet Responsive Section Switcher Bar (Visible on smaller screens) -->
   <nav class="mobile-view-tabs" id="mobileViewTabs" aria-label="Responsive View Switcher">
     <button class="mobile-tab active" data-view="all">📱 แสดงทั้งหมด (All 4 Parts)</button>
-    <button class="mobile-tab" data-view="col1">🕒 1. Timeline (<span id="mobTimelineCount">4</span>)</button>
-    <button class="mobile-tab" data-view="col2">📍 2. Chooses (28)</button>
+    <button class="mobile-tab" data-view="col1">🕒 1. แผนเดินทาง (<span id="mobTimelineCount">4</span>)</button>
+    <button class="mobile-tab" data-view="col2">📋 2. รายละเอียด &amp; วิธีเดินทาง</button>
     <button class="mobile-tab" data-view="col34">🗺️ 3-4. AMAP Map (EN)</button>
   </nav>
 
@@ -116,132 +122,168 @@
     </section>
 
     <!-- =======================================================================
-         SECTION 2 (COLUMN 2): CHOOSES (ตัวเลือกสถานที่ท่องเที่ยว & ของกิน ลากใส่ส่วนที่ 1)
+         SECTION 2 (COLUMN 2): ② รายละเอียดของ Column 1 (วิธีเดินทางจากจุดก่อนหน้า, รูปภาพ, รายละเอียด, ลิงก์ค้นหาเพิ่ม)
+         + โหมดสลับคลังสถานที่ (Chooses) สำหรับลากเพิ่มเข้า Column 1
          ======================================================================= -->
-    <section class="vertical-col col-2-chooses" id="sectionChooses" aria-label="Section 2: Attraction Choices">
-      <div class="col-header">
-        <div class="col-header-top">
-          <span class="col-part-pill part-2">ส่วนที่ 2 · CHOOSES</span>
-          <span class="col-stat-badge" id="choosesCountBadge">28 สถานที่</span>
+    <section class="vertical-col col-2-chooses" id="sectionChooses" aria-label="Section 2: Timeline Item Details & Transit Guide">
+      <div class="ph-clean-header col2-clean-header">
+        <div class="ph-title-group">
+          <span class="ph-main-title">② รายละเอียด &amp; การเดินทาง</span>
         </div>
-        <h2>📍 ตัวเลือกสถานที่ &amp; ร้านเด็ดฮาร์บิน</h2>
-        <p class="col-subtitle">หยิบจับ (Drag &amp; Drop) โยนใส่ส่วนที่ 1 หรือกดปุ่ม <strong>+แทรกคิว</strong> เพื่อแทรกตำแหน่งใดก็ได้</p>
-
-        <!-- Search Box inside Column 2 -->
-        <div class="chooses-search-row">
-          <div class="search-input-wrap">
-            <span class="search-icon">🔍</span>
-            <input type="text" id="choosesSearchInput" placeholder="ค้นหาสถานที่, ของกิน, English, 中文..." autocomplete="off">
-            <button id="btnClearChoosesSearch" class="btn-clear-input" title="Clear search">✕</button>
-          </div>
-          <!-- Target Queue Position Selector for 1-Click Insertion -->
-          <div class="insert-pos-selector" title="เลือกตำแหน่งคิวเมื่อกดปุ่ม +แทรกคิว">
-            <label for="selectInsertIndex">แทรกที่:</label>
-            <select id="selectInsertIndex">
-              <option value="end">ท้ายคิว (End)</option>
-              <option value="0">คิวแรก (#1)</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Category Filter Pills -->
-        <div class="chooses-filter-bar" id="choosesFilterBar">
-          <button class="filter-chip active" data-cat="all">🌟 ทั้งหมด (28)</button>
-          <button class="filter-chip" data-cat="food_dining">🍲 การกิน/ร้านเด็ด (6)</button>
-          <button class="filter-chip" data-cat="walk_street">🚶 การเดิน/ย่านเก่า (5)</button>
-          <button class="filter-chip" data-cat="russian_heritage">🏰 โบสถ์/รัสเซีย (3)</button>
-          <button class="filter-chip" data-cat="ice_snow">❄️ หิมะ &amp; น้ำแข็ง (5)</button>
-          <button class="filter-chip" data-cat="culture_wildlife">🐅 เสือ/พิพิธภัณฑ์/วิว (7)</button>
-          <button class="filter-chip" data-cat="transit_hub">🚅 สนามบิน/สถานี (2)</button>
+        <div class="col2-mode-tabs" role="tablist">
+          <button type="button" class="col2-mode-btn active" id="btnCol2ModeDetail" title="ดูรายละเอียดสถานที่ การเดินทางจากจุดก่อนหน้า รูปภาพ และลิงก์ค้นหาเพิ่ม">
+            📋 รายละเอียดจุดที่เลือก
+          </button>
+          <button type="button" class="col2-mode-btn" id="btnCol2ModeChooses" title="เปิดคลังสถานที่ 28 แห่งเพื่อลากแทรกเข้าแผนการเดินทาง">
+            ➕ เพิ่มสถานที่ (<span id="choosesCountBadge">28</span>)
+          </button>
         </div>
       </div>
 
-      <!-- Scrollable Attraction Cards List (Draggable items) -->
-      <div class="col-body chooses-scroll-area" id="choosesListContainer">
-        <!-- Populated dynamically by app.js -->
+      <!-- PANE A (DEFAULT): DETAIL OF SELECTED ITEM FROM COLUMN 1 -->
+      <div class="col-body col2-detail-scroll-area" id="col2DetailPane">
+        <!-- Populated dynamically by renderSelectedTimelineDetail() in app.js -->
+      </div>
+
+      <!-- PANE B (OPTIONAL TOGGLE): CHOOSES LIBRARY FOR DRAGGING NEW PLACES INTO COLUMN 1 -->
+      <div class="col2-chooses-pane" id="col2ChoosesPane" hidden>
+        <div class="col-header chooses-sub-header">
+          <p class="col-subtitle">ลาก (Drag &amp; Drop) การ์ดสถานที่ไปวางแทรกใน <strong>① แผนการเดินทาง</strong> หรือกดปุ่ม <strong>+แทรกคิว</strong></p>
+
+          <!-- Search Box inside Column 2 -->
+          <div class="chooses-search-row">
+            <div class="search-input-wrap">
+              <span class="search-icon">🔍</span>
+              <input type="text" id="choosesSearchInput" placeholder="ค้นหาสถานที่, ของกิน, English, 中文..." autocomplete="off">
+              <button id="btnClearChoosesSearch" class="btn-clear-input" title="Clear search">✕</button>
+            </div>
+            <!-- Target Queue Position Selector for 1-Click Insertion -->
+            <div class="insert-pos-selector" title="เลือกตำแหน่งคิวเมื่อกดปุ่ม +แทรกคิว">
+              <label for="selectInsertIndex">แทรกที่:</label>
+              <select id="selectInsertIndex">
+                <option value="end">ท้ายคิว (End)</option>
+                <option value="0">คิวแรก (#1)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Category Filter Pills -->
+          <div class="chooses-filter-bar" id="choosesFilterBar">
+            <button class="filter-chip active" data-cat="all">🌟 ทั้งหมด (28)</button>
+            <button class="filter-chip" data-cat="food_dining">🍲 การกิน/ร้านเด็ด (6)</button>
+            <button class="filter-chip" data-cat="walk_street">🚶 การเดิน/ย่านเก่า (5)</button>
+            <button class="filter-chip" data-cat="russian_heritage">🏰 โบสถ์/รัสเซีย (3)</button>
+            <button class="filter-chip" data-cat="ice_snow">❄️ หิมะ &amp; น้ำแข็ง (5)</button>
+            <button class="filter-chip" data-cat="culture_wildlife">🐅 เสือ/พิพิธภัณฑ์/วิว (7)</button>
+            <button class="filter-chip" data-cat="transit_hub">🚅 สนามบิน/สถานี (2)</button>
+          </div>
+        </div>
+
+        <!-- Scrollable Attraction Cards List (Draggable items) -->
+        <div class="col-body chooses-scroll-area" id="choosesListContainer">
+          <!-- Populated dynamically by app.js -->
+        </div>
       </div>
     </section>
 
     <!-- =======================================================================
          SECTIONS 3 & 4 (COLUMNS 3 & 4): AMAP HARBIN INTERACTIVE MAP (ENGLISH)
+         - แสดงแผนที่เต็มพื้นที่มากที่สุด พร้อมลิ้นชักเครื่องมือด้านบน (Collapsible Top Drawer)
          ======================================================================= -->
     <section class="vertical-col col-3-4-map" id="sectionMap" aria-label="Sections 3 and 4: AMAP Harbin Interactive Map in English">
-      <!-- Visual 2-Column Split Indicator Header for Sections 3 & 4 -->
-      <div class="map-top-bar">
-        <div class="map-section-headers">
-          <div class="map-part-tag">
-            <span class="col-part-pill part-3">ส่วนที่ 3 · AMAP PINS &amp; ATTRACTIONS</span>
-            <span class="col-part-pill part-4">ส่วนที่ 4 · ROUTE &amp; NAVIGATION (EN)</span>
-          </div>
-          <div class="map-title-row">
-            <h2>🗺️ Harbin (哈尔滨) AMAP Interactive Map <span class="en-tag">ENGLISH EDITION</span></h2>
-          </div>
-        </div>
 
-        <!-- Map Interactive Controls (All in English for Map Usability) -->
-        <div class="map-toolbar">
-          <!-- Pin Mode Toggle (ปักหมุดบนแผนที่ได้) -->
-          <button id="btnPinMode" class="map-tool-btn pin-mode-btn" title="Click anywhere on the map to drop a new custom pin in Harbin">
-            <span>📌</span> Pin Mode: OFF
-          </button>
-
-          <!-- Toggle Route Line -->
-          <button id="btnToggleRoute" class="map-tool-btn active" title="Show/Hide Timeline Route Line & Directions">
-            <span>🧭</span> Route Path: ON
-          </button>
-
-          <!-- Toggle All Pins vs Timeline Pins -->
-          <button id="btnToggleAllPins" class="map-tool-btn active" title="Show All 28 Harbin Pins or Timeline Pins Only">
-            <span>📍</span> All Pins (28)
-          </button>
-
-          <!-- Toggle English Labels on Map -->
-          <button id="btnToggleEnLabels" class="map-tool-btn active" title="Show Permanent English Labels on Map Markers">
-            <span>🔤</span> EN Labels
-          </button>
-
-          <!-- Map Tile Layer Selector (AMAP English / Satellite / Street) -->
-          <select id="selectMapLayer" class="map-layer-select" title="Select AMAP / English Map Tile Style">
-            <option value="amap_en_hybrid">🗺️ AMAP Road + English Labels (Default)</option>
-            <option value="carto_en">🌐 English Clean Map (Latin Script)</option>
-            <option value="amap_sat_en">🛰️ AMAP Satellite + English Pins</option>
-            <option value="amap_bilingual">🇨🇳 AMAP Bilingual (EN / 中文)</option>
-          </select>
-
-          <!-- Fit Route Bounds -->
-          <button id="btnFitRoute" class="map-tool-btn" title="Zoom to fit current Timeline route">
-            <span>🎯</span> Fit Route
-          </button>
-
-          <!-- My Location / Center Harbin -->
-          <button id="btnLocateMe" class="map-tool-btn" title="Show My Position / Center on Harbin Downtown">
-            <span>📡</span> Locate
-          </button>
-
-          <!-- Fullscreen Map Toggle (ขยายแผนที่เต็มจอ) -->
-          <button id="btnFullscreenMap" class="map-tool-btn fullscreen-btn" title="ขยายแผนที่เต็มจอ / ย่อกลับ (Toggle Fullscreen Map)">
-            <span>⛶</span> เต็มจอ (Fullscreen)
-          </button>
-        </div>
-      </div>
-
-      <!-- Pin Mode Active Banner -->
-      <div class="pin-mode-banner" id="pinModeBanner" hidden>
-        <span>📌 <strong>PIN MODE ACTIVE:</strong> Click anywhere on the Harbin (哈尔滨) map to drop a custom pin and insert it into your Timeline or Chooses!</span>
-        <button id="btnCancelPinMode" class="btn-cancel-pin">Cancel (ESC)</button>
-      </div>
-
-      <!-- Main Map Canvas -->
+      <!-- Main Map Canvas (Full 100% Height of Column 3 & 4) -->
       <div class="map-canvas-wrapper">
         <div id="map" aria-label="AMAP English Map of Harbin"></div>
 
-        <!-- Floating Fullscreen Quick Toggle Button on Map Canvas -->
-        <button id="btnFloatingFullscreen" class="map-floating-fullscreen-btn" title="ขยายแผนที่เต็มจอ / ย่อกลับ (Toggle Fullscreen Map)">
-          <span>⛶</span> ขยายเต็มจอ
-        </button>
+        <!-- Floating Top Handle Bar (สำหรับดึงลิ้นชักเครื่องมือแผนที่ลงมา + ปุ่มด่วน) -->
+        <div class="map-drawer-handle-bar" id="mapDrawerHandleBar">
+          <button type="button" id="btnToggleMapDrawer" class="map-drawer-trigger-btn" title="เปิด/ปิดลิ้นชักเครื่องมือแผนที่ (Toggle Map Controls Drawer)">
+            <span>🗺️</span> เครื่องมือแผนที่ (Map Tools) <span class="drawer-caret" id="mapDrawerCaret">▾</span>
+          </button>
+          <button type="button" id="btnQuickFitRoute" class="map-quick-pill-btn" title="ซูมพอดีเส้นทาง (Fit Route)">
+            🎯 Fit Route
+          </button>
+          <button type="button" id="btnFloatingFullscreen" class="map-floating-fullscreen-btn" title="ขยายแผนที่เต็มจอ / ย่อกลับ (Toggle Fullscreen Map)">
+            <span>⛶</span> ขยายเต็มจอ
+          </button>
+        </div>
 
-        <!-- Floating Map Legend & Live Coordinates (English) -->
-        <div class="map-floating-legend" id="mapLegend">
+        <!-- Collapsible Top Drawer (ลิ้นชักเก็บส่วนหัวและปุ่มควบคุมแผนที่ตามรูป) -->
+        <div class="map-top-bar map-top-drawer" id="mapTopDrawer" aria-hidden="true">
+          <div class="map-section-headers">
+            <div class="map-part-tag">
+              <span class="col-part-pill part-3">ส่วนที่ 3 · AMAP PINS &amp; ATTRACTIONS</span>
+              <span class="col-part-pill part-4">ส่วนที่ 4 · ROUTE &amp; NAVIGATION (EN)</span>
+            </div>
+            <div class="map-title-row">
+              <h2>🗺️ Harbin (哈尔滨) AMAP Interactive Map <span class="en-tag">ENGLISH EDITION</span></h2>
+              <button type="button" id="btnCloseMapDrawer" class="btn-close-map-drawer" title="เก็บลิ้นชักขึ้น (Collapse Drawer)">
+                เก็บลิ้นชัก ▴
+              </button>
+            </div>
+          </div>
+
+          <!-- Map Interactive Controls (All in English for Map Usability) -->
+          <div class="map-toolbar">
+            <!-- Pin Mode Toggle (ปักหมุดบนแผนที่ได้) -->
+            <button id="btnPinMode" class="map-tool-btn pin-mode-btn" title="Click anywhere on the map to drop a new custom pin in Harbin">
+              <span>📌</span> Pin Mode: OFF
+            </button>
+
+            <!-- Toggle Route Line -->
+            <button id="btnToggleRoute" class="map-tool-btn active" title="Show/Hide Timeline Route Line & Directions">
+              <span>🧭</span> Route Path: ON
+            </button>
+
+            <!-- Toggle All Pins vs Timeline Pins -->
+            <button id="btnToggleAllPins" class="map-tool-btn active" title="Show All 28 Harbin Pins or Timeline Pins Only">
+              <span>📍</span> All Pins (28)
+            </button>
+
+            <!-- Toggle English Labels on Map -->
+            <button id="btnToggleEnLabels" class="map-tool-btn active" title="Show Permanent English Labels on Map Markers">
+              <span>🔤</span> EN Labels
+            </button>
+
+            <!-- Map Tile Layer Selector (AMAP English / Satellite / Street) -->
+            <select id="selectMapLayer" class="map-layer-select" title="Select AMAP / English Map Tile Style">
+              <option value="amap_en_hybrid">🗺️ AMAP Road + English Labels (Default)</option>
+              <option value="carto_en">🌐 English Clean Map (Latin Script)</option>
+              <option value="amap_sat_en">🛰️ AMAP Satellite + English Pins</option>
+              <option value="amap_bilingual">🇨🇳 AMAP Bilingual (EN / 中文)</option>
+            </select>
+
+            <!-- Fit Route Bounds -->
+            <button id="btnFitRoute" class="map-tool-btn" title="Zoom to fit current Timeline route">
+              <span>🎯</span> Fit Route
+            </button>
+
+            <!-- My Location / Center Harbin -->
+            <button id="btnLocateMe" class="map-tool-btn" title="Show My Position / Center on Harbin Downtown">
+              <span>📡</span> Locate
+            </button>
+
+            <!-- Toggle Legend Visibility -->
+            <button id="btnToggleLegend" class="map-tool-btn" title="Show/Hide Map Legend Box">
+              <span>🏷️</span> Legend
+            </button>
+
+            <!-- Fullscreen Map Toggle (ขยายแผนที่เต็มจอ) -->
+            <button id="btnFullscreenMap" class="map-tool-btn fullscreen-btn" title="ขยายแผนที่เต็มจอ / ย่อกลับ (Toggle Fullscreen Map)">
+              <span>⛶</span> เต็มจอ (Fullscreen)
+            </button>
+          </div>
+        </div>
+
+        <!-- Pin Mode Active Banner (Only visible when Pin Mode is ON) -->
+        <div class="pin-mode-banner" id="pinModeBanner" hidden>
+          <span>📌 <strong>PIN MODE ACTIVE:</strong> Click anywhere on the Harbin (哈尔滨) map to drop a custom pin and insert it into your Timeline!</span>
+          <button id="btnCancelPinMode" class="btn-cancel-pin">Cancel (ESC)</button>
+        </div>
+
+        <!-- Floating Map Legend & Live Coordinates (English - Hidden by default to maximize map, toggleable from drawer) -->
+        <div class="map-floating-legend" id="mapLegend" hidden>
           <div class="legend-title">HARBIN (哈尔滨) AMAP LEGEND</div>
           <div class="legend-items">
             <span class="legend-item"><i class="dot active-stop">1</i> Active Timeline Stop</span>
@@ -253,7 +295,7 @@
         </div>
       </div>
 
-      <!-- Bottom English Route Sequence & Distance Bar (ส่วนแสดงเส้นทางและตำแหน่งที่ตั้ง) -->
+      <!-- Compact Bottom English Route Sequence Bar -->
       <div class="map-route-bar">
         <div class="route-stats-summary">
           <div class="route-stat">

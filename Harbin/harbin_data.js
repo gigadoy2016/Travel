@@ -1756,6 +1756,70 @@ const HARBIN_ATTRACTIONS = [
     ],
     descriptionTh: "ห้างชิวหลิน (Qiulin Company) ก่อตั้งตั้งแต่ปี 1900 เป็นสวรรค์ของคนรักขนมปังรัสเซียและของฝากประจำเมืองฮาร์บิน โดยเฉพาะขนมปังก้อนโตต้าเลี่ยปาและไส้กรอกแดงรมควัน",
     descriptionEn: "Founded in 1900 as Churin & Co., this historic department store is Harbin's premier culinary souvenir destination for giant Dalieba bread and wood-smoked red sausages."
+  },
+
+  {
+    id: 28,
+    nameTh: "โรงแรม LIZZY • Ritz Hotel ถนนจงหยาง (พัก 2 คืนแรก 4–6 ธ.ค.)",
+    nameZh: "哈尔滨大洋丽兹酒店(中央大街索菲亚教堂店) · 道里区西三道街19号",
+    pinyin: "Hā'ěrbīn Dàyáng Lìzī Jiǔdiàn (Xīsāndào Jiē 19 Hào)",
+    nameEn: "LIZZY • Ritz Hotel on Harbin Central Street (No. 19 West 3rd St)",
+    category: "russian_heritage",
+    activityType: "visit",
+    defaultDuration: 45,
+    categoryLabelTh: "โรงแรมที่พัก (คืนที่ 1 & 2 · ถนนจงหยาง)",
+    categoryLabelEn: "Hotel Stay (Nights 1 & 2 · Central St.)",
+    categoryColor: "#7c3aed",
+    pastelBg: "#f3e8ff",
+    badgeColor: "#e9d5ff",
+    doodleBorderColor: "#6d28d9",
+    doodleIcon: "🏨",
+    rating: 4.9,
+    ratingStars: "⭐⭐⭐⭐⭐",
+    ratingDescTh: "โรงแรมหรูสไตล์พระราชวังยุโรปคลาสสิก เปิดใหม่ปี 2024 ติดถนนคนเดินจงหยาง (ซอย West 3rd Street เลขที่ 19) เดินไปแม่น้ำซงฮัว 5 นาที และโบสถ์เซนต์โซเฟีย 8 นาที",
+    ratingDescEn: "2024 European palace-inspired luxury boutique hotel right off Central Street (No. 19 West 3rd St, Daoli District), 5 mins walk to Songhua River & 8 mins to St. Sophia",
+    coords: [45.7748, 126.6176],
+    bookingUrl: "https://th.trip.com/hotels/w/detail/?cityid=5&hotelid=124049377&checkin=2026-12-04&checkout=2026-12-06&curr=THB&locale=en_th&fromShare=TripAppDetail&linkhub_token=sl_xeVM2GLAzW2",
+    image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80",
+    tags: ["LIZZY Ritz Hotel", "哈尔滨大洋丽兹酒店", "ที่พักถนนจงหยาง", "West 3rd Street", "Central Street Hotel"],
+    shortBulletsTh: [
+      "ตั้งอยู่เลขที่ 19 ถนนซีซานเต้าเจีย (No. 19 West 3rd Street / 西三道街19号) ติดถนนคนเดินจงหยาง",
+      "เข้าพัก 2 คืนแรก: เช็คอิน 4 ธ.ค. 2026 – เช็คเอาท์ 6 ธ.ค. 2026 (ฝากกระเป๋าใบใหญ่ก่อนไป Snow Town ได้)",
+      "เดินไปริมแม่น้ำซงฮัวเพียง 5 นาที, ตลาดเช้าหงจวน 4 นาที และมหาวิหารเซนต์โซเฟีย 8 นาที"
+    ],
+    shortBulletsEn: [
+      "Located at No. 19 West 3rd Street (道里区西三道街19号), steps from Zhongyang Pedestrian Street",
+      "Confirmed 2-Night Stay: Check-in Dec 4, 2026 – Check-out Dec 6, 2026 (Luggage storage for Snow Town)",
+      "5-min walk to Songhua River & Flood Control Monument, 4-min walk to Hongzhuan Morning Market, 8-min walk to St. Sophia"
+    ],
+    openingHoursTh: "แผนกต้อนรับเปิดบริการ 24 ชั่วโมง (เช็คอิน 14:00 น. / เช็คเอาท์ 12:00 น.)",
+    openingHoursEn: "24-Hour Front Desk (Check-in from 14:00 / Check-out until 12:00)",
+    bestTimeTh: "พักคืนที่ 1 (4 ธ.ค.) และ คืนที่ 2 (5 ธ.ค.) · ทำเลดีที่สุดใจกลางถนนจงหยาง",
+    bestTimeEn: "Stay Night 1 (Dec 4) & Night 2 (Dec 5) right at the heart of Central Street",
+    ticketPriceTh: "จองผ่าน Trip.com (Hotel ID: 124049377 · เช็คอิน 4 ธ.ค. - เช็คเอาท์ 6 ธ.ค. 2026)",
+    ticketPriceEn: "Booked via Trip.com (Hotel ID: 124049377 · Dec 4 – Dec 6, 2026)",
+    transportTh: {
+      fromStation: "จากสนามบิน HRB นั่ง Airport Bus สาย 3 ลงป้าย Central Street หรือนั่งรถไฟใต้ดิน Line 2 ลงสถานี People's Square / Zhongyangdajie แล้วเดินเข้าซอย West 3rd St. (~350 ม.)",
+      fromAirport: "นั่ง DiDi / แท็กซี่จากสนามบินฮาร์บิน T2 ประมาณ 45 นาที (แจ้งคนขับว่า 哈尔滨大洋丽兹酒店 道里区西三道街19号)",
+      inside: "ตกแต่งสไตล์ยุโรปหรูหรา มีฮีตเตอร์อุ่นสบาย เครื่องชงกาแฟแคปซูล เลานจ์คาเฟ่ และบริการรับฝากสัมภาระฟรี"
+    },
+    transportEn: {
+      fromStation: "Metro Line 2 to People's Square or Zhongyangdajie Station, then ~350m walk to No. 19 West 3rd Street",
+      fromAirport: "45 mins by DiDi/Taxi or Airport Bus Line 3 to Central Street",
+      inside: "Heated European-palace rooms, capsule coffee machines, lounge bar, and free luggage storage"
+    },
+    highlightsTh: [
+      "ทำเลทองติดถนนคนเดินจงหยาง เดินออกจากโรงแรมเพียงไม่กี่ก้าวก็ถึงถนนหินร้อยปี",
+      "อยู่ใกล้ร้านอาหารหัวเหมย (Huamei), ไอศกรีมหม่าเตี๋ยเอ่อร์ และร้านเหล่าฉูเจีย (Laochujia)",
+      "สะดวกมากสำหรับฝากกระเป๋าเดินทางใบใหญ่ไว้ที่โรงแรมในเช้าวันที่ 3 ก่อนเดินทางไปค้าง Snow Town 2 คืน"
+    ],
+    highlightsEn: [
+      "Prime location at No. 19 West 3rd Street right next to Zhongyang Pedestrian Street",
+      "Steps away from Huamei Russian Restaurant, Madieer Popsicles, and Hongzhuan Morning Market",
+      "Ideal base to store large suitcases before heading to China Snow Town on Day 3"
+    ],
+    descriptionTh: "LIZZY • Ritz Hotel on Harbin Central Street (哈尔滨大洋丽兹酒店 中央大街索菲亚教堂店) ตั้งอยู่ที่เลขที่ 19 ถนน West 3rd Street (西三道街19号) เขตเต้าหลี่ ติดกับถนนคนเดินจงหยาง ตกแต่งงดงามสไตล์พระราชวังยุโรปคลาสสิกผสานความทันสมัย เปิดใหม่ในปี 2024 เดินทางสะดวกมากทั้งการเดินเที่ยวถนนจงหยาง ตลาดเช้าหงจวน โบสถ์เซนต์โซเฟีย และริมแม่น้ำซงฮัว",
+    descriptionEn: "LIZZY • Ritz Hotel on Harbin Central Street (哈尔滨大洋丽兹酒店) is a newly opened (2024) European palace-style boutique hotel at No. 19 West 3rd Street, right beside Central Street. Its unbeatable walkable location puts St. Sophia Cathedral, Hongzhuan Morning Market, and the frozen Songhua River within a 4 to 8-minute stroll."
   }
 ];
 
@@ -1765,8 +1829,8 @@ const DEFAULT_HARBIN_TIMELINE = {
   day1: {
     labelTh: "Day 1 (4 ธ.ค.)",
     labelEn: "Day 1 (Dec 4)",
-    titleTh: "Bangkok (BKK) ➔ เซี่ยงไฮ้ (PVG) ➔ ฮาร์บิน (HRB) • ถนนจงหยาง",
-    titleEn: "Bangkok (BKK) ➔ Shanghai (PVG) ➔ Harbin (HRB) • Zhongyang St.",
+    titleTh: "Bangkok (BKK) ➔ เซี่ยงไฮ้ (PVG) ➔ ฮาร์บิน (HRB) • เช็คอิน LIZZY • Ritz Hotel ถนนจงหยาง (คืนที่ 1)",
+    titleEn: "Bangkok (BKK) ➔ Shanghai (PVG) ➔ Harbin (HRB) • Check-in LIZZY • Ritz Hotel Central St. (Night 1)",
     items: [
       {
         uid: "d1-bkk",
@@ -1807,94 +1871,323 @@ const DEFAULT_HARBIN_TIMELINE = {
         actType: "transit",
         isFlightStep: true,
         flightBadge: "🛬 ถึงฮาร์บิน 17:00 น. (รวม 10 ชม. 55 นาที)",
-        noteTh: "เดินทางถึงสนามบินฮาร์บินไท่ผิง T2 เวลา 17:00 น. รับสัมภาระ เปลี่ยนชุดกันหนาว และนั่งรถตู้เข้าเมือง",
-        noteEn: "Touch down at Harbin Taiping Airport T2 at 17:00, collect baggage & transfer to downtown hotel"
+        noteTh: "เดินทางถึงสนามบินฮาร์บินไท่ผิง T2 เวลา 17:00 น. รับสัมภาระ นั่ง DiDi หรือ Airport Bus สาย 3 มุ่งหน้าสู่โรงแรม LIZZY • Ritz Hotel ถนนจงหยาง (~45 นาที)",
+        noteEn: "Touch down at Harbin Taiping Airport T2 at 17:00, take DiDi or Airport Bus Line 3 to LIZZY • Ritz Hotel on Harbin Central Street"
+      },
+      {
+        uid: "d1-hotel",
+        spotId: 28,
+        customNameTh: "เช็คอิน LIZZY • Ritz Hotel ถนนจงหยาง (พักคืนที่ 1 · ซอย West 3rd St.)",
+        customNameEn: "Check-in: LIZZY • Ritz Hotel on Harbin Central Street (Stay Night 1)",
+        time: "18:30",
+        timeLabel: "18:30 - 19:15 น.",
+        duration: 45,
+        actType: "visit",
+        noteTh: "🏨 เช็คอินเข้าที่พัก LIZZY • Ritz Hotel on Harbin Central Street (哈尔滨大洋丽兹酒店 · 道里区西三道街19号) เก็บกระเป๋าเดินทาง สวมเสื้อกันหนาวจัดเต็ม แล้วเดินออกจากซอยโรงแรมเข้าสู่ถนนคนเดินจงหยางได้ทันที",
+        noteEn: "Check in at LIZZY • Ritz Hotel on Harbin Central Street (No. 19 West 3rd St), drop luggage & step right out onto Central Street"
       },
       {
         uid: "d1-2",
         spotId: 2,
-        customNameTh: "ถนนคนเดินหินร้อยปีจงหยาง",
-        customNameEn: "Zhongyang Pedestrian Street",
-        time: "19:00",
-        timeLabel: "19:00 - 20:00 น.",
-        duration: 60,
+        customNameTh: "เดินเล่นถนนคนเดินหินร้อยปีจงหยาง (หน้าปากซอยโรงแรม)",
+        customNameEn: "Zhongyang Pedestrian Street Stroll (Steps from LIZZY • Ritz Hotel)",
+        time: "19:15",
+        timeLabel: "19:15 - 20:00 น.",
+        duration: 45,
         actType: "walk",
-        noteTh: "เดินเล่นรับลมหนาวชมตึกยุโรปไฟสีทองบนถนนหินร้อยปีจงหยาง",
-        noteEn: "Evening winter stroll along illuminated cobblestone Zhongyang Street"
+        noteTh: "เดินออกจากโรงแรม LIZZY • Ritz Hotel เพียงไม่กี่ก้าว ชมตึกยุโรปโบราณเปิดไฟสีทองบนถนนหินร้อยปีจงหยาง",
+        noteEn: "Walk steps from LIZZY • Ritz Hotel onto illuminated cobblestone Zhongyang Pedestrian Street"
       },
       {
         uid: "d1-3",
         spotId: 24,
-        customNameTh: "ไอศกรีมหม่าเตี๋ยเอ่อร์ (ถนนจงหยาง)",
+        customNameTh: "ไอศกรีมหม่าเตี๋ยเอ่อร์ (หน้าโรงแรม Modern ถนนจงหยาง)",
         customNameEn: "Madieer Ice Popsicle (1906)",
         time: "20:00",
         timeLabel: "20:00 - 20:30 น.",
         duration: 30,
         actType: "eat",
-        noteTh: "ชิมไอศกรีมแท่งหม่าเตี๋ยเอ่อร์ท้าความหนาว -15°C และไส้กรอกแดงร้อนๆ",
-        noteEn: "Taste iconic 1906 Madieer vanilla popsicle in -15°C snow"
+        noteTh: "เดินเล่นตามถนนจงหยางประมาณ 350 เมตร ชิมไอศกรีมแท่งหม่าเตี๋ยเอ่อร์ท้าความหนาว -16°C และไส้กรอกแดงร้อนๆ",
+        noteEn: "Taste iconic 1906 Madieer vanilla popsicle in -16°C snow along Zhongyang Street"
       },
       {
         uid: "d1-4",
         spotId: 25,
-        customNameTh: "หม้อไฟทองเหลืองตงเป่ย & เนื้อแกะสไลซ์",
-        customNameEn: "Dongbei Copper Pot Hot Pot",
+        customNameTh: "หม้อไฟทองเหลืองตงเป่ย & เดินกลับ LIZZY • Ritz Hotel (นอนคืนที่ 1)",
+        customNameEn: "Dongbei Copper Pot Hot Pot & Return to LIZZY • Ritz Hotel (Night 1)",
         time: "20:30",
-        timeLabel: "20:30 - 21:45 น.",
-        duration: 75,
+        timeLabel: "20:30 - 22:00 น.",
+        duration: 90,
         actType: "eat",
-        noteTh: "มื้อค่ำหม้อไฟทองเหลืองตงเป่ย เนื้อแกะสไลซ์และซุปผักกาดดองคลายหนาว",
-        noteEn: "Warming Dongbei charcoal copper pot lamb hot pot dinner"
+        noteTh: "มื้อค่ำหม้อไฟทองเหลืองตงเป่ย เนื้อแกะสไลซ์และซุปผักกาดดองคลายหนาว อิ่มแล้วเดินกลับเข้าที่พัก LIZZY • Ritz Hotel on Harbin Central Street · 🛌 พักคืนที่ 1 (4 ธ.ค.)",
+        noteEn: "Warming Dongbei copper pot hot pot dinner, then walk back to LIZZY • Ritz Hotel on Harbin Central Street (Night 1)"
       }
     ]
   },
   day2: {
     labelTh: "Day 2 (5 ธ.ค.)",
     labelEn: "Day 2 (Dec 5)",
-    titleTh: "ตลาดเช้า • โบสถ์เซนต์โซเฟีย • อาหารรัสเซีย • สะพานรถไฟ",
-    titleEn: "Morning Market • St. Sophia • Russian Lunch • Railway Bridge",
+    titleTh: "เดินเที่ยวจาก LIZZY • Ritz Hotel: ตลาดเช้าหงจวน • โบสถ์เซนต์โซเฟีย • หัวเหมย • ริมน้ำซงฮัว (พักคืนที่ 2)",
+    titleEn: "Walk from LIZZY • Ritz Hotel: Morning Market • St. Sophia • Huamei • Songhua River (Night 2)",
     items: [
-      { uid: "d2-1", spotId: 15, time: "07:30", timeLabel: "07:30 - 08:30 น.", duration: 60, actType: "eat", noteTh: "เดินตลาดเช้าหงจวน ชมไอควันยามเช้า ชิมซาลาเปาทอดและน้ำเต้าหู้ร้อน", noteEn: "Walk & eat through steaming Hongzhuan Morning Street Food Market" },
-      { uid: "d2-2", spotId: 1, time: "09:30", timeLabel: "09:30 - 11:00 น.", duration: 90, actType: "visit", noteTh: "ถ่ายรูปมหาวิหารเซนต์โซเฟีย ฝูงนกพิราบสีขาว และจิบกาแฟคาเฟ่วินเทจ", noteEn: "Visit Saint Sophia Cathedral, feed white doves & sip vintage coffee" },
-      { uid: "d2-3", spotId: 22, time: "12:00", timeLabel: "12:00 - 13:30 น.", duration: 90, actType: "eat", noteTh: "มื้อกลางวันอาหารรัสเซียคลาสสิก ร้านหัวเหมย (ซุปบอร์ชต์ & เนื้ออบโถขนมปัง)", noteEn: "Classic 1925 Russian lunch at Huamei Restaurant (Borsch & beef pot)" },
-      { uid: "d2-4", spotId: 10, time: "14:30", timeLabel: "14:30 - 15:30 น.", duration: 60, actType: "walk", noteTh: "เดินทอดน่องสวนสตาลินและอนุสาวรีย์ควบคุมอุทกภัยริมแม่น้ำซงฮัว", noteEn: "Scenic riverside walk through Stalin Park & Flood Control Monument" },
-      { uid: "d2-5", spotId: 6, time: "15:30", timeLabel: "15:30 - 16:45 น.", duration: 75, actType: "walk", noteTh: "เดินข้ามสะพานรถไฟโบราณปินโจว ชมพื้นกระจกและพระอาทิตย์ตกเหนือธารน้ำแข็ง", noteEn: "Walk across 1900 Binzhou Railway Bridge for golden sunset over frozen river" }
+      {
+        uid: "d2-1",
+        spotId: 15,
+        customNameEn: "Hongzhuan Morning Street Food Market (Walk from LIZZY • Ritz Hotel)",
+        customNameTh: "เดินจาก LIZZY • Ritz Hotel ไปตลาดเช้าถนนหงจวน (~400 ม.)",
+        time: "07:30",
+        timeLabel: "07:30 - 08:45 น.",
+        duration: 75,
+        actType: "eat",
+        noteTh: "เดินจากโรงแรม LIZZY • Ritz Hotel (ซอย West 3rd St.) เพียง ~5 นาที ก็ถึงตลาดเช้าหงจวน ชิมซาลาเปาทอด เกี๊ยวน้ำร้อนๆ และปาท่องโก๋ยักษ์ท่ามกลางไอควันยามเช้า",
+        noteEn: "Just a 5-minute walk from LIZZY • Ritz Hotel to steaming Hongzhuan Morning Street Food Market"
+      },
+      {
+        uid: "d2-2",
+        spotId: 1,
+        customNameEn: "Saint Sophia Cathedral & Square (8-min Walk)",
+        customNameTh: "มหาวิหารเซนต์โซเฟีย (เดินจากตลาดเช้า/โรงแรม ~8 นาที)",
+        time: "09:15",
+        timeLabel: "09:15 - 11:15 น.",
+        duration: 120,
+        actType: "visit",
+        noteTh: "เดินเชื่อมจากย่านถนนจงหยาง/ตลาดเช้าเพียง ~8 นาที ถ่ายรูปมหาวิหารเซนต์โซเฟีย ฝูงนกพิราบสีขาว และจิบกาแฟในคาเฟ่วินเทจ",
+        noteEn: "8-minute walk to Saint Sophia Cathedral, feed white doves & sip hot coffee"
+      },
+      {
+        uid: "d2-3",
+        spotId: 22,
+        customNameEn: "Huamei Western Restaurant (1925 Russian Lunch near Hotel)",
+        customNameTh: "มื้อกลางวันอาหารรัสเซีย ร้านหัวเหมย 1925 (ใกล้ LIZZY • Ritz Hotel)",
+        time: "11:45",
+        timeLabel: "11:45 - 13:15 น.",
+        duration: 90,
+        actType: "eat",
+        noteTh: "เดินกลับมาที่ถนนจงหยาง ทานอาหารรัสเซียเก่าแก่ปี 1925 ร้านหัวเหมย (ซุปบอร์ชต์ & เนื้อตุ๋นอบโถขนมปัง) อยู่ใกล้โรงแรม LIZZY • Ritz Hotel แวะพักผ่อนได้สะดวกมาก",
+        noteEn: "Classic 1925 Russian lunch at Huamei Restaurant on Zhongyang Street, right near LIZZY • Ritz Hotel"
+      },
+      {
+        uid: "d2-4",
+        spotId: 10,
+        customNameEn: "Flood Control Monument & Stalin Park (5-min Walk from Hotel)",
+        customNameTh: "อนุสาวรีย์ควบคุมอุทกภัย & สวนสตาลิน (เดินจากโรงแรมเพียง 5 นาที)",
+        time: "14:00",
+        timeLabel: "14:00 - 15:15 น.",
+        duration: 75,
+        actType: "walk",
+        noteTh: "จากซอย West 3rd Street เดินมุ่งหน้าไปทางทิศเหนือเพียง 5 นาที (400 ม.) จะพบอนุสาวรีย์ควบคุมอุทกภัยและสวนสตาลินริมแม่น้ำซงฮัว",
+        noteEn: "Walk 5 minutes north from West 3rd Street to reach Flood Control Monument & frozen Songhua River"
+      },
+      {
+        uid: "d2-5",
+        spotId: 7,
+        customNameEn: "Songhua River Ice Carnival & Binzhou Railway Bridge Sunset",
+        customNameTh: "ลานน้ำแข็งแม่น้ำซงฮัว & ชมพระอาทิตย์ตกสะพานรถไฟปินโจว",
+        time: "15:15",
+        timeLabel: "15:15 - 17:15 น.",
+        duration: 120,
+        actType: "walk",
+        noteTh: "ลงเดินบนแม่น้ำซงฮัวที่เป็นน้ำแข็ง เล่นสไลเดอร์หิมะ และเดินต่อไปยังสะพานรถไฟโบราณปินโจวชมแสงพระอาทิตย์ตกสีทอง",
+        noteEn: "Play on the frozen Songhua River Ice Carnival and walk to Binzhou Railway Bridge at sunset"
+      },
+      {
+        uid: "d2-hotel",
+        spotId: 28,
+        customNameEn: "Return to LIZZY • Ritz Hotel on Harbin Central Street (Stay Night 2)",
+        customNameTh: "พักผ่อนที่โรงแรม LIZZY • Ritz Hotel ถนนจงหยาง (คืนที่ 2 · จัดกระเป๋าไป Snow Town)",
+        time: "18:00",
+        timeLabel: "18:00 - 21:30 น.",
+        duration: 120,
+        actType: "visit",
+        noteTh: "🏨 เดินกลับโรงแรม LIZZY • Ritz Hotel (道里区西三道街19号) · 💡 เคล็ดลับ: จัดกระเป๋าใบเล็กสำหรับไปนอน Snow Town 2 คืน และเตรียมฝากกระเป๋าเดินทางใบใหญ่ไว้ที่เคาน์เตอร์โรงแรมในเช้าวันรุ่งขึ้น · 🛌 พักคืนที่ 2 (5 ธ.ค.)",
+        noteEn: "Return to LIZZY • Ritz Hotel on Harbin Central Street (Night 2) · Pack a 2-night bag for Snow Town & prepare to store big suitcases"
+      }
     ]
   },
   day3: {
     labelTh: "Day 3 (6 ธ.ค.)",
     labelEn: "Day 3 (Dec 6)",
-    titleTh: "ปราสาทรัสเซีย คฤหาสน์วอลกา • ถนนกัวโกรี่ • หอคอยมังกร",
-    titleEn: "Volga Manor Russian Fairytale • Gogol Street • Dragon Tower",
+    titleTh: "เช็คเอาท์ LIZZY • Ritz Hotel ➔ สถานีฮาร์บิน ➔ หมู่บ้านหิมะจีน Snow Town • พักค้างคืนที่ 1",
+    titleEn: "Check-out LIZZY • Ritz Hotel ➔ Harbin Station ➔ China Snow Town • Night 1 in Snow Town",
     items: [
-      { uid: "d3-1", spotId: 3, time: "09:30", timeLabel: "09:30 - 13:30 น.", duration: 240, actType: "visit", noteTh: "เที่ยวคฤหาสน์รัสเซียวอลกา ชมโบสถ์เซนต์นิโคลัส สไลเดอร์หิมะ และวอดก้าแก้วน้ำแข็ง", noteEn: "Explore Volga Manor Russian castles, snow tubing & ice-glass vodka" },
-      { uid: "d3-2", spotId: 13, time: "15:30", timeLabel: "15:30 - 17:00 น.", duration: 90, actType: "walk", noteTh: "เดินเล่นถนนกัวโกรี่ ชมโบสถ์เซนต์อเล็กเซเยฟสีแดง และร้านหนังสือยุโรป", noteEn: "Stroll Gogol Street, Saint Alekseyev Church & vintage bookstore" },
-      { uid: "d3-3", spotId: 17, time: "17:30", timeLabel: "17:30 - 18:45 น.", duration: 75, actType: "visit", noteTh: "ขึ้นหอคอยมังกรหลงถ่า เดินพื้นกระจกลอยฟ้าและชมไฟเมืองฮาร์บิน 360 องศา", noteEn: "Ascend Dragon Tower (Long Ta) glass skywalk for night views" }
+      {
+        uid: "d3-1",
+        spotId: 0,
+        customNameEn: "Check-out LIZZY • Ritz Hotel (6 Dec) ➔ Harbin Station ➔ China Snow Town",
+        customNameTh: "เช็คเอาท์ LIZZY • Ritz Hotel (ฝากกระเป๋าใบใหญ่) ➔ สถานีรถไฟฮาร์บิน ➔ Snow Town",
+        time: "07:30",
+        timeLabel: "07:30 - 11:45 น.",
+        duration: 255,
+        actType: "transit",
+        noteTh: "เช็คเอาท์โรงแรม LIZZY • Ritz Hotel วันที่ 6 ธ.ค. (ฝากกระเป๋าเดินทางใบใหญ่ไว้ที่โรงแรม) นั่ง DiDi ~8 นาที ไปสถานีรถไฟฮาร์บิน (哈尔滨站) เพื่อเดินทางสู่หมู่บ้านหิมะ Snow Town",
+        noteEn: "Check out of LIZZY • Ritz Hotel on Dec 6 (store big luggage); short DiDi ride to Harbin Station, then HSR/Bus to China Snow Town"
+      },
+      {
+        uid: "d3-2",
+        spotId: 20,
+        customNameEn: "China Snow Town (Xuexiang) · Check-in Kang Guesthouse",
+        customNameTh: "ถึงหมู่บ้านหิมะจีน เสวี่ยเซียง · เช็คอินที่พักเตียงอุ่นคั่ง (คืนที่ 1)",
+        time: "12:00",
+        timeLabel: "12:00 - 14:30 น.",
+        duration: 150,
+        actType: "visit",
+        noteTh: "เดินทางถึงหมู่บ้านหิมะจีน (中国雪乡) เช็คอินเข้าที่พักโฮมสเตย์เตียงอุ่นคั่ง (Heated Kang) และทานอาหารกลางวันตงเป่ยร้อนๆ",
+        noteEn: "Arrive at China Snow Town (Xuexiang), check in to traditional heated Kang guesthouse (Night 1/2) & lunch"
+      },
+      {
+        uid: "d3-3",
+        spotId: 20,
+        customNameEn: "Xueyun Street & Dream Home Snow Mushrooms",
+        customNameTh: "เดินถนนเสวี่ยยวิ่น & ชมบ้านเห็ดหิมะ Dream Home (梦幻家园)",
+        customCoords: [44.3948, 128.2572],
+        time: "15:00",
+        timeLabel: "15:00 - 17:00 น.",
+        duration: 120,
+        actType: "walk",
+        noteTh: "เดินเล่นถนนคนเดินเสวี่ยยวิ่น (雪韵大街) และเข้าชมโซน Dream Home ถ่ายภาพเห็ดหิมะธรรมชาติหนา 2 เมตรบนหลังคาบ้านไม้",
+        noteEn: "Stroll Xueyun Street & photograph iconic 2m-thick natural snow mushrooms at Dream Home"
+      },
+      {
+        uid: "d3-4",
+        spotId: 20,
+        customNameEn: "Bangchui Mountain Night Boardwalk & Red Lanterns (Stay Night 1)",
+        customNameTh: "จุดชมวิวมุมสูงเขาปั้งฉุย ชมโคมไฟแดงยามค่ำคืน (นอน Snow Town คืนที่ 1)",
+        customCoords: [44.3962, 128.2605],
+        time: "17:30",
+        timeLabel: "17:30 - 20:30 น.",
+        duration: 180,
+        actType: "visit",
+        noteTh: "เดินขึ้นทางเดินไม้เขาปั้งฉุย (Bangchui Boardwalk) ชมวิวมุมสูงหมู่บ้านหิมะเปิดโคมไฟสีแดงตัดกับหิมะยามพลบค่ำ · 🛌 พักค้างคืนที่ Snow Town (คืนที่ 1/2)",
+        noteEn: "Blue-hour aerial view of glowing red lanterns from Bangchui Boardwalk · Overnight in Snow Town (Night 1/2)"
+      }
     ]
   },
   day4: {
     labelTh: "Day 4 (7 ธ.ค.)",
     labelEn: "Day 4 (Dec 7)",
-    titleTh: "สวนเสือไซบีเรีย • ปลากระทะเหล็ก • เกาะพระอาทิตย์ & แม่น้ำน้ำแข็ง",
-    titleEn: "Siberian Tigers • Iron Pot Fish • Sun Island & Ice River",
+    titleTh: "ตะลุยหิมะ Snow Town & ยอดเขาหยางเฉ่าซาน เต็มวัน • พักค้างคืนที่ 2",
+    titleEn: "Full Day in China Snow Town & Mt. Yangcao Rime Forest • Night 2 in Snow Town",
     items: [
-      { uid: "d4-1", spotId: 4, time: "09:30", timeLabel: "09:30 - 11:30 น.", duration: 120, actType: "visit", noteTh: "นั่งรถบัสกรงนิรภัยชมและป้อนอาหารพญาเสือไซบีเรียกลางทุ่งหิมะ", noteEn: "Ride safari bus through snowy enclosures at Siberian Tiger Park" },
-      { uid: "d4-2", spotId: 26, time: "12:00", timeLabel: "12:00 - 13:20 น.", duration: 80, actType: "eat", noteTh: "มื้อเที่ยงปลาแม่น้ำซงฮัวตุ๋นหม้อไฟกระทะเหล็ก (เที่ยกัวตุน) แปะขนมปังข้าวโพด", noteEn: "Hearty Songhua River fish braised in giant iron cauldron (Tieguo Dun)" },
-      { uid: "d4-3", spotId: 5, time: "13:45", timeLabel: "13:45 - 15:30 น.", duration: 105, actType: "visit", noteTh: "ชมงานประติมากรรมแกะสลักหิมะขาวบริสุทธิ์ขนาดยักษ์ ณ สวนเกาะพระอาทิตย์", noteEn: "Admire colossal snow sculptures at Sun Island Scenic Area" },
-      { uid: "d4-4", spotId: 14, time: "15:45", timeLabel: "15:45 - 16:30 น.", duration: 45, actType: "transit", noteTh: "นั่งกระเช้าลอยฟ้าข้ามแม่น้ำซงฮัวชมวิวมุมสูงธารน้ำแข็ง", noteEn: "Ride Songhua River Sightseeing Ropeway across the frozen river" },
-      { uid: "d4-5", spotId: 7, time: "16:30", timeLabel: "16:30 - 17:45 น.", duration: 75, actType: "walk", noteTh: "ลงเดินบนแม่น้ำซงฮัวที่เป็นน้ำแข็ง เล่นแคร่เลื่อนหิมะ และชม Ice and Snow World", noteEn: "Walk on frozen Songhua River Ice Carnival & play snow sleds" }
+      {
+        uid: "d4-1",
+        spotId: 20,
+        customNameEn: "Snow Town Morning · Splash Boiling Water into Ice (-25°C)",
+        customNameTh: "สาดน้ำร้อนกลายเป็นเกล็ดน้ำแข็งกลางหิมะ & ชมแสงเช้าเสวี่ยเซียง",
+        customCoords: [44.3936, 128.2588],
+        time: "07:30",
+        timeLabel: "07:30 - 09:00 น.",
+        duration: 90,
+        actType: "visit",
+        noteTh: "ตื่นเช้ารับอากาศบริสุทธิ์ -25°C เล่นกิจกรรมไฮไลท์ สาดน้ำเดือดให้กลายเป็นละอองน้ำแข็งกลางอากาศ (泼水成冰)",
+        noteEn: "Morning sub-zero experience: splash boiling water into instant ice crystals at sunrise"
+      },
+      {
+        uid: "d4-2",
+        spotId: 21,
+        customNameEn: "Mount Yangcao Rime Ice Forest & Snow Valley Viewpoint",
+        customNameTh: "ตะลุยป่าสนน้ำค้างแข็งยอดเขาหยางเฉ่าซาน & จุดชมวิวหุบเขาหิมะ เสวี่ยกู่",
+        time: "09:30",
+        timeLabel: "09:30 - 13:00 น.",
+        duration: 210,
+        actType: "walk",
+        noteTh: "นั่งสโนว์โมบิล/รถลุยหิมะและเดินชมป่าสนน้ำค้างแข็ง (Rime Ice) บนยอดเขาหยางเฉ่าซาน (ความสูง 1,235 ม.) รอยต่อระหว่าง Snow Town และ Snow Valley",
+        noteEn: "Snowmobile & alpine walk through magical rime-frosted pine forests at Mount Yangcao (1,235m) overlooking Snow Valley"
+      },
+      {
+        uid: "d4-3",
+        spotId: 20,
+        customNameEn: "Snow Town Dongbei Iron Pot Stew Lunch",
+        customNameTh: "มื้อกลางวันหม้อไฟกระทะเหล็กตงเป่ย (เที่ยกัวตุน) ในหมู่บ้านหิมะ",
+        customCoords: [44.3941, 128.2592],
+        time: "13:15",
+        timeLabel: "13:15 - 14:45 น.",
+        duration: 90,
+        actType: "eat",
+        noteTh: "อิ่มอร่อยกับหม้อไฟกระทะเหล็กตงเป่ยร้อนๆ แปะแผ่นขนมปังข้าวโพดอบรอบขอบกระทะ คลายหนาวในหมู่บ้านหิมะ",
+        noteEn: "Hearty Dongbei iron-pot stew (Tieguo Dun) lunch inside a warm Snow Town wooden tavern"
+      },
+      {
+        uid: "d4-4",
+        spotId: 20,
+        customNameEn: "Snow Tubing, Horse Sled & Folk Photography",
+        customNameTh: "เล่นสไลเดอร์หิมะ เลื่อนม้าลาก & ถ่ายภาพชุดพื้นเมืองท่ามกลางหิมะฟู",
+        customCoords: [44.3925, 128.2578],
+        time: "15:00",
+        timeLabel: "15:00 - 17:30 น.",
+        duration: 150,
+        actType: "visit",
+        noteTh: "สนุกกับลานสไลเดอร์หางมังกรหิมะ (Snow Tubing) นั่งเลื่อนลากบนหิมะ และแวะร้านไปรษณีย์หมู่บ้านหิมะส่งโปสการ์ด",
+        noteEn: "Enjoy snow tubing, horse-drawn sleds, and send postcards from the Snow Town Post Office"
+      },
+      {
+        uid: "d4-5",
+        spotId: 20,
+        customNameEn: "Snow Town Bonfire Party & Yangge Dance (Stay Night 2)",
+        customNameTh: "ปาร์ตี้รอบกองไฟ & ระบำหยางเกอ ถนนเสวี่ยยวิ่น (นอน Snow Town คืนที่ 2)",
+        customCoords: [44.3936, 128.2588],
+        time: "19:00",
+        timeLabel: "19:00 - 21:00 น.",
+        duration: 120,
+        actType: "visit",
+        noteTh: "ชมขบวนแห่ระบำหยางเกอ ร่วมเต้นรอบกองไฟกลางลานหิมะ ชิมลูกพลับแช่แข็งและถังหูลู่ · 🛌 พักค้างคืนที่ Snow Town (คืนที่ 2/2)",
+        noteEn: "Evening bonfire party, Yangge folk dance parade & frozen persimmons · Overnight in Snow Town (Night 2/2)"
+      }
     ]
   },
   day5: {
     labelTh: "Day 5 (8 ธ.ค.)",
     labelEn: "Day 5 (Dec 8)",
-    titleTh: "ย่านบาโรกจีน • กัวเปาโร่ว 100 ปี • โรงอุปรากร & ตุ๊กตาหิมะยักษ์",
-    titleEn: "Chinese Baroque • 100-Yr Guobaorou • Opera House & Snowman",
+    titleTh: "เช็คเอาท์ Snow Town ➔ เดินทางกลับฮาร์บิน • ตุ๊กตาหิมะยักษ์ • โลกน้ำแข็ง Ice & Snow World",
+    titleEn: "Check-out Snow Town ➔ Return to Harbin • Giant Snowman • Ice & Snow World",
     items: [
-      { uid: "d5-1", spotId: 8, time: "09:30", timeLabel: "09:30 - 11:30 น.", duration: 120, actType: "walk", noteTh: "เดินชมและถ่ายภาพตึกโบราณย่านวัฒนธรรมบาโรกจีน (เหล่าเต้าว่าย)", noteEn: "Architectural walk through Chinese Baroque Historic Block courtyards" },
-      { uid: "d5-2", spotId: 23, time: "11:45", timeLabel: "11:45 - 13:00 น.", duration: 75, actType: "eat", noteTh: "ทานมื้อเที่ยงร้านเหล่าฉูเจีย ชิมหมูทอดเปรี้ยวหวาน 'กัวเปาโร่ว' ต้นกำเนิด 100 ปี", noteEn: "Lunch at Laochushi, birthplace of crispy sweet & sour Guobaorou" },
-      { uid: "d5-3", spotId: 9, time: "14:00", timeLabel: "14:00 - 15:30 น.", duration: 90, actType: "visit", noteTh: "ชมสถาปัตยกรรมระดับโลก โรงอุปรากรฮาร์บิน เดินขึ้นดาดฟ้าชมวิวทุ่งหิมะ", noteEn: "Visit futuristic Harbin Grand Opera House rooftop snow walk" },
-      { uid: "d5-4", spotId: 19, time: "16:00", timeLabel: "16:00 - 17:00 น.", duration: 60, actType: "walk", noteTh: "แวะถ่ายรูปคู่กับตุ๊กตาหิมะยักษ์สูง 18 เมตร ที่สวนดนตรีริมแม่น้ำซงฮัว", noteEn: "Take photos with the famous 18m Giant Snowman at Harbin Music Park" }
+      {
+        uid: "d5-1",
+        spotId: 20,
+        customNameEn: "Morning in China Snow Town & Check-out ➔ Return to Harbin",
+        customNameTh: "เก็บภาพบรรยากาศเช้าที่หมู่บ้านหิมะ Snow Town & เดินทางกลับฮาร์บิน",
+        time: "08:30",
+        timeLabel: "08:30 - 13:00 น.",
+        duration: 270,
+        actType: "transit",
+        noteTh: "เดินเล่นชมควันไฟจากปล่องบ้านไม้ยามเช้าในหมู่บ้านหิมะ เช็คเอาท์และนั่งรถกลับสู่นครฮาร์บิน (~4 ชม.)",
+        noteEn: "Peaceful morning stroll in Snow Town, check out after 2 nights & transfer back to Harbin (~4h)"
+      },
+      {
+        uid: "d5-2",
+        spotId: 23,
+        customNameEn: "Laochushi Restaurant (100-Yr Guobaorou Lunch)",
+        customNameTh: "กลับถึงฮาร์บิน · มื้อบ่ายร้านเหล่าฉูเจีย ต้นกำเนิดกัวเปาโร่ว 100 ปี",
+        time: "13:30",
+        timeLabel: "13:30 - 14:45 น.",
+        duration: 75,
+        actType: "eat",
+        noteTh: "เดินทางกลับถึงตัวเมืองฮาร์บิน แวะทานหมูทอดเปรี้ยวหวานกรอบนอกนุ่มใน 'กัวเปาโร่ว' สูตรต้นตำรับ 100 ปี",
+        noteEn: "Back in Harbin downtown for crispy sweet & sour Guobaorou at historic Laochushi"
+      },
+      {
+        uid: "d5-3",
+        spotId: 19,
+        customNameEn: "Harbin Music Park Giant Snowman (18m)",
+        customNameTh: "ถ่ายรูปคู่กับตุ๊กตาหิมะยักษ์สูง 18 เมตร สวนดนตรีริมแม่น้ำซงฮัว",
+        time: "15:15",
+        timeLabel: "15:15 - 16:15 น.",
+        duration: 60,
+        actType: "walk",
+        noteTh: "เช็คอินแลนด์มาร์กสุดไวรัล ตุ๊กตาหิมะยักษ์สวมหมวกแดงและผ้าพันคอสูง 18 เมตร ริมฝั่งแม่น้ำซงฮัว",
+        noteEn: "Snap photos with Harbin's famous 18-meter smiling Giant Snowman by the river"
+      },
+      {
+        uid: "d5-4",
+        spotId: 12,
+        customNameEn: "Harbin Ice and Snow World (Illuminated Ice Castles)",
+        customNameTh: "โลกน้ำแข็งและหิมะฮาร์บิน (Harbin Ice and Snow World) ยามค่ำคืน",
+        time: "16:30",
+        timeLabel: "16:30 - 20:30 น.",
+        duration: 240,
+        actType: "visit",
+        noteTh: "ปิดท้ายค่ำคืนด้วยไฮไลท์ระดับโลก ชมปราสาทน้ำแข็งเรืองแสงขนาดมหึมาและเล่นสไลเดอร์น้ำแข็งยักษ์",
+        noteEn: "Grand finale evening at Harbin Ice and Snow World among illuminated towering ice palaces"
+      }
     ]
   },
   day6: {

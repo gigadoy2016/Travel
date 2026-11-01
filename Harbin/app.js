@@ -5,8 +5,8 @@
 // - Sections 3 & 4: AMAP Harbin Interactive Map (English Labels, Pinning, Route Lines)
 // ============================================================================
 
-const STORAGE_KEY_TIMELINE = "harbin_planner_timeline_v3";
-const STORAGE_KEY_CUSTOM_SPOTS = "harbin_planner_custom_spots_v3";
+const STORAGE_KEY_TIMELINE = "harbin_planner_timeline_v6";
+const STORAGE_KEY_CUSTOM_SPOTS = "harbin_planner_custom_spots_v6";
 
 // Detail Markdown File Mapping (for the original 22 Harbin docs)
 const SPOT_MD_FILES = {
@@ -117,6 +117,15 @@ let timelineViewMode = "table"; // "table" (Step-by-Step yellow table) or "card"
 let currentChooseCategory = "all";
 let currentChooseSearch = "";
 
+// Column 2 State: Shows Detail of selected Column 1 item ("detail") or Chooses library ("chooses")
+let col2ViewMode = "detail";
+let activeTimelineSelection = {
+  dayKey: "day1",
+  index: 0
+};
+// Active Transit Mode selected in Column 2 ("auto" | "taxi" | "rail_walk" | "walk")
+let selectedTransitMode = "auto";
+
 // Drag & Drop State
 let draggedPayload = null; // { source: 'chooses' | 'timeline', spotId?, dayKey?, timelineIndex?, uid? }
 
@@ -143,6 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initMap();
   renderAll();
   setupEventListeners();
+  fetchLiveHarbinWeather();
 });
 
 function loadPersistedData() {
@@ -283,14 +293,142 @@ function minutesToTime(totalMins) {
 }
 
 // ============================================================================
-// 3. RENDER ALL SECTIONS
+// 3. RENDER ALL SECTIONS & WEATHER / TEMPERATURE BY DATE-TIME
 // ============================================================================
+const HARBIN_TRIP_WEATHER_BY_DAY = {
+  day1: { dateTh: "4 ธ.ค. 2026", dateShort: "4 ธ.ค.", highC: -11, lowC: -22, condTh: "ฟ้าใสหนาวจัด ❄️", windKmh: 14 },
+  day2: { dateTh: "5 ธ.ค. 2026", dateShort: "5 ธ.ค.", highC: -12, lowC: -23, condTh: "หิมะโปรยบางเบา 🌨️", windKmh: 16 },
+  day3: { dateTh: "6 ธ.ค. 2026", dateShort: "6 ธ.ค.", highC: -14, lowC: -26, condTh: "หมู่บ้านหิมะ Snow Town (คืนที่ 1) 🍄❄️", windKmh: 18 },
+  day4: { dateTh: "7 ธ.ค. 2026", dateShort: "7 ธ.ค.", highC: -15, lowC: -28, condTh: "หมู่บ้านหิมะ Snow Town (คืนที่ 2) ⛄❄️", windKmh: 15 },
+  day5: { dateTh: "8 ธ.ค. 2026", dateShort: "8 ธ.ค.", highC: -12, lowC: -23, condTh: "เช้า Snow Town ➔ บ่ายฮาร์บิน 🌬️", windKmh: 17 },
+  day6: { dateTh: "9 ธ.ค. 2026", dateShort: "9 ธ.ค.", highC: -10, lowC: -20, condTh: "แดดอ่อนอากาศเย็นจัด 🌤️", windKmh: 12 }
+};
+
+let liveHarbinWeather = null;
+
+function getWeatherForSelection(dayKey, item) {
+  const allDayKeys = Object.keys(timelineState);
+  const dayIdx = Math.max(0, allDayKeys.indexOf(dayKey));
+  const preset = HARBIN_TRIP_WEATHER_BY_DAY[dayKey] || {
+    dateTh: `${4 + dayIdx} ธ.ค. 2026`,
+    dateShort: `${4 + dayIdx} ธ.ค.`,
+    highC: -12,
+    lowC: -23,
+    condTh: "อากาศหนาวจัด ❄️",
+    windKmh: 15
+  };
+
+  const timeStr = item?.time || "12:00";
+  const mins = timeToMinutes(timeStr);
+  const hour = mins / 60;
+
+  // Calculate realistic hourly temperature between daily lowC (at 06:00) and highC (at 14:00)
+  // Using cosine curve peaking around 14:00
+  const phase = ((hour - 14) / 24) * 2 * Math.PI;
+  const factor = (Math.cos(phase) + 1) / 2; // 1 at 14:00, 0 at 02:00
+  let hourlyTempC = Math.round(preset.lowC + (preset.highC - preset.lowC) * factor);
+
+  // Adjust if Snow Town (spotId 20) or Snow Valley (spotId 21) which are 3-4°C colder in the mountains
+  if (Number(item?.spotId) === 20 || Number(item?.spotId) === 21) {
+    hourlyTempC -= 3;
+  }
+
+  const feelsLikeC = hourlyTempC - 5;
+  const sourceUrl = "https://www.accuweather.com/th/cn/harbin/103326/weather-forecast/103326";
+  const secondaryUrl = "https://www.timeanddate.com/weather/china/harbin/ext";
+
+  return {
+    tempC: hourlyTempC,
+    feelsLikeC,
+    highC: preset.highC,
+    lowC: preset.lowC,
+    dateTh: preset.dateTh,
+    dateShort: preset.dateShort,
+    timeStr,
+    dayNumber: dayIdx + 1,
+    condTh: preset.condTh,
+    sourceName: "AccuWeather Harbin",
+    sourceUrl,
+    secondaryUrl
+  };
+}
+
+function updateHeaderWeatherBadge() {
+  const badgeLink = document.getElementById("headerWeatherBadge");
+  const badgeText = document.getElementById("headerWeatherText");
+  if (!badgeLink || !badgeText) return;
+
+  const selDayKey = activeTimelineSelection.dayKey || currentDayKey || "day1";
+  const items = timelineState[selDayKey]?.items || [];
+  const selItem = items[activeTimelineSelection.index] || items[0] || { time: "12:00" };
+  const w = getWeatherForSelection(selDayKey, selItem);
+
+  const liveNote = liveHarbinWeather
+    ? ` | ขณะนี้ ${liveHarbinWeather.tempC}°C`
+    : "";
+
+  badgeLink.href = w.sourceUrl;
+  badgeLink.title = `คลิกเพื่อเปิดดูพยากรณ์อากาศฮาร์บินจากแหล่งที่มา (${w.sourceName}) · วันที่ ${w.dayNumber} (${w.dateTh}) เวลา ${w.timeStr} น. อุณหภูมิประมาณ ${w.tempC}°C (Feel like ${w.feelsLikeC}°C)`;
+  badgeText.innerHTML = `❄️ <strong>${w.tempC}°C</strong> <span style="opacity:0.88;">(${w.lowC}°~${w.highC}°C)</span> · 📅 วันที่ ${w.dayNumber} (${w.dateShort}) 🕒 ${w.timeStr} น.${liveNote}`;
+}
+
+async function fetchLiveHarbinWeather() {
+  try {
+    const res = await fetch(
+      "https://api.open-meteo.com/v1/forecast?latitude=45.75&longitude=126.65&current=temperature_2m,apparent_temperature&timezone=Asia%2FShanghai"
+    );
+    if (!res.ok) return;
+    const data = await res.json();
+    if (data?.current && typeof data.current.temperature_2m === "number") {
+      liveHarbinWeather = {
+        tempC: Math.round(data.current.temperature_2m),
+        feelsC: Math.round(data.current.apparent_temperature ?? data.current.temperature_2m),
+        updatedAt: data.current.time || ""
+      };
+      updateHeaderWeatherBadge();
+    }
+  } catch (_) {
+    // Fallback to historical trip forecast silently if offline
+  }
+}
+
 function renderAll() {
+  ensureValidTimelineSelection();
+  updateHeaderWeatherBadge();
   renderDayTabs();
   renderTimelineSection();
+  renderSelectedTimelineDetail();
   renderChoosesSection();
   updateInsertPositionDropdown();
   renderMapMarkersAndRoute();
+}
+
+function ensureValidTimelineSelection() {
+  const dayKeys = Object.keys(timelineState);
+  if (!dayKeys.length) return;
+  if (!timelineState[activeTimelineSelection.dayKey]) {
+    activeTimelineSelection.dayKey = currentDayKey && timelineState[currentDayKey] ? currentDayKey : dayKeys[0];
+    activeTimelineSelection.index = 0;
+  }
+  const items = timelineState[activeTimelineSelection.dayKey]?.items || [];
+  if (items.length === 0) {
+    activeTimelineSelection.index = 0;
+  } else if (activeTimelineSelection.index >= items.length || activeTimelineSelection.index < 0) {
+    activeTimelineSelection.index = Math.max(0, items.length - 1);
+  }
+}
+
+function setCol2ViewMode(mode) {
+  col2ViewMode = mode === "chooses" ? "chooses" : "detail";
+  const detailPane = document.getElementById("col2DetailPane");
+  const choosesPane = document.getElementById("col2ChoosesPane");
+  const btnDetail = document.getElementById("btnCol2ModeDetail");
+  const btnChooses = document.getElementById("btnCol2ModeChooses");
+
+  if (detailPane) detailPane.hidden = col2ViewMode !== "detail";
+  if (choosesPane) choosesPane.hidden = col2ViewMode !== "chooses";
+  if (btnDetail) btnDetail.classList.toggle("active", col2ViewMode === "detail");
+  if (btnChooses) btnChooses.classList.toggle("active", col2ViewMode === "chooses");
 }
 
 const DAY_COLORS = ["#e4572e", "#2a9d8f", "#6a4c93", "#f4a300", "#1d70b8", "#b5179e", "#059669", "#e11d48"];
@@ -441,21 +579,38 @@ function renderTimelineSection() {
     items.forEach((item, index) => {
       const spot = getSpotById(item.spotId);
 
-      // Format display title like "哈尔滨站 สถานีรถไฟฮาร์บิน" or flight step
-      let displayTitle = "";
+      // Format display title in strict order: 1. English -> 2. Thai -> 3. Chinese (up to 2 lines)
+      let displayTitleHtml = "";
+      let displayTitlePlain = "";
       if (item.isFlightStep) {
-        displayTitle = `✈️ ${item.customNameTh || item.customNameEn}`;
+        const enPart = item.customNameEn || spot?.nameEn || "";
+        const thPart = item.customNameTh || spot?.nameTh || "";
+        const zhPart = spot?.nameZh ? spot.nameZh.split(" ")[0] : "";
+        const tailParts = [thPart, zhPart].filter(Boolean).join(" · ");
+        displayTitleHtml = `<span class="n-en">✈️ ${enPart || thPart}</span>${enPart && tailParts ? ` <span class="n-sub">· ${tailParts}</span>` : ""}`;
+        displayTitlePlain = `✈️ ${[enPart, thPart, zhPart].filter(Boolean).join(" · ")}`;
       } else if (spot) {
-        const zhPart = spot.nameZh ? `${spot.nameZh.split(" ")[0]} ` : "";
-        displayTitle = `${zhPart}${item.customNameTh || spot.nameTh}`;
+        const enPart = item.customNameEn || spot.nameEn || "";
+        const thPart = item.customNameTh || spot.nameTh || "";
+        const zhPart = spot.nameZh ? spot.nameZh.split(" ")[0] : "";
+        const tailParts = [thPart, zhPart].filter(Boolean).join(" · ");
+        displayTitleHtml = `<span class="n-en">${enPart}</span>${tailParts ? ` <span class="n-sub">· ${tailParts}</span>` : ""}`;
+        displayTitlePlain = [enPart, thPart, zhPart].filter(Boolean).join(" · ");
       } else {
-        displayTitle = item.customNameTh || item.customNameEn || "กิจกรรมกำหนดเอง";
+        const enPart = item.customNameEn || "";
+        const thPart = item.customNameTh || "";
+        displayTitleHtml = `<span class="n-en">${enPart || thPart || "Custom Activity"}</span>${enPart && thPart && enPart !== thPart ? ` <span class="n-sub">· ${thPart}</span>` : ""}`;
+        displayTitlePlain = [enPart, thPart].filter(Boolean).join(" · ") || "Custom Activity";
       }
 
       const tipDetail = item.noteTh || (spot ? spot.ratingDescTh : "") || "";
 
+      const isSelectedRow =
+        activeTimelineSelection.dayKey === dayKey &&
+        Number(activeTimelineSelection.index) === Number(index);
+
       const row = document.createElement("div");
-      row.className = "tl-row";
+      row.className = `tl-row ${isSelectedRow ? "active-selected" : ""}`;
       row.draggable = true;
       row.dataset.dayKey = dayKey;
       row.dataset.index = index;
@@ -463,7 +618,7 @@ function renderTimelineSection() {
 
       row.innerHTML = `
         <span class="t" title="คลิกเพื่อเปลี่ยนเวลา">${item.time || "09:00"}</span>
-        <span class="n">${displayTitle}</span>
+        <span class="n">${displayTitleHtml}</span>
         <button type="button" class="edit-btn" title="แก้ไขรายละเอียด">✎</button>
         <button type="button" class="x" title="เอาออก">×</button>
       `;
@@ -494,16 +649,19 @@ function renderTimelineSection() {
         removeTimelineItem(index, dayKey);
       });
 
-      // Click place name (.n) -> focus on map (or open flight ticket modal if flight leg)
-      row.querySelector(".n").addEventListener("click", () => {
+      // Click row -> select this item to show full Detail & Transit in Column 2 + focus on map
+      row.addEventListener("click", () => {
         currentDayKey = dayKey;
+        activeTimelineSelection = { dayKey, index };
+        selectedTransitMode = "auto";
+        setCol2ViewMode("detail");
         renderAll();
         focusTimelineItemOnMap(index, dayKey);
       });
 
       // Hover tooltip & highlight pin on map
       row.addEventListener("mouseenter", e => {
-        showFloatingTip(e, displayTitle, tipDetail);
+        showFloatingTip(e, displayTitlePlain, tipDetail);
       });
       row.addEventListener("mousemove", moveFloatingTip);
       row.addEventListener("mouseleave", hideFloatingTip);
@@ -671,6 +829,7 @@ function insertSpotIntoTimeline(spotId, targetIndex = "end", targetDayKey = curr
   };
 
   items.splice(insertAt, 0, newItem);
+  activeTimelineSelection = { dayKey: targetDayKey, index: insertAt };
 
   saveState();
   renderAll();
@@ -755,7 +914,972 @@ function updateInsertPositionDropdown() {
 }
 
 // ============================================================================
-// 5. SECTION 2: CHOOSES (ATTRACTION & FOOD CARDS) RENDERING
+// 5. SECTION 2: DETAIL OF COLUMN 1 (TRANSIT FROM PREV STOP, PHOTOS, INFO, LINKS)
+// ============================================================================
+function getFlattenedTimelineStops() {
+  const flat = [];
+  Object.keys(timelineState).forEach((dayKey, dayIdx) => {
+    const items = timelineState[dayKey]?.items || [];
+    items.forEach((item, index) => {
+      flat.push({ dayKey, dayIdx, index, item });
+    });
+  });
+  return flat;
+}
+
+function navigateTimelineSelection(delta) {
+  const flat = getFlattenedTimelineStops();
+  if (!flat.length) return;
+  const curPos = flat.findIndex(
+    x => x.dayKey === activeTimelineSelection.dayKey && x.index === activeTimelineSelection.index
+  );
+  const nextPos = Math.min(flat.length - 1, Math.max(0, (curPos === -1 ? 0 : curPos) + delta));
+  const target = flat[nextPos];
+  if (!target) return;
+  currentDayKey = target.dayKey;
+  activeTimelineSelection = { dayKey: target.dayKey, index: target.index };
+  selectedTransitMode = "auto";
+  setCol2ViewMode("detail");
+  renderAll();
+  focusTimelineItemOnMap(target.index, target.dayKey);
+}
+
+function zoomMapBetweenTwoCoords(coordsA, coordsB) {
+  if (!map || !coordsA || !coordsB) return;
+  map.closePopup();
+  const ptA = getDisplayCoords(coordsA);
+  const ptB = getDisplayCoords(coordsB);
+  const bounds = L.latLngBounds([ptA, ptB]).pad(0.32);
+  map.flyToBounds(bounds, {
+    paddingTopLeft: [70, 75],
+    paddingBottomRight: [70, 75],
+    maxZoom: 17,
+    duration: 0.85
+  });
+}
+
+// Real Harbin Metro Stations & Transit Transfer Hubs (GCJ-02 Coordinates)
+const HARBIN_TRANSIT_HUBS = [
+  {
+    id: "metro_zhongyang",
+    nameEn: "Metro Line 2 · Zhongyangdajie Stn (Exit 2)",
+    nameTh: "สถานีรถไฟใต้ดิน Zhongyangdajie (Line 2 ทางออก 2)",
+    nameZh: "中央大街地铁站 (2号线)",
+    lineTh: "รถไฟใต้ดินสาย 2 (Metro Line 2)",
+    coords: [45.7689, 126.6188],
+    spotIds: [2, 15, 22, 24, 25]
+  },
+  {
+    id: "metro_renmin",
+    nameEn: "Metro Line 2 · People's Square Stn",
+    nameTh: "สถานีรถไฟใต้ดิน People's Square (Line 2)",
+    nameZh: "人民广场地铁站 (2号线)",
+    lineTh: "รถไฟใต้ดินสาย 2 (Metro Line 2)",
+    coords: [45.7768, 126.6162],
+    spotIds: [7, 10, 14, 19, 28]
+  },
+  {
+    id: "metro_harbin_stn",
+    nameEn: "Metro Line 2 · Harbin Railway Station",
+    nameTh: "สถานีรถไฟฮาร์บิน (Metro Line 2 / HSR)",
+    nameZh: "哈尔滨站 (地铁2号线/高铁)",
+    lineTh: "รถไฟใต้ดินสาย 2 (Metro Line 2)",
+    coords: [45.7574, 126.6272],
+    spotIds: [0, 1]
+  },
+  {
+    id: "metro_bowuguan",
+    nameEn: "Metro Line 1/2 · Museum Station (Bowuguan)",
+    nameTh: "สถานีรถไฟใต้ดิน Bowuguan พิพิธภัณฑ์ (Line 1/2)",
+    nameZh: "博物馆地铁站 (1/2号线)",
+    lineTh: "รถไฟใต้ดินสาย 1/2 (Metro Line 1/2)",
+    coords: [45.7568, 126.6412],
+    spotIds: [13, 16, 17, 27]
+  },
+  {
+    id: "metro_baroque",
+    nameEn: "Metro Line 3 · Chinese Baroque Stn",
+    nameTh: "สถานีรถไฟใต้ดิน Chinese Baroque (Line 3)",
+    nameZh: "中华巴洛克街区地铁站 (3号线)",
+    lineTh: "รถไฟใต้ดินสาย 3 (Metro Line 3)",
+    coords: [45.7832, 126.6525],
+    spotIds: [6, 8, 23]
+  },
+  {
+    id: "metro_sun_island",
+    nameEn: "Metro Line 2 · Sun Island Stn (Exit 3)",
+    nameTh: "สถานีรถไฟใต้ดิน Sun Island เกาะพระอาทิตย์ (Line 2)",
+    nameZh: "太阳岛地铁站 (2号线)",
+    lineTh: "รถไฟใต้ดินสาย 2 (Metro Line 2)",
+    coords: [45.7905, 126.5920],
+    spotIds: [4, 5, 9, 26]
+  },
+  {
+    id: "metro_ice_world",
+    nameEn: "Metro Line 2 · Ice & Snow World Stn",
+    nameTh: "สถานีรถไฟใต้ดิน Ice & Snow World (Line 2)",
+    nameZh: "冰雪大世界地铁站 (2号线)",
+    lineTh: "รถไฟใต้ดินสาย 2 (Metro Line 2)",
+    coords: [45.7808, 126.5645],
+    spotIds: [12, 18]
+  }
+];
+
+function findNearestMetroHub(spotId, coords) {
+  if (spotId !== undefined && spotId !== null && spotId !== "") {
+    const byId = HARBIN_TRANSIT_HUBS.find(h => h.spotIds.includes(Number(spotId)));
+    if (byId) return byId;
+  }
+  if (!coords) return HARBIN_TRANSIT_HUBS[0];
+  let best = HARBIN_TRANSIT_HUBS[0];
+  let bestDist = Infinity;
+  HARBIN_TRANSIT_HUBS.forEach(h => {
+    const d = calcDistanceKm(coords, h.coords);
+    if (d < bestDist) {
+      bestDist = d;
+      best = h;
+    }
+  });
+  return best;
+}
+
+function buildMultiModalPlansForStop(prevItem, currItem, prevCoords, currCoords, prevSpot, currSpot) {
+  if (!prevCoords || !currCoords) return null;
+
+  const distKm = calcDistanceKm(prevCoords, currCoords);
+  const walkMins = Math.max(4, Math.round((distKm / 4.2) * 60));
+  const driveMins = Math.max(8, Math.round((distKm / 30) * 60 + 5));
+  const estTaxiMin = Math.max(9, Math.round(9 + Math.max(0, distKm - 3) * 2.2));
+  const estTaxiMax = Math.round(estTaxiMin * 1.35 + 4);
+
+  const prevSid = prevItem?.spotId !== undefined && prevItem?.spotId !== null ? Number(prevItem.spotId) : -1;
+  const currSid = currItem?.spotId !== undefined && currItem?.spotId !== null ? Number(currItem.spotId) : -1;
+
+  // Recommended default mode when "auto" is active
+  const defaultMode = distKm <= 0.85 ? "walk" : "taxi";
+  const activeMode = selectedTransitMode === "auto" ? defaultMode : selectedTransitMode;
+
+  // -------------------------------------------------------------------------
+  // PLAN 1: TAXI / DIDI / PRIVATE VAN (ขับรถส่งตรงถึงจุดหมาย)
+  // -------------------------------------------------------------------------
+  const midTaxiPoint = [
+    (prevCoords[0] + currCoords[0]) / 2 + (currCoords[1] - prevCoords[1]) * 0.08,
+    (prevCoords[1] + currCoords[1]) / 2 - (currCoords[0] - prevCoords[0]) * 0.08
+  ];
+  const taxiPlan = {
+    modeKey: "taxi",
+    titleTh: distKm > 45
+      ? `🚐 เหมารถตู้ / รถบัสทางไกลตรงถึงที่หมาย (~${(distKm / 65).toFixed(1)} ชม. · ${distKm.toFixed(0)} กม.)`
+      : `🚕 เรียก DiDi / แท็กซี่ ส่งตรงถึงจุดหมาย (~${driveMins} นาที · ${distKm.toFixed(1)} กม.)`,
+    descTh: distKm > 45
+      ? `เดินทางจากจุดก่อนหน้าด้วยรถตู้เหมาล้อโซ่หิมะ วิ่งตามทางหลวงหิมะส่งถึงหน้าจุดหมายโดยตรง`
+      : `เรียกผ่านแอป DiDi หรือโบกแท็กซี่จากจุดก่อนหน้า ส่งถึงหน้าจุดหมายโดยไม่ต้องเดินตากลมหนาว (ค่าโดยสารประมาณ ${estTaxiMin}–${estTaxiMax} หยวน)`,
+    legs: [
+      {
+        type: "taxi",
+        color: "#e4572e",
+        dashArray: "10, 12",
+        pathCoords: [prevCoords, midTaxiPoint, currCoords],
+        badgeTh: distKm > 45
+          ? `🚐 รถตู้/บัสทางไกล ${distKm.toFixed(0)} กม. (~${(distKm / 65).toFixed(1)} ชม.)`
+          : `🚕 DiDi / แท็กซี่ ${distKm.toFixed(1)} กม. (~${driveMins} นาที · ${estTaxiMin}-${estTaxiMax}¥)`,
+        stepTextTh: distKm > 45
+          ? `ช่วงเดียวถึง: 🚐 นั่งรถตู้/รถบัสท่องเที่ยว ${distKm.toFixed(0)} กม. (~${(distKm / 65).toFixed(1)} ชม.) ส่งถึงจุดหมาย`
+          : `ช่วงเดียวถึง: 🚕 นั่ง DiDi / แท็กซี่ ${distKm.toFixed(1)} กม. (~${driveMins} นาที) ส่งถึงหน้าจุดหมาย`
+      }
+    ],
+    transferHubs: []
+  };
+
+  // -------------------------------------------------------------------------
+  // PLAN 2: RAIL / METRO / AIRPORT BUS + WALK TO DESTINATION (รถไฟ/รถบัส + เดินเท้าถึงจุดหมาย)
+  // -------------------------------------------------------------------------
+  let railWalkPlan = null;
+
+  if (prevSid === 11 || currSid === 11) {
+    // Airport Bus Line 3 + Walk to/from Zhongyang Street
+    const busStopCoords = [45.7672, 126.6175];
+    const walkToDestMeters = Math.max(120, Math.round(calcDistanceKm(busStopCoords, prevSid === 11 ? currCoords : prevCoords) * 1000));
+    const walkToDestMins = Math.max(3, Math.round(walkToDestMeters / 70));
+
+    if (prevSid === 11) {
+      railWalkPlan = {
+        modeKey: "rail_walk",
+        titleTh: `🚌 รถบัสสนามบิน (Airport Bus สาย 3) + 🚶 เดินเท้าเข้าที่พัก (~50 นาที · 20 หยวน)`,
+        descTh: `ประหยัดและสะดวก: นั่ง Airport Bus สาย 3 จากสนามบิน HRB T2 มาลงป้ายถนนจงหยาง (Jingwei St.) แล้วเดินเท้าต่อเข้าที่พัก`,
+        legs: [
+          {
+            type: "bus",
+            color: "#7c3aed",
+            dashArray: null,
+            pathCoords: [prevCoords, [45.6950, 126.4400], busStopCoords],
+            badgeTh: `🚌 ช่วงที่ 1: Airport Bus สาย 3 (~45 นาที · 20¥)`,
+            stepTextTh: `ช่วงที่ 1 (รถบัส): 🚌 นั่ง Airport Shuttle Bus สาย 3 จากสนามบิน HRB T2 ➔ ลงป้ายถนนจงหยาง (中央大街经纬街站)`
+          },
+          {
+            type: "walk",
+            color: "#10b981",
+            dashArray: "5, 8",
+            pathCoords: [busStopCoords, currCoords],
+            badgeTh: `🚶 ช่วงที่ 2: เดินเท้า ${walkToDestMeters} ม. (~${walkToDestMins} นาที)`,
+            stepTextTh: `ช่วงที่ 2 (เดินเท้า): 🚶 เดินจากป้ายรถบัสสนามบิน ${walkToDestMeters} เมตร (~${walkToDestMins} นาที) ➔ ถึงจุดหมาย`
+          }
+        ],
+        transferHubs: [
+          {
+            coords: busStopCoords,
+            label: `🚏 จุดลง Airport Bus สาย 3 ➔ เดินต่อ ${walkToDestMeters} ม.`
+          }
+        ]
+      };
+    } else {
+      railWalkPlan = {
+        modeKey: "rail_walk",
+        titleTh: `🚶 เดินไปจุดขึ้นรถ + 🚌 Airport Bus สาย 3 สู่สนามบิน (~50 นาที · 20 หยวน)`,
+        descTh: `เดินจากจุดเริ่มต้นไปขึ้นรถบัสสนามบินที่ถนนจงหยาง ตรงสู่ท่าอากาศยานฮาร์บิน T2`,
+        legs: [
+          {
+            type: "walk",
+            color: "#10b981",
+            dashArray: "5, 8",
+            pathCoords: [prevCoords, busStopCoords],
+            badgeTh: `🚶 ช่วงที่ 1: เดินไปป้ายรถบัส ${walkToDestMeters} ม.`,
+            stepTextTh: `ช่วงที่ 1 (เดินเท้า): 🚶 เดินไปป้าย Airport Bus ถนนจงหยาง (${walkToDestMeters} ม. · ~${walkToDestMins} นาที)`
+          },
+          {
+            type: "bus",
+            color: "#7c3aed",
+            dashArray: null,
+            pathCoords: [busStopCoords, [45.6950, 126.4400], currCoords],
+            badgeTh: `🚌 ช่วงที่ 2: Airport Bus สู่สนามบิน HRB T2 (~45 นาที)`,
+            stepTextTh: `ช่วงที่ 2 (รถบัส): 🚌 นั่ง Airport Bus ยาวถึงหน้าอาคารผู้โดยสารสนามบินฮาร์บิน T2`
+          }
+        ],
+        transferHubs: [
+          {
+            coords: busStopCoords,
+            label: `🚏 จุดขึ้น Airport Bus ไปสนามบิน`
+          }
+        ]
+      };
+    }
+  } else if (distKm > 45) {
+    // High-Speed Rail (Harbin Station <-> Yabuli West) + Highway Bus + Walk in Snow Town
+    const yabuliWestCoords = [44.7815, 128.4310];
+    const snowTownGateCoords = [44.3915, 128.2555];
+    const goingToSnow = currCoords[0] < 45.0;
+
+    if (goingToSnow) {
+      railWalkPlan = {
+        modeKey: "rail_walk",
+        titleTh: `🚅 รถไฟความเร็วสูง (HSR) + 🚌 รถบัสหิมะ + 🚶 เดินเข้าที่พัก (~3 ชม.)`,
+        descTh: `นั่งรถไฟหัวกระสุนจากสถานีฮาร์บิน (哈尔滨站) ไปลงสถานี Yabuli West (亚布力西站) ต่อรถบัสอุทยาน และเดินเข้าถนนเสวี่ยยวิ่น`,
+        legs: [
+          {
+            type: "rail",
+            color: "#7c3aed",
+            dashArray: null,
+            pathCoords: [prevCoords, [45.3200, 127.4500], yabuliWestCoords],
+            badgeTh: `🚅 ช่วงที่ 1: รถไฟความเร็วสูง HSR ➔ สถานี Yabuli West (~1.2 ชม.)`,
+            stepTextTh: `ช่วงที่ 1 (รถไฟ HSR): 🚅 นั่งรถไฟความเร็วสูงจากสถานีฮาร์บิน ➔ ลงสถานี Yabuli West (亚布力西站 · ~75 หยวน)`
+          },
+          {
+            type: "bus",
+            color: "#0891b2",
+            dashArray: "8, 6",
+            pathCoords: [yabuliWestCoords, [44.5800, 128.3400], snowTownGateCoords],
+            badgeTh: `🚌 ช่วงที่ 2: รถบัสถนนสายหิมะ Yaxue (~1.5 ชม.)`,
+            stepTextTh: `ช่วงที่ 2 (รถบัสหิมะ): 🚌 ต่อรถชัทเทิลบัสจากหน้าสถานี Yabuli West วิ่งผ่านถนนสายหิมะ ➔ ด่านหมู่บ้านหิมะ Snow Town`
+          },
+          {
+            type: "walk",
+            color: "#10b981",
+            dashArray: "4, 7",
+            pathCoords: [snowTownGateCoords, currCoords],
+            badgeTh: `🚶 ช่วงที่ 3: เดินเท้าเข้าหมู่บ้านหิมะ ~350 ม. (5 นาที)`,
+            stepTextTh: `ช่วงที่ 3 (เดินเท้า): 🚶 เดินเท้าจากจุดจอดรถอุทยานเข้าสู่ถนนคนเดินเสวี่ยยวิ่นและที่พัก (~350 ม.)`
+          }
+        ],
+        transferHubs: [
+          {
+            coords: yabuliWestCoords,
+            label: `🚅 สถานีรถไฟความเร็วสูง Yabuli West (ต่อรถบัสหิมะ)`
+          },
+          {
+            coords: snowTownGateCoords,
+            label: `🚏 จุดจอดรถอุทยาน Snow Town ➔ 🚶 เดินเข้าหมู่บ้าน`
+          }
+        ]
+      };
+    } else {
+      const harbinStnCoords = [45.7570, 126.6268];
+      railWalkPlan = {
+        modeKey: "rail_walk",
+        titleTh: `🚌 รถบัสหิมะ + 🚅 รถไฟความเร็วสูงกลับฮาร์บิน + 🚶 เดินเข้าจุดหมาย`,
+        descTh: `นั่งรถบัสจากหมู่บ้านหิมะมาขึ้นรถไฟความเร็วสูงที่สถานี Yabuli West กลับสู่สถานีรถไฟฮาร์บิน แล้วต่อเข้าจุดหมาย`,
+        legs: [
+          {
+            type: "bus",
+            color: "#0891b2",
+            dashArray: "8, 6",
+            pathCoords: [prevCoords, yabuliWestCoords],
+            badgeTh: `🚌 ช่วงที่ 1: รถบัส Snow Town ➔ สถานี Yabuli West (~1.5 ชม.)`,
+            stepTextTh: `ช่วงที่ 1 (รถบัส): 🚌 นั่งรถบัสจากหมู่บ้านหิมะ Snow Town ➔ สถานีรถไฟความเร็วสูง Yabuli West`
+          },
+          {
+            type: "rail",
+            color: "#7c3aed",
+            dashArray: null,
+            pathCoords: [yabuliWestCoords, [45.3200, 127.4500], harbinStnCoords],
+            badgeTh: `🚅 ช่วงที่ 2: รถไฟความเร็วสูง HSR ➔ สถานีฮาร์บิน (~1.2 ชม.)`,
+            stepTextTh: `ช่วงที่ 2 (รถไฟ HSR): 🚅 นั่งรถไฟความเร็วสูงกลับถึงสถานีรถไฟฮาร์บิน (哈尔滨站)`
+          },
+          {
+            type: "walk",
+            color: "#10b981",
+            dashArray: "4, 7",
+            pathCoords: [harbinStnCoords, currCoords],
+            badgeTh: `🚇/🚶 ช่วงที่ 3: จากสถานีฮาร์บินเข้าสู่จุดหมาย`,
+            stepTextTh: `ช่วงที่ 3 (เข้าจุดหมาย): 🚇 ต่อรถไฟใต้ดิน/เดินเท้าจากสถานีฮาร์บินเข้าสู่จุดหมาย`
+          }
+        ],
+        transferHubs: [
+          {
+            coords: yabuliWestCoords,
+            label: `🚅 สถานี Yabuli West (ขึ้นรถไฟ HSR กลับฮาร์บิน)`
+          },
+          {
+            coords: harbinStnCoords,
+            label: `🚅 สถานีรถไฟฮาร์บิน (哈尔滨站)`
+          }
+        ]
+      };
+    }
+  } else {
+    // Urban Harbin Metro + Walking Leg to Destination
+    const originHub = findNearestMetroHub(prevSid, prevCoords);
+    const destHub = findNearestMetroHub(currSid, currCoords);
+    const walkFromStnMeters = Math.max(90, Math.round(calcDistanceKm(destHub.coords, currCoords) * 1000));
+    const walkFromStnMins = Math.max(2, Math.round(walkFromStnMeters / 70));
+
+    if (originHub.id !== destHub.id) {
+      const walkToOriginMeters = Math.max(80, Math.round(calcDistanceKm(prevCoords, originHub.coords) * 1000));
+      const walkToOriginMins = Math.max(2, Math.round(walkToOriginMeters / 70));
+      railWalkPlan = {
+        modeKey: "rail_walk",
+        titleTh: `🚇 รถไฟใต้ดิน (${destHub.lineTh}) + 🚶 เดินเท้าถึงจุดหมาย`,
+        descTh: currSpot?.transportTh?.fromStation || `เดินไปขึ้นรถไฟใต้ดินที่ ${originHub.nameTh} นั่งไปลง ${destHub.nameTh} แล้วเดินเท้าต่ออีก ${walkFromStnMeters} ม.`,
+        legs: [
+          {
+            type: "walk",
+            color: "#10b981",
+            dashArray: "4, 7",
+            pathCoords: [prevCoords, originHub.coords],
+            badgeTh: `🚶 ช่วงที่ 1: เดินไปสถานี ${walkToOriginMeters} ม. (~${walkToOriginMins} นาที)`,
+            stepTextTh: `ช่วงที่ 1 (เดินไปสถานี): 🚶 เดินเท้า ${walkToOriginMeters} ม. (~${walkToOriginMins} นาที) ไปขึ้นรถไฟใต้ดินที่ ${originHub.nameTh}`
+          },
+          {
+            type: "rail",
+            color: "#7c3aed",
+            dashArray: null,
+            pathCoords: [originHub.coords, destHub.coords],
+            badgeTh: `🚇 ช่วงที่ 2: นั่ง ${destHub.lineTh} ➔ ลงสถานี ${destHub.nameZh.split(" ")[0]}`,
+            stepTextTh: `ช่วงที่ 2 (รถไฟใต้ดิน): 🚇 นั่งรถไฟใต้ดินจาก ${originHub.nameZh.split(" ")[0]} ➔ ลงที่ ${destHub.nameTh} (ค่าโดยสาร ~2-4 หยวน)`
+          },
+          {
+            type: "walk",
+            color: "#10b981",
+            dashArray: "4, 7",
+            pathCoords: [destHub.coords, currCoords],
+            badgeTh: `🚶 ช่วงที่ 3: เดินจากสถานี ${walkFromStnMeters} ม. (~${walkFromStnMins} นาที) ถึงจุดหมาย`,
+            stepTextTh: `ช่วงที่ 3 (เดินเข้าจุดหมาย): 🚶 ออกจากสถานีเดินเท้าต่ออีก ${walkFromStnMeters} ม. (~${walkFromStnMins} นาที) ถึงจุดหมาย`
+          }
+        ],
+        transferHubs: [
+          {
+            coords: originHub.coords,
+            label: `🚇 ขึ้นรถไฟใต้ดิน: ${originHub.nameZh.split(" ")[0]}`
+          },
+          {
+            coords: destHub.coords,
+            label: `🚇 ลงสถานี ${destHub.nameZh.split(" ")[0]} ➔ 🚶 เดินต่อ ${walkFromStnMeters} ม.`
+          }
+        ]
+      };
+    } else {
+      // Same Metro station area (e.g. both stops in Zhongyang Street / Daoli area)
+      railWalkPlan = {
+        modeKey: "rail_walk",
+        titleTh: `🚇 สถานีรถไฟใต้ดินใกล้เคียง (${destHub.nameZh.split(" ")[0]}) + 🚶 เดินเท้าถึงจุดหมาย`,
+        descTh: currSpot?.transportTh?.fromStation || `อยู่ในโซนเดียวกับ ${destHub.nameTh} สามารถเดินเชื่อมถึงจุดหมายได้เลย (${walkFromStnMeters} ม.)`,
+        legs: [
+          {
+            type: "rail",
+            color: "#7c3aed",
+            dashArray: null,
+            pathCoords: [prevCoords, destHub.coords],
+            badgeTh: `🚇 จุดเชื่อมต่อ ${destHub.nameZh.split(" ")[0]}`,
+            stepTextTh: `ช่วงที่ 1 (จุดอ้างอิงสถานี): 🚇 สถานีหลักประจำย่านคือ ${destHub.nameTh} (${destHub.nameZh})`
+          },
+          {
+            type: "walk",
+            color: "#10b981",
+            dashArray: "4, 7",
+            pathCoords: [destHub.coords, currCoords],
+            badgeTh: `🚶 เดินจากสถานี ${walkFromStnMeters} ม. (~${walkFromStnMins} นาที) ถึงจุดหมาย`,
+            stepTextTh: `ช่วงที่ 2 (เดินเท้าเข้าจุดหมาย): 🚶 เดินเท้าจากสถานี/ถนนสายหลัก ${walkFromStnMeters} ม. (~${walkFromStnMins} นาที) ถึงจุดหมาย`
+          }
+        ],
+        transferHubs: [
+          {
+            coords: destHub.coords,
+            label: `🚇 ${destHub.nameZh.split(" ")[0]} ➔ 🚶 เดิน ${walkFromStnMeters} ม.`
+          }
+        ]
+      };
+    }
+  }
+
+  // -------------------------------------------------------------------------
+  // PLAN 3: WALKING ROUTE & INSIDE AREA EXPLORATION (เดินเท้าชมเมือง / เดินภายในพื้นที่)
+  // -------------------------------------------------------------------------
+  const walkMeters = Math.max(60, Math.round(distKm * 1000));
+  const estSteps = Math.max(90, Math.round(walkMeters * 1.35));
+  const midWalkCorner = [
+    prevCoords[0] + (currCoords[0] - prevCoords[0]) * 0.52,
+    prevCoords[1] + (currCoords[1] - prevCoords[1]) * 0.48
+  ];
+  const walkPlan = {
+    modeKey: "walk",
+    titleTh: distKm <= 2.5
+      ? `🚶 เดินเท้าชมเมืองตามทางเท้า (${distKm < 1 ? `${walkMeters} เมตร` : `${distKm.toFixed(1)} กม.`} · ~${walkMins} นาที)`
+      : `🚶 การเดินชมภายในพื้นที่ & เส้นทางเดินเท้า (~${estSteps.toLocaleString()} ก้าว)`,
+    descTh: currSpot?.transportTh?.inside || `เดินเท้าชมบรรยากาศเมืองหนาวจากจุดก่อนหน้ามายังจุดหมาย (${distKm < 1 ? `ระยะทางเพียง ${walkMeters} ม.` : `ระยะทาง ${distKm.toFixed(1)} กม.`})`,
+    legs: [
+      {
+        type: "walk",
+        color: "#10b981",
+        dashArray: "5, 8",
+        pathCoords: [prevCoords, midWalkCorner, currCoords],
+        badgeTh: `🚶 เดินเท้า ${distKm < 1 ? `${walkMeters} ม.` : `${distKm.toFixed(1)} กม.`} (~${walkMins} นาที · ~${estSteps.toLocaleString()} ก้าว)`,
+        stepTextTh: `เส้นทางเดินเท้า: 🚶 เดินจากจุดก่อนหน้า ${distKm < 1 ? `${walkMeters} เมตร` : `${distKm.toFixed(1)} กม.`} (ใช้เวลา ~${walkMins} นาที · ประมาณ ${estSteps.toLocaleString()} ก้าว) ถึงจุดหมาย`
+      }
+    ],
+    transferHubs: []
+  };
+
+  // Order plans so the most sensible one for this distance is first, while keeping all 3 clickable
+  const plansByKey = {
+    taxi: taxiPlan,
+    rail_walk: railWalkPlan,
+    walk: walkPlan
+  };
+  const orderedKeys = distKm <= 0.85
+    ? ["walk", "rail_walk", "taxi"]
+    : ["taxi", "rail_walk", "walk"];
+
+  return {
+    activeMode,
+    defaultMode,
+    plansByKey,
+    orderedPlans: orderedKeys.map(k => plansByKey[k])
+  };
+}
+
+function zoomMapToTransitPlan(plan) {
+  if (!map || !plan || !plan.legs || !plan.legs.length) return;
+  map.closePopup();
+  const allPts = [];
+  plan.legs.forEach(leg => {
+    (leg.pathCoords || []).forEach(c => {
+      if (c) allPts.push(getDisplayCoords(c));
+    });
+  });
+  if (allPts.length >= 2) {
+    const bounds = L.latLngBounds(allPts).pad(0.32);
+    map.flyToBounds(bounds, {
+      paddingTopLeft: [70, 75],
+      paddingBottomRight: [70, 75],
+      maxZoom: 17,
+      duration: 0.85
+    });
+  }
+}
+
+function renderSelectedTimelineDetail() {
+  const container = document.getElementById("col2DetailPane");
+  if (!container) return;
+
+  const allDayKeys = Object.keys(timelineState);
+  const selDayKey = activeTimelineSelection.dayKey || currentDayKey || allDayKeys[0];
+  const dayObj = timelineState[selDayKey];
+  const items = dayObj?.items || [];
+  const dayIdx = Math.max(0, allDayKeys.indexOf(selDayKey));
+  const dayColor = DAY_COLORS[dayIdx % DAY_COLORS.length];
+
+  if (!items.length) {
+    container.innerHTML = `
+      <div class="col2-info-card" style="text-align:center; padding:28px 14px;">
+        <div style="font-size:2rem; margin-bottom:8px;">📋</div>
+        <div style="font-weight:800; color:#0f172a; font-size:0.9rem;">ยังไม่มีรายการในวันที่ ${dayIdx + 1}</div>
+        <p style="font-size:0.76rem; color:#64748b; margin:6px 0 14px;">คลิกเลือกรายการใน <strong>① แผนการเดินทาง</strong> ด้านซ้าย หรือกดปุ่มด้านล่างเพื่อเพิ่มสถานที่เข้าตาราง</p>
+        <button type="button" class="btn-col2-mini" id="btnEmptySwitchToChooses" style="max-width:220px; margin:0 auto;">
+          ➕ เปิดคลังสถานที่ (${allSpots.length} แห่ง)
+        </button>
+      </div>
+    `;
+    container.querySelector("#btnEmptySwitchToChooses")?.addEventListener("click", () => {
+      setCol2ViewMode("chooses");
+    });
+    return;
+  }
+
+  const selIdx = Math.min(items.length - 1, Math.max(0, Number(activeTimelineSelection.index) || 0));
+  const item = items[selIdx];
+  const spot = getSpotById(item.spotId);
+  const currCoords = item.customCoords || (spot ? spot.coords : [45.7725, 126.6208]);
+
+  // Find Previous Item (in same day, or last stop of previous day)
+  let prevItem = null;
+  let prevDayLabel = "";
+  if (selIdx > 0) {
+    prevItem = items[selIdx - 1];
+    prevDayLabel = `จุดที่ #${selIdx} (วันที่ ${dayIdx + 1})`;
+  } else if (dayIdx > 0) {
+    for (let d = dayIdx - 1; d >= 0; d--) {
+      const pKey = allDayKeys[d];
+      const pItems = timelineState[pKey]?.items || [];
+      if (pItems.length > 0) {
+        prevItem = pItems[pItems.length - 1];
+        prevDayLabel = `จุดสุดท้ายของวันที่ ${d + 1}`;
+        break;
+      }
+    }
+  }
+
+  const prevSpot = prevItem ? getSpotById(prevItem.spotId) : null;
+  const prevCoords = prevItem
+    ? (prevItem.customCoords || (prevSpot ? prevSpot.coords : null))
+    : null;
+
+  // Place Names & Metadata (Full English, Full Thai, Full Chinese)
+  const nameEn = (item.customNameEn && spot?.nameEn && item.customNameEn !== spot.nameEn)
+    ? `${item.customNameEn} (${spot.nameEn})`
+    : (spot?.nameEn || item.customNameEn || "Harbin Stop");
+  const nameTh = (item.customNameTh && spot?.nameTh && item.customNameTh !== spot.nameTh)
+    ? `${item.customNameTh} (${spot.nameTh})`
+    : (spot?.nameTh || item.customNameTh || "สถานที่ในแผนการเดินทาง");
+  const nameZh = spot?.nameZh || (item.isFlightStep ? "哈尔滨太平国际机场 (Harbin Taiping Intl Airport)" : "哈尔滨景点");
+  const pinyin = spot?.pinyin || "";
+  const actType = item.actType || (spot ? spot.activityType : "visit") || "visit";
+  const actMeta = ACTIVITY_META[actType] || ACTIVITY_META.visit;
+
+  const prevNameEn = prevItem
+    ? (prevSpot?.nameEn || prevItem.customNameEn || "")
+    : "Bangkok Suvarnabhumi Airport (BKK)";
+  const prevNameTh = prevItem
+    ? (prevItem.customNameTh || (prevSpot ? prevSpot.nameTh : prevItem.customNameEn))
+    : "จุดเริ่มต้นของทริป (สนามบินสุวรรณภูมิ BKK / ที่พัก)";
+  const prevNameZh = prevItem
+    ? (prevSpot?.nameZh || "")
+    : "曼谷素万那普国际机场";
+  const prevFullLabel = [prevNameEn, prevNameTh, prevNameZh].filter(Boolean).join(" · ");
+  const currFullLabel = [nameEn, nameTh, nameZh].filter(Boolean).join(" · ");
+  const prevTime = prevItem ? (prevItem.time || "08:00") : "จุดเริ่มต้น";
+
+  // Calculate Distance & Transit Advice from Previous Stop
+  const distKm = (prevCoords && currCoords) ? calcDistanceKm(prevCoords, currCoords) : 0;
+  const walkMins = Math.max(4, Math.round((distKm / 4.2) * 60));
+  const driveMins = Math.max(8, Math.round((distKm / 30) * 60 + 5));
+  const estTaxiMin = Math.max(9, Math.round(9 + Math.max(0, distKm - 3) * 2.2));
+  const estTaxiMax = Math.round(estTaxiMin * 1.35 + 4);
+
+  let transitBadgeText = "จุดเริ่มต้น";
+  let transitArrowSummary = "จุดเริ่มต้นของการเดินทาง";
+  let recommendedMethodHtml = "";
+  let extraSpotTransportHtml = "";
+
+  // Ensure EVERY activity (including Flight steps & 1st item of the trip) has interactive multi-modal plans on the map
+  const fallbackAirportSpot = getSpotById(11);
+  const fallbackHotelSpot = getSpotById(28) || getSpotById(2);
+  const effectivePrevItem = prevItem || { spotId: 11, customNameTh: "สนามบินฮาร์บิน T2", customNameEn: "Harbin Airport T2" };
+  const effectiveCurrItem = item.isFlightStep
+    ? (items.find(x => !x.isFlightStep) || { spotId: 28, customNameTh: "LIZZY • Ritz Hotel ถนนจงหยาง", customNameEn: "LIZZY • Ritz Hotel Central St." })
+    : item;
+  const effectivePrevSpot = prevSpot || fallbackAirportSpot;
+  const effectiveCurrSpot = item.isFlightStep
+    ? (getSpotById(effectiveCurrItem.spotId) || fallbackHotelSpot)
+    : spot;
+  const effectivePrevCoords = item.isFlightStep
+    ? (fallbackAirportSpot ? fallbackAirportSpot.coords : [45.6234, 126.2503])
+    : (prevCoords || (fallbackAirportSpot ? fallbackAirportSpot.coords : [45.6234, 126.2503]));
+  const effectiveCurrCoords = item.isFlightStep
+    ? (effectiveCurrItem.customCoords || (effectiveCurrSpot ? effectiveCurrSpot.coords : [45.7748, 126.6176]))
+    : currCoords;
+
+  const multiModalBundle = buildMultiModalPlansForStop(
+    item.isFlightStep ? { spotId: 11 } : effectivePrevItem,
+    effectiveCurrItem,
+    effectivePrevCoords,
+    effectiveCurrCoords,
+    effectivePrevSpot,
+    effectiveCurrSpot
+  );
+
+  if (multiModalBundle) {
+    const effDistKm = calcDistanceKm(effectivePrevCoords, effectiveCurrCoords);
+    transitBadgeText = item.isFlightStep ? `✈️ เที่ยวบิน + เข้าเมือง ${effDistKm.toFixed(1)} กม.` : `${effDistKm.toFixed(1)} กม.`;
+    const activeModeKey = multiModalBundle.activeMode;
+
+    if (item.isFlightStep) {
+      transitArrowSummary = `⬇ เที่ยวบินตามตาราง (Booking: 1622932337344364) + คลิกเลือกวิธีเดินทางจากสนามบินฮาร์บิน T2 เข้าที่พักด้านล่าง`;
+    } else if (effDistKm <= 0.45) {
+      const meters = Math.max(50, Math.round(effDistKm * 1000));
+      transitArrowSummary = `⬇ ห่างกันเพียง ~${meters} เมตร (คลิกเลือกวิธีเดินทางด้านล่างเพื่อแสดงเส้นทางแยกช่วงบนแผนที่)`;
+    } else if (effDistKm <= 45) {
+      transitArrowSummary = `⬇ ระยะทาง ~${effDistKm.toFixed(1)} กม. (คลิกที่กล่องวิธีเดินทางด้านล่าง เพื่อดูเส้นทาง รถไฟ/รถบัส + เดินเท้า บนแผนที่)`;
+    } else {
+      const hours = (effDistKm / 65).toFixed(1);
+      transitArrowSummary = `⬇ เส้นทางระหว่างเมือง ~${effDistKm.toFixed(0)} กม. (~${hours} ชม. · คลิกเลือกวิธีเดินทางเพื่อดูจุดต่อรถไฟ/รถบัสบนแผนที่)`;
+    }
+
+    const flightNoteBanner = item.isFlightStep ? `
+      <div class="col2-method-row recommended" style="margin-bottom:6px;">
+        <strong>✈️ ขั้นตอนเที่ยวบิน &amp; ต่อเครื่อง:</strong><br>
+        ${item.noteTh || "เช็คอินล่วงหน้าอย่างน้อย 2.5 - 3 ชั่วโมง ตรวจสอบสัมภาระและอาคารผู้โดยสารตามใบจอง"}
+      </div>
+    ` : "";
+
+    const orderedPlans = (multiModalBundle.orderedPlans || []).filter(Boolean);
+
+    recommendedMethodHtml = flightNoteBanner + orderedPlans.map(plan => {
+      const isSelected = plan.modeKey === activeModeKey;
+      const isDefaultRec = plan.modeKey === multiModalBundle.defaultMode;
+      const legsHtml = (plan.legs || []).map(leg => {
+        const legTypeClass = leg.type === "rail" ? "leg-rail" : leg.type === "bus" ? "leg-bus" : leg.type === "walk" ? "leg-walk" : "leg-taxi";
+        return `
+          <div class="method-leg-step ${legTypeClass}">
+            ${leg.stepTextTh || leg.badgeTh || ""}
+          </div>
+        `;
+      }).join("");
+
+      return `
+        <div class="col2-method-row clickable-method ${isDefaultRec ? "recommended" : ""} ${isSelected ? "active-mode-selected" : ""}"
+             data-transit-mode="${plan.modeKey}"
+             title="คลิกเพื่อแสดงเส้นทาง ${plan.titleTh} แยกตามขั้นตอนบนแผนที่ AMAP">
+          <div class="col2-method-header-line">
+            <strong>${isDefaultRec ? "⭐ แนะนำ: " : ""}${plan.titleTh}</strong>
+            <span class="method-click-pill">${isSelected ? "✓ แสดงบนแผนที่อยู่" : "🗺️ คลิกดูบนแผนที่"}</span>
+          </div>
+          <div>${plan.descTh || ""}</div>
+          <div class="method-legs-breakdown">
+            ${legsHtml}
+          </div>
+        </div>
+      `;
+    }).join("");
+
+    if (spot?.transportTh?.inside) {
+      extraSpotTransportHtml = `
+        <div class="col2-method-row" style="background:#fffbeb; border-color:#fde68a;">
+          <strong>💡 การเดินชมภายในพื้นที่:</strong> ${spot.transportTh.inside}
+        </div>
+      `;
+    }
+  }
+
+  // Image Source (Flight ticket image for flight steps, or Spot image with fallback)
+  const heroImgSrc = item.isFlightStep
+    ? "1/S__27820034.jpg"
+    : (spot?.image || SPOT_LOCAL_IMGS[spot?.id] || "assets/places/harbin_01_saint_sophia.jpg");
+  const fallbackHeroImg = item.isFlightStep
+    ? "1/S__27820034.jpg"
+    : (SPOT_LOCAL_IMGS[spot?.id] || heroImgSrc);
+
+  // Build Highlights List
+  const bullets = [
+    ...(spot?.highlightsTh || []),
+    ...(spot?.shortBulletsTh || [])
+  ];
+  const uniqueBullets = [...new Set(bullets)].slice(0, 5);
+
+  // Build Search Queries & Deep Links
+  const qGoogleTh = encodeURIComponent(`${nameTh} ${nameZh.split(" ")[0]} ฮาร์บิน รีวิว การเดินทาง`);
+  const qGoogleImg = encodeURIComponent(`${nameZh} ${nameEn} Harbin winter`);
+  const qXhs = encodeURIComponent(`${nameZh.split(" ")[0]} 哈尔滨`);
+  const qYoutube = encodeURIComponent(`เที่ยวฮาร์บิน ${nameTh} ${nameEn}`);
+  const qPantip = encodeURIComponent(`${nameTh} ฮาร์บิน site:pantip.com OR site:readme.me OR site:trip.com`);
+  const amapUrl = `https://uri.amap.com/marker?position=${currCoords[1].toFixed(4)},${currCoords[0].toFixed(4)}&name=${encodeURIComponent(nameZh || nameEn)}`;
+  const localMdFile = spot && SPOT_MD_FILES[spot.id] ? SPOT_MD_FILES[spot.id] : null;
+
+  // Check flat position for Prev/Next buttons
+  const flatStops = getFlattenedTimelineStops();
+  const flatPos = flatStops.findIndex(x => x.dayKey === selDayKey && x.index === selIdx);
+  const hasPrevStop = flatPos > 0;
+  const hasNextStop = flatPos >= 0 && flatPos < flatStops.length - 1;
+  const weatherInfo = getWeatherForSelection(selDayKey, item);
+
+  container.innerHTML = `
+    <!-- Top Stepper Bar: Shows active Day & Stop # in Column 1 -->
+    <div class="col2-stepper-bar">
+      <div class="col2-stepper-pos">
+        <i style="background:${dayColor}"></i>
+        <span>วันที่ ${dayIdx + 1} · คิวที่ #${selIdx + 1}/${items.length}</span>
+      </div>
+      <div class="col2-stepper-btns">
+        <button type="button" class="btn-col2-step" id="btnCol2PrevStop" ${!hasPrevStop ? "disabled" : ""} title="ดูรายละเอียดจุดก่อนหน้า">
+          ◀ ก่อนหน้า
+        </button>
+        <button type="button" class="btn-col2-step" id="btnCol2NextStop" ${!hasNextStop ? "disabled" : ""} title="ดูรายละเอียดจุดถัดไป">
+          ถัดไป ▶
+        </button>
+      </div>
+    </div>
+
+    <!-- SELECTED PLACE FULL NAME HEADER CARD (แสดงชื่อเต็ม: 1. อังกฤษ 2. ไทย 3. จีน ทันทีที่เลือกสถานที่) -->
+    <div class="col2-selected-title-card">
+      <div class="col2-sel-top-meta">
+        <span class="col2-sel-time-badge">🕒 ${item.time || "09:00"} น. (~${item.duration || 60} นาที)</span>
+        <span class="col2-sel-cat-badge">${actMeta.icon} ${spot?.categoryLabelEn || actMeta.labelEn} · ${spot?.categoryLabelTh || actMeta.labelTh}</span>
+      </div>
+      <div class="col2-sel-lang-row">
+        <span class="lang-tag en">EN</span>
+        <div class="lang-val en-val">${nameEn}</div>
+      </div>
+      <div class="col2-sel-lang-row">
+        <span class="lang-tag th">TH</span>
+        <div class="lang-val th-val">${nameTh}</div>
+      </div>
+      <div class="col2-sel-lang-row">
+        <span class="lang-tag zh">中文</span>
+        <div class="lang-val zh-val">${nameZh} ${pinyin ? `<span class="pinyin-sub">(${pinyin})</span>` : ""}</div>
+      </div>
+    </div>
+
+    <!-- 1. TRANSIT FROM PREVIOUS STOP (วิธีการเดินทางจากจุดก่อนหน้า) -->
+    <div class="col2-transit-card">
+      <div class="col2-section-header">
+        <span class="col2-section-title">🧭 วิธีเดินทางจากจุดก่อนหน้า</span>
+        <span class="col2-dist-pill">${transitBadgeText}</span>
+      </div>
+
+      <div class="col2-route-flow">
+        <div class="col2-route-point">
+          <span class="col2-route-badge from">จาก ${prevTime}</span>
+          <span class="col2-route-name">${prevFullLabel}</span>
+        </div>
+        <div class="col2-route-arrow">${transitArrowSummary}</div>
+        <div class="col2-route-point">
+          <span class="col2-route-badge to">ถึง ${item.time || "09:00"}</span>
+          <span class="col2-route-name">${currFullLabel}</span>
+        </div>
+      </div>
+
+      <div class="col2-transit-methods">
+        ${recommendedMethodHtml}
+        ${extraSpotTransportHtml}
+      </div>
+
+      <div class="col2-taxi-card">
+        <div class="col2-taxi-text">
+          <span>🚕 ป้ายภาษาจีน &amp; อังกฤษเต็ม สำหรับคนขับแท็กซี่ / แอป DiDi:</span>
+          <b>请带我去：${nameZh}</b>
+          <div style="color:#bae6fd; font-size:0.74rem; font-weight:600; margin-top:2px;">EN: ${nameEn}</div>
+          ${pinyin ? `<small style="color:#94a3b8;">Pinyin: ${pinyin}</small>` : ""}
+        </div>
+      </div>
+
+      <div class="col2-transit-actions">
+        <button type="button" class="btn-col2-mini" id="btnCol2CopyZh">
+          📋 คัดลอกชื่อจีน-อังกฤษเต็ม
+        </button>
+        ${prevCoords ? `
+          <button type="button" class="btn-col2-mini" id="btnCol2ZoomSegment">
+            🗺️ ซูมเส้นทางคู่นี้บนแผนที่
+          </button>
+        ` : ""}
+        ${item.isFlightStep ? `
+          <button type="button" class="btn-col2-mini" id="btnCol2OpenFlightModal">
+            ✈️ ดูรูปตั๋วบินเต็มจอ
+          </button>
+        ` : ""}
+      </div>
+    </div>
+
+    <!-- 2. PHOTO & CORE PLACE INFO (รูปภาพและข้อมูลหลัก) -->
+    <div class="col2-hero-card">
+      <div class="col2-hero-img-wrap" id="col2HeroImgWrap" title="คลิกเพื่อดูรูปขนาดใหญ่">
+        <img src="${heroImgSrc}" alt="${nameEn} - ${nameTh}" onerror="this.onerror=null; this.src='${fallbackHeroImg}';">
+        <div class="col2-hero-badges">
+          <span class="col2-hero-pill time">🕒 ${item.time || "09:00"} น. (~${item.duration || 60} นาที)</span>
+          <span class="col2-hero-pill">${actMeta.icon} ${spot?.categoryLabelTh || actMeta.labelTh}</span>
+        </div>
+      </div>
+      <div class="col2-hero-body">
+        <div class="col2-title-zh">${nameEn}</div>
+        <div class="col2-title-th">${nameTh}</div>
+        <div class="col2-title-en" style="font-size:0.84rem; font-weight:700; color:#0f172a; margin-top:3px;">🇨🇳 ${nameZh} ${pinyin ? `<span style="color:#64748b; font-weight:500;">(${pinyin})</span>` : ""} ${spot?.rating ? `· ⭐ ${spot.rating}` : ""}</div>
+
+        ${(item.noteTh || item.noteEn) ? `
+          <div class="col2-note-callout">
+            <strong>📝 บันทึกในตาราง:</strong> ${item.noteTh || item.noteEn}
+          </div>
+        ` : ""}
+
+        <div class="col2-transit-actions" style="margin-top:10px;">
+          <button type="button" class="btn-col2-mini" id="btnCol2FocusPin">
+            📍 ซูมหมุดบนแผนที่ AMAP
+          </button>
+          <button type="button" class="btn-col2-mini" id="btnCol2EditItem">
+            ✎ แก้ไขเวลา / บันทึกโน้ต
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. COMPREHENSIVE DETAILS (รายละเอียดสถานที่ เวลาเปิด-ปิด ค่าเข้าชม ไฮไลท์) -->
+    <div class="col2-info-card">
+      <div class="col2-section-header">
+        <span class="col2-section-title" style="color:#0f172a;">📌 รายละเอียด &amp; ข้อมูลสำคัญ</span>
+      </div>
+
+      <div class="col2-info-grid">
+        <div class="col2-info-box">
+          <span class="lbl">🕒 เวลาเปิด-ปิด</span>
+          <span class="val">${spot?.openingHoursTh || spot?.openingHoursEn || "เช็คตามเวลาท้องถิ่น"}</span>
+        </div>
+        <div class="col2-info-box">
+          <span class="lbl">🎫 ค่าเข้าชม / ค่าใช้จ่าย</span>
+          <span class="val">${spot?.ticketPriceTh || spot?.ticketPriceEn || "ไม่มีค่าเข้าชม / ตามสั่ง"}</span>
+        </div>
+        <div class="col2-info-box">
+          <span class="lbl">✨ ช่วงเวลาแนะนำ</span>
+          <span class="val">${spot?.bestTimeTh || spot?.bestTimeEn || "เที่ยวได้ตลอดวัน"}</span>
+        </div>
+        <div class="col2-info-box">
+          <span class="lbl">📍 พิกัด AMAP (GCJ-02)</span>
+          <span class="val">${currCoords[0].toFixed(4)}, ${currCoords[1].toFixed(4)}</span>
+        </div>
+        <a href="${weatherInfo.sourceUrl}" target="_blank" rel="noopener noreferrer" class="col2-info-box" style="grid-column: 1 / -1; text-decoration:none; background:linear-gradient(90deg,#eff6ff,#e0f2fe); border-color:#7dd3fc; display:flex; align-items:center; justify-content:space-between; gap:8px;" title="คลิกเพื่อเปิดเว็บไซต์พยากรณ์อากาศแหล่งที่มา (${weatherInfo.sourceName})">
+          <div>
+            <span class="lbl" style="color:#0369a1;">❄️ อุณหภูมิ ณ วันที่ ${weatherInfo.dayNumber} (${weatherInfo.dateTh}) · เวลา ${weatherInfo.timeStr} น.</span>
+            <span class="val" style="color:#0c4a6e; font-size:0.82rem;">🌡️ <strong>${weatherInfo.tempC}°C</strong> (รู้สึกจริง ${weatherInfo.feelsLikeC}°C · ช่วงวัน ${weatherInfo.lowC}°C ~ ${weatherInfo.highC}°C · ${weatherInfo.condTh})</span>
+          </div>
+          <span style="background:#0284c7; color:#ffffff; font-size:0.68rem; font-weight:800; padding:4px 8px; border-radius:6px; white-space:nowrap;">ดูเว็บพยากรณ์ ↗</span>
+        </a>
+      </div>
+
+      ${(spot?.descriptionTh || spot?.ratingDescTh) ? `
+        <div class="col2-desc-text">
+          ${spot.descriptionTh || spot.ratingDescTh}
+        </div>
+      ` : ""}
+
+      ${uniqueBullets.length > 0 ? `
+        <div style="font-size:0.74rem; font-weight:800; color:#0369a1; margin-bottom:5px;">✨ ไฮไลท์ &amp; สิ่งที่ห้ามพลาด:</div>
+        <ul class="col2-hl-list">
+          ${uniqueBullets.map(b => `<li>${b}</li>`).join("")}
+        </ul>
+      ` : ""}
+    </div>
+
+    <!-- 4. SEARCH & EXTERNAL LINKS (ลิงก์สำหรับ Search หาข้อมูลเพิ่ม) -->
+    <div class="col2-links-card">
+      <div class="col2-section-header">
+        <span class="col2-section-title" style="color:#0369a1;">🔗 ลิงก์สำหรับ Search หาข้อมูลเพิ่ม</span>
+      </div>
+      <div style="font-size:0.72rem; color:#64748b;">คลิกเพื่อค้นหารีวิวล่าสุด รูปภาพ คลิปวิดีโอ และแผนที่นำทางของ <strong>${nameTh}</strong>:</div>
+
+      <div class="col2-links-grid">
+        <a href="https://www.google.com/search?q=${qGoogleTh}" target="_blank" rel="noopener" class="col2-search-link google">
+          <span>🔍</span> Google ค้นหารีวิวไทย
+        </a>
+        <a href="https://www.google.com/search?tbm=isch&q=${qGoogleImg}" target="_blank" rel="noopener" class="col2-search-link images">
+          <span>🖼️</span> Google ดูรูปสถานที่จริง
+        </a>
+        <a href="https://www.xiaohongshu.com/search_result?keyword=${qXhs}" target="_blank" rel="noopener" class="col2-search-link xhs">
+          <span>📕</span> Xiaohongshu (小红书)
+        </a>
+        <a href="https://www.youtube.com/results?search_query=${qYoutube}" target="_blank" rel="noopener" class="col2-search-link youtube">
+          <span>🎬</span> YouTube คลิปพาเที่ยว
+        </a>
+        <a href="${amapUrl}" target="_blank" rel="noopener" class="col2-search-link amap">
+          <span>🗺️</span> เปิดนำทางใน AMAP จีน
+        </a>
+        <a href="https://www.google.com/search?q=${qPantip}" target="_blank" rel="noopener" class="col2-search-link pantip">
+          <span>💬</span> รีวิว Pantip &amp; Trip.com
+        </a>
+        ${spot?.bookingUrl ? `
+          <a href="${spot.bookingUrl}" target="_blank" rel="noopener noreferrer" class="col2-search-link local-doc full-span" style="background:linear-gradient(90deg,#2563eb,#1d4ed8); color:#ffffff; border-color:#1e40af; font-weight:800;">
+            <span>🏨</span> เปิดหน้าจองโรงแรมบน Trip.com (เช็คอิน 4 ธ.ค. – เช็คเอาท์ 6 ธ.ค. 2026) ↗
+          </a>
+        ` : ""}
+        ${localMdFile ? `
+          <a href="${localMdFile}" target="_blank" class="col2-search-link local-doc full-span">
+            <span>📄</span> เปิดอ่านคู่มือเจาะลึกประจำสถานที่ (${localMdFile})
+          </a>
+        ` : ""}
+      </div>
+    </div>
+  `;
+
+  // Wire up interactive buttons inside Column 2 Detail Pane
+  container.querySelector("#btnCol2PrevStop")?.addEventListener("click", () => navigateTimelineSelection(-1));
+  container.querySelector("#btnCol2NextStop")?.addEventListener("click", () => navigateTimelineSelection(1));
+
+  container.querySelector("#btnCol2CopyZh")?.addEventListener("click", () => {
+    const textToCopy = `${nameZh} | ${nameEn} (${nameTh})`;
+    navigator.clipboard?.writeText(textToCopy);
+    showToast(`📋 คัดลอกชื่อเต็ม "${textToCopy}" เรียบร้อยแล้ว`);
+  });
+
+  container.querySelector("#btnCol2ZoomSegment")?.addEventListener("click", () => {
+    if (prevCoords && currCoords) {
+      zoomMapBetweenTwoCoords(prevCoords, currCoords);
+      showToast(`🗺️ ซูมดูเส้นทางจาก "${prevNameTh}" ➔ "${nameTh}" บนแผนที่ AMAP`);
+    }
+  });
+
+  container.querySelector("#btnCol2OpenFlightModal")?.addEventListener("click", () => {
+    const fm = document.getElementById("flightModalBackdrop");
+    if (fm) fm.hidden = false;
+  });
+
+  container.querySelector("#col2HeroImgWrap")?.addEventListener("click", () => {
+    if (item.isFlightStep) {
+      const fm = document.getElementById("flightModalBackdrop");
+      if (fm) fm.hidden = false;
+    } else if (spot) {
+      openSpotDetailModal(spot.id);
+    }
+  });
+
+  container.querySelector("#btnCol2FocusPin")?.addEventListener("click", () => {
+    focusTimelineItemOnMap(selIdx, selDayKey);
+  });
+
+  container.querySelector("#btnCol2EditItem")?.addEventListener("click", () => {
+    openEditTimelineModal(selIdx, selDayKey);
+  });
+
+  // Wire up clickable transit method cards (แสดงแยกช่วง รถไฟ/รถบัส + เดินเท้า บนแผนที่ AMAP)
+  container.querySelectorAll(".col2-method-row.clickable-method[data-transit-mode]").forEach(cardEl => {
+    cardEl.addEventListener("click", () => {
+      const modeKey = cardEl.dataset.transitMode;
+      if (!modeKey || !multiModalBundle || !multiModalBundle.plansByKey?.[modeKey]) return;
+      selectedTransitMode = modeKey;
+      const chosenPlan = multiModalBundle.plansByKey[modeKey];
+      renderSelectedTimelineDetail();
+      renderMapMarkersAndRoute();
+      zoomMapToTransitPlan(chosenPlan);
+      showToast(`🗺️ แสดงเส้นทาง "${chosenPlan.titleTh}" แยกขั้นตอนบนแผนที่ AMAP`);
+    });
+  });
+}
+
+// ============================================================================
+// 5B. SECTION 2: CHOOSES (ATTRACTION & FOOD CARDS) RENDERING
 // ============================================================================
 function filterMatchesCategory(spot, cat) {
   if (cat === "all") return true;
@@ -973,6 +2097,42 @@ function renderEnglishGeoLabels() {
   });
 }
 
+function getTimelineItemCoords(item) {
+  if (!item) return null;
+  const spot = getSpotById(item.spotId);
+  return item.customCoords || (spot ? spot.coords : null);
+}
+
+function getPreviousTimelineItemInfo(index, dayKey = currentDayKey) {
+  const allDayKeys = Object.keys(timelineState);
+  const dayIdx = allDayKeys.indexOf(dayKey);
+  const items = timelineState[dayKey]?.items || [];
+
+  if (index > 0 && items[index - 1]) {
+    return {
+      item: items[index - 1],
+      index: index - 1,
+      dayKey,
+      queueNum: index
+    };
+  }
+  if (dayIdx > 0) {
+    for (let d = dayIdx - 1; d >= 0; d--) {
+      const pKey = allDayKeys[d];
+      const pItems = timelineState[pKey]?.items || [];
+      if (pItems.length > 0) {
+        return {
+          item: pItems[pItems.length - 1],
+          index: pItems.length - 1,
+          dayKey: pKey,
+          queueNum: pItems.length
+        };
+      }
+    }
+  }
+  return null;
+}
+
 function renderMapMarkersAndRoute() {
   if (!map || !markerLayerGroup || !routeLayerGroup) return;
 
@@ -981,6 +2141,23 @@ function renderMapMarkersAndRoute() {
 
   const dayObj = timelineState[currentDayKey];
   const dayItems = dayObj ? dayObj.items : [];
+
+  // Identify Currently Focused Stop & Previous Stop in currentDayKey
+  const hasActiveFocusInDay =
+    activeTimelineSelection &&
+    activeTimelineSelection.dayKey === currentDayKey &&
+    dayItems[activeTimelineSelection.index];
+
+  const currFocusIdx = hasActiveFocusInDay ? Number(activeTimelineSelection.index) : -1;
+  const prevFocusInfo = hasActiveFocusInDay ? getPreviousTimelineItemInfo(currFocusIdx, currentDayKey) : null;
+  const prevFocusIdx = (prevFocusInfo && prevFocusInfo.dayKey === currentDayKey) ? Number(prevFocusInfo.index) : -1;
+
+  const currFocusSpotId = currFocusIdx >= 0 && dayItems[currFocusIdx]?.spotId !== undefined && dayItems[currFocusIdx]?.spotId !== ""
+    ? Number(dayItems[currFocusIdx].spotId)
+    : null;
+  const prevFocusSpotId = prevFocusIdx >= 0 && dayItems[prevFocusIdx]?.spotId !== undefined && dayItems[prevFocusIdx]?.spotId !== ""
+    ? Number(dayItems[prevFocusIdx].spotId)
+    : null;
 
   // Map spotId -> array of 1-based queue numbers in current timeline
   const spotQueueMap = new Map();
@@ -994,39 +2171,69 @@ function renderMapMarkersAndRoute() {
 
   // 1. Render All Harbin Attraction Markers (in English)
   allSpots.forEach(spot => {
-    const queueNums = spotQueueMap.get(Number(spot.id)) || [];
+    const sid = Number(spot.id);
+    const queueNums = spotQueueMap.get(sid) || [];
     const isActiveInQueue = queueNums.length > 0;
+    const isCurrFocusedSpot = currFocusSpotId !== null && sid === currFocusSpotId;
+    const isPrevFocusedSpot = prevFocusSpotId !== null && sid === prevFocusSpotId && !isCurrFocusedSpot;
 
     if (!showAllHarbinPins && !isActiveInQueue) return;
 
     const displayPos = getDisplayCoords(spot.coords);
-    const badgeText = isActiveInQueue ? queueNums.join(",") : (spot.doodleIcon || "•");
-    const bgColor = isActiveInQueue
+    const badgeText = isCurrFocusedSpot
+      ? (currFocusIdx + 1)
+      : isPrevFocusedSpot
+      ? (prevFocusIdx + 1)
+      : isActiveInQueue
+      ? queueNums.join(",")
+      : (spot.doodleIcon || "•");
+
+    const bgColor = isCurrFocusedSpot
+      ? "#e4572e"
+      : isPrevFocusedSpot
+      ? "#10b981"
+      : isActiveInQueue
       ? "#0284c7"
       : (spot.isCustomPin ? "#e11d48" : (spot.categoryColor || "#475569"));
 
     const shortEnName = spot.nameEn.length > 26 ? spot.nameEn.slice(0, 24) + "…" : spot.nameEn;
 
+    let roleClass = "";
+    let labelHtml = "";
+    if (isCurrFocusedSpot) {
+      roleClass = "is-active-queue is-curr-stop";
+      labelHtml = `<div class="pin-en-label">🎯 ถึง #${currFocusIdx + 1}: ${shortEnName}</div>`;
+    } else if (isPrevFocusedSpot) {
+      roleClass = "is-active-queue is-prev-stop";
+      labelHtml = `<div class="pin-en-label">🟢 จาก #${prevFocusIdx + 1}: ${shortEnName}</div>`;
+    } else if (hasActiveFocusInDay) {
+      roleClass = `${isActiveInQueue ? "is-active-queue" : ""} is-dimmed-pin`;
+      labelHtml = showPermanentEnLabels ? `<div class="pin-en-label">${isActiveInQueue ? `#${queueNums[0]} ` : ""}${shortEnName}</div>` : "";
+    } else {
+      roleClass = isActiveInQueue ? "is-active-queue" : "";
+      labelHtml = showPermanentEnLabels ? `<div class="pin-en-label">${isActiveInQueue ? `#${queueNums[0]} ` : ""}${shortEnName}</div>` : "";
+    }
+
     const pinHtml = `
-      <div class="harbin-map-pin ${isActiveInQueue ? "is-active-queue" : ""}">
+      <div class="harbin-map-pin ${roleClass}">
         <div class="pin-bubble" style="background:${bgColor};">
           <span class="pin-bubble-inner">${badgeText}</span>
         </div>
-        ${showPermanentEnLabels ? `<div class="pin-en-label">${isActiveInQueue ? `#${queueNums[0]} ` : ""}${shortEnName}</div>` : ""}
+        ${labelHtml}
       </div>
     `;
 
     const icon = L.divIcon({
       className: "custom-harbin-pin-container",
       html: pinHtml,
-      iconSize: [140, 56],
-      iconAnchor: [70, 32],
+      iconSize: [160, 62],
+      iconAnchor: [80, 34],
       popupAnchor: [0, -28]
     });
 
     const marker = L.marker(displayPos, {
       icon,
-      zIndexOffset: isActiveInQueue ? 1000 : 100
+      zIndexOffset: isCurrFocusedSpot ? 3000 : isPrevFocusedSpot ? 2500 : isActiveInQueue ? 900 : 100
     });
 
     marker.bindPopup(createEnglishPopupHtml(spot, queueNums));
@@ -1038,28 +2245,49 @@ function renderMapMarkersAndRoute() {
   dayItems.forEach((it, idx) => {
     if (it.spotId === undefined || it.spotId === null || it.spotId === "") {
       if (!it.customCoords) return;
+      const isCurrFocusedCustom = idx === currFocusIdx;
+      const isPrevFocusedCustom = idx === prevFocusIdx && !isCurrFocusedCustom;
       const displayPos = getDisplayCoords(it.customCoords);
       const shortEn = (it.customNameEn || `Activity #${idx + 1}`).slice(0, 24);
+
+      let roleClass = "is-active-queue";
+      let labelText = `#${idx + 1} ${shortEn}`;
+      let bg = "#e11d48";
+      if (isCurrFocusedCustom) {
+        roleClass = "is-active-queue is-curr-stop";
+        labelText = `🎯 ถึง #${idx + 1}: ${shortEn}`;
+        bg = "#e4572e";
+      } else if (isPrevFocusedCustom) {
+        roleClass = "is-active-queue is-prev-stop";
+        labelText = `🟢 จาก #${idx + 1}: ${shortEn}`;
+        bg = "#10b981";
+      } else if (hasActiveFocusInDay) {
+        roleClass = "is-active-queue is-dimmed-pin";
+      }
+
       const pinHtml = `
-        <div class="harbin-map-pin is-active-queue">
-          <div class="pin-bubble" style="background:#e11d48;">
+        <div class="harbin-map-pin ${roleClass}">
+          <div class="pin-bubble" style="background:${bg};">
             <span class="pin-bubble-inner">${idx + 1}</span>
           </div>
-          ${showPermanentEnLabels ? `<div class="pin-en-label">#${idx + 1} ${shortEn}</div>` : ""}
+          ${showPermanentEnLabels || isCurrFocusedCustom || isPrevFocusedCustom ? `<div class="pin-en-label">${labelText}</div>` : ""}
         </div>
       `;
       const icon = L.divIcon({
         className: "custom-harbin-pin-container",
         html: pinHtml,
-        iconSize: [140, 56],
-        iconAnchor: [70, 32],
+        iconSize: [160, 62],
+        iconAnchor: [80, 34],
         popupAnchor: [0, -28]
       });
-      L.marker(displayPos, { icon, zIndexOffset: 1000 }).addTo(markerLayerGroup);
+      L.marker(displayPos, {
+        icon,
+        zIndexOffset: isCurrFocusedCustom ? 3000 : isPrevFocusedCustom ? 2500 : 900
+      }).addTo(markerLayerGroup);
     }
   });
 
-  // 3. Render Timeline Route Path & Update English Route Bar
+  // 3. Render Timeline Route Path & Highlight Active Focused Segment
   renderTimelineRouteAndSummary(dayItems);
 }
 
@@ -1122,39 +2350,190 @@ function renderTimelineRouteAndSummary(dayItems) {
   let totalDistKm = 0;
   let totalTravelMins = 0;
 
+  const hasActiveFocusInDay =
+    activeTimelineSelection &&
+    activeTimelineSelection.dayKey === currentDayKey &&
+    dayItems[activeTimelineSelection.index];
+  const currFocusIdx = hasActiveFocusInDay ? Number(activeTimelineSelection.index) : -1;
+
   if (routeNodes.length >= 2) {
-    const latlngs = routeNodes.map(n => n.displayCoords);
+    // Filter background polyline to Harbin local stops so BKK/Shanghai flight coords don't distort Harbin view
+    const localNodes = routeNodes.filter(n => n.gcjCoords[0] >= 42.0);
+    const bgLatlngs = (localNodes.length >= 2 ? localNodes : routeNodes).map(n => n.displayCoords);
 
     if (isRouteVisible) {
-      // Outer glow route line
-      L.polyline(latlngs, {
-        color: "#0284c7",
-        weight: 7,
-        opacity: 0.25,
+      // Subtle Background Day Route Line
+      L.polyline(bgLatlngs, {
+        color: "#64748b",
+        weight: 3.5,
+        opacity: hasActiveFocusInDay ? 0.32 : 0.75,
+        dashArray: "6, 8",
         lineCap: "round",
         lineJoin: "round"
       }).addTo(routeLayerGroup);
-
-      // Inner dashed directional line
-      L.polyline(latlngs, {
-        color: "#0284c7",
-        weight: 3.5,
-        opacity: 0.95,
-        dashArray: "8, 8",
-        lineCap: "round"
-      }).addTo(routeLayerGroup);
     }
 
-    // Calculate segment distances and place midpoint English labels
+    // Calculate segment distances and highlight the ACTIVE segment (จุดก่อนหน้า -> จุดนี้)
     for (let i = 0; i < routeNodes.length - 1; i++) {
       const a = routeNodes[i];
       const b = routeNodes[i + 1];
       const segKm = calcDistanceKm(a.gcjCoords, b.gcjCoords);
       const leg = estimateTravelLeg(segKm);
-      totalDistKm += segKm;
-      totalTravelMins += leg.mins;
+      if (segKm < 400) {
+        totalDistKm += segKm;
+        totalTravelMins += leg.mins;
+      }
 
-      if (isRouteVisible) {
+      const isFocusedSegment = b.index === currFocusIdx;
+
+      if (isRouteVisible && isFocusedSegment) {
+        const prevItemObj = dayItems[a.index];
+        const currItemObj = dayItems[b.index];
+        const prevSpotObj = prevItemObj ? getSpotById(prevItemObj.spotId) : null;
+        const currSpotObj = currItemObj ? getSpotById(currItemObj.spotId) : null;
+
+        const bundle = (prevItemObj && currItemObj && !currItemObj.isFlightStep)
+          ? buildMultiModalPlansForStop(prevItemObj, currItemObj, a.gcjCoords, b.gcjCoords, prevSpotObj, currSpotObj)
+          : null;
+
+        const activeModeKey = bundle
+          ? (selectedTransitMode === "auto"
+              ? bundle.defaultMode
+              : (bundle.plansByKey?.[selectedTransitMode] ? selectedTransitMode : bundle.defaultMode))
+          : null;
+
+        const activePlan = (bundle && activeModeKey && bundle.plansByKey) ? bundle.plansByKey[activeModeKey] : null;
+
+        if (activePlan && activePlan.legs && activePlan.legs.length > 0) {
+          // Render each leg of the selected transit mode (e.g., Walk -> Metro/Bus -> Walk to destination)
+          activePlan.legs.forEach((planLeg, legIdx) => {
+            const rawCoords = planLeg.pathCoords || [];
+            if (rawCoords.length < 2) return;
+            const legLatLngs = rawCoords.map(c => getDisplayCoords(c));
+            const fromDisp = legLatLngs[0];
+            const toDisp = legLatLngs[legLatLngs.length - 1];
+
+            // 1. White High-Contrast Outer Road Casing
+            L.polyline(legLatLngs, {
+              color: "#ffffff",
+              weight: 12,
+              opacity: 0.96,
+              lineCap: "round",
+              lineJoin: "round"
+            }).addTo(routeLayerGroup);
+
+            // 2. Mode-Specific Core Line (Purple=#7c3aed for Rail/Metro, Cyan=#0891b2 for Bus, Green=#10b981 for Walk, Orange=#e4572e for Taxi)
+            L.polyline(legLatLngs, {
+              color: planLeg.color || "#e4572e",
+              weight: planLeg.type === "walk" ? 6 : 7.5,
+              opacity: 1,
+              dashArray: planLeg.dashArray || null,
+              lineCap: "round",
+              lineJoin: "round"
+            }).addTo(routeLayerGroup);
+
+            // 3. Animated Flow Dashes showing direction along each leg
+            L.polyline(legLatLngs, {
+              color: planLeg.flowColor || "#fde047",
+              weight: 3.2,
+              opacity: 0.95,
+              dashArray: planLeg.type === "walk" ? "4, 10" : "10, 12",
+              lineCap: "round",
+              className: "active-segment-flow-line"
+            }).addTo(routeLayerGroup);
+
+            // 4. Directional Arrow Marker along leg
+            const dLat = toDisp[0] - fromDisp[0];
+            const dLng = toDisp[1] - fromDisp[1];
+            const angleDeg = Math.atan2(-dLat, dLng) * (180 / Math.PI);
+            const arrowPoints = activePlan.legs.length === 1 ? [0.3, 0.7] : [0.55];
+
+            arrowPoints.forEach(t => {
+              const arrowLat = fromDisp[0] + dLat * t;
+              const arrowLng = fromDisp[1] + dLng * t;
+              const arrowIcon = L.divIcon({
+                className: "route-seg-wrapper",
+                html: `<div class="active-segment-arrow-icon" style="border-color:${planLeg.color || "#e4572e"}; color:${planLeg.color || "#c2410c"}; transform: rotate(${angleDeg.toFixed(1)}deg);">➤</div>`,
+                iconSize: [22, 22],
+                iconAnchor: [11, 11]
+              });
+              L.marker([arrowLat, arrowLng], { icon: arrowIcon, interactive: false, zIndexOffset: 2600 }).addTo(routeLayerGroup);
+            });
+
+            // 5. Callout Pill at the midpoint of each leg (shows Step # + Mode + Dist/Time)
+            const midIdx = Math.floor(legLatLngs.length / 2);
+            const midLat = legLatLngs.length === 2
+              ? (fromDisp[0] + toDisp[0]) / 2
+              : legLatLngs[midIdx][0];
+            const midLng = legLatLngs.length === 2
+              ? (fromDisp[1] + toDisp[1]) / 2
+              : legLatLngs[midIdx][1];
+            const legBadgeIcon = L.divIcon({
+              className: "route-seg-wrapper",
+              html: `<div class="active-segment-badge" style="border-color:${planLeg.color || "#fde047"};">${planLeg.badgeTh || ""}</div>`,
+              iconSize: [230, 28],
+              iconAnchor: [115, legIdx % 2 === 0 ? -8 : 26]
+            });
+            L.marker([midLat, midLng], { icon: legBadgeIcon, interactive: false, zIndexOffset: 2800 + legIdx }).addTo(routeLayerGroup);
+          });
+
+          // 6. Render Transfer Station / Hub Pins (e.g. Metro Station / Bus Stop where user switches from Rail/Bus to Walk)
+          if (activePlan.transferHubs && activePlan.transferHubs.length > 0) {
+            activePlan.transferHubs.forEach((hub, hIdx) => {
+              if (!hub.coords) return;
+              const hubDisp = getDisplayCoords(hub.coords);
+              const hubIcon = L.divIcon({
+                className: "route-seg-wrapper",
+                html: `<div class="transfer-hub-pin">${hub.label || hub.nameTh || "🚇 จุดเชื่อมต่อ"}</div>`,
+                iconSize: [210, 32],
+                iconAnchor: [105, 16]
+              });
+              L.marker(hubDisp, { icon: hubIcon, interactive: false, zIndexOffset: 2750 + hIdx }).addTo(routeLayerGroup);
+            });
+          }
+        } else {
+          const segLatLngs = [a.displayCoords, b.displayCoords];
+
+          // Fallback single active segment line
+          L.polyline(segLatLngs, {
+            color: "#ffffff",
+            weight: 12,
+            opacity: 0.96,
+            lineCap: "round",
+            lineJoin: "round"
+          }).addTo(routeLayerGroup);
+
+          L.polyline(segLatLngs, {
+            color: "#e4572e",
+            weight: 7,
+            opacity: 1,
+            lineCap: "round",
+            lineJoin: "round"
+          }).addTo(routeLayerGroup);
+
+          L.polyline(segLatLngs, {
+            color: "#fde047",
+            weight: 3.5,
+            opacity: 1,
+            dashArray: "10, 12",
+            lineCap: "round",
+            className: "active-segment-flow-line"
+          }).addTo(routeLayerGroup);
+
+          const midLat = (a.displayCoords[0] + b.displayCoords[0]) / 2;
+          const midLng = (a.displayCoords[1] + b.displayCoords[1]) / 2;
+          const distLabel = segKm < 1
+            ? `${Math.max(50, Math.round(segKm * 1000))} ม. (~${leg.mins} นาที)`
+            : `${segKm.toFixed(1)} กม. (~${leg.mins} นาที)`;
+          const segIcon = L.divIcon({
+            className: "route-seg-wrapper",
+            html: `<div class="active-segment-badge">${leg.mode.split(" ")[0]} #${a.queueNum} ➔ #${b.queueNum} · ${distLabel}</div>`,
+            iconSize: [200, 28],
+            iconAnchor: [100, -8]
+          });
+          L.marker([midLat, midLng], { icon: segIcon, interactive: false, zIndexOffset: 2800 }).addTo(routeLayerGroup);
+        }
+      } else if (isRouteVisible && !hasActiveFocusInDay && segKm < 400) {
         const midLat = (a.displayCoords[0] + b.displayCoords[0]) / 2;
         const midLng = (a.displayCoords[1] + b.displayCoords[1]) / 2;
         const segIcon = L.divIcon({
@@ -1186,9 +2565,10 @@ function renderTimelineRouteAndSummary(dayItems) {
       chainContainer.innerHTML = routeNodes
         .map((node, i) => {
           const shortEn = node.nameEn.length > 22 ? node.nameEn.slice(0, 20) + "…" : node.nameEn;
+          const isCurr = node.index === currFocusIdx;
           const pill = `
-            <span class="route-node-pill" onclick="window.appFocusTimelineIndex(${node.index})" title="${node.time} - ${node.nameEn}">
-              <span class="num">${node.queueNum}</span>
+            <span class="route-node-pill" style="${isCurr ? "border-color:#f97316; background:#7c2d12;" : ""}" onclick="window.appFocusTimelineIndex(${node.index})" title="${node.time} - ${node.nameEn}">
+              <span class="num" style="${isCurr ? "background:#f97316;" : ""}">${node.queueNum}</span>
               <span>${node.icon} ${shortEn}</span>
             </span>
           `;
@@ -1200,14 +2580,18 @@ function renderTimelineRouteAndSummary(dayItems) {
 }
 
 window.appFocusTimelineIndex = function(index) {
-  focusTimelineItemOnMap(index);
+  activeTimelineSelection = { dayKey: currentDayKey, index };
+  selectedTransitMode = "auto";
+  setCol2ViewMode("detail");
+  renderAll();
+  focusTimelineItemOnMap(index, currentDayKey);
 };
 
-function focusSpotOnMap(spotId, openPopup = true) {
+function focusSpotOnMap(spotId, openPopup = false) {
   const spot = getSpotById(spotId);
   if (!spot || !map) return;
   const pos = getDisplayCoords(spot.coords);
-  map.flyTo(pos, 15, { duration: 0.9 });
+  map.flyTo(pos, 16, { duration: 0.85 });
   if (openPopup && spot._leafletMarker) {
     setTimeout(() => {
       spot._leafletMarker.openPopup();
@@ -1218,16 +2602,43 @@ function focusSpotOnMap(spotId, openPopup = true) {
 function focusTimelineItemOnMap(index, dayKey = currentDayKey) {
   const items = timelineState[dayKey]?.items || [];
   const item = items[index];
-  if (!item) return;
-  if (item.spotId !== undefined && item.spotId !== null && item.spotId !== "") {
-    focusSpotOnMap(item.spotId, true);
-  } else if (item.customCoords) {
-    const pos = getDisplayCoords(item.customCoords);
-    map.flyTo(pos, 15, { duration: 0.9 });
-  } else if (item.isFlightStep) {
-    // Open Flight Ticket modal if clicking a flight transit leg without Harbin spotId
-    document.getElementById("flightModalBackdrop").hidden = false;
+  if (!item || !map) return;
+
+  // Close any open popup so the highlighted route and pins are completely unobstructed
+  map.closePopup();
+
+  const currCoords = getTimelineItemCoords(item);
+  if (!currCoords) {
+    if (item.isFlightStep) {
+      document.getElementById("flightModalBackdrop").hidden = false;
+    }
+    return;
   }
+
+  // Check if there is a Previous Stop in the timeline to zoom & frame the route segment [prev -> curr]
+  const prevInfo = getPreviousTimelineItemInfo(index, dayKey);
+  const prevCoords = prevInfo ? getTimelineItemCoords(prevInfo.item) : null;
+
+  if (prevCoords) {
+    const segDistKm = calcDistanceKm(prevCoords, currCoords);
+    // If previous stop and current stop are in the same region (< 380 km) and not identical coordinates
+    if (segDistKm > 0.005 && segDistKm < 380) {
+      const ptPrev = getDisplayCoords(prevCoords);
+      const ptCurr = getDisplayCoords(currCoords);
+      const bounds = L.latLngBounds([ptPrev, ptCurr]).pad(0.32);
+      map.flyToBounds(bounds, {
+        paddingTopLeft: [70, 75],
+        paddingBottomRight: [70, 75],
+        maxZoom: 17,
+        duration: 0.85
+      });
+      return;
+    }
+  }
+
+  // Fallback if first stop of trip or coming from an international flight leg: zoom clearly onto the current stop
+  const pos = getDisplayCoords(currCoords);
+  map.flyTo(pos, 16, { duration: 0.85 });
 }
 
 function fitCurrentTimelineRoute() {
@@ -1418,6 +2829,14 @@ function setupEventListeners() {
     });
   }
 
+  // Column 2 Mode Switcher: "📋 รายละเอียดจุดที่เลือก" vs "➕ เพิ่มสถานที่ (28)"
+  document.getElementById("btnCol2ModeDetail")?.addEventListener("click", () => {
+    setCol2ViewMode("detail");
+  });
+  document.getElementById("btnCol2ModeChooses")?.addEventListener("click", () => {
+    setCol2ViewMode("chooses");
+  });
+
   // Timeline Display Mode Switcher (Table vs Card)
   document.getElementById("btnModeTable")?.addEventListener("click", () => {
     timelineViewMode = "table";
@@ -1536,9 +2955,45 @@ function setupEventListeners() {
     showToast("🗑️ ล้างคิวกิจกรรมในวันนี้แล้ว — ลากสถานที่จากส่วนที่ 2 มาใส่ใหม่ได้เลย");
   });
 
+  // Map Top Drawer Toggle (ลิ้นชักเก็บส่วนหัวและปุ่มควบคุมแผนที่)
+  const toggleMapTopDrawer = forceState => {
+    const drawer = document.getElementById("mapTopDrawer");
+    const triggerBtn = document.getElementById("btnToggleMapDrawer");
+    const caret = document.getElementById("mapDrawerCaret");
+    if (!drawer) return;
+    const isNowOpen = typeof forceState === "boolean"
+      ? forceState
+      : !drawer.classList.contains("is-open");
+    drawer.classList.toggle("is-open", isNowOpen);
+    drawer.setAttribute("aria-hidden", String(!isNowOpen));
+    if (triggerBtn) triggerBtn.classList.toggle("active", isNowOpen);
+    if (caret) caret.textContent = isNowOpen ? "▴" : "▾";
+  };
+
+  document.getElementById("btnToggleMapDrawer")?.addEventListener("click", () => {
+    toggleMapTopDrawer();
+  });
+  document.getElementById("btnCloseMapDrawer")?.addEventListener("click", () => {
+    toggleMapTopDrawer(false);
+  });
+  document.getElementById("btnQuickFitRoute")?.addEventListener("click", () => {
+    fitCurrentTimelineRoute();
+  });
+
   // Map Toolbar Controls
-  document.getElementById("btnPinMode")?.addEventListener("click", () => togglePinMode());
+  document.getElementById("btnPinMode")?.addEventListener("click", () => {
+    togglePinMode();
+    toggleMapTopDrawer(false);
+  });
   document.getElementById("btnCancelPinMode")?.addEventListener("click", () => togglePinMode(false));
+
+  document.getElementById("btnToggleLegend")?.addEventListener("click", e => {
+    const legend = document.getElementById("mapLegend");
+    if (!legend) return;
+    const isNowVisible = legend.hidden;
+    legend.hidden = !isNowVisible;
+    e.currentTarget.classList.toggle("active", isNowVisible);
+  });
 
   document.getElementById("btnToggleRoute")?.addEventListener("click", e => {
     isRouteVisible = !isRouteVisible;
