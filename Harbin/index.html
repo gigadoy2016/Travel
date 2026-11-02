@@ -46,6 +46,9 @@
 
     <!-- Header Quick Links & Controls -->
     <div class="header-actions">
+      <button id="btnOpenChecklistModal" class="btn-action" style="background:linear-gradient(135deg,#0284c7,#0369a1); color:#fff; border-color:#0284c7; font-weight:800;" title="เปิดดูรายการเช็คลิสต์เตรียมตัวสำหรับคุณรังสรรค์และคุณสุนิสา">
+        <span>📋</span> Checklist เตรียมตัว (<span id="headerChecklistBadge">0%</span>)
+      </button>
       <button id="btnExportXlsx" class="btn-action" style="background:linear-gradient(135deg,#10b981,#059669); color:#fff; border-color:#047857; font-weight:800;" title="ดาวน์โหลดแผนการเดินทางและลิสต์สถานที่ทั้งหมดเป็นไฟล์ Excel (.xlsx) แยกเป็นข้อๆ">
         <span>📊</span> Export .xlsx
       </button>
@@ -95,6 +98,7 @@
           <span class="ph-main-title">① แผนการเดินทาง <small id="timelineSummaryBadge">(28 รายการ)</small></span>
         </div>
         <div class="ph-btn-group">
+          <button type="button" class="btn-ph-action" id="btnInlineChecklist" style="background:#e0f2fe; color:#0369a1; border-color:#bae6fd; font-weight:700;" title="เปิดเช็คลิสต์เตรียมตัวเดินทางสำหรับ 2 ท่าน">📋 Checklist</button>
           <button type="button" class="btn-ph-action" id="btnInlineExportXlsx" style="background:#dcfce7; color:#166534; border-color:#86efac; font-weight:800;" title="Export ตารางการเดินทางและรายการสถานที่ทั้งหมดเป็นไฟล์ Excel (.xlsx)">📊 .xlsx</button>
           <button type="button" class="btn-ph-action flight" id="btnInlineFlight" title="ดูรูปตั๋วเครื่องบินจริง (Folder 1)">✈️ ตั๋วบิน</button>
           <button type="button" class="btn-ph-action" id="btnAddDay" title="เพิ่มวันใหม่ในแผนการเดินทาง">+ วัน</button>
@@ -519,6 +523,62 @@
       <div class="modal-footer">
         <a href="1/S__27820034.jpg" target="_blank" class="btn-modal secondary">🔍 เปิดดูรูปขนาดเต็ม (1/S__27820034.jpg)</a>
         <button type="button" id="btnCloseFlightModalBottom" class="btn-modal submit">ปิดหน้าต่าง</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL 4: TRAVEL PREPARATION CHECKLIST (คุณรังสรรค์ & คุณสุนิสา)
+       ========================================================================= -->
+  <div class="modal-backdrop" id="checklistModalBackdrop" hidden>
+    <div class="modal-card checklist-modal-card" role="dialog" aria-labelledby="checklistModalTitle">
+      <div class="modal-header">
+        <div>
+          <span class="col-part-pill" style="background:#e0f2fe; color:#0369a1; font-weight:700;">📋 HARBIN TRAVEL PREPARATION · 6 DAYS 5 NIGHTS</span>
+          <h3 id="checklistModalTitle" style="margin:4px 0 0; font-size:1.05rem; font-weight:800; color:#0f172a;">
+            เช็คลิสต์เตรียมตัวเดินทางฮาร์บิน (คุณรังสรรค์ &amp; คุณสุนิสา)
+          </h3>
+          <span style="font-size:0.75rem; color:#64748b; margin-top:2px; display:inline-block;">
+            ❄️ สภาพอากาศเป้าหมาย: หิมะตก อุณหภูมิ -10°C ถึง -22°C (4 – 9 ธ.ค. 2026)
+          </span>
+        </div>
+        <button class="modal-close" id="btnCloseChecklistModal" aria-label="Close Checklist Modal">✕</button>
+      </div>
+
+      <div class="checklist-top-bar">
+        <div class="checklist-progress-container">
+          <div class="checklist-progress-text">
+            <span>ความพร้อมในการเดินทาง: <strong id="checklistProgressText" style="color:#0284c7;">0 / 0 รายการ</strong></span>
+            <span class="checklist-percent-badge" id="checklistPercentBadge">0%</span>
+          </div>
+          <div class="checklist-progress-track">
+            <div class="checklist-progress-fill" id="checklistProgressFill" style="width: 0%;"></div>
+          </div>
+        </div>
+
+        <div class="checklist-toolbar">
+          <div class="checklist-filter-group" id="checklistFilterGroup">
+            <button type="button" class="cl-filter-btn active" data-filter="all">ทั้งหมด (<span id="countFilterAll">0</span>)</button>
+            <button type="button" class="cl-filter-btn" data-filter="pending">ยังไม่เตรียม (<span id="countFilterPending">0</span>)</button>
+            <button type="button" class="cl-filter-btn" data-filter="done">เตรียมแล้ว ✓ (<span id="countFilterDone">0</span>)</button>
+          </div>
+          <div class="checklist-quick-actions">
+            <button type="button" class="cl-action-btn" id="btnChecklistCheckAll" title="ทำเครื่องหมายว่าเตรียมแล้วทั้งหมด">✓ ติ๊กทั้งหมด</button>
+            <button type="button" class="cl-action-btn" id="btnChecklistReset" title="ล้างสถานะเพื่อเริ่มเช็คใหม่">🔄 รีเซ็ต</button>
+            <button type="button" class="cl-action-btn print-btn" id="btnChecklistPrint" title="พิมพ์เช็คลิสต์หรือบันทึกเป็น PDF">🖨️ พิมพ์</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-body checklist-modal-body" id="checklistContainer">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+
+      <div class="modal-footer" style="justify-content:space-between; align-items:center;">
+        <span style="font-size:0.75rem; color:#64748b; display:flex; align-items:center; gap:4px;">
+          💾 บันทึกสถานะลงเบราว์เซอร์ (LocalStorage) อัตโนมัติ ปิดเปิดใหม่ข้อมูลไม่หาย
+        </span>
+        <button type="button" id="btnCloseChecklistModalBottom" class="btn-modal submit">ปิดหน้าต่าง</button>
       </div>
     </div>
   </div>

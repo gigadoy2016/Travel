@@ -153,6 +153,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderAll();
   setupEventListeners();
   fetchLiveHarbinWeather();
+  initChecklistModule();
 });
 
 function loadPersistedData() {
@@ -3450,4 +3451,270 @@ function exportTripToXlsx() {
   } else {
     showToast("⚠️ ไม่พบไลบรารี XLSX กรุณาเชื่อมต่ออินเทอร์เน็ตแล้วรีเฟรชหน้าเว็บ");
   }
+}
+
+// ============================================================================
+// CHECKLIST INTERACTIVE MODULE (สำหรับ คุณรังสรรค์ & คุณสุนิสา)
+// ============================================================================
+const HARBIN_CHECKLIST_STORAGE_KEY = "harbin_travel_checklist_state_v1";
+
+const HARBIN_CHECKLIST_DATA = [
+  {
+    category: "📑 1. เอกสาร & การเงิน & โทรศัพท์ (Digital & Travel)",
+    id: "docs",
+    items: [
+      { id: "doc_passport", text: "หนังสือเดินทาง (Passport): อายุการใช้งานคงเหลือมากกว่า 6 เดือน (ตรวจสอบทั้ง 2 ท่าน)" },
+      { id: "doc_flight", text: "ใบยืนยันตั๋วเครื่องบินไป-กลับ (Trip.com Booking: 1622932337344364) พิมพ์สำรอง 1 ชุด" },
+      { id: "doc_hotel", text: "ใบจองโรงแรม / แผนการเดินทาง (เตรียมไว้เผื่อ ตม. จีนขอดู ฟรีวีซ่าไทย-จีน 30 วัน)" },
+      { id: "doc_travelcard", text: "บัตร Travel Card (YouTrip / SCB Planet / Krungthai) ผูกกับ Alipay และ WeChat Pay ทั้ง 2 ท่าน" },
+      { id: "doc_realname", text: "ยืนยันตัวตน (Real-Name Verification สแกนพาสปอร์ต) ในแอป Alipay สมบูรณ์ทั้ง 2 บัญชี" },
+      { id: "doc_cash", text: "เงินสดหยวน (RMB) ติดตัวไว้สำรองฉุกเฉิน (ประมาณ 1,000 – 1,500 หยวน)" },
+      { id: "doc_sim", text: "Travel SIM หรือ Data Roaming จากไทย (AIS / True-Dtac ไม่บล็อก LINE, FB, IG, Google)" },
+      { id: "doc_apps", text: "ติดตั้งแอปจำเป็น: Alipay, WeChat, Amap (高德地图), Baidu/Google Translate (Offline), Trip.com" }
+    ]
+  },
+  {
+    category: "🧥 2. เสื้อผ้าและเครื่องแต่งกายกันหนาว (-10°C ถึง -22°C)",
+    id: "clothing",
+    items: [
+      { id: "cloth_base", text: "Base Layer: เสื้อและกางเกงลองจอน / Heattech Ultra Warm แนบเนื้อ (คนละ 3-4 ชุด)" },
+      { id: "cloth_mid_fleece", text: "Mid Layer: เสื้อสเวตเตอร์ฟลีซ (Fleece) หรือไหมพรมหนา (คนละ 2-3 ตัว)" },
+      { id: "cloth_mid_down", text: "Mid Layer: เสื้อกั๊กขนเป็ดบาง (Ultralight Down Vest) หรือแจ็คเก็ตชั้นใน (คนละ 1 ตัว)" },
+      { id: "cloth_outer_coat", text: "Outer Layer: เสื้อโค้ทขนเป็ดตัวยาวกันลม-หิมะ (Windproof & Water-resistant) (คนละ 1-2 ตัว)" },
+      { id: "cloth_outer_pants", text: "Outer Layer: กางเกงกันลมบุขนแกะด้านใน (Fleece-lined) หรือกางเกงสกี (คนละ 2-3 ตัว)" },
+      { id: "cloth_sleep", text: "ชุดนอนเนื้อหนานุ่มอบอุ่นสำหรับนอนในโรงแรม (คนละ 2 ชุด)" }
+    ]
+  },
+  {
+    category: "🧤 3. อุปกรณ์ปกป้องส่วนปลายร่างกาย (จุดเสี่ยงหนาวบาด)",
+    id: "extremities",
+    items: [
+      { id: "ext_boots", text: "รองเท้าลุยหิมะ (Snow Boots) บุขนหนา กันน้ำ กันลื่น ดอกยางลึก (แนะนำเผื่อไซส์ +1 เบอร์)" },
+      { id: "ext_socks", text: "ถุงเท้ากันหนาว Wool / Thermal Socks หนาพิเศษ (คนละ 5-6 คู่)" },
+      { id: "ext_gloves_outer", text: "ถุงมือกันหนาวกันลม/กันน้ำบุขน (แนะนำรุ่นที่ทัชสกรีนได้) (คนละ 1 คู่)" },
+      { id: "ext_gloves_inner", text: "ถุงมือผ้าบางชั้นใน (Inner glove) สำหรับใส่ซ้อนเวลาถอดมือถือถ่ายรูป (คนละ 1 คู่)" },
+      { id: "ext_hat", text: "หมวกไหมพรม / หมวกบุขน (Trapper Hat) ปิดคลุมถึงใบหูมิดชิด (คนละ 1-2 ใบ)" },
+      { id: "ext_scarf", text: "ผ้าพันคอหนา หรือ ปลอกคอกันลม (Neck Warmer / Balaclava) (คนละ 1-2 ผืน)" },
+      { id: "ext_earmuffs", text: "ที่ปิดหู (Earmuffs) กันลมหนาวบาดหู (พิเศษสำหรับคุณสุนิสา)" },
+      { id: "ext_mask", text: "หน้ากากอนามัย / แมสก์ผ้าหนา ช่วยให้อากาศหายใจอุ่นขึ้น ไม่แสบจมูกและคอ" }
+    ]
+  },
+  {
+    category: "🔥 4. อุปกรณ์ยังชีพในความหนาว & ไอที (Winter Gadgets)",
+    id: "gear",
+    items: [
+      { id: "gear_body_warmer", text: "แผ่นร้อนแปะลำตัว (Body Warmer): 20–30 แผ่น (แปะบนเสื้อชั้นใน ห้ามแปะผิวตรงๆ)" },
+      { id: "gear_toe_warmer", text: "แผ่นร้อนแปะเท้า/ถุงเท้า (Toe Warmer): 15–20 คู่ (ช่วยให้อุ่นเดินสบายมาก)" },
+      { id: "gear_hand_warmer", text: "แผ่นร้อนแบบถือ/กำมือพกในกระเป๋าเสื้อโค้ท: 10–15 ชิ้น" },
+      { id: "gear_thermos", text: "กระติกน้ำเก็บความร้อน (Thermos) ขนาด 400-500ml ไว้จิบน้ำอุ่นระหว่างวัน" },
+      { id: "gear_sunglasses", text: "แว่นกันแดด (Sunglasses) ป้องกันแสงสะท้อนหิมะจ้า (Snow Blindness)" },
+      { id: "gear_powerbank", text: "พาวเวอร์แบงก์ ความจุไม่เกิน 20,000 mAh (คนละ 1 ตัว ต้องถือขึ้นเครื่อง)" },
+      { id: "gear_phone_warm", text: "แผ่นแปะหลังโทรศัพท์ / ซองเก็บมือถือบุขน (ป้องกันแบตเตอรี่ดับจากอากาศติดลบ)" },
+      { id: "gear_charger", text: "สายชาร์จ, หัวชาร์จ Fast Charge และ Universal Adapter" }
+    ]
+  },
+  {
+    category: "💊 5. ยา ของใช้ส่วนตัว & ผลิตภัณฑ์ดูแลผิวพรรณ",
+    id: "skincare_med",
+    items: [
+      { id: "med_lip", text: "ลิปบาล์มบำรุงเข้มข้น / วาสลีน (ทาบ่อยๆ ป้องกันปากแห้งแตกเลือดซิบ)" },
+      { id: "med_cream", text: "มอยส์เจอไรเซอร์บำรุงผิวหน้า/ผิวกายสูตรเข้มข้นมาก (Ultra-rich moisturizing cream)" },
+      { id: "med_handcream", text: "ครีมทามือ (Hand Cream) ขนาดพกพา" },
+      { id: "med_sunscreen", text: "ครีมกันแดดสำหรับหน้าและคอ (SPF 50+ PA++++) หิมะสะท้อนแดดแรงมาก" },
+      { id: "med_eyedrops", text: "น้ำตาเทียม / ยาหยอดตา (ตาแห้งง่ายเวลามีลมหนาวปะทะ)" },
+      { id: "med_nasal", text: "สเปรย์พ่นจมูกน้ำเกลือ (ป้องกันเยื่อบุโพรงจมูกแห้งแตกเลือดกำเดาไหล)" },
+      { id: "med_cold", text: "ยาสามัญ: ยาแก้หวัด ลดไข้, ยาลดน้ำมูก, ยาแก้แพ้" },
+      { id: "med_throat", text: "ยาอมแก้เจ็บคอ / สเปรย์พ่นคอ (Propoliz / Kamillosan)" },
+      { id: "med_stomach", text: "ยาแก้ท้องเสีย, ผงเกลือแร่ (ORS), ยาช่วยย่อย" },
+      { id: "med_personal", text: "ยาประจำตัวของทั้งคุณรังสรรค์ และ คุณสุนิสา (เตรียมครบ 6 วัน)" }
+    ]
+  },
+  {
+    category: "🧳 6. การจัดกระเป๋าเดินทาง & ตรวจเช็คก่อนขึ้นเครื่อง",
+    id: "packing",
+    items: [
+      { id: "pack_luggage", text: "กระเป๋าเดินทางโหลดใต้เครื่อง: เสื้อผ้าหนา, แผ่นร้อนสำรอง, ของเหลวเกิน 100ml" },
+      { id: "pack_tag", text: "ติดป้ายชื่อและเบอร์โทรศัพท์ภาษาอังกฤษที่กระเป๋าเดินทางทั้ง 2 ใบ" },
+      { id: "pack_carryon", text: "กระเป๋าเป้สะพายหลัง (Daypack) คนละ 1 ใบ สำหรับของติดตัวและขึ้นเครื่อง" },
+      { id: "pack_valuables", text: "พาสปอร์ต, บัตร Travel Card, เงินสด (พกติดตัวตลอด)" },
+      { id: "pack_powerbank_carry", text: "พาวเวอร์แบงก์ และอุปกรณ์ไอที (ถือขึ้นเครื่อง ห้ามโหลดใต้เครื่อง)" },
+      { id: "pack_jacket_ready", text: "เสื้อกันหนาวตัวนอก 1 ตัวใส่ไว้ใน Carry-on เพื่อหยิบใส่ทันทีที่ลงเครื่องฮาร์บิน" }
+    ]
+  }
+];
+
+let checklistFilter = "all";
+
+function loadChecklistState() {
+  try {
+    const raw = localStorage.getItem(HARBIN_CHECKLIST_STORAGE_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch (e) {
+    return {};
+  }
+}
+
+function saveChecklistState(state) {
+  try {
+    localStorage.setItem(HARBIN_CHECKLIST_STORAGE_KEY, JSON.stringify(state));
+  } catch (e) {
+    console.error("Failed to save checklist state:", e);
+  }
+}
+
+function renderChecklist() {
+  const container = document.getElementById("checklistContainer");
+  const state = loadChecklistState();
+  let totalCount = 0;
+  let doneCount = 0;
+
+  HARBIN_CHECKLIST_DATA.forEach(cat => {
+    cat.items.forEach(item => {
+      totalCount++;
+      if (state[item.id]) doneCount++;
+    });
+  });
+
+  const pendingCount = totalCount - doneCount;
+  const percent = totalCount > 0 ? Math.round((doneCount / totalCount) * 100) : 0;
+
+  const progressText = document.getElementById("checklistProgressText");
+  const percentBadge = document.getElementById("checklistPercentBadge");
+  const progressFill = document.getElementById("checklistProgressFill");
+  const headerBadge = document.getElementById("headerChecklistBadge");
+
+  const countAll = document.getElementById("countFilterAll");
+  const countPending = document.getElementById("countFilterPending");
+  const countDone = document.getElementById("countFilterDone");
+
+  if (progressText) progressText.textContent = `${doneCount} / ${totalCount} รายการ (${percent}%)`;
+  if (percentBadge) percentBadge.textContent = `${percent}%`;
+  if (progressFill) progressFill.style.width = `${percent}%`;
+  if (headerBadge) headerBadge.textContent = `${percent}%`;
+
+  if (countAll) countAll.textContent = totalCount;
+  if (countPending) countPending.textContent = pendingCount;
+  if (countDone) countDone.textContent = doneCount;
+
+  if (!container) return;
+  container.innerHTML = "";
+
+  HARBIN_CHECKLIST_DATA.forEach(cat => {
+    const visibleItems = cat.items.filter(item => {
+      const isDone = !!state[item.id];
+      if (checklistFilter === "pending") return !isDone;
+      if (checklistFilter === "done") return isDone;
+      return true;
+    });
+
+    if (visibleItems.length === 0 && checklistFilter !== "all") {
+      return;
+    }
+
+    const catCard = document.createElement("div");
+    catCard.className = "checklist-category-card";
+
+    const catDoneCount = cat.items.filter(item => state[item.id]).length;
+    const catTotalCount = cat.items.length;
+
+    catCard.innerHTML = `
+      <div class="checklist-cat-header">
+        <span class="checklist-cat-title">${cat.category}</span>
+        <span class="checklist-cat-counter">${catDoneCount} / ${catTotalCount}</span>
+      </div>
+      <div class="checklist-items-list">
+        ${visibleItems.map(item => {
+          const isChecked = !!state[item.id];
+          return `
+            <label class="checklist-item ${isChecked ? 'checked' : ''}" data-id="${item.id}">
+              <input type="checkbox" data-id="${item.id}" ${isChecked ? 'checked' : ''}>
+              <span class="cl-item-text">${item.text}</span>
+              ${isChecked ? '<span class="cl-item-badge">✓ พร้อมแล้ว</span>' : ''}
+            </label>
+          `;
+        }).join("")}
+      </div>
+    `;
+
+    container.appendChild(catCard);
+  });
+
+  // Bind item change events
+  container.querySelectorAll('input[type="checkbox"]').forEach(chk => {
+    chk.addEventListener("change", (e) => {
+      const itemId = e.target.dataset.id;
+      const checked = e.target.checked;
+      const currentState = loadChecklistState();
+      if (checked) {
+        currentState[itemId] = true;
+      } else {
+        delete currentState[itemId];
+      }
+      saveChecklistState(currentState);
+      renderChecklist();
+    });
+  });
+}
+
+function initChecklistModule() {
+  const modal = document.getElementById("checklistModalBackdrop");
+  const openModal = () => {
+    if (modal) {
+      modal.hidden = false;
+      renderChecklist();
+    }
+  };
+  const closeModal = () => {
+    if (modal) modal.hidden = true;
+  };
+
+  document.getElementById("btnOpenChecklistModal")?.addEventListener("click", openModal);
+  document.getElementById("btnInlineChecklist")?.addEventListener("click", openModal);
+  document.getElementById("btnCloseChecklistModal")?.addEventListener("click", closeModal);
+  document.getElementById("btnCloseChecklistModalBottom")?.addEventListener("click", closeModal);
+
+  // Close on outside click
+  modal?.addEventListener("click", (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  // Filter Buttons
+  document.querySelectorAll("#checklistFilterGroup .cl-filter-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll("#checklistFilterGroup .cl-filter-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      checklistFilter = btn.dataset.filter || "all";
+      renderChecklist();
+    });
+  });
+
+  // Check All Button
+  document.getElementById("btnChecklistCheckAll")?.addEventListener("click", () => {
+    const allState = {};
+    HARBIN_CHECKLIST_DATA.forEach(cat => {
+      cat.items.forEach(item => {
+        allState[item.id] = true;
+      });
+    });
+    saveChecklistState(allState);
+    renderChecklist();
+    if (typeof showToast === "function") showToast("✓ ติ๊กเตรียมพร้อมแล้วทุกรายการ!");
+  });
+
+  // Reset Button
+  document.getElementById("btnChecklistReset")?.addEventListener("click", () => {
+    if (confirm("ต้องการรีเซ็ตสถานะเช็คลิสต์ทั้งหมดเพื่อเริ่มเช็คใหม่หรือไม่?")) {
+      saveChecklistState({});
+      renderChecklist();
+      if (typeof showToast === "function") showToast("🔄 รีเซ็ตสถานะเช็คลิสต์เรียบร้อยแล้ว");
+    }
+  });
+
+  // Print Button
+  document.getElementById("btnChecklistPrint")?.addEventListener("click", () => {
+    window.print();
+  });
+
+  // Initial calculation for header badge
+  renderChecklist();
 }
