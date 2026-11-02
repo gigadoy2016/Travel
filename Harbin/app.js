@@ -434,33 +434,21 @@ function setCol2ViewMode(mode) {
 
 const DAY_COLORS = ["#e4572e", "#2a9d8f", "#6a4c93", "#f4a300", "#1d70b8", "#b5179e", "#059669", "#e11d48"];
 
-// Tooltip Helpers (Matching Downloads/index.html)
-function showFloatingTip(e, title, detail) {
-  const tip = document.getElementById("floatingTip");
-  if (!tip) return;
-  tip.innerHTML = "<b></b>";
-  tip.firstChild.textContent = title || "";
-  tip.append(detail || "");
-  tip.style.display = "block";
-  moveFloatingTip(e);
+// Tooltip Helpers (Disabled as requested - no intrusive floating tooltip popover)
+function showFloatingTip() {
+  return;
 }
 
-function moveFloatingTip(e) {
-  const tip = document.getElementById("floatingTip");
-  if (!tip || tip.style.display === "none") return;
-  const w = tip.offsetWidth;
-  const h = tip.offsetHeight;
-  let x = e.clientX + 14;
-  let y = e.clientY + 14;
-  if (x + w > window.innerWidth) x = e.clientX - w - 14;
-  if (y + h > window.innerHeight) y = e.clientY - h - 14;
-  tip.style.left = x + "px";
-  tip.style.top = y + "px";
+function moveFloatingTip() {
+  return;
 }
 
 function hideFloatingTip() {
   const tip = document.getElementById("floatingTip");
-  if (tip) tip.style.display = "none";
+  if (tip) {
+    tip.style.display = "none";
+    tip.innerHTML = "";
+  }
 }
 
 function clearDragOverStates() {

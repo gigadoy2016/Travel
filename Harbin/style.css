@@ -673,27 +673,12 @@ html, body {
   padding: 6px 14px;
 }
 
-/* Floating Dark Tooltip (Hover on Timeline Row or Candidate Card) */
+/* Floating Dark Tooltip (Disabled as requested) */
 #floatingTip {
-  position: fixed;
-  z-index: 4000;
-  max-width: 310px;
-  background: #1f2933;
-  color: #ffffff;
-  padding: 8px 11px;
-  border-radius: 8px;
-  font-size: 12.5px;
-  line-height: 1.4;
-  pointer-events: none;
-  display: none;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.32);
-}
-
-#floatingTip b {
-  display: block;
-  margin-bottom: 3px;
-  font-size: 13px;
-  color: #ff9f80;
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 /* ==========================================================================
