@@ -3590,6 +3590,127 @@ body.is-dragging .timeline-dropzone .drop-hint {
   margin-top: 2px;
 }
 
+/* 2-Column Split for Personal Items & Shared Section */
+.checklist-shared-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  border-top: 4px solid #10b981;
+}
+
+.checklist-shared-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.checklist-shared-title {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #047857;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.checklist-shared-pill {
+  font-size: 0.74rem;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.checklist-two-col-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.cl-person-column {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.cl-person-column.rangsan {
+  border-top: 4px solid #0284c7;
+}
+
+.cl-person-column.sunisa {
+  border-top: 4px solid #ec4899;
+}
+
+.cl-person-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.cl-person-name {
+  font-size: 0.92rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cl-person-column.rangsan .cl-person-name {
+  color: #0369a1;
+}
+
+.cl-person-column.sunisa .cl-person-name {
+  color: #be185d;
+}
+
+.cl-person-progress-pill {
+  font-size: 0.74rem;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.cl-person-column.rangsan .cl-person-progress-pill {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.cl-person-column.sunisa .cl-person-progress-pill {
+  background: #fce7f3;
+  color: #be185d;
+}
+
+.cl-sub-group-title {
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+@media (max-width: 768px) {
+  .checklist-two-col-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
 @media print {
   body * {
     visibility: hidden;

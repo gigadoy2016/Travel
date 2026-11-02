@@ -3456,92 +3456,92 @@ function exportTripToXlsx() {
 // ============================================================================
 // CHECKLIST INTERACTIVE MODULE (สำหรับ คุณรังสรรค์ & คุณสุนิสา)
 // ============================================================================
-const HARBIN_CHECKLIST_STORAGE_KEY = "harbin_travel_checklist_state_v1";
+const HARBIN_CHECKLIST_STORAGE_KEY = "harbin_travel_checklist_state_v2";
 
-const HARBIN_CHECKLIST_DATA = [
-  {
-    category: "📑 1. เอกสาร & การเงิน & โทรศัพท์ (Digital & Travel)",
-    id: "docs",
+const HARBIN_CHECKLIST_DATA = {
+  shared: {
+    title: "🤝 ของใช้ร่วมกัน & ภารกิจส่วนกลาง (Shared Items)",
     items: [
-      { id: "doc_passport", text: "หนังสือเดินทาง (Passport): อายุการใช้งานคงเหลือมากกว่า 6 เดือน (ตรวจสอบทั้ง 2 ท่าน)" },
-      { id: "doc_flight", text: "ใบยืนยันตั๋วเครื่องบินไป-กลับ (Trip.com Booking: 1622932337344364) พิมพ์สำรอง 1 ชุด" },
-      { id: "doc_hotel", text: "ใบจองโรงแรม / แผนการเดินทาง (เตรียมไว้เผื่อ ตม. จีนขอดู ฟรีวีซ่าไทย-จีน 30 วัน)" },
-      { id: "doc_travelcard", text: "บัตร Travel Card (YouTrip / SCB Planet / Krungthai) ผูกกับ Alipay และ WeChat Pay ทั้ง 2 ท่าน" },
-      { id: "doc_realname", text: "ยืนยันตัวตน (Real-Name Verification สแกนพาสปอร์ต) ในแอป Alipay สมบูรณ์ทั้ง 2 บัญชี" },
-      { id: "doc_cash", text: "เงินสดหยวน (RMB) ติดตัวไว้สำรองฉุกเฉิน (ประมาณ 1,000 – 1,500 หยวน)" },
-      { id: "doc_sim", text: "Travel SIM หรือ Data Roaming จากไทย (AIS / True-Dtac ไม่บล็อก LINE, FB, IG, Google)" },
-      { id: "doc_apps", text: "ติดตั้งแอปจำเป็น: Alipay, WeChat, Amap (高德地图), Baidu/Google Translate (Offline), Trip.com" }
+      { id: "sh_flight", text: "ใบยืนยันตั๋วเครื่องบินไป-กลับ (Trip.com Booking: 1622932337344364) พิมพ์สำรอง 1 ชุด" },
+      { id: "sh_hotel", text: "ใบจองโรงแรม / แผนเดินทาง 6 วัน (พิมพ์ภาษาอังกฤษ/จีน เผื่อ ตม. จีนขอดู ฟรีวีซ่า 30 วัน)" },
+      { id: "sh_cash", text: "เงินสดหยวน (RMB) ติดตัวไว้สำรองฉุกเฉิน (ประมาณ 1,000 – 1,500 หยวน)" },
+      { id: "sh_apps", text: "แอปจำเป็นในเครื่อง: Amap (高德地图) แผนที่จีนแม่นยำ + Baidu/Google Translate ภาษาจีน Offline" },
+      { id: "sh_thermos", text: "กระติกน้ำเก็บความร้อน (Thermos) ขนาด 400-500ml ไว้จิบน้ำอุ่นแก้หนาวระหว่างเดินเที่ยว" },
+      { id: "sh_body_warmer", text: "แผ่นร้อนแปะลำตัว (Body Warmer) กองกลาง 20–30 แผ่น (ห้ามแปะผิวตรงๆ ให้แปะบนลองจอน)" },
+      { id: "sh_toe_warmer", text: "แผ่นร้อนแปะเท้า/ถุงเท้า (Toe Warmer) กองกลาง 15–20 คู่ (ช่วยให้อุ่นเดินสบายมาก)" },
+      { id: "sh_hand_warmer", text: "แผ่นร้อนแบบถือ/กำมือพกในกระเป๋าเสื้อโค้ท 10–15 ชิ้น" },
+      { id: "sh_adapter", text: "หัวแปลงปลั๊ก Universal Adapter + ปลั๊กพ่วง / Fast Charger ส่วนกลาง" },
+      { id: "sh_sunscreen", text: "ครีมกันแดดทาหน้า/คอ SPF 50+ PA++++ (หิมะขาวสะท้อนแดดแรงมาก)" },
+      { id: "sh_nasal", text: "สเปรย์พ่นจมูกน้ำเกลือ (ป้องกันเยื่อบุโพรงจมูกแห้งแตกเลือดกำเดาไหลจากอากาศแห้งจัด)" },
+      { id: "sh_med_cold", text: "ยาสามัญ: ยาแก้หวัด ลดไข้ (Paracetamol, Tiffy), ยาลดน้ำมูก, ยาแก้แพ้" },
+      { id: "sh_med_throat", text: "ยาสามัญ: ยาอมแก้เจ็บคอ, สเปรย์พ่นคอ (Propoliz / Kamillosan)" },
+      { id: "sh_med_stomach", text: "ยาสามัญ: ยาแก้ท้องเสีย, ผงเกลือแร่ (ORS), ยาช่วยย่อย" },
+      { id: "sh_med_firstaid", text: "ยาสามัญ: พลาสเตอร์ยา, แผ่นแปะแก้ปวดเมื่อยขา/กล้ามเนื้อจากการเดิน" },
+      { id: "sh_luggage", text: "กระเป๋าเดินทางใบใหญ่โหลดใต้เครื่อง (เสื้อผ้าหนา, ของเหลวเกิน 100ml) ติดป้ายชื่อ-เบอร์ภาษาอังกฤษ" }
     ]
   },
-  {
-    category: "🧥 2. เสื้อผ้าและเครื่องแต่งกายกันหนาว (-10°C ถึง -22°C)",
-    id: "clothing",
-    items: [
-      { id: "cloth_base", text: "Base Layer: เสื้อและกางเกงลองจอน / Heattech Ultra Warm แนบเนื้อ (คนละ 3-4 ชุด)" },
-      { id: "cloth_mid_fleece", text: "Mid Layer: เสื้อสเวตเตอร์ฟลีซ (Fleece) หรือไหมพรมหนา (คนละ 2-3 ตัว)" },
-      { id: "cloth_mid_down", text: "Mid Layer: เสื้อกั๊กขนเป็ดบาง (Ultralight Down Vest) หรือแจ็คเก็ตชั้นใน (คนละ 1 ตัว)" },
-      { id: "cloth_outer_coat", text: "Outer Layer: เสื้อโค้ทขนเป็ดตัวยาวกันลม-หิมะ (Windproof & Water-resistant) (คนละ 1-2 ตัว)" },
-      { id: "cloth_outer_pants", text: "Outer Layer: กางเกงกันลมบุขนแกะด้านใน (Fleece-lined) หรือกางเกงสกี (คนละ 2-3 ตัว)" },
-      { id: "cloth_sleep", text: "ชุดนอนเนื้อหนานุ่มอบอุ่นสำหรับนอนในโรงแรม (คนละ 2 ชุด)" }
-    ]
-  },
-  {
-    category: "🧤 3. อุปกรณ์ปกป้องส่วนปลายร่างกาย (จุดเสี่ยงหนาวบาด)",
-    id: "extremities",
-    items: [
-      { id: "ext_boots", text: "รองเท้าลุยหิมะ (Snow Boots) บุขนหนา กันน้ำ กันลื่น ดอกยางลึก (แนะนำเผื่อไซส์ +1 เบอร์)" },
-      { id: "ext_socks", text: "ถุงเท้ากันหนาว Wool / Thermal Socks หนาพิเศษ (คนละ 5-6 คู่)" },
-      { id: "ext_gloves_outer", text: "ถุงมือกันหนาวกันลม/กันน้ำบุขน (แนะนำรุ่นที่ทัชสกรีนได้) (คนละ 1 คู่)" },
-      { id: "ext_gloves_inner", text: "ถุงมือผ้าบางชั้นใน (Inner glove) สำหรับใส่ซ้อนเวลาถอดมือถือถ่ายรูป (คนละ 1 คู่)" },
-      { id: "ext_hat", text: "หมวกไหมพรม / หมวกบุขน (Trapper Hat) ปิดคลุมถึงใบหูมิดชิด (คนละ 1-2 ใบ)" },
-      { id: "ext_scarf", text: "ผ้าพันคอหนา หรือ ปลอกคอกันลม (Neck Warmer / Balaclava) (คนละ 1-2 ผืน)" },
-      { id: "ext_earmuffs", text: "ที่ปิดหู (Earmuffs) กันลมหนาวบาดหู (พิเศษสำหรับคุณสุนิสา)" },
-      { id: "ext_mask", text: "หน้ากากอนามัย / แมสก์ผ้าหนา ช่วยให้อากาศหายใจอุ่นขึ้น ไม่แสบจมูกและคอ" }
-    ]
-  },
-  {
-    category: "🔥 4. อุปกรณ์ยังชีพในความหนาว & ไอที (Winter Gadgets)",
-    id: "gear",
-    items: [
-      { id: "gear_body_warmer", text: "แผ่นร้อนแปะลำตัว (Body Warmer): 20–30 แผ่น (แปะบนเสื้อชั้นใน ห้ามแปะผิวตรงๆ)" },
-      { id: "gear_toe_warmer", text: "แผ่นร้อนแปะเท้า/ถุงเท้า (Toe Warmer): 15–20 คู่ (ช่วยให้อุ่นเดินสบายมาก)" },
-      { id: "gear_hand_warmer", text: "แผ่นร้อนแบบถือ/กำมือพกในกระเป๋าเสื้อโค้ท: 10–15 ชิ้น" },
-      { id: "gear_thermos", text: "กระติกน้ำเก็บความร้อน (Thermos) ขนาด 400-500ml ไว้จิบน้ำอุ่นระหว่างวัน" },
-      { id: "gear_sunglasses", text: "แว่นกันแดด (Sunglasses) ป้องกันแสงสะท้อนหิมะจ้า (Snow Blindness)" },
-      { id: "gear_powerbank", text: "พาวเวอร์แบงก์ ความจุไม่เกิน 20,000 mAh (คนละ 1 ตัว ต้องถือขึ้นเครื่อง)" },
-      { id: "gear_phone_warm", text: "แผ่นแปะหลังโทรศัพท์ / ซองเก็บมือถือบุขน (ป้องกันแบตเตอรี่ดับจากอากาศติดลบ)" },
-      { id: "gear_charger", text: "สายชาร์จ, หัวชาร์จ Fast Charge และ Universal Adapter" }
-    ]
-  },
-  {
-    category: "💊 5. ยา ของใช้ส่วนตัว & ผลิตภัณฑ์ดูแลผิวพรรณ",
-    id: "skincare_med",
-    items: [
-      { id: "med_lip", text: "ลิปบาล์มบำรุงเข้มข้น / วาสลีน (ทาบ่อยๆ ป้องกันปากแห้งแตกเลือดซิบ)" },
-      { id: "med_cream", text: "มอยส์เจอไรเซอร์บำรุงผิวหน้า/ผิวกายสูตรเข้มข้นมาก (Ultra-rich moisturizing cream)" },
-      { id: "med_handcream", text: "ครีมทามือ (Hand Cream) ขนาดพกพา" },
-      { id: "med_sunscreen", text: "ครีมกันแดดสำหรับหน้าและคอ (SPF 50+ PA++++) หิมะสะท้อนแดดแรงมาก" },
-      { id: "med_eyedrops", text: "น้ำตาเทียม / ยาหยอดตา (ตาแห้งง่ายเวลามีลมหนาวปะทะ)" },
-      { id: "med_nasal", text: "สเปรย์พ่นจมูกน้ำเกลือ (ป้องกันเยื่อบุโพรงจมูกแห้งแตกเลือดกำเดาไหล)" },
-      { id: "med_cold", text: "ยาสามัญ: ยาแก้หวัด ลดไข้, ยาลดน้ำมูก, ยาแก้แพ้" },
-      { id: "med_throat", text: "ยาอมแก้เจ็บคอ / สเปรย์พ่นคอ (Propoliz / Kamillosan)" },
-      { id: "med_stomach", text: "ยาแก้ท้องเสีย, ผงเกลือแร่ (ORS), ยาช่วยย่อย" },
-      { id: "med_personal", text: "ยาประจำตัวของทั้งคุณรังสรรค์ และ คุณสุนิสา (เตรียมครบ 6 วัน)" }
-    ]
-  },
-  {
-    category: "🧳 6. การจัดกระเป๋าเดินทาง & ตรวจเช็คก่อนขึ้นเครื่อง",
-    id: "packing",
-    items: [
-      { id: "pack_luggage", text: "กระเป๋าเดินทางโหลดใต้เครื่อง: เสื้อผ้าหนา, แผ่นร้อนสำรอง, ของเหลวเกิน 100ml" },
-      { id: "pack_tag", text: "ติดป้ายชื่อและเบอร์โทรศัพท์ภาษาอังกฤษที่กระเป๋าเดินทางทั้ง 2 ใบ" },
-      { id: "pack_carryon", text: "กระเป๋าเป้สะพายหลัง (Daypack) คนละ 1 ใบ สำหรับของติดตัวและขึ้นเครื่อง" },
-      { id: "pack_valuables", text: "พาสปอร์ต, บัตร Travel Card, เงินสด (พกติดตัวตลอด)" },
-      { id: "pack_powerbank_carry", text: "พาวเวอร์แบงก์ และอุปกรณ์ไอที (ถือขึ้นเครื่อง ห้ามโหลดใต้เครื่อง)" },
-      { id: "pack_jacket_ready", text: "เสื้อกันหนาวตัวนอก 1 ตัวใส่ไว้ใน Carry-on เพื่อหยิบใส่ทันทีที่ลงเครื่องฮาร์บิน" }
-    ]
+  personal: {
+    rangsan: {
+      key: "rangsan",
+      name: "👨 คุณรังสรรค์ (Rangsan)",
+      themeClass: "rangsan",
+      badgeColor: "#0284c7",
+      items: [
+        { id: "rs_passport", text: "หนังสือเดินทาง (Passport): อายุคงเหลือ > 6 เดือน" },
+        { id: "rs_travelcard", text: "บัตร Travel Card ผูกกับ Alipay & WeChat Pay (ยืนยัน Real-Name แล้ว)" },
+        { id: "rs_sim", text: "Travel SIM / Data Roaming จากไทย (ไม่บล็อก LINE, FB, Google)" },
+        { id: "rs_powerbank", text: "พาวเวอร์แบงก์ (ไม่เกิน 20,000 mAh ถือขึ้นเครื่อง) + สายชาร์จ" },
+        { id: "rs_phone_warm", text: "แผ่นอุ่นหลังมือถือ / ซองใส่มือถือกันแบตเตอรี่ดับในอากาศติดลบ" },
+        { id: "rs_heattech", text: "Base Layer: ลองจอน / Heattech Ultra Warm แนบเนื้อ (3–4 ชุด)" },
+        { id: "rs_fleece", text: "Mid Layer: เสื้อสเวตเตอร์ฟลีซ (Fleece) หรือไหมพรมหนา (2–3 ตัว)" },
+        { id: "rs_vest", text: "Mid Layer: เสื้อกั๊กขนเป็ดบาง (Ultralight Down Vest) (1 ตัว)" },
+        { id: "rs_coat", text: "Outer Layer: เสื้อโค้ทขนเป็ดตัวหนายาวกันลม-หิมะ (1–2 ตัว)" },
+        { id: "rs_pants", text: "Outer Layer: กางเกงกันลมบุขนแกะ / กางเกงสกี (2–3 ตัว)" },
+        { id: "rs_sleepwear", text: "ชุดนอนเนื้อหนานุ่มอบอุ่นสำหรับโรงแรม (2 ชุด)" },
+        { id: "rs_boots", text: "รองเท้าลุยหิมะ Snow Boots บุขนหนา กันน้ำ กันลื่น ดอกยางลึก (+1 ไซส์)" },
+        { id: "rs_socks", text: "ถุงเท้ากันหนาว Wool / Thermal Socks หนาพิเศษ (5–6 คู่)" },
+        { id: "rs_gloves", text: "ถุงมือกันหนาวกันลมทัชสกรีนได้ + ถุงมือผ้าบางชั้นใน" },
+        { id: "rs_hat", text: "หมวกไหมพรม / หมวกบุขนปิดคลุมหูมิดชิด (1–2 ใบ)" },
+        { id: "rs_scarf", text: "ผ้าพันคอหนา หรือ ปลอกคอกันลม (Neck Warmer)" },
+        { id: "rs_sunglasses", text: "แว่นกันแดด (ป้องกันแสงสะท้อนหิมะ Snow Blindness)" },
+        { id: "rs_mask", text: "หน้ากากอนามัย / แมสก์ผ้าหนา ช่วยให้อากาศหายใจอุ่นขึ้น" },
+        { id: "rs_skincare", text: "ลิปมันบำรุงเข้มข้น + ครีมบำรุงหน้า/ผิว + แฮนด์ครีม (อากาศแห้งจัด)" },
+        { id: "rs_personal_med", text: "ยาประจำตัว (ถ้ามี ให้เตรียมเพียงพอ 6 วัน)" },
+        { id: "rs_daypack", text: "กระเป๋าเป้สะพายหลัง (Daypack) พกของติดตัวขึ้นเครื่อง" }
+      ]
+    },
+    sunisa: {
+      key: "sunisa",
+      name: "👩 คุณสุนิสา (Sunisa)",
+      themeClass: "sunisa",
+      badgeColor: "#ec4899",
+      items: [
+        { id: "sn_passport", text: "หนังสือเดินทาง (Passport): อายุคงเหลือ > 6 เดือน" },
+        { id: "sn_travelcard", text: "บัตร Travel Card ผูกกับ Alipay & WeChat Pay (ยืนยัน Real-Name แล้ว)" },
+        { id: "sn_sim", text: "Travel SIM / Data Roaming จากไทย (ไม่บล็อก LINE, FB, Google)" },
+        { id: "sn_powerbank", text: "พาวเวอร์แบงก์ (ไม่เกิน 20,000 mAh ถือขึ้นเครื่อง) + สายชาร์จ" },
+        { id: "sn_phone_warm", text: "แผ่นอุ่นหลังมือถือ / ซองใส่มือถือกันแบตเตอรี่ดับในอากาศติดลบ" },
+        { id: "sn_heattech", text: "Base Layer: ลองจอน / Heattech Ultra Warm แนบเนื้อ (3–4 ชุด)" },
+        { id: "sn_fleece", text: "Mid Layer: เสื้อสเวตเตอร์ฟลีซ (Fleece) หรือไหมพรมหนา (2–3 ตัว)" },
+        { id: "sn_vest", text: "Mid Layer: เสื้อกั๊กขนเป็ดบาง (Ultralight Down Vest) (1 ตัว)" },
+        { id: "sn_coat", text: "Outer Layer: เสื้อโค้ทขนเป็ดตัวหนายาวกันลม-หิมะ (1–2 ตัว)" },
+        { id: "sn_pants", text: "Outer Layer: กางเกงกันลมบุขนแกะ / กางเกงสกี (2–3 ตัว)" },
+        { id: "sn_sleepwear", text: "ชุดนอนเนื้อหนานุ่มอบอุ่นสำหรับโรงแรม (2 ชุด)" },
+        { id: "sn_boots", text: "รองเท้าลุยหิมะ Snow Boots บุขนหนา กันน้ำ กันลื่น ดอกยางลึก (+1 ไซส์)" },
+        { id: "sn_socks", text: "ถุงเท้ากันหนาว Wool / Thermal Socks หนาพิเศษ (5–6 คู่)" },
+        { id: "sn_gloves", text: "ถุงมือกันหนาวกันลมทัชสกรีนได้ + ถุงมือผ้าบางชั้นใน" },
+        { id: "sn_hat", text: "หมวกไหมพรม / หมวกบุขนนุ่มปิดคลุมหูมิดชิด (1–2 ใบ)" },
+        { id: "sn_earmuffs", text: "ที่ปิดหูบุขน (Earmuffs) กันลมหนาวบาดหู (พิเศษสำหรับคุณสุนิสา)" },
+        { id: "sn_scarf", text: "ผ้าพันคอหนานุ่ม หรือ ปลอกคอกันลม (Neck Warmer)" },
+        { id: "sn_sunglasses", text: "แว่นกันแดด (ป้องกันแสงสะท้อนหิมะ Snow Blindness)" },
+        { id: "sn_mask", text: "หน้ากากอนามัย / แมสก์ผ้าหนา ช่วยให้อากาศหายใจอุ่นขึ้น" },
+        { id: "sn_skincare", text: "ลิปบาล์มบำรุงเข้มข้น + ครีมบำรุงผิวหน้า + แฮนด์ครีม + น้ำตาเทียม" },
+        { id: "sn_personal_med", text: "ยาประจำตัว (ถ้ามี ให้เตรียมเพียงพอ 6 วัน)" },
+        { id: "sn_daypack", text: "กระเป๋าเป้สะพายหลัง (Daypack) พกของติดตัวขึ้นเครื่อง" }
+      ]
+    }
   }
-];
+};
 
 let checklistFilter = "all";
 
@@ -3562,19 +3562,20 @@ function saveChecklistState(state) {
   }
 }
 
+function getAllChecklistItemsFlat() {
+  const list = [...HARBIN_CHECKLIST_DATA.shared.items];
+  list.push(...HARBIN_CHECKLIST_DATA.personal.rangsan.items);
+  list.push(...HARBIN_CHECKLIST_DATA.personal.sunisa.items);
+  return list;
+}
+
 function renderChecklist() {
   const container = document.getElementById("checklistContainer");
   const state = loadChecklistState();
-  let totalCount = 0;
-  let doneCount = 0;
 
-  HARBIN_CHECKLIST_DATA.forEach(cat => {
-    cat.items.forEach(item => {
-      totalCount++;
-      if (state[item.id]) doneCount++;
-    });
-  });
-
+  const allItems = getAllChecklistItemsFlat();
+  const totalCount = allItems.length;
+  const doneCount = allItems.filter(i => state[i.id]).length;
   const pendingCount = totalCount - doneCount;
   const percent = totalCount > 0 ? Math.round((doneCount / totalCount) * 100) : 0;
 
@@ -3599,31 +3600,27 @@ function renderChecklist() {
   if (!container) return;
   container.innerHTML = "";
 
-  HARBIN_CHECKLIST_DATA.forEach(cat => {
-    const visibleItems = cat.items.filter(item => {
-      const isDone = !!state[item.id];
-      if (checklistFilter === "pending") return !isDone;
-      if (checklistFilter === "done") return isDone;
-      return true;
-    });
+  // 1. Render Shared Items Section
+  const sharedItems = HARBIN_CHECKLIST_DATA.shared.items;
+  const visibleShared = sharedItems.filter(item => {
+    const isDone = !!state[item.id];
+    if (checklistFilter === "pending") return !isDone;
+    if (checklistFilter === "done") return isDone;
+    return true;
+  });
 
-    if (visibleItems.length === 0 && checklistFilter !== "all") {
-      return;
-    }
+  const sharedDone = sharedItems.filter(i => state[i.id]).length;
 
-    const catCard = document.createElement("div");
-    catCard.className = "checklist-category-card";
-
-    const catDoneCount = cat.items.filter(item => state[item.id]).length;
-    const catTotalCount = cat.items.length;
-
-    catCard.innerHTML = `
-      <div class="checklist-cat-header">
-        <span class="checklist-cat-title">${cat.category}</span>
-        <span class="checklist-cat-counter">${catDoneCount} / ${catTotalCount}</span>
+  if (visibleShared.length > 0 || checklistFilter === "all") {
+    const sharedCard = document.createElement("div");
+    sharedCard.className = "checklist-shared-card";
+    sharedCard.innerHTML = `
+      <div class="checklist-shared-header">
+        <span class="checklist-shared-title">${HARBIN_CHECKLIST_DATA.shared.title}</span>
+        <span class="checklist-shared-pill">พร้อม ${sharedDone} / ${sharedItems.length}</span>
       </div>
-      <div class="checklist-items-list">
-        ${visibleItems.map(item => {
+      <div class="checklist-items-list" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:6px;">
+        ${visibleShared.map(item => {
           const isChecked = !!state[item.id];
           return `
             <label class="checklist-item ${isChecked ? 'checked' : ''}" data-id="${item.id}">
@@ -3635,9 +3632,49 @@ function renderChecklist() {
         }).join("")}
       </div>
     `;
+    container.appendChild(sharedCard);
+  }
 
-    container.appendChild(catCard);
+  // 2. Render 2-Column Split for Personal Items (Rangsan & Sunisa)
+  const twoColGrid = document.createElement("div");
+  twoColGrid.className = "checklist-two-col-grid";
+
+  ["rangsan", "sunisa"].forEach(key => {
+    const person = HARBIN_CHECKLIST_DATA.personal[key];
+    const visiblePersonal = person.items.filter(item => {
+      const isDone = !!state[item.id];
+      if (checklistFilter === "pending") return !isDone;
+      if (checklistFilter === "done") return isDone;
+      return true;
+    });
+
+    const personDone = person.items.filter(i => state[i.id]).length;
+
+    const col = document.createElement("div");
+    col.className = `cl-person-column ${person.themeClass}`;
+    col.innerHTML = `
+      <div class="cl-person-header">
+        <span class="cl-person-name">${person.name}</span>
+        <span class="cl-person-progress-pill">พร้อม ${personDone} / ${person.items.length}</span>
+      </div>
+      <div class="checklist-items-list">
+        ${visiblePersonal.map(item => {
+          const isChecked = !!state[item.id];
+          return `
+            <label class="checklist-item ${isChecked ? 'checked' : ''}" data-id="${item.id}">
+              <input type="checkbox" data-id="${item.id}" ${isChecked ? 'checked' : ''}>
+              <span class="cl-item-text">${item.text}</span>
+              ${isChecked ? '<span class="cl-item-badge">✓ พร้อมแล้ว</span>' : ''}
+            </label>
+          `;
+        }).join("")}
+        ${visiblePersonal.length === 0 ? '<div style="font-size:0.75rem; color:#94a3b8; text-align:center; padding:12px 0;">ไม่มีรายการในหมวดนี้</div>' : ''}
+      </div>
+    `;
+    twoColGrid.appendChild(col);
   });
+
+  container.appendChild(twoColGrid);
 
   // Bind item change events
   container.querySelectorAll('input[type="checkbox"]').forEach(chk => {
@@ -3691,10 +3728,9 @@ function initChecklistModule() {
   // Check All Button
   document.getElementById("btnChecklistCheckAll")?.addEventListener("click", () => {
     const allState = {};
-    HARBIN_CHECKLIST_DATA.forEach(cat => {
-      cat.items.forEach(item => {
-        allState[item.id] = true;
-      });
+    const allItems = getAllChecklistItemsFlat();
+    allItems.forEach(item => {
+      allState[item.id] = true;
     });
     saveChecklistState(allState);
     renderChecklist();
