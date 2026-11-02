@@ -1584,6 +1584,19 @@ body.is-dragging .timeline-dropzone .drop-hint {
   border-color: #0f172a;
 }
 
+.map-quick-pill-btn.sat-btn.active {
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  color: #38bdf8;
+  border-color: #38bdf8;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+}
+
+.map-quick-pill-btn.sat-btn.active:hover {
+  background: #0284c7;
+  color: #ffffff;
+  border-color: #0369a1;
+}
+
 .map-floating-fullscreen-btn {
   margin-left: auto;
 }

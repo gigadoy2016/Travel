@@ -132,6 +132,7 @@ let draggedPayload = null; // { source: 'chooses' | 'timeline', spotId?, dayKey?
 // Map State
 let map = null;
 let tileLayerInstance = null;
+let satelliteOverlayInstance = null;
 let currentMapLayerKey = "amap_en_hybrid";
 let markerLayerGroup = null;
 let routeLayerGroup = null;
@@ -2058,6 +2059,10 @@ function setMapTileLayer(layerKey) {
   if (tileLayerInstance) {
     map.removeLayer(tileLayerInstance);
   }
+  if (satelliteOverlayInstance) {
+    map.removeLayer(satelliteOverlayInstance);
+    satelliteOverlayInstance = null;
+  }
 
   tileLayerInstance = L.tileLayer(cfg.baseUrl, {
     subdomains: cfg.subdomains,
@@ -2065,8 +2070,32 @@ function setMapTileLayer(layerKey) {
     attribution: cfg.attribution
   }).addTo(map);
 
+  // If satellite mode, add transparent hybrid road lines & labels on top
+  if (layerKey === "amap_sat_en") {
+    satelliteOverlayInstance = L.tileLayer("https://wprd0{s}.is.autonavi.com/appmaptile?x={x}&y={y}&z={z}&lang=zh_en&size=1&scl=1&style=8", {
+      subdomains: "1234",
+      maxZoom: 18,
+      opacity: 0.92
+    }).addTo(map);
+  }
+
+  updateSatelliteButtonState();
   renderEnglishGeoLabels();
   renderMapMarkersAndRoute();
+}
+
+function updateSatelliteButtonState() {
+  const btn = document.getElementById("btnToggleSatellite");
+  const isSat = (currentMapLayerKey === "amap_sat_en");
+  if (btn) {
+    btn.classList.toggle("active", isSat);
+    btn.innerHTML = isSat ? `<span>🗺️</span> แผนที่ปกติ` : `<span>🛰️</span> ภาพดาวเทียม`;
+    btn.title = isSat ? "คลิกเพื่อสลับกลับเป็นแผนที่ถนนปกติ" : "คลิกเพื่อสลับเป็นโหมดแผนที่ภาพถ่ายดาวเทียม (Satellite)";
+  }
+  const select = document.getElementById("selectMapLayer");
+  if (select && select.value !== currentMapLayerKey) {
+    select.value = currentMapLayerKey;
+  }
 }
 
 function renderEnglishGeoLabels() {
@@ -2995,6 +3024,15 @@ function setupEventListeners() {
   });
   document.getElementById("btnQuickFitRoute")?.addEventListener("click", () => {
     fitCurrentTimelineRoute();
+  });
+  document.getElementById("btnToggleSatellite")?.addEventListener("click", () => {
+    if (currentMapLayerKey === "amap_sat_en") {
+      setMapTileLayer("amap_en_hybrid");
+      if (typeof showToast === "function") showToast("🗺️ สลับสู่โหมดแผนที่ปกติ (Road Map)");
+    } else {
+      setMapTileLayer("amap_sat_en");
+      if (typeof showToast === "function") showToast("🛰️ สลับสู่โหมดภาพถ่ายดาวเทียม (Satellite Hybrid)");
+    }
   });
 
   // Map Toolbar Controls
