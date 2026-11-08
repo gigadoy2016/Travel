@@ -5,8 +5,8 @@
 // - Sections 3 & 4: AMAP Harbin Interactive Map (English Labels, Pinning, Route Lines)
 // ============================================================================
 
-const STORAGE_KEY_TIMELINE = "harbin_planner_timeline_v9";
-const STORAGE_KEY_CUSTOM_SPOTS = "harbin_planner_custom_spots_v9";
+const STORAGE_KEY_TIMELINE = "harbin_planner_timeline_v11";
+const STORAGE_KEY_CUSTOM_SPOTS = "harbin_planner_custom_spots_v11";
 
 // Detail Markdown File Mapping (for the original 22 Harbin docs)
 const SPOT_MD_FILES = {
