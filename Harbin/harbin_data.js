@@ -1820,6 +1820,71 @@ const HARBIN_ATTRACTIONS = [
     ],
     descriptionTh: "LIZZY • Ritz Hotel on Harbin Central Street (哈尔滨大洋丽兹酒店 中央大街索菲亚教堂店) ตั้งอยู่ที่เลขที่ 19 ถนน West 3rd Street (西三道街19号) เขตเต้าหลี่ ติดกับถนนคนเดินจงหยาง ตกแต่งงดงามสไตล์พระราชวังยุโรปคลาสสิกผสานความทันสมัย เปิดใหม่ในปี 2024 เดินทางสะดวกมากทั้งการเดินเที่ยวถนนจงหยาง ตลาดเช้าหงจวน โบสถ์เซนต์โซเฟีย และริมแม่น้ำซงฮัว",
     descriptionEn: "LIZZY • Ritz Hotel on Harbin Central Street (哈尔滨大洋丽兹酒店) is a newly opened (2024) European palace-style boutique hotel at No. 19 West 3rd Street, right beside Central Street. Its unbeatable walkable location puts St. Sophia Cathedral, Hongzhuan Morning Market, and the frozen Songhua River within a 4 to 8-minute stroll."
+  },
+
+  {
+    id: 29,
+    nameTh: "หม้อไฟทะเลตักเอง หนิวฟู่กุ้ย (牛富贵 3F ถนนจงหยาง)",
+    nameZh: "牛富贵自选海鲜火锅 (中央大街潮人广场3F)",
+    pinyin: "Niú Fù Guì Zìxuǎn Hǎixiān Huǒguō",
+    nameEn: "Niu Fu Gui Seafood Hotpot (3F Chaoren Square, Central Street)",
+    category: "food_dining",
+    activityType: "eat",
+    defaultDuration: 90,
+    categoryLabelTh: "หม้อไฟทะเลตักเอง (มื้อค่ำ & ดึก)",
+    categoryLabelEn: "Seafood & Beef Buffet Hot Pot",
+    categoryColor: "#e11d48",
+    pastelBg: "#ffe4e6",
+    badgeColor: "#fecdd3",
+    doodleBorderColor: "#be123c",
+    doodleIcon: "🦀",
+    rating: 4.9,
+    ratingStars: "⭐⭐⭐⭐⭐",
+    ratingDescTh: "ร้านหม้อไฟทะเลตักเองยอดนิยมบนถนนคนเดินจงหยาง ชั้น 3 อาคารเฉาเหรินกวั่งฉ่าง (潮人广场 3F) คัดสรรกุ้ง หอย ปู ปลาสดใหม่ เนื้อวัวสไลซ์พรีเมียม น้ำซุปร้อนๆ และเครื่องดื่มบริการไม่อั้น เปิดยาวตั้งแต่ 11:00 น. ถึงตี 04:00 น.",
+    ratingDescEn: "Famous self-service seafood & beef hot pot restaurant on Central Street, 3F Chaoren Square. Premium seafood, thinly sliced beef, rich broths, open late 11:00 AM - 04:00 AM.",
+    coords: [45.7720, 126.6205],
+    image: "assets/places/harbin_29_niufugui_hotpot.jpg",
+    tags: ["牛富贵", "海鲜火锅", "潮人广场", "Niu Fu Gui", "Seafood Hotpot", "Central Street Hotpot"],
+    shortBulletsTh: [
+      "ตั้งอยู่ชั้น 3 อาคารเฉาเหรินกวั่งฉ่าง (Chaoren Square 3F / 潮人广场 3F) ใจกลางถนนคนเดินจงหยาง",
+      "เวลาเปิดบริการสุดสะดวก: 11:00 - 04:00 น. (เปิดถึงตี 4 รองรับมื้อค่ำและมื้อดึก)",
+      "ซีฟู้ดสดๆ ตักเองตามใจชอบ: กุ้ง หอย ปู ปลา หมึก เนื้อวัวสไลซ์นุ่ม และน้ำซุปร้อนคลายหนาว -20°C"
+    ],
+    shortBulletsEn: [
+      "Located on 3F Chaoren Square right on Central Street (中央大街潮人广场3楼)",
+      "Convenient opening hours: 11:00 AM - 04:00 AM (Late night dining in Harbin)",
+      "Self-service fresh seafood, prawns, crabs, clams, premium sliced beef, and warming winter broths"
+    ],
+    openingHoursTh: "ทุกวัน 11:00 - 04:00 น. (เปิดถึงตี 4 รองรับมื้อดึก)",
+    openingHoursEn: "Daily 11:00 - 04:00 (Open late until 4 AM)",
+    bestTimeTh: "20:00 - 22:30 น. (มื้อค่ำมื้อแรกหลังเดินทางถึงฮาร์บินและเช็คอินโรงแรม)",
+    bestTimeEn: "20:00 - 22:30 (Perfect warm dinner after checking in on Night 1)",
+    ticketPriceTh: "เฉลี่ย 88-128 หยวน/ท่าน (~450-650 บาท) ตักเองตามใจชอบ",
+    ticketPriceEn: "Average ~88-128 RMB per person (Self-selection hot pot buffet)",
+    transportTh: {
+      fromStation: "ตั้งอยู่บนถนนคนเดินจงหยาง (อาคารเฉาเหรินกวั่งฉ่าง ชั้น 3) เดินจากโรงแรม LIZZY • Ritz Hotel เพียง 3 นาที (~250 ม.)",
+      fromAirport: "นั่งแท็กซี่/DiDi มาลงถนนจงหยาง (~45 นาที)",
+      inside: "ขึ้นลิฟต์มาที่ชั้น 3 (3F) บรรยากาศกว้างขวาง อบอุ่น มีเคาน์เตอร์บาร์น้ำจิ้มและสเตชั่นซีฟู้ดสดใหม่"
+    },
+    transportEn: {
+      fromStation: "Located on Central Street (3F Chaoren Square); only a 3-minute walk (~250m) from LIZZY • Ritz Hotel",
+      fromAirport: "Taxi / DiDi ~45 mins from HRB Airport T2",
+      inside: "Take elevator to 3F; spacious heated dining hall, sauce bar, and extensive fresh seafood stations"
+    },
+    highlightsTh: [
+      "ป้ายร้านไฟนีออนสีแดงทองโดดเด่น: '海鲜 牛富贵 火锅 3F' บนถนนคนเดินจงหยาง",
+      "หม้อไฟสไตล์ตักเอง เลือกวัตถุดิบอาหารทะเลและเนื้อสัตว์สดๆ ได้ตามใจชอบ",
+      "น้ำซุปร้อนเดือดปุดๆ ให้ความอบอุ่นสะใจหลังเผชิญความหนาวเหน็บภายนอก",
+      "ทำเลสุดสะดวก เดินจากโรงแรม LIZZY • Ritz Hotel และร้านไอศกรีมหม่าเตี๋ยเอ่อร์เพียง 2-3 นาที"
+    ],
+    highlightsEn: [
+      "Prominent red & gold illuminated facade: '海鲜 牛富贵 火锅 3F' on Central Street",
+      "Self-selection style: choose your favorite fresh seafood and premium meats",
+      "Boiling hot broths providing instant comfort against Harbin's sub-zero winter temperatures",
+      "Superb location: just a 2-3 minute stroll from LIZZY • Ritz Hotel and Madieer Popsicles"
+    ],
+    descriptionTh: "ร้านหม้อไฟทะเลตักเอง หนิวฟู่กุ้ย (牛富贵海鲜火锅) ตั้งอยู่บนชั้น 3 ของอาคารเฉาเหรินกวั่งฉ่าง (潮人广场 3F) ริมถนนคนเดินหินร้อยปีจงหยาง เป็นร้านยอดนิยมสำหรับผู้ที่ชื่นชอบอาหารทะเลและเนื้อวัวสไลซ์ในหม้อไฟร้อนๆ จุดเด่นคือการเลือกตักวัตถุดิบสดใหม่ได้เองตามใจชอบ มีน้ำซุปหลากหลายให้เลือก และเปิดบริการยาวนานถึงตี 4 (11:00 - 04:00 น.) จึงเหมาะอย่างยิ่งสำหรับเป็นมื้อค่ำคืนแรกหลังเช็คอินเข้าที่พักถนนจงหยาง",
+    descriptionEn: "Niu Fu Gui Seafood Hotpot (牛富贵海鲜火锅) is a popular self-selected seafood and hot pot establishment on the 3rd floor of Chaoren Square along Harbin's Central Street. Featuring an extensive selection of fresh seafood, quality beef, customizable sauces, and hearty broths, it opens until 4:00 AM—making it the ideal cozy culinary kickoff for Night 1 in Harbin."
   }
 ];
 
@@ -1829,8 +1894,8 @@ const DEFAULT_HARBIN_TIMELINE = {
   day1: {
     labelTh: "Day 1 (4 ธ.ค.)",
     labelEn: "Day 1 (Dec 4)",
-    titleTh: "Bangkok (BKK) ➔ เซี่ยงไฮ้ (PVG) ➔ ฮาร์บิน (HRB) • เช็คอิน LIZZY • Ritz Hotel ถนนจงหยาง (คืนที่ 1)",
-    titleEn: "Bangkok (BKK) ➔ Shanghai (PVG) ➔ Harbin (HRB) • Check-in LIZZY • Ritz Hotel Central St. (Night 1)",
+    titleTh: "Bangkok (BKK) ➔ เซี่ยงไฮ้ (PVG) ➔ ฮาร์บิน (HRB) • เช็คอิน LIZZY • Ritz Hotel • หม้อไฟทะเลตักเองหนิวฟู่กุ้ย (คืนที่ 1)",
+    titleEn: "Bangkok (BKK) ➔ Shanghai (PVG) ➔ Harbin (HRB) • LIZZY • Ritz Hotel • Niu Fu Gui Hotpot (Night 1)",
     items: [
       {
         uid: "d1-bkk",
@@ -1912,15 +1977,15 @@ const DEFAULT_HARBIN_TIMELINE = {
       },
       {
         uid: "d1-4",
-        spotId: 25,
-        customNameTh: "หม้อไฟทองเหลืองตงเป่ย (มื้อค่ำคลายหนาว)",
-        customNameEn: "Dongbei Copper Pot Hot Pot Dinner",
+        spotId: 29,
+        customNameTh: "หม้อไฟทะเลตักเอง หนิวฟู่กุ้ย (มื้อค่ำคืนแรก · ชั้น 3 อาคารเฉาเหรินกวั่งฉ่าง ถนนจงหยาง)",
+        customNameEn: "Niu Fu Gui Seafood Hotpot (Dinner Night 1 · 3F Chaoren Square, Central Street)",
         time: "20:30",
-        timeLabel: "20:30 - 21:45 น.",
-        duration: 75,
+        timeLabel: "20:30 - 22:00 น.",
+        duration: 90,
         actType: "eat",
-        noteTh: "มื้อค่ำหม้อไฟทองเหลืองตงเป่ย เนื้อแกะสไลซ์และซุปผักกาดดองร้อนๆ คลายหนาว",
-        noteEn: "Warming Dongbei charcoal copper pot hot pot dinner"
+        noteTh: "มื้อค่ำมื้อแรกที่ฮาร์บิน: ร้านหม้อไฟทะเลตักเองหนิวฟู่กุ้ย (牛富贵海鲜火锅) ชั้น 3 อาคารเฉาเหรินกวั่งฉ่าง บนถนนคนเดินจงหยาง อาหารทะเลสดๆ เนื้อวัวเกรดพรีเมียม และน้ำซุปร้อนๆ คลายหนาว เปิดบริการยาวถึงตี 4 (11:00-04:00 น.)",
+        noteEn: "First night dinner: Niu Fu Gui self-selected seafood & beef hot pot on 3F Chaoren Square, Zhongyang Street. Fresh seafood, premium beef, rich warming broths (Open 11:00-04:00 AM)"
       },
       {
         uid: "d1-hotel-night1",
@@ -1931,16 +1996,16 @@ const DEFAULT_HARBIN_TIMELINE = {
         timeLabel: "22:00 น. (พักคืนที่ 1)",
         duration: 60,
         actType: "visit",
-        noteTh: "🏨 เดินกลับเข้าโรงแรม LIZZY • Ritz Hotel on Harbin Central Street (哈尔滨大洋丽兹酒店 · 道里区西三道街19号) พักผ่อนอย่างอบอุ่น · 🛌 พักค้างคืนที่ 1 (4 ธ.ค. 2026)",
-        noteEn: "Walk back to LIZZY • Ritz Hotel on Harbin Central Street (No. 19 West 3rd St) for a warm night's rest · Overnight Stay Night 1 (Dec 4)"
+        noteTh: "🏨 เดินจากร้านหนิวฟู่กุ้ยกลับโรงแรม LIZZY • Ritz Hotel (西三道街19号) เพียง ~3 นาที พักผ่อนอย่างอบอุ่น · 🛌 พักค้างคืนที่ 1 (4 ธ.ค. 2026)",
+        noteEn: "Walk 3 mins back to LIZZY • Ritz Hotel on Harbin Central Street (No. 19 West 3rd St) · Overnight Stay Night 1 (Dec 4)"
       }
     ]
   },
   day2: {
     labelTh: "Day 2 (5 ธ.ค.)",
     labelEn: "Day 2 (Dec 5)",
-    titleTh: "เริ่มจาก LIZZY • Ritz Hotel ➔ ตลาดเช้าหงจวน • โบสถ์เซนต์โซเฟีย • หัวเหมย • ริมน้ำซงฮัว ➔ กลับพัก LIZZY • Ritz Hotel (คืนที่ 2)",
-    titleEn: "Start at LIZZY • Ritz Hotel ➔ Morning Market • St. Sophia • Huamei • Songhua River ➔ LIZZY • Ritz Hotel (Night 2)",
+    titleTh: "เริ่มจาก LIZZY • Ritz Hotel ➔ ตลาดเช้าหงจวน • โบสถ์เซนต์โซเฟีย • หัวเหมย • ริมน้ำซงฮัว ➔ หม้อไฟทองเหลืองตงเป่ย ➔ กลับพัก LIZZY • Ritz Hotel (คืนที่ 2)",
+    titleEn: "Start at LIZZY • Ritz Hotel ➔ Morning Market • St. Sophia • Huamei • Songhua River ➔ Dongbei Copper Pot Hot Pot ➔ LIZZY • Ritz Hotel (Night 2)",
     items: [
       {
         uid: "d2-hotel-start",
@@ -2015,12 +2080,24 @@ const DEFAULT_HARBIN_TIMELINE = {
         noteEn: "Play on the frozen Songhua River Ice Carnival and walk to Binzhou Railway Bridge at sunset"
       },
       {
+        uid: "d2-dinner-hotpot",
+        spotId: 25,
+        customNameTh: "หม้อไฟทองเหลืองตงเป่ย & เนื้อแกะสไลซ์ (Dongbei Copper Pot Hot Pot & Spring Pancakes)",
+        customNameEn: "Dongbei Copper Pot Hot Pot Dinner (Dongbei Copper Pot Hot Pot & Spring Pancakes)",
+        time: "17:45",
+        timeLabel: "17:45 - 19:15 น.",
+        duration: 90,
+        actType: "eat",
+        noteTh: "มื้อค่ำหม้อไฟทองเหลืองถ่านไม้ตงเป่ยดั้งเดิม ซุปผักกาดดองร้อนๆ ลวกเนื้อแกะสไลซ์และทานคู่แผ่นแป้งชุนปิ่ง (Dongbei Copper Pot Hot Pot & Spring Pancakes) เติมพลังความอุ่นหลังเดินชมพระอาทิตย์ตกแม่น้ำซงฮัว",
+        noteEn: "Warm up with traditional charcoal brass chimney hot pot, pickled cabbage broth, tender sliced lamb & spring pancakes"
+      },
+      {
         uid: "d2-hotel",
         spotId: 28,
         customNameEn: "LIZZY • Ritz Hotel on Harbin Central Street (Return & Stay Night 2)",
         customNameTh: "กลับเข้าที่พัก LIZZY • Ritz Hotel ถนนจงหยาง (พักค้างคืนที่ 2 · จัดกระเป๋าไป Snow Town)",
-        time: "18:30",
-        timeLabel: "18:30 น. (พักคืนที่ 2)",
+        time: "19:30",
+        timeLabel: "19:30 น. (พักคืนที่ 2)",
         duration: 120,
         actType: "visit",
         noteTh: "🏨 เดินกลับโรงแรม LIZZY • Ritz Hotel (道里区西三道街19号) · 💡 เคล็ดลับ: จัดกระเป๋าใบเล็กสำหรับไปนอน Snow Town 2 คืน และเตรียมฝากกระเป๋าเดินทางใบใหญ่ไว้ที่เคาน์เตอร์โรงแรมในเช้าวันรุ่งขึ้น · 🛌 พักค้างคืนที่ 2 (5 ธ.ค. 2026)",

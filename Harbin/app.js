@@ -5,8 +5,8 @@
 // - Sections 3 & 4: AMAP Harbin Interactive Map (English Labels, Pinning, Route Lines)
 // ============================================================================
 
-const STORAGE_KEY_TIMELINE = "harbin_planner_timeline_v8";
-const STORAGE_KEY_CUSTOM_SPOTS = "harbin_planner_custom_spots_v8";
+const STORAGE_KEY_TIMELINE = "harbin_planner_timeline_v9";
+const STORAGE_KEY_CUSTOM_SPOTS = "harbin_planner_custom_spots_v9";
 
 // Detail Markdown File Mapping (for the original 22 Harbin docs)
 const SPOT_MD_FILES = {
@@ -55,7 +55,8 @@ const SPOT_LOCAL_IMGS = {
   16: "assets/places/harbin_16_provincial_museum.jpg",
   17: "assets/places/harbin_17_dragon_tower.jpg",
   18: "assets/places/harbin_18_beer_museum.jpg",
-  19: "assets/places/harbin_19_music_park.jpg"
+  19: "assets/places/harbin_19_music_park.jpg",
+  29: "assets/places/harbin_29_niufugui_hotpot.jpg"
 };
 
 // English Geographic Landmarks Overlay for AMAP Harbin Map
@@ -956,7 +957,7 @@ const HARBIN_TRANSIT_HUBS = [
     nameZh: "中央大街地铁站 (2号线)",
     lineTh: "รถไฟใต้ดินสาย 2 (Metro Line 2)",
     coords: [45.7689, 126.6188],
-    spotIds: [2, 15, 22, 24, 25]
+    spotIds: [2, 15, 22, 24, 25, 29]
   },
   {
     id: "metro_renmin",
