@@ -55,13 +55,16 @@
       <button id="btnViewFlightTicket" class="btn-action flight-btn" title="ดูรูปตารางบินจริงจากโฟลเดอร์ 1 (1/S__27820034.jpg)">
         <span>✈️</span> ตารางบิน (Flight Ticket)
       </button>
-      <button id="btnAddCustomModal" class="btn-action primary" title="Add Custom Walking / Dining / Sightseeing Activity">
+      <span class="header-badge" style="background:#e0f2fe; color:#0369a1; border:1px solid #bae6fd; font-weight:800; cursor:default;" title="โหมดแสดงผลสาธารณะ (เปิดดูอย่างเดียว ปิดการแก้ไข)">
+        👁️ View Only
+      </span>
+      <button id="btnAddCustomModal" class="btn-action primary" title="Add Custom Walking / Dining / Sightseeing Activity" style="display:none;">
         <span>➕</span> เพิ่มกิจกรรม / ปักหมุดใหม่
       </button>
-      <button id="btnAutoTime" class="btn-action" title="Recalculate sequential times automatically">
+      <button id="btnAutoTime" class="btn-action" title="Recalculate sequential times automatically" style="display:none;">
         <span>⏱️</span> จัดเวลาอัตโนมัติ
       </button>
-      <button id="btnResetDay" class="btn-action" title="Reset timeline to default plan with flights">
+      <button id="btnResetDay" class="btn-action" title="Reset timeline to default plan with flights" style="display:none;">
         <span>🔄</span> รีเซ็ตแผนเริ่มต้น
       </button>
       <a href="Plan_05_Harbin.md" target="_blank" class="btn-action link" title="Open Full 6-Day Plan Markdown">
@@ -101,7 +104,7 @@
           <button type="button" class="btn-ph-action" id="btnInlineChecklist" style="background:#e0f2fe; color:#0369a1; border-color:#bae6fd; font-weight:700;" title="เปิดเช็คลิสต์เตรียมตัวเดินทางสำหรับ 2 ท่าน">📋 Checklist</button>
           <button type="button" class="btn-ph-action" id="btnInlineExportXlsx" style="background:#dcfce7; color:#166534; border-color:#86efac; font-weight:800;" title="Export ตารางการเดินทางและรายการสถานที่ทั้งหมดเป็นไฟล์ Excel (.xlsx)">📊 .xlsx</button>
           <button type="button" class="btn-ph-action flight" id="btnInlineFlight" title="ดูรูปตั๋วเครื่องบินจริง (Folder 1)">✈️ ตั๋วบิน</button>
-          <button type="button" class="btn-ph-action" id="btnAddDay" title="เพิ่มวันใหม่ในแผนการเดินทาง">+ วัน</button>
+          <button type="button" class="btn-ph-action" id="btnAddDay" title="เพิ่มวันใหม่ในแผนการเดินทาง" style="display:none;">+ วัน</button>
         </div>
       </div>
 
@@ -142,8 +145,8 @@
           <button type="button" class="col2-mode-btn active" id="btnCol2ModeDetail" title="ดูรายละเอียดสถานที่ การเดินทางจากจุดก่อนหน้า รูปภาพ และลิงก์ค้นหาเพิ่ม">
             📋 รายละเอียดจุดที่เลือก
           </button>
-          <button type="button" class="col2-mode-btn" id="btnCol2ModeChooses" title="เปิดคลังสถานที่ 28 แห่งเพื่อลากแทรกเข้าแผนการเดินทาง">
-            ➕ เพิ่มสถานที่ (<span id="choosesCountBadge">28</span>)
+          <button type="button" class="col2-mode-btn" id="btnCol2ModeChooses" title="เปิดคลังสถานที่ 28 แห่งเพื่อดูรายละเอียดและหมุด">
+            🏛️ คลังสถานที่ (<span id="choosesCountBadge">28</span>)
           </button>
         </div>
       </div>
@@ -153,10 +156,10 @@
         <!-- Populated dynamically by renderSelectedTimelineDetail() in app.js -->
       </div>
 
-      <!-- PANE B (OPTIONAL TOGGLE): CHOOSES LIBRARY FOR DRAGGING NEW PLACES INTO COLUMN 1 -->
+      <!-- PANE B (OPTIONAL TOGGLE): CHOOSES LIBRARY FOR BROWSING PLACES -->
       <div class="col2-chooses-pane" id="col2ChoosesPane" hidden>
         <div class="col-header chooses-sub-header">
-          <p class="col-subtitle">ลาก (Drag &amp; Drop) การ์ดสถานที่ไปวางแทรกใน <strong>① แผนการเดินทาง</strong> หรือกดปุ่ม <strong>+แทรกคิว</strong></p>
+          <p class="col-subtitle">คลิกที่การ์ดเพื่อดูข้อมูล หรือกดปุ่ม <strong>📍 Map</strong> เพื่อดูตำแหน่งบนแผนที่ AMAP</p>
 
           <!-- Search Box inside Column 2 -->
           <div class="chooses-search-row">
@@ -237,8 +240,8 @@
 
           <!-- Map Interactive Controls (All in English for Map Usability) -->
           <div class="map-toolbar">
-            <!-- Pin Mode Toggle (ปักหมุดบนแผนที่ได้) -->
-            <button id="btnPinMode" class="map-tool-btn pin-mode-btn" title="Click anywhere on the map to drop a new custom pin in Harbin">
+            <!-- Pin Mode Toggle (ปักหมุดบนแผนที่ได้ - ซ่อนในโหมด View Only) -->
+            <button id="btnPinMode" class="map-tool-btn pin-mode-btn" title="Click anywhere on the map to drop a new custom pin in Harbin" style="display:none;">
               <span>📌</span> Pin Mode: OFF
             </button>
 

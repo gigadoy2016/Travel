@@ -613,12 +613,7 @@ html, body {
   font-size: 13px;
   line-height: 1.35;
   padding-top: 1px;
-  cursor: pointer;
-}
-
-.tl-row .t:hover {
-  color: #e4572e;
-  text-decoration: underline;
+  cursor: default;
 }
 
 .tl-row .n {

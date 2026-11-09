@@ -7,6 +7,7 @@
 
 const STORAGE_KEY_TIMELINE = "harbin_planner_timeline_v11";
 const STORAGE_KEY_CUSTOM_SPOTS = "harbin_planner_custom_spots_v11";
+const IS_READ_ONLY = true; // Public View-Only Mode: Disables edits, deletes, drag-and-drop, and pin additions
 
 // Detail Markdown File Mapping (for the original 22 Harbin docs)
 const SPOT_MD_FILES = {
@@ -602,43 +603,50 @@ function renderTimelineSection() {
 
       const row = document.createElement("div");
       row.className = `tl-row ${isSelectedRow ? "active-selected" : ""}`;
-      row.draggable = true;
+      row.draggable = !IS_READ_ONLY;
       row.dataset.dayKey = dayKey;
       row.dataset.index = index;
       row.dataset.uid = item.uid;
 
-      row.innerHTML = `
-        <span class="t" title="คลิกเพื่อเปลี่ยนเวลา">${item.time || "09:00"}</span>
-        <span class="n">${displayTitleHtml}</span>
-        <button type="button" class="edit-btn" title="แก้ไขรายละเอียด">✎</button>
-        <button type="button" class="x" title="เอาออก">×</button>
-      `;
+      if (IS_READ_ONLY) {
+        row.innerHTML = `
+          <span class="t" style="cursor:default;" title="${item.time || "09:00"}">${item.time || "09:00"}</span>
+          <span class="n">${displayTitleHtml}</span>
+        `;
+      } else {
+        row.innerHTML = `
+          <span class="t" title="คลิกเพื่อเปลี่ยนเวลา">${item.time || "09:00"}</span>
+          <span class="n">${displayTitleHtml}</span>
+          <button type="button" class="edit-btn" title="แก้ไขรายละเอียด">✎</button>
+          <button type="button" class="x" title="เอาออก">×</button>
+        `;
 
-      // Click time (.t) -> prompt for quick time change (just like Downloads/index.html)
-      row.querySelector(".t").addEventListener("click", e => {
-        e.stopPropagation();
-        const v = prompt("เวลา (HH:MM)", item.time || "09:00");
-        if (v && /^\d{1,2}:\d{2}$/.test(v.trim())) {
-          const formatted = v.trim().padStart(5, "0");
-          item.time = formatted;
-          const endMins = timeToMinutes(formatted) + Number(item.duration || 60);
-          item.timeLabel = `${formatted} - ${minutesToTime(endMins)} น.`;
-          saveState();
-          renderAll();
-        }
-      });
+        // Click time (.t) -> prompt for quick time change (just like Downloads/index.html)
+        row.querySelector(".t").addEventListener("click", e => {
+          e.stopPropagation();
+          const v = prompt("เวลา (HH:MM)", item.time || "09:00");
+          if (v && /^\d{1,2}:\d{2}$/.test(v.trim())) {
+            const formatted = v.trim().padStart(5, "0");
+            item.time = formatted;
+            const endMins = timeToMinutes(formatted) + Number(item.duration || 60);
+            item.timeLabel = `${formatted} - ${minutesToTime(endMins)} น.`;
+            saveState();
+            renderAll();
+          }
+        });
 
-      // Click edit button (.edit-btn) -> open full edit modal
-      row.querySelector(".edit-btn").addEventListener("click", e => {
-        e.stopPropagation();
-        openEditTimelineModal(index, dayKey);
-      });
+        // Click edit button (.edit-btn) -> open full edit modal
+        row.querySelector(".edit-btn").addEventListener("click", e => {
+          e.stopPropagation();
+          openEditTimelineModal(index, dayKey);
+        });
 
-      // Click remove button (.x) -> remove item from day
-      row.querySelector(".x").addEventListener("click", e => {
-        e.stopPropagation();
-        removeTimelineItem(index, dayKey);
-      });
+        // Click remove button (.x) -> remove item from day
+        row.querySelector(".x").addEventListener("click", e => {
+          e.stopPropagation();
+          removeTimelineItem(index, dayKey);
+        });
+      }
 
       // Click row -> select this item to show full Detail & Transit in Column 2 + focus on map
       row.addEventListener("click", () => {
@@ -657,63 +665,67 @@ function renderTimelineSection() {
       row.addEventListener("mousemove", moveFloatingTip);
       row.addEventListener("mouseleave", hideFloatingTip);
 
-      // Drag start on timeline row
-      row.addEventListener("dragstart", e => {
-        hideFloatingTip();
-        draggedPayload = {
-          source: "timeline",
-          dayKey,
-          timelineIndex: index,
-          uid: item.uid
-        };
-        e.dataTransfer.effectAllowed = "move";
-        e.dataTransfer.setData("text/plain", JSON.stringify(draggedPayload));
-      });
+      if (!IS_READ_ONLY) {
+        // Drag start on timeline row
+        row.addEventListener("dragstart", e => {
+          hideFloatingTip();
+          draggedPayload = {
+            source: "timeline",
+            dayKey,
+            timelineIndex: index,
+            uid: item.uid
+          };
+          e.dataTransfer.effectAllowed = "move";
+          e.dataTransfer.setData("text/plain", JSON.stringify(draggedPayload));
+        });
 
-      row.addEventListener("dragend", () => {
-        draggedPayload = null;
-        clearDragOverStates();
-      });
+        row.addEventListener("dragend", () => {
+          draggedPayload = null;
+          clearDragOverStates();
+        });
 
-      // Drag over row -> show orange top insertion line (.before)
-      row.addEventListener("dragover", e => {
-        e.preventDefault();
-        e.stopPropagation();
-        clearDragOverStates();
-        row.classList.add("before");
-      });
+        // Drag over row -> show orange top insertion line (.before)
+        row.addEventListener("dragover", e => {
+          e.preventDefault();
+          e.stopPropagation();
+          clearDragOverStates();
+          row.classList.add("before");
+        });
 
-      // Drop onto row -> insert before this row
-      row.addEventListener("drop", e => {
-        e.preventDefault();
-        e.stopPropagation();
-        clearDragOverStates();
-        handleDropAtTimelineIndex(index, dayKey);
-      });
+        // Drop onto row -> insert before this row
+        row.addEventListener("drop", e => {
+          e.preventDefault();
+          e.stopPropagation();
+          clearDragOverStates();
+          handleDropAtTimelineIndex(index, dayKey);
+        });
+      }
 
       listEl.appendChild(row);
     });
 
     dayEl.appendChild(listEl);
 
-    // Drag over Day container -> show dashed outline (.over) and drop at end of day
-    dayEl.addEventListener("dragover", e => {
-      e.preventDefault();
-      clearDragOverStates();
-      dayEl.classList.add("over");
-    });
+    if (!IS_READ_ONLY) {
+      // Drag over Day container -> show dashed outline (.over) and drop at end of day
+      dayEl.addEventListener("dragover", e => {
+        e.preventDefault();
+        clearDragOverStates();
+        dayEl.classList.add("over");
+      });
 
-    dayEl.addEventListener("dragleave", e => {
-      if (!dayEl.contains(e.relatedTarget)) {
-        dayEl.classList.remove("over");
-      }
-    });
+      dayEl.addEventListener("dragleave", e => {
+        if (!dayEl.contains(e.relatedTarget)) {
+          dayEl.classList.remove("over");
+        }
+      });
 
-    dayEl.addEventListener("drop", e => {
-      e.preventDefault();
-      clearDragOverStates();
-      handleDropAtTimelineIndex(items.length, dayKey);
-    });
+      dayEl.addEventListener("drop", e => {
+        e.preventDefault();
+        clearDragOverStates();
+        handleDropAtTimelineIndex(items.length, dayKey);
+      });
+    }
 
     container.appendChild(dayEl);
   });
@@ -1925,7 +1937,7 @@ function renderChoosesSection() {
 
     const card = document.createElement("div");
     card.className = `choose-card ${isInQueue ? "in-timeline" : ""}`;
-    card.draggable = true;
+    card.draggable = !IS_READ_ONLY;
     card.dataset.spotId = spot.id;
 
     const fallbackImg = SPOT_LOCAL_IMGS[spot.id] || spot.image;
@@ -1949,9 +1961,11 @@ function renderChoosesSection() {
           </div>
         </div>
         <div class="choose-actions-row">
-          <button class="btn-choose-insert" data-action="insert" title="แทรกเข้า Timeline ตามตำแหน่งคิวที่เลือก">
-            ➕ แทรกคิว (Insert)
-          </button>
+          ${!IS_READ_ONLY ? `
+            <button class="btn-choose-insert" data-action="insert" title="แทรกเข้า Timeline ตามตำแหน่งคิวที่เลือก">
+              ➕ แทรกคิว (Insert)
+            </button>
+          ` : ""}
           <button class="btn-choose-mini" data-action="pin-map" title="ดูหมุดบนแผนที่ AMAP">
             📍 Map
           </button>
@@ -1962,22 +1976,24 @@ function renderChoosesSection() {
       </div>
     `;
 
-    // Drag events from Section 2 (Chooses) to Section 1 (Timeline)
-    card.addEventListener("dragstart", e => {
-      hideFloatingTip();
-      draggedPayload = {
-        source: "chooses",
-        spotId: spot.id
-      };
-      document.body.classList.add("is-dragging");
-      e.dataTransfer.effectAllowed = "copyMove";
-      e.dataTransfer.setData("text/plain", JSON.stringify(draggedPayload));
-    });
+    if (!IS_READ_ONLY) {
+      // Drag events from Section 2 (Chooses) to Section 1 (Timeline)
+      card.addEventListener("dragstart", e => {
+        hideFloatingTip();
+        draggedPayload = {
+          source: "chooses",
+          spotId: spot.id
+        };
+        document.body.classList.add("is-dragging");
+        e.dataTransfer.effectAllowed = "copyMove";
+        e.dataTransfer.setData("text/plain", JSON.stringify(draggedPayload));
+      });
 
-    card.addEventListener("dragend", () => {
-      document.body.classList.remove("is-dragging");
-      clearDragOverStates();
-    });
+      card.addEventListener("dragend", () => {
+        document.body.classList.remove("is-dragging");
+        clearDragOverStates();
+      });
+    }
 
     card.addEventListener("mouseenter", e => {
       showFloatingTip(e, spot, {
@@ -2043,12 +2059,14 @@ function initMap() {
 
   // Click on map when Pin Mode is active -> Drop custom pin at that location!
   map.on("click", e => {
+    if (IS_READ_ONLY) return;
     if (!isPinModeActive) return;
     handleMapPinClick(e.latlng);
   });
 
-  // Right-click (contextmenu) anywhere on map also lets user drop a custom pin!
+  // Right-click (contextmenu) anywhere on map
   map.on("contextmenu", e => {
+    if (IS_READ_ONLY) return;
     handleMapPinClick(e.latlng);
   });
 }
@@ -2716,6 +2734,7 @@ function togglePinMode(forceState) {
 }
 
 function handleMapPinClick(latlng) {
+  if (IS_READ_ONLY) return;
   togglePinMode(false);
   openCustomActivityModal({
     lat: Number(latlng.lat.toFixed(4)),
