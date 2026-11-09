@@ -1523,7 +1523,7 @@ function renderSelectedTimelineDetail() {
     const activeModeKey = multiModalBundle.activeMode;
 
     if (item.isFlightStep) {
-      transitArrowSummary = `⬇ เที่ยวบินตามตาราง (Booking: 1622932337344364) + คลิกเลือกวิธีเดินทางจากสนามบินฮาร์บิน T2 เข้าที่พักด้านล่าง`;
+      transitArrowSummary = `⬇ เที่ยวบินตามตาราง (Trip.com Booking: Confirmed ✅) + คลิกเลือกวิธีเดินทางจากสนามบินฮาร์บิน T2 เข้าที่พักด้านล่าง`;
     } else if (effDistKm <= 0.45) {
       const meters = Math.max(50, Math.round(effDistKm * 1000));
       transitArrowSummary = `⬇ ห่างกันเพียง ~${meters} เมตร (คลิกเลือกวิธีเดินทางด้านล่างเพื่อแสดงเส้นทางแยกช่วงบนแผนที่)`;
@@ -3329,7 +3329,7 @@ function exportTripToXlsx() {
       // Build itemized transit steps (แยกเป็นข้อๆ 1, 2, 3)
       let transitStepsList = "";
       if (item.isFlightStep) {
-        transitStepsList = `1) ✈️ เที่ยวบินตามตาราง (Booking: 1622932337344364)\n2) 🚌 เข้าเมืองด้วย Airport Bus สาย 3 ลงถนนจงหยาง (20 หยวน) หรือ 🚕 DiDi (~45 นาที)`;
+        transitStepsList = `1) ✈️ เที่ยวบินตามตาราง (Trip.com Booking: Confirmed ✅)\n2) 🚌 เข้าเมืองด้วย Airport Bus สาย 3 ลงถนนจงหยาง (20 หยวน) หรือ 🚕 DiDi (~45 นาที)`;
       } else {
         const bundle = buildMultiModalPlansForStop(
           prevGlobalItem || { spotId: 11 },
@@ -3481,7 +3481,7 @@ function exportTripToXlsx() {
 }
 
 // ============================================================================
-// CHECKLIST INTERACTIVE MODULE (สำหรับ คุณรังสรรค์ & คุณสุนิสา)
+// CHECKLIST INTERACTIVE MODULE (สำหรับ ผู้เดินทาง 2 ท่าน · 2 Travelers)
 // ============================================================================
 const HARBIN_CHECKLIST_STORAGE_KEY = "harbin_travel_checklist_state_v2";
 
@@ -3489,7 +3489,7 @@ const HARBIN_CHECKLIST_DATA = {
   shared: {
     title: "🤝 ของใช้ร่วมกัน & ภารกิจส่วนกลาง (Shared Items)",
     items: [
-      { id: "sh_flight", text: "ใบยืนยันตั๋วเครื่องบินไป-กลับ (Trip.com Booking: 1622932337344364) พิมพ์สำรอง 1 ชุด" },
+      { id: "sh_flight", text: "ใบยืนยันตั๋วเครื่องบินไป-กลับ (Trip.com Booking: Confirmed ✅) พิมพ์สำรอง 1 ชุด" },
       { id: "sh_hotel", text: "ใบจองโรงแรม / แผนเดินทาง 6 วัน (พิมพ์ภาษาอังกฤษ/จีน เผื่อ ตม. จีนขอดู ฟรีวีซ่า 30 วัน)" },
       { id: "sh_cash", text: "เงินสดหยวน (RMB) ติดตัวไว้สำรองฉุกเฉิน (ประมาณ 1,000 – 1,500 หยวน)" },
       { id: "sh_apps", text: "แอปจำเป็นในเครื่อง: Amap (高德地图) แผนที่จีนแม่นยำ + Baidu/Google Translate ภาษาจีน Offline" },
@@ -3510,7 +3510,7 @@ const HARBIN_CHECKLIST_DATA = {
   personal: {
     rangsan: {
       key: "rangsan",
-      name: "👨 คุณรังสรรค์ (Rangsan)",
+      name: "👨 ผู้เดินทาง 1 (Traveler 1)",
       themeClass: "rangsan",
       badgeColor: "#0284c7",
       items: [
@@ -3539,7 +3539,7 @@ const HARBIN_CHECKLIST_DATA = {
     },
     sunisa: {
       key: "sunisa",
-      name: "👩 คุณสุนิสา (Sunisa)",
+      name: "👩 ผู้เดินทาง 2 (Traveler 2)",
       themeClass: "sunisa",
       badgeColor: "#ec4899",
       items: [
@@ -3558,7 +3558,7 @@ const HARBIN_CHECKLIST_DATA = {
         { id: "sn_socks", text: "ถุงเท้ากันหนาว Wool / Thermal Socks หนาพิเศษ (5–6 คู่)" },
         { id: "sn_gloves", text: "ถุงมือกันหนาวกันลมทัชสกรีนได้ + ถุงมือผ้าบางชั้นใน" },
         { id: "sn_hat", text: "หมวกไหมพรม / หมวกบุขนนุ่มปิดคลุมหูมิดชิด (1–2 ใบ)" },
-        { id: "sn_earmuffs", text: "ที่ปิดหูบุขน (Earmuffs) กันลมหนาวบาดหู (พิเศษสำหรับคุณสุนิสา)" },
+        { id: "sn_earmuffs", text: "ที่ปิดหูบุขน (Earmuffs) กันลมหนาวบาดหู (พิเศษสำหรับผู้เดินทาง 2)" },
         { id: "sn_scarf", text: "ผ้าพันคอหนานุ่ม หรือ ปลอกคอกันลม (Neck Warmer)" },
         { id: "sn_sunglasses", text: "แว่นกันแดด (ป้องกันแสงสะท้อนหิมะ Snow Blindness)" },
         { id: "sn_mask", text: "หน้ากากอนามัย / แมสก์ผ้าหนา ช่วยให้อากาศหายใจอุ่นขึ้น" },
@@ -3662,7 +3662,7 @@ function renderChecklist() {
     container.appendChild(sharedCard);
   }
 
-  // 2. Render 2-Column Split for Personal Items (Rangsan & Sunisa)
+  // 2. Render 2-Column Split for Personal Items (Traveler 1 & Traveler 2)
   const twoColGrid = document.createElement("div");
   twoColGrid.className = "checklist-two-col-grid";
 

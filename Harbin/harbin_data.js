@@ -1889,7 +1889,7 @@ const HARBIN_ATTRACTIONS = [
 ];
 
 // Default 6-Day Harbin Slow-Life Timeline Itinerary (Walk, Eat, Visit, Transit)
-// Includes Confirmed Flight Schedule from 1/S__27820034.jpg (Booking: 1622932337344364)
+// Includes Confirmed Flight Schedule from 1/S__27820034.jpg (Trip.com Booking: Confirmed ✅)
 const DEFAULT_HARBIN_TIMELINE = {
   day1: {
     labelTh: "Day 1 (4 ธ.ค.)",
