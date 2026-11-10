@@ -20,7 +20,7 @@ const HARBIN_ATTRACTIONS = [
     ratingStars: "⭐⭐⭐⭐⭐",
     ratingDescTh: "สถานีรถไฟสถาปัตยกรรมอาร์ตนูโวยุโรปสุดคลาสสิก ดั่งสถานีรถไฟในปารีส สะอาด เชื่อมต่อรถไฟใต้ดิน Line 2",
     ratingDescEn: "Stunning European Art Nouveau architecture, modern HSR hub directly linked to Metro Line 2",
-    coords: [45.76354, 126.64327],
+    coords: [45.76161, 126.63295],
     image: "https://images.unsplash.com/photo-1517649763962-0c623266ddc0?auto=format&fit=crop&w=600&q=80",
     tags: ["รถไฟความเร็วสูง", "สถานีฮาร์บิน", "จุดต่อรถ", "Art Nouveau", "Harbin Station"],
     shortBulletsTh: [
@@ -1907,7 +1907,7 @@ const HARBIN_ATTRACTIONS = [
     ratingStars: "⭐⭐⭐⭐⭐",
     ratingDescTh: "สถานีรถไฟความเร็วสูงเชื่อมต่อสายฮาร์บิน-หมู่บ้านหิมะ จุดเปลี่ยนผ่านสู่ชัทเทิลบัสทางหลวงสายหิมะ (Yaxue Highway)",
     ratingDescEn: "Key high-speed railway gateway to Yabuli and China Snow Town, direct interchange to scenic snow highway shuttle buses",
-    coords: [44.9100, 128.5868],
+    coords: [44.91063, 128.58639],
     image: "https://images.unsplash.com/photo-1517649763962-0c623266ddc0?auto=format&fit=crop&w=600&q=80",
     tags: ["รถไฟความเร็วสูง", "ย่าปู้ลี่ซี", "สถานีย่าปู้ลี่", "Yabuli West", "CRH Station", "Snow Highway"],
     shortBulletsTh: [
@@ -2211,7 +2211,7 @@ const DEFAULT_HARBIN_TIMELINE = {
       {
         uid: "d3-crh-train",
         spotId: 30,
-        customCoords: [44.9100, 128.5868],
+        customCoords: [44.91063, 128.58639],
         customNameEn: "CRH High-Speed Bullet Train: Harbin ➔ Yabuli West Station (亚布力西站)",
         customNameTh: "รถไฟความเร็วสูง CRH: สถานีฮาร์บิน ➔ สถานีย่าปู้ลี่ซี (ขบวน D8511 / G913 · วิ่ง 1 ชม. 12 นาที)",
         time: "07:45",
