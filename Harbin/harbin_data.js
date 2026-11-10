@@ -1575,15 +1575,15 @@ const HARBIN_ATTRACTIONS = [
 
   {
     id: 25,
-    nameTh: "หม้อไฟทองเหลืองตงเป่ย & เนื้อแกะสไลซ์",
-    nameZh: "东北老北京铜锅涮肉 / 老昌春饼",
-    pinyin: "Tóngguō Shuànròu",
-    nameEn: "Dongbei Copper Pot Hot Pot & Spring Pancakes",
+    nameTh: "ร้านแผ่นแป้งชุนปิ่ง & หม้อไฟตงเป่ย เหลาชางชุนปิ่ง (สาขาถนนจงหยาง 180)",
+    nameZh: "老昌春饼(中央大街店) · 道里区中央大街180号",
+    pinyin: "Lǎochāng Chūnbǐng (Zhōngyāng Dàjiē 180)",
+    nameEn: "Lao Chang Spring Pancake (Central Avenue No. 180)",
     category: "food_dining",
     activityType: "eat",
     defaultDuration: 90,
-    categoryLabelTh: "หม้อไฟคลายหนาว (การกิน)",
-    categoryLabelEn: "Winter Warming Hot Pot",
+    categoryLabelTh: "ชุนปิ่ง & หม้อไฟคลายหนาว (การกิน)",
+    categoryLabelEn: "Spring Pancakes & Hot Pot",
     categoryColor: "#e11d48",
     pastelBg: "#ffe4e6",
     badgeColor: "#fecdd3",
@@ -1591,47 +1591,47 @@ const HARBIN_ATTRACTIONS = [
     doodleIcon: "🥘",
     rating: 4.8,
     ratingStars: "⭐⭐⭐⭐⭐",
-    ratingDescTh: "หม้อไฟทองเหลืองถ่านไม้ร้อนกรุ่น เนื้อแกะและเนื้อวัวสไลซ์ลวกในซุปกระดูกผักกาดดอง ทานคู่ซอสงาเข้มข้นคลายหนาว -20°C",
-    ratingDescEn: "Charcoal-heated traditional copper pot hot pot with tender lamb, pickled cabbage broth, and sesame dip",
-    coords: [45.7745, 126.6189],
+    ratingDescTh: "ร้านแผ่นแป้งชุนปิ่งชื่อดังและหม้อไฟทองเหลืองตงเป่ยต้นตำรับ แผ่นแป้งนุ่มห่อหมูผัดซอสและผัดถั่วงอก ซดน้ำซุปผักกาดดองคลายหนาว -20°C",
+    ratingDescEn: "Famous Lao Chang Spring Pancakes & Dongbei hot pot on Central Ave (No. 180). Paper-thin pancakes wrapped with Peking shredded pork & warm broth",
+    coords: [45.77606, 126.61822],
     image: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=600&q=80",
-    tags: ["หม้อไฟตงเป่ย", "หม้อไฟทองเหลือง", "ผักกาดดอง", "Hot Pot", "Dongbei Food"],
+    tags: ["老昌春饼", "ชุนปิ่ง", "หม้อไฟตงเป่ย", "หม้อไฟทองเหลือง", "Spring Pancakes", "Dongbei Food"],
     shortBulletsTh: [
-      "หม้อไฟทองเหลืองโบราณใส่ถ่านไม้ตรงกลาง น้ำซุปเดือดปุดๆ ให้ความอบอุ่นสูงสุด",
-      "ไฮไลท์คือน้ำซุปผักกาดดองตงเป่ย (Suan Cai) รสกลมกล่อมตัดเลี่ยน",
-      "เนื้อแกะมองโกเลียในและเนื้อวัวสไลซ์บางเฉียบ จิ้มซอสงาสูตรพิเศษ"
+      "ร้านชุนปิ่งชื่อดังที่สุดในฮาร์บิน แผ่นแป้งปิ่งบางนุ่มห่อหมูผัดซอสจิงเจี้ยง (京酱肉丝) และผัดถั่วงอก",
+      "มีหม้อไฟทองเหลืองโบราณ ซุปผักกาดดองตงเป่ย (Suan Cai) ร้อนๆ ลวกเนื้อแกะสไลซ์",
+      "ทำเลสุดสะดวกบนถนนคนเดินจงหยาง เลขที่ 180 (ตรงข้ามอาคาร Jingu Mansion) เดินกลับโรงแรม Ritz ซอย West 3rd เพียง 2 นาที"
     ],
     shortBulletsEn: [
-      "Traditional charcoal-fired brass chimney hot pot ideal for -20°C evenings",
-      "Signature Dongbei fermented pickled cabbage (Suan Cai) & bone marrow broth",
-      "Hand-sliced Inner Mongolian lamb and beef with rich sesame-peanut sauce"
+      "Harbin's most iconic Spring Pancake house: paper-thin pancakes wrapping sweet-savory shredded pork & bean sprouts",
+      "Traditional charcoal brass chimney hot pot with pickled cabbage broth & tender sliced lamb",
+      "Prime location at No. 180 Central Avenue (opposite Jingu Mansion), just 2-min walk back to Ritz Hotel"
     ],
-    openingHoursTh: "ทุกวัน 11:00 - 22:30 น.",
-    openingHoursEn: "Daily 11:00 - 22:30",
-    bestTimeTh: "18:00 - 20:30 น. (มื้อค่ำเติมความอบอุ่นหลังเดินเล่นหิมะ)",
-    bestTimeEn: "18:00 - 20:30 (Cozy dinner after outdoor winter sightseeing)",
-    ticketPriceTh: "เฉลี่ย 80-120 หยวน/ท่าน (~400-600 บาท)",
-    ticketPriceEn: "Average ~80-120 RMB per person",
+    openingHoursTh: "ทุกวัน 10:00 - 21:00 น.",
+    openingHoursEn: "Daily 10:00 - 21:00",
+    bestTimeTh: "17:45 - 19:30 น. (มื้อค่ำเติมความอบอุ่นหลังชมพระอาทิตย์ตกแม่น้ำซงฮัว)",
+    bestTimeEn: "17:45 - 19:30 (Warm cozy dinner after sunset at frozen Songhua River)",
+    ticketPriceTh: "เฉลี่ย 48-80 หยวน/ท่าน (~240-400 บาท)",
+    ticketPriceEn: "Average ~48-80 RMB per person",
     transportTh: {
-      fromStation: "ตั้งอยู่ใกล้ถนนคนเดินจงหยางและโบสถ์เซนต์โซเฟีย เดินเพียง 5 นาที",
-      fromAirport: "นั่งรถตู้ 45 นาที",
-      inside: "ห้องอาหารติดฮีตเตอร์อุ่นสบาย บริการประทับใจ"
+      fromStation: "ตั้งอยู่บนถนนคนเดินจงหยาง เลขที่ 180 (ตรงข้ามอาคาร Jingu Mansion) ใกล้ซอย West 3rd St เดินจากโรงแรม Ritz เพียง 2 นาที",
+      fromAirport: "นั่งรถตู้/แท็กซี่ 45 นาที",
+      inside: "ห้องอาหาร 2 ชั้นติดฮีตเตอร์อุ่นสบาย บริการรวดเร็ว"
     },
     transportEn: {
-      fromStation: "5 mins walk from Zhongyang Street & St. Sophia Cathedral",
+      fromStation: "No. 180 Central Avenue (opposite Jingu Mansion) near West 3rd St, 2 mins walk from Ritz Hotel",
       fromAirport: "Taxi ~45 mins",
-      inside: "Warm indoor dining rooms with private booths"
+      inside: "Warm 2-floor dining hall with comfortable booth seating"
     },
     highlightsTh: [
-      "หม้อไฟทองเหลืองซุปใสและซุปผักกาดดอง",
-      "แป้งปิ่งบางนุ่มห่อหมูผัดซอสและถั่วงอก (Laochang Spring Pancakes)"
+      "แผ่นแป้งชุนปิ่งบางนุ่มห่อหมูผัดซอสจิงเจี้ยงและผัดผักรวม",
+      "หม้อไฟทองเหลืองตงเป่ยซุปผักกาดดองคลายหนาว"
     ],
     highlightsEn: [
-      "Brass chimney hot pot with pickled cabbage & clear bone broth",
-      "Paper-thin spring pancakes wrapped with Peking-style shredded pork"
+      "Paper-thin spring pancakes with Peking-style shredded pork & stir-fried greens",
+      "Dongbei brass chimney hot pot with tangy fermented pickled cabbage broth"
     ],
-    descriptionTh: "มื้อค่ำในฤดูหนาวของฮาร์บินไม่มีอะไรฟินไปกว่าการล้อมวงทานหม้อไฟทองเหลืองร้อนๆ น้ำซุปต้มกระดูกใส่ผักกาดดองเปรี้ยวกำลังดี ลวกเนื้อแกะนุ่มๆ คลายความหนาวได้ทันที",
-    descriptionEn: "Nothing beats Harbin's sub-zero evening chill like gathering around a steaming charcoal copper hot pot brimming with pickled cabbage broth and tender lamb slices."
+    descriptionTh: "มื้อค่ำยอดนิยมในฮาร์บินที่รวม 2 สุดยอดเมนูตงเป่ย: แผ่นแป้งชุนปิ่งร้อนๆ ห่อกับหมูเส้นผัดซอสรสเข้มข้น ทานคู่กับหม้อไฟทองเหลืองโบราณซุปผักกาดดองต้มกระดูกหมู ช่วยให้อบอุ่นร่างกายทันทีหลังเดินฝ่าลมหนาวริมแม่น้ำซงฮัว",
+    descriptionEn: "A hearty Harbin winter dinner pairing iconic paper-thin spring pancakes wrapped with savory shredded pork and steaming charcoal hot pot to thaw out after a sunset stroll along the frozen Songhua River."
   },
 
   {
@@ -2094,14 +2094,14 @@ const DEFAULT_HARBIN_TIMELINE = {
       {
         uid: "d2-dinner-hotpot",
         spotId: 25,
-        customNameTh: "หม้อไฟทองเหลืองตงเป่ย & เนื้อแกะสไลซ์ (Dongbei Copper Pot Hot Pot & Spring Pancakes)",
-        customNameEn: "Dongbei Copper Pot Hot Pot Dinner (Dongbei Copper Pot Hot Pot & Spring Pancakes)",
+        customNameTh: "มื้อค่ำ: โรตีชุนปิ่ง & หม้อไฟตงเป่ย ร้านเหลาชางชุนปิ่ง (ถนนจงหยาง 180)",
+        customNameEn: "Lao Chang Spring Pancakes & Dongbei Hot Pot Dinner",
         time: "17:45",
         timeLabel: "17:45 - 19:15 น.",
         duration: 90,
         actType: "eat",
-        noteTh: "มื้อค่ำหม้อไฟทองเหลืองถ่านไม้ตงเป่ยดั้งเดิม ซุปผักกาดดองร้อนๆ ลวกเนื้อแกะสไลซ์และทานคู่แผ่นแป้งชุนปิ่ง (Dongbei Copper Pot Hot Pot & Spring Pancakes) เติมพลังความอุ่นหลังเดินชมพระอาทิตย์ตกแม่น้ำซงฮัว",
-        noteEn: "Warm up with traditional charcoal brass chimney hot pot, pickled cabbage broth, tender sliced lamb & spring pancakes"
+        noteTh: "มื้อค่ำเติมความอบอุ่นหลังชมพระอาทิตย์ตกแม่น้ำซงฮัว: แผ่นแป้งชุนปิ่งบางนุ่มห่อหมูผัดซอสจิงเจี้ยง ผัดถั่วงอก และซุปหม้อไฟร้อนๆ ร้านเหลาชางชุนปิ่ง สาขาถนนจงหยาง 180 (เดินกลับโรงแรม Ritz ซอย West 3rd เพียง 2 นาที)",
+        noteEn: "Cozy dinner at Lao Chang Spring Pancakes (Central Ave No. 180): warm thin spring pancakes wrapped with savory shredded pork & hot pot, just 2-min walk back to Ritz Hotel"
       },
       {
         uid: "d2-hotel",
