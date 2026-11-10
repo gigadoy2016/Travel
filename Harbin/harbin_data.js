@@ -20,7 +20,7 @@ const HARBIN_ATTRACTIONS = [
     ratingStars: "⭐⭐⭐⭐⭐",
     ratingDescTh: "สถานีรถไฟสถาปัตยกรรมอาร์ตนูโวยุโรปสุดคลาสสิก ดั่งสถานีรถไฟในปารีส สะอาด เชื่อมต่อรถไฟใต้ดิน Line 2",
     ratingDescEn: "Stunning European Art Nouveau architecture, modern HSR hub directly linked to Metro Line 2",
-    coords: [45.7570, 126.6268],
+    coords: [45.7611, 126.6309],
     image: "https://images.unsplash.com/photo-1517649763962-0c623266ddc0?auto=format&fit=crop&w=600&q=80",
     tags: ["รถไฟความเร็วสูง", "สถานีฮาร์บิน", "จุดต่อรถ", "Art Nouveau", "Harbin Station"],
     shortBulletsTh: [
@@ -83,7 +83,7 @@ const HARBIN_ATTRACTIONS = [
     ratingStars: "⭐⭐⭐⭐⭐",
     ratingDescTh: "แลนด์มาร์กอันดับ 1 ของฮาร์บิน โดมหัวหอมสีเขียวมรกต ฝูงนกพิราบบินตัดหิมะ คาเฟ่วินเทจสุดโรแมนติก",
     ratingDescEn: "Harbin's iconic #1 landmark: magnificent Byzantine green onion dome, flying white doves, and winter wonderland romance",
-    coords: [45.7686, 126.6278],
+    coords: [45.7697, 126.6272],
     image: "https://images.unsplash.com/photo-1548625361-12503722f42a?auto=format&fit=crop&w=600&q=80",
     tags: ["โบสถ์เซนต์โซเฟีย", "สถาปัตยกรรมรัสเซีย", "แลนด์มาร์กฮาร์บิน", "Byzantine", "Saint Sophia"],
     shortBulletsTh: [
@@ -146,7 +146,7 @@ const HARBIN_ATTRACTIONS = [
     ratingStars: "⭐⭐⭐⭐⭐",
     ratingDescTh: "ถนนหินแกรนิตรัสเซียอายุกว่า 120 ปี สถาปัตยกรรมบาโรก ไอศกรีมหม่าเตี๋ยเอ่อร์ และร้านอาหารรัสเซียคลาสสิก",
     ratingDescEn: "120-year-old Russian cobblestone pedestrian avenue lined with baroque architecture, Modern ice popsicles, and borsch",
-    coords: [45.7725, 126.6208],
+    coords: [45.7736, 126.6181],
     image: "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=600&q=80",
     tags: ["ถนนจงหยาง", "ไอศกรีมหม่าเตี๋ยเอ่อร์", "สถาปัตยกรรมยุโรป", "Zhongyang Street", "Cobblestones"],
     shortBulletsTh: [
@@ -209,7 +209,7 @@ const HARBIN_ATTRACTIONS = [
     ratingStars: "⭐⭐⭐⭐⭐",
     ratingDescTh: "อาณาจักรปราสาทและโบสถ์ไม้รัสเซียท่ามกลางป่าสนขาว จิบวอดก้าในแก้วน้ำแข็งแท้ และสไลเดอร์หิมะจากยอดปราสาท",
     ratingDescEn: "Russian fairy-tale manor with wooden churches, snow tubing from castle towers, and ice-glass vodka tasting",
-    coords: [45.6415, 126.9175],
+    coords: [45.6723, 126.9036],
     image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80",
     tags: ["วอลกามาเนอร์", "ปราสาทรัสเซีย", "วอดก้าแก้วน้ำแข็ง", "Snow Tubing", "Volga Manor"],
     shortBulletsTh: [
@@ -272,7 +272,7 @@ const HARBIN_ATTRACTIONS = [
     ratingStars: "⭐⭐⭐⭐⭐",
     ratingDescTh: "สวนเพาะพันธุ์เสือไซบีเรียที่ใหญ่ที่สุดในโลก นั่งรถบัสกรงนิรภัยให้อาหารพญาเสือตัวโตขนฟูกลางทุ่งหิมะ",
     ratingDescEn: "World's largest Siberian tiger conservation park: ride protected safari buses across snowy plains",
-    coords: [45.8152, 126.6358],
+    coords: [45.8175, 126.6007],
     image: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=600&q=80",
     tags: ["สวนเสือไซบีเรีย", "เสือตงเป่ย", "ให้อาหารเสือ", "Siberian Tiger", "Wildlife"],
     shortBulletsTh: [
@@ -335,7 +335,7 @@ const HARBIN_ATTRACTIONS = [
     ratingStars: "⭐⭐⭐⭐⭐",
     ratingDescTh: "ศูนย์กลางงานประติมากรรมแกะสลักหิมะระดับนานาชาติ ประติมากรรมหิมะขนาดยักษ์สูงหลายสิบเมตร ละเอียดประณีต",
     ratingDescEn: "Epicenter of Harbin's International Snow Sculpture Art Expo featuring colossal master-carved snow giants",
-    coords: [45.7905, 126.5935],
+    coords: [45.7915, 126.5986],
     image: "https://images.unsplash.com/photo-1483921020237-2ff51e8e4b22?auto=format&fit=crop&w=600&q=80",
     tags: ["เกาะพระอาทิตย์", "แกะสลักหิมะ", "Sun Island", "Snow Sculpture", "Taiyangdao"],
     shortBulletsTh: [
@@ -398,7 +398,7 @@ const HARBIN_ATTRACTIONS = [
     ratingStars: "⭐⭐⭐⭐⭐",
     ratingDescTh: "สะพานเหล็กทางรถไฟ 120 ปี ปรับเป็นทางเดินชมวิว มีพื้นกระจกใสชมธารน้ำแข็งและพระอาทิตย์ตกดินสีส้มทอง",
     ratingDescEn: "120-year-old railway truss bridge converted into a walking skyway with glass floors overlooking frozen river sunsets",
-    coords: [45.7795, 126.6350],
+    coords: [45.7836, 126.6282],
     image: "https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=600&q=80",
     tags: ["สะพานปินโจว", "แม่น้ำซงฮัว", "พื้นกระจก", "พระอาทิตย์ตก", "Binzhou Bridge"],
     shortBulletsTh: [
@@ -461,7 +461,7 @@ const HARBIN_ATTRACTIONS = [
     ratingStars: "⭐⭐⭐⭐⭐",
     ratingDescTh: "แม่น้ำทั้งสายกลายเป็นลานน้ำแข็งหนา 1 เมตร แคร่เลื่อนหิมะ ปั่นจักรยานน้ำแข็ง ชมชาวบ้านตัดก้อนน้ำแข็งยักษ์",
     ratingDescEn: "Entire frozen river becomes a giant winter playground: ice bumper cars, sleds, and traditional ice harvesting",
-    coords: [45.7790, 126.6185],
+    coords: [45.7818, 126.6165],
     image: "https://images.unsplash.com/photo-1517411032315-54ef2cb783bb?auto=format&fit=crop&w=600&q=80",
     tags: ["แม่น้ำซงฮัว", "ลานน้ำแข็ง", "เลื่อนหิมะ", "ตัดน้ำแข็ง", "Songhua Carnival"],
     shortBulletsTh: [
@@ -524,7 +524,7 @@ const HARBIN_ATTRACTIONS = [
     ratingStars: "⭐⭐⭐⭐⭐",
     ratingDescTh: "สถาปัตยกรรมบาโรกตะวันตกผสมผสานเรือนสี่ประสานจีนดั้งเดิม แหล่งกำเนิดร้านกัวเปาโร่ว 100 ปี Laochushi",
     ratingDescEn: "World's largest Chinese Baroque complex: western facade with traditional Chinese courtyards & 100-year food legends",
-    coords: [45.7875, 126.6635],
+    coords: [45.7828, 126.6508],
     image: "https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=600&q=80",
     tags: ["บาโรกจีน", "เหล่าเต้าว่าย", "กัวเปาโร่ว", "Laochushi", "Chinese Baroque"],
     shortBulletsTh: [
@@ -587,7 +587,7 @@ const HARBIN_ATTRACTIONS = [
     ratingStars: "⭐⭐⭐⭐⭐",
     ratingDescTh: "สถาปัตยกรรมระดับโลกทรงคลื่นหิมะสีขาว ออกแบบโดย MAD Architects สวยสง่าดั่งประติมากรรมธรรมชาติกลางหิมะ",
     ratingDescEn: "World Architecture Award winner: futuristic curvilinear snow-white opera house designed by MAD Architects",
-    coords: [45.8115, 126.5680],
+    coords: [45.8085, 126.5835],
     image: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=600&q=80",
     tags: ["โรงอุปรากรฮาร์บิน", "MAD Architects", "สถาปัตยกรรมระดับโลก", "Opera House", "Modern Landmark"],
     shortBulletsTh: [
@@ -650,7 +650,7 @@ const HARBIN_ATTRACTIONS = [
     ratingStars: "⭐⭐⭐⭐⭐",
     ratingDescTh: "แลนด์มาร์กสำคัญปลายถนนคนเดินจงหยาง สวนสาธารณะสไตล์รัสเซียทิวสนหิมะและทางเดินริมแม่น้ำซงฮัว",
     ratingDescEn: "Historic monument at the terminus of Zhongyang Street, framed by Stalin Park's snow-laden Russian pines",
-    coords: [45.7798, 126.6178],
+    coords: [45.7801, 126.6177],
     image: "https://images.unsplash.com/photo-1517411032315-54ef2cb783bb?auto=format&fit=crop&w=600&q=80",
     tags: ["อนุสาวรีย์น้ำท่วม", "สวนสตาลิน", "แม่น้ำซงฮัว", "Stalin Park", "Monument"],
     shortBulletsTh: [
@@ -713,7 +713,7 @@ const HARBIN_ATTRACTIONS = [
     ratingStars: "⭐⭐⭐⭐⭐",
     ratingDescTh: "ประตูบานใหญ่สู่นครหิมะ จุดที่เที่ยวบินของ China Eastern / Shanghai Airlines ลงจอด สะดวก ทันสมัย มีฮีตเตอร์อุ่น",
     ratingDescEn: "Primary flight gateway to Harbin: modern Terminal 2 handling China Eastern & Shanghai Airlines flights",
-    coords: [45.6234, 126.2503],
+    coords: [45.6262, 126.2485],
     image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=600&q=80",
     tags: ["สนามบินฮาร์บิน", "ไท่ผิง T2", "China Eastern", "Airport", "HRB"],
     shortBulletsTh: [
@@ -776,7 +776,7 @@ const HARBIN_ATTRACTIONS = [
     ratingStars: "⭐⭐⭐⭐⭐",
     ratingDescTh: "อาณาจักรปราสาทและเมืองน้ำแข็งแกะสลักที่ใหญ่ที่สุดในโลก สไลเดอร์น้ำแข็งยาว 500 เมตร ประดับไฟ LED สีสันตระการตา",
     ratingDescEn: "World's largest frozen theme park: colossal crystal ice castles, 500-meter ice slides, and vibrant LED illuminations",
-    coords: [45.7845, 126.5615],
+    coords: [45.7804, 126.5652],
     image: "https://images.unsplash.com/photo-1548625361-12503722f42a?auto=format&fit=crop&w=600&q=80",
     tags: ["ไอซ์แอนด์สโนว์เวิลด์", "ปราสาทน้ำแข็ง", "สไลเดอร์น้ำแข็ง", "Ice and Snow World", "Harbin Festival"],
     shortBulletsTh: [
@@ -839,7 +839,7 @@ const HARBIN_ATTRACTIONS = [
     ratingStars: "⭐⭐⭐⭐☆",
     ratingDescTh: "ถนนการค้าเก่าแก่สไตล์รัสเซีย โบสถ์คาทอลิกสไตล์บาโรกสีแดงสด ร้านหนังสือรัสเซียที่มีชื่อเสียงที่สุดในฮาร์บิน",
     ratingDescEn: "Historic century-old Russian commercial boulevard featuring the crimson baroque Alekseyev Church and bookstore",
-    coords: [45.7485, 126.6480],
+    coords: [45.7482, 126.6536],
     image: "https://images.unsplash.com/photo-1548625361-12503722f42a?auto=format&fit=crop&w=600&q=80",
     tags: ["ถนนกัวโกรี่", "โบสถ์เซนต์อเล็กเซเยฟ", "ร้านหนังสือรัสเซีย", "Gogol Street", "Alekseyev"],
     shortBulletsTh: [
@@ -902,7 +902,7 @@ const HARBIN_ATTRACTIONS = [
     ratingStars: "⭐⭐⭐⭐⭐",
     ratingDescTh: "กระเช้าลอยฟ้าทรงลูกแก้วลอยข้ามแม่น้ำซงฮัว ชมวิวพาโนรามา 360 องศาธารน้ำแข็งยักษ์ เชื่อมฝั่งเมืองกับเกาะพระอาทิตย์",
     ratingDescEn: "Gliding cable cars soaring over the frozen Songhua River connecting Daoli district to Sun Island with 360 views",
-    coords: [45.7820, 126.6080],
+    coords: [45.7809, 126.6108],
     image: "https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=600&q=80",
     tags: ["กระเช้าลอยฟ้า", "แม่น้ำซงฮัว", "วิวมุมสูง", "Sun Island Cableway", "Songhua Ropeway"],
     shortBulletsTh: [
@@ -965,7 +965,7 @@ const HARBIN_ATTRACTIONS = [
     ratingStars: "⭐⭐⭐⭐⭐",
     ratingDescTh: "ตลาดเช้าสตรีทฟู้ดอันดับ 1 ของฮาร์บิน สัมผัสไอควันสีขาวพวยพุ่งในอุณหภูมิติดลบ ชิมเกี๊ยวทอด ซาลาเปาร้อนๆ ขนมกล้วยทอด",
     ratingDescEn: "Harbin's liveliest morning food market: steam billowing in freezing morning air with freshly fried pancakes and buns",
-    coords: [45.7710, 126.6190],
+    coords: [45.7735, 126.6177],
     image: "https://images.unsplash.com/photo-1541544741938-0af808871cc0?auto=format&fit=crop&w=600&q=80",
     tags: ["ตลาดเช้าหงจวน", "สตรีทฟู้ดฮาร์บิน", "เกี๊ยวซ่า", "Hongzhuan Market", "Breakfast"],
     shortBulletsTh: [
@@ -1028,7 +1028,7 @@ const HARBIN_ATTRACTIONS = [
     ratingStars: "⭐⭐⭐⭐☆",
     ratingDescTh: "ตึกสถาปัตยกรรมบาโรกยุโรปสีเหลืองมัสตาร์ด จัดแสดงฟอสซิลช้างแมมมอธไซบีเรียสมบูรณ์แบบและโบราณวัตถุราชวงศ์จิน",
     ratingDescEn: "Ochre-yellow European baroque landmark housing complete woolly mammoth fossils and Jurchen dynasty treasures",
-    coords: [45.7565, 126.6385],
+    coords: [45.7576, 126.6419],
     image: "https://images.unsplash.com/photo-1566127444979-b3d2b654e3d7?auto=format&fit=crop&w=600&q=80",
     tags: ["พิพิธภัณฑ์เฮยหลงเจียง", "แมมมอธ", "ประวัติศาสตร์", "Museum", "Heilongjiang"],
     shortBulletsTh: [
@@ -1091,7 +1091,7 @@ const HARBIN_ATTRACTIONS = [
     ratingStars: "⭐⭐⭐⭐☆",
     ratingDescTh: "หอส่งสัญญาณโทรทัศน์โครงสร้างเหล็กสูง 336 เมตร มีทางเดินพื้นกระจกลอยฟ้ารอบหอคอยชมเมืองหิมะ 360 องศา",
     ratingDescEn: "336-meter landmark steel observation tower featuring a 360-degree outdoor glass skywalk over Harbin",
-    coords: [45.7480, 126.6780],
+    coords: [45.7485, 126.6804],
     image: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=600&q=80",
     tags: ["หอคอยมังกร", "หลงถ่า", "Dragon Tower", "วิวมุมสูง", "Skywalk"],
     shortBulletsTh: [
@@ -1154,7 +1154,7 @@ const HARBIN_ATTRACTIONS = [
     ratingStars: "⭐⭐⭐⭐⭐",
     ratingDescTh: "ต้นกำเนิดเบียร์แบรนด์แรกของประเทศจีนตั้งแต่ปี 1900 โดยชาวรัสเซีย ชมประวัติศาสตร์และชิมเบียร์สดกลั่นใหม่รสเลิศ",
     ratingDescEn: "China's first and oldest beer brand (established 1900): interactive beer museum with fresh craft tastings",
-    coords: [45.5890, 126.7020],
+    coords: [45.595, 126.7208],
     image: "https://images.unsplash.com/photo-1518176258769-f227c798150e?auto=format&fit=crop&w=600&q=80",
     tags: ["เบียร์ฮาร์บิน", "พิพิธภัณฑ์เบียร์", "โรงเบียร์1900", "Harbin Beer", "Brewery"],
     shortBulletsTh: [
@@ -1217,7 +1217,7 @@ const HARBIN_ATTRACTIONS = [
     ratingStars: "⭐⭐⭐⭐⭐",
     ratingDescTh: "แลนด์มาร์กระเบียงดนตรีสไตล์ยุโรปริมฝั่งแม่น้ำซงฮัว (ถนนโหยวอี้ตะวันตก) พร้อมประติมากรรมตุ๊กตาหิมะยักษ์ 18 เมตร สวมหมวกแดงและผ้าพันคอสีแดงสุดไวรัลประจำฤดูหนาว",
     ratingDescEn: "European classical colonnade gallery along Songhua River and the iconic viral 18-meter-tall Giant Snowman",
-    coords: [45.7610, 126.5780],
+    coords: [45.7528, 126.5645],
     image: "https://images.unsplash.com/photo-1511192336575-5a79af67a629?auto=format&fit=crop&w=600&q=80",
     tags: ["Harbin Music Gallery", "哈尔滨音乐长廊", "ระเบียงดนตรี", "สวนดนตรี", "ตุ๊กตาหิมะยักษ์", "Music Park", "Giant Snowman"],
     shortBulletsTh: [
@@ -1282,7 +1282,7 @@ const HARBIN_ATTRACTIONS = [
     ratingStars: "⭐⭐⭐⭐⭐",
     ratingDescTh: "หมู่บ้านเห็ดหิมะธรรมชาติหนา 2 เมตร โคมไฟสีแดงสว่างไสวยามค่ำคืนบนถนนเสวี่ยยวิ่น และจุดชมวิวมุมสูง",
     ratingDescEn: "Famous fairytale wooden village blanketed in 2-meter-thick natural 'snow mushrooms' and glowing red lanterns",
-    coords: [44.3936, 128.2588],
+    coords: [44.3345, 128.2093],
     image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80",
     tags: ["หมู่บ้านหิมะ", "เสวี่ยเซียง", "เห็ดหิมะ", "Snow Town", "Xuexiang"],
     shortBulletsTh: [
@@ -1345,7 +1345,7 @@ const HARBIN_ATTRACTIONS = [
     ratingStars: "⭐⭐⭐⭐⭐",
     ratingDescTh: "หมู่บ้านชนบทตงเป่ยแท้ไร้แสงสีพาณิชย์ จุดเริ่มต้นเดินป่าหิมะข้ามเขาหยางเฉ่าซาน 15 กม. สู่ Snow Town",
     ratingDescEn: "Authentic rustic forestry village & starting point of the legendary 15km Mount Yangcao snow trek to Snow Town",
-    coords: [44.4530, 128.1650],
+    coords: [44.4522, 128.2065],
     image: "https://images.unsplash.com/photo-1491557345352-5929e343eb89?auto=format&fit=crop&w=600&q=80",
     tags: ["หุบเขาหิมะ", "เสวี่ยกู่", "เดินป่าหิมะ", "Snow Valley", "Xuegu"],
     shortBulletsTh: [
@@ -1408,7 +1408,7 @@ const HARBIN_ATTRACTIONS = [
     ratingStars: "⭐⭐⭐⭐⭐",
     ratingDescTh: "ภัตตาคารอาหารรัสเซียเก่าแก่ตั้งแต่ปี 1925 บนถนนจงหยาง ซุปบอร์ชต์เนื้อตุ๋น สตูว์เนื้ออบโถขนมปัง และขนมปังต้าเลี่ยปา",
     ratingDescEn: "Legendary 1925 Russian restaurant on Zhongyang St. famous for Borsch soup, pot-baked beef, and Dalieba bread",
-    coords: [45.7718, 126.6202],
+    coords: [45.7737, 126.6193],
     image: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80",
     tags: ["อาหารรัสเซีย", "ร้านหัวเหมย", "ซุปบอร์ชต์", "Huamei", "Russian Food"],
     shortBulletsTh: [
@@ -1471,7 +1471,7 @@ const HARBIN_ATTRACTIONS = [
     ratingStars: "⭐⭐⭐⭐⭐",
     ratingDescTh: "ร้านผู้คิดค้นเมนู 'กัวเปาโร่ว' (หมูทอดกรอบซอสเปรี้ยวหวานตงเป่ย) แห่งแรกของโลกตั้งแต่สมัยราชวงศ์ชิง",
     ratingDescEn: "Original creator of Harbin's famous Guobaorou (crispy sweet & sour pork) dating back over 100 years",
-    coords: [45.7872, 126.6628],
+    coords: [45.7832, 126.6502],
     image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=600&q=80",
     tags: ["กัวเปาโร่ว", "เหล่าฉูเจีย", "อาหารตงเป่ย", "Guobaorou", "Laochushi"],
     shortBulletsTh: [
@@ -1532,7 +1532,7 @@ const HARBIN_ATTRACTIONS = [
     ratingStars: "⭐⭐⭐⭐⭐",
     ratingDescTh: "ธรรมเนียมปฏิบัติอันดับ 1 ของฮาร์บิน: กินไอศกรีมแท่งนมสดวานิลลาสูตรปี 1906 เดินท้าความหนาว -15°C บนถนนจงหยาง",
     ratingDescEn: "Harbin's #1 winter ritual: eating a rich 1906 recipe Madieer vanilla milk popsicle outdoors in -15°C snow",
-    coords: [45.7712, 126.6205],
+    coords: [45.7737, 126.6202],
     image: "https://images.unsplash.com/photo-1501443762994-82bd5dace89a?auto=format&fit=crop&w=600&q=80",
     tags: ["ไอศกรีมหม่าเตี๋ยเอ่อร์", "ถนนจงหยาง", "ของกินฮาร์บิน", "Madieer", "Popsicle"],
     shortBulletsTh: [
@@ -1593,7 +1593,7 @@ const HARBIN_ATTRACTIONS = [
     ratingStars: "⭐⭐⭐⭐⭐",
     ratingDescTh: "หม้อไฟทองเหลืองถ่านไม้ร้อนกรุ่น เนื้อแกะและเนื้อวัวสไลซ์ลวกในซุปกระดูกผักกาดดอง ทานคู่ซอสงาเข้มข้นคลายหนาว -20°C",
     ratingDescEn: "Charcoal-heated traditional copper pot hot pot with tender lamb, pickled cabbage broth, and sesame dip",
-    coords: [45.7695, 126.6225],
+    coords: [45.7745, 126.6189],
     image: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=600&q=80",
     tags: ["หม้อไฟตงเป่ย", "หม้อไฟทองเหลือง", "ผักกาดดอง", "Hot Pot", "Dongbei Food"],
     shortBulletsTh: [
@@ -1654,7 +1654,7 @@ const HARBIN_ATTRACTIONS = [
     ratingStars: "⭐⭐⭐⭐⭐",
     ratingDescTh: "อาหารพื้นบ้านตงเป่ยขนานแท้ กระทะเหล็กใบยักษ์ฝังในโต๊ะ ตุ๋นปลาแม่น้ำซงฮัวสดๆ แปะแผ่นแป้งข้าวโพดรอบขอบกระทะ",
     ratingDescEn: "Authentic Dongbei wood-fired giant iron cauldron built into the table, braising fresh Songhua River fish & cornbread",
-    coords: [45.8020, 126.6150],
+    coords: [45.7875, 126.578],
     image: "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=600&q=80",
     tags: ["เที่ยกัวตุน", "ปลากระทะเหล็ก", "อาหารตงเป่ย", "Tieguo Dun", "Iron Pot Stew"],
     shortBulletsTh: [
@@ -1715,7 +1715,7 @@ const HARBIN_ATTRACTIONS = [
     ratingStars: "⭐⭐⭐⭐⭐",
     ratingDescTh: "ห้างสรรพสินค้าเก่าแก่ที่ก่อตั้งโดยพ่อค้ารัสเซียปี 1900 แหล่งซื้อของฝากอันดับ 1 ไส้กรอกแดงชิวหลิน และขนมปังต้าเลี่ยปาลูกยักษ์",
     ratingDescEn: "Historic 1900 Russian department store famous for giant Dalieba sourdough loaves, Kvass, and smoked Red Sausages",
-    coords: [45.7582, 126.6410],
+    coords: [45.7594, 126.6461],
     image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80",
     tags: ["ชิวหลิน", "ไส้กรอกแดง", "ต้าเลี่ยปา", "ของฝากฮาร์บิน", "Qiulin", "Dalieba"],
     shortBulletsTh: [
@@ -1842,7 +1842,7 @@ const HARBIN_ATTRACTIONS = [
     ratingStars: "⭐⭐⭐⭐⭐",
     ratingDescTh: "ร้านหม้อไฟทะเลตักเองยอดนิยมบนถนนคนเดินจงหยาง ชั้น 3 อาคารเฉาเหรินกวั่งฉ่าง (潮人广场 3F) คัดสรรกุ้ง หอย ปู ปลาสดใหม่ เนื้อวัวสไลซ์พรีเมียม น้ำซุปร้อนๆ และเครื่องดื่มบริการไม่อั้น เปิดยาวตั้งแต่ 11:00 น. ถึงตี 04:00 น.",
     ratingDescEn: "Famous self-service seafood & beef hot pot restaurant on Central Street, 3F Chaoren Square. Premium seafood, thinly sliced beef, rich broths, open late 11:00 AM - 04:00 AM.",
-    coords: [45.7720, 126.6205],
+    coords: [45.7711, 126.6208],
     image: "assets/places/harbin_29_niufugui_hotpot.jpg",
     tags: ["牛富贵", "海鲜火锅", "潮人广场", "Niu Fu Gui", "Seafood Hotpot", "Central Street Hotpot"],
     shortBulletsTh: [
@@ -2164,7 +2164,7 @@ const DEFAULT_HARBIN_TIMELINE = {
         spotId: 20,
         customNameEn: "Snow Highway Direct Shuttle Bus: Yabuli West Station ➔ China Snow Town",
         customNameTh: "ต่อรถชัทเทิลบัสทางหลวงสายหิมะย่าเสวี่ย: สถานีย่าปู้ลี่ซี ➔ สู่หมู่บ้านหิมะจีน Snow Town",
-        customCoords: [44.7570, 128.4350],
+        customCoords: [44.9079, 128.5867],
         time: "09:15",
         timeLabel: "09:15 - 11:15 น.",
         duration: 120,
@@ -2189,7 +2189,7 @@ const DEFAULT_HARBIN_TIMELINE = {
         spotId: 20,
         customNameEn: "Xueyun Street Stroll & Dream Home Snow Mushrooms (梦幻家园)",
         customNameTh: "เดินถนนคนเดินเสวี่ยยวิ่น & ชมปรากฏการณ์เห็ดหิมะธรรมชาติในฝัน Dream Home",
-        customCoords: [44.3948, 128.2572],
+        customCoords: [44.3345, 128.2093],
         time: "14:30",
         timeLabel: "14:30 - 17:00 น.",
         duration: 150,
@@ -2202,7 +2202,7 @@ const DEFAULT_HARBIN_TIMELINE = {
         spotId: 20,
         customNameEn: "Bangchui Mountain Night Boardwalk & Glowing Red Lanterns (Stay Night 1)",
         customNameTh: "จุดชมวิวมุมสูงทางเดินไม้เขาปั้งฉุย ชมโคมไฟแดงยามค่ำคืน (นอน Snow Town คืนที่ 1)",
-        customCoords: [44.3962, 128.2605],
+        customCoords: [44.3355, 128.2105],
         time: "17:30",
         timeLabel: "17:30 - 20:30 น.",
         duration: 180,
@@ -2223,7 +2223,7 @@ const DEFAULT_HARBIN_TIMELINE = {
         spotId: 20,
         customNameEn: "Snow Town Morning · Splash Boiling Water into Ice (-25°C)",
         customNameTh: "สาดน้ำร้อนกลายเป็นเกล็ดน้ำแข็งกลางหิมะ & ชมแสงเช้าเสวี่ยเซียง",
-        customCoords: [44.3936, 128.2588],
+        customCoords: [44.3348, 128.2098],
         time: "07:30",
         timeLabel: "07:30 - 09:00 น.",
         duration: 90,
@@ -2248,7 +2248,7 @@ const DEFAULT_HARBIN_TIMELINE = {
         spotId: 20,
         customNameEn: "Snow Town Dongbei Iron Pot Stew Lunch",
         customNameTh: "มื้อกลางวันหม้อไฟกระทะเหล็กตงเป่ย (เที่ยกัวตุน) ในหมู่บ้านหิมะ",
-        customCoords: [44.3941, 128.2592],
+        customCoords: [44.3360, 128.2120],
         time: "13:15",
         timeLabel: "13:15 - 14:45 น.",
         duration: 90,
@@ -2261,7 +2261,7 @@ const DEFAULT_HARBIN_TIMELINE = {
         spotId: 20,
         customNameEn: "Snow Tubing, Horse Sled & Folk Photography",
         customNameTh: "เล่นสไลเดอร์หิมะ เลื่อนม้าลาก & ถ่ายภาพชุดพื้นเมืองท่ามกลางหิมะฟู",
-        customCoords: [44.3925, 128.2578],
+        customCoords: [44.3340, 128.2085],
         time: "15:00",
         timeLabel: "15:00 - 17:30 น.",
         duration: 150,
@@ -2274,7 +2274,7 @@ const DEFAULT_HARBIN_TIMELINE = {
         spotId: 20,
         customNameEn: "Snow Town Bonfire Party & Yangge Dance (Stay Night 2)",
         customNameTh: "ปาร์ตี้รอบกองไฟ & ระบำหยางเกอ ถนนเสวี่ยยวิ่น (นอน Snow Town คืนที่ 2)",
-        customCoords: [44.3936, 128.2588],
+        customCoords: [44.3348, 128.2098],
         time: "19:00",
         timeLabel: "19:00 - 21:00 น.",
         duration: 120,

@@ -5,7 +5,7 @@
 // - Sections 3 & 4: AMAP Harbin Interactive Map (English Labels, Pinning, Route Lines)
 // ============================================================================
 
-const STORAGE_KEY_TIMELINE = "harbin_planner_timeline_v13";
+const STORAGE_KEY_TIMELINE = "harbin_planner_timeline_v14";
 const STORAGE_KEY_CUSTOM_SPOTS = "harbin_planner_custom_spots_v11";
 const IS_READ_ONLY = true; // Public View-Only Mode: Disables edits, deletes, drag-and-drop, and pin additions
 
@@ -987,7 +987,7 @@ const HARBIN_TRANSIT_HUBS = [
     nameTh: "สถานีรถไฟฮาร์บิน (Metro Line 2 / HSR)",
     nameZh: "哈尔滨站 (地铁2号线/高铁)",
     lineTh: "รถไฟใต้ดินสาย 2 (Metro Line 2)",
-    coords: [45.7574, 126.6272],
+    coords: [45.7611, 126.6309],
     spotIds: [0, 1]
   },
   {
@@ -996,7 +996,7 @@ const HARBIN_TRANSIT_HUBS = [
     nameTh: "สถานีรถไฟใต้ดิน Bowuguan พิพิธภัณฑ์ (Line 1/2)",
     nameZh: "博物馆地铁站 (1/2号线)",
     lineTh: "รถไฟใต้ดินสาย 1/2 (Metro Line 1/2)",
-    coords: [45.7568, 126.6412],
+    coords: [45.7576, 126.6419],
     spotIds: [13, 16, 17, 27]
   },
   {
@@ -1005,7 +1005,7 @@ const HARBIN_TRANSIT_HUBS = [
     nameTh: "สถานีรถไฟใต้ดิน Chinese Baroque (Line 3)",
     nameZh: "中华巴洛克街区地铁站 (3号线)",
     lineTh: "รถไฟใต้ดินสาย 3 (Metro Line 3)",
-    coords: [45.7832, 126.6525],
+    coords: [45.7828, 126.6508],
     spotIds: [6, 8, 23]
   },
   {
@@ -1014,7 +1014,7 @@ const HARBIN_TRANSIT_HUBS = [
     nameTh: "สถานีรถไฟใต้ดิน Sun Island เกาะพระอาทิตย์ (Line 2)",
     nameZh: "太阳岛地铁站 (2号线)",
     lineTh: "รถไฟใต้ดินสาย 2 (Metro Line 2)",
-    coords: [45.7905, 126.5920],
+    coords: [45.7915, 126.5986],
     spotIds: [4, 5, 9, 26]
   },
   {
@@ -1023,7 +1023,7 @@ const HARBIN_TRANSIT_HUBS = [
     nameTh: "สถานีรถไฟใต้ดิน Ice & Snow World (Line 2)",
     nameZh: "冰雪大世界地铁站 (2号线)",
     lineTh: "รถไฟใต้ดินสาย 2 (Metro Line 2)",
-    coords: [45.7808, 126.5645],
+    coords: [45.7804, 126.5652],
     spotIds: [12, 18]
   }
 ];
@@ -1514,8 +1514,8 @@ function renderSelectedTimelineDetail() {
     ? (getSpotById(effectiveCurrItem.spotId) || fallbackHotelSpot)
     : spot;
   const effectivePrevCoords = item.isFlightStep
-    ? (fallbackAirportSpot ? fallbackAirportSpot.coords : [45.6234, 126.2503])
-    : (prevCoords || (fallbackAirportSpot ? fallbackAirportSpot.coords : [45.6234, 126.2503]));
+    ? (fallbackAirportSpot ? fallbackAirportSpot.coords : [45.6262, 126.2485])
+    : (prevCoords || (fallbackAirportSpot ? fallbackAirportSpot.coords : [45.6262, 126.2485]));
   const effectiveCurrCoords = item.isFlightStep
     ? (effectiveCurrItem.customCoords || (effectiveCurrSpot ? effectiveCurrSpot.coords : [45.77606, 126.62103]))
     : currCoords;
@@ -2142,7 +2142,7 @@ function getTimelineItemCoords(item) {
   // Fallback for flight steps without spotId (e.g. BKK / PVG transit steps) -> Harbin Taiping Airport T2
   if (item.isFlightStep) {
     const airportSpot = getSpotById(11);
-    return airportSpot ? airportSpot.coords : [45.6234, 126.2503];
+    return airportSpot ? airportSpot.coords : [45.6262, 126.2485];
   }
   return [45.77606, 126.62103];
 }
@@ -2463,8 +2463,8 @@ function renderTimelineRouteAndSummary(dayItems) {
       : currItemObj;
 
     let effPrevCoords = currItemObj.isFlightStep
-      ? (fallbackAirportSpot ? fallbackAirportSpot.coords : [45.6234, 126.2503])
-      : (getTimelineItemCoords(effPrevItem) || [45.6234, 126.2503]);
+      ? (fallbackAirportSpot ? fallbackAirportSpot.coords : [45.6262, 126.2485])
+      : (getTimelineItemCoords(effPrevItem) || [45.6262, 126.2485]);
     let effCurrCoords = getTimelineItemCoords(effCurrItem) || [45.77606, 126.62103];
 
     // If clicking #1 morning hotel start (same spot as last night's hotel), show the departure route to #2
@@ -2644,7 +2644,7 @@ function focusTimelineItemOnMap(index, dayKey = currentDayKey) {
   // Close any open popup so the highlighted route and pins are completely unobstructed
   map.closePopup();
 
-  const fallbackAirportCoords = getSpotById(11)?.coords || [45.6234, 126.2503];
+  const fallbackAirportCoords = getSpotById(11)?.coords || [45.6262, 126.2485];
   const fallbackHotelCoords = getSpotById(28)?.coords || [45.77606, 126.62103];
 
   if (item.isFlightStep) {
@@ -3353,7 +3353,7 @@ function exportTripToXlsx() {
         const bundle = buildMultiModalPlansForStop(
           prevGlobalItem || { spotId: 11 },
           item,
-          prevGlobalCoords || [45.6234, 126.2503],
+          prevGlobalCoords || [45.6262, 126.2485],
           currCoords,
           prevGlobalSpot || getSpotById(11),
           spot
