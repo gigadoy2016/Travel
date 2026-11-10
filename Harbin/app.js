@@ -5,7 +5,7 @@
 // - Sections 3 & 4: AMAP Harbin Interactive Map (English Labels, Pinning, Route Lines)
 // ============================================================================
 
-const STORAGE_KEY_TIMELINE = "harbin_planner_timeline_v12";
+const STORAGE_KEY_TIMELINE = "harbin_planner_timeline_v13";
 const STORAGE_KEY_CUSTOM_SPOTS = "harbin_planner_custom_spots_v11";
 const IS_READ_ONLY = true; // Public View-Only Mode: Disables edits, deletes, drag-and-drop, and pin additions
 
@@ -1517,7 +1517,7 @@ function renderSelectedTimelineDetail() {
     ? (fallbackAirportSpot ? fallbackAirportSpot.coords : [45.6234, 126.2503])
     : (prevCoords || (fallbackAirportSpot ? fallbackAirportSpot.coords : [45.6234, 126.2503]));
   const effectiveCurrCoords = item.isFlightStep
-    ? (effectiveCurrItem.customCoords || (effectiveCurrSpot ? effectiveCurrSpot.coords : [45.7748, 126.6176]))
+    ? (effectiveCurrItem.customCoords || (effectiveCurrSpot ? effectiveCurrSpot.coords : [45.77606, 126.62103]))
     : currCoords;
 
   const multiModalBundle = buildMultiModalPlansForStop(
@@ -2144,7 +2144,7 @@ function getTimelineItemCoords(item) {
     const airportSpot = getSpotById(11);
     return airportSpot ? airportSpot.coords : [45.6234, 126.2503];
   }
-  return [45.7748, 126.6176];
+  return [45.77606, 126.62103];
 }
 
 function getPreviousTimelineItemInfo(index, dayKey = currentDayKey) {
@@ -2465,7 +2465,7 @@ function renderTimelineRouteAndSummary(dayItems) {
     let effPrevCoords = currItemObj.isFlightStep
       ? (fallbackAirportSpot ? fallbackAirportSpot.coords : [45.6234, 126.2503])
       : (getTimelineItemCoords(effPrevItem) || [45.6234, 126.2503]);
-    let effCurrCoords = getTimelineItemCoords(effCurrItem) || [45.7748, 126.6176];
+    let effCurrCoords = getTimelineItemCoords(effCurrItem) || [45.77606, 126.62103];
 
     // If clicking #1 morning hotel start (same spot as last night's hotel), show the departure route to #2
     if (currFocusIdx === 0 && calcDistanceKm(effPrevCoords, effCurrCoords) < 0.01 && dayItems[1]) {
@@ -2645,7 +2645,7 @@ function focusTimelineItemOnMap(index, dayKey = currentDayKey) {
   map.closePopup();
 
   const fallbackAirportCoords = getSpotById(11)?.coords || [45.6234, 126.2503];
-  const fallbackHotelCoords = getSpotById(28)?.coords || [45.7748, 126.6176];
+  const fallbackHotelCoords = getSpotById(28)?.coords || [45.77606, 126.62103];
 
   if (item.isFlightStep) {
     // For any flight step, zoom clearly to show Harbin Airport T2 <-> Hotel transfer route on the map
@@ -3332,7 +3332,7 @@ function exportTripToXlsx() {
       const nameTh = item.customNameTh || spot?.nameTh || nameEn;
       const nameZh = spot?.nameZh || (item.isFlightStep ? "哈尔滨太平国际机场 / 浦东国际机场" : "哈尔滨景点");
       const pinyin = spot?.pinyin || "";
-      const currCoords = getTimelineItemCoords(item) || [45.7748, 126.6176];
+      const currCoords = getTimelineItemCoords(item) || [45.77606, 126.62103];
 
       const prevNameEn = prevGlobalItem
         ? (prevGlobalItem.customNameEn || prevGlobalSpot?.nameEn || "")

@@ -1778,7 +1778,7 @@ const HARBIN_ATTRACTIONS = [
     ratingStars: "⭐⭐⭐⭐⭐",
     ratingDescTh: "โรงแรมหรูสไตล์พระราชวังยุโรปคลาสสิก เปิดใหม่ปี 2024 ติดถนนคนเดินจงหยาง (ซอย West 3rd Street เลขที่ 19) เดินไปแม่น้ำซงฮัว 5 นาที และโบสถ์เซนต์โซเฟีย 8 นาที",
     ratingDescEn: "2024 European palace-inspired luxury boutique hotel right off Central Street (No. 19 West 3rd St, Daoli District), 5 mins walk to Songhua River & 8 mins to St. Sophia",
-    coords: [45.7748, 126.6176],
+    coords: [45.77606, 126.62103],
     bookingUrl: "https://th.trip.com/hotels/w/detail/?cityid=5&hotelid=124049377&checkin=2026-12-04&checkout=2026-12-06&curr=THB&locale=en_th&fromShare=TripAppDetail&linkhub_token=sl_xeVM2GLAzW2",
     image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80",
     tags: ["LIZZY Ritz Hotel", "哈尔滨大洋丽兹酒店", "ที่พักถนนจงหยาง", "West 3rd Street", "Central Street Hotel"],
