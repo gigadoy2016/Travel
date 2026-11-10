@@ -965,7 +965,7 @@ const HARBIN_ATTRACTIONS = [
     ratingStars: "⭐⭐⭐⭐⭐",
     ratingDescTh: "ตลาดเช้าสตรีทฟู้ดอันดับ 1 ของฮาร์บิน สัมผัสไอควันสีขาวพวยพุ่งในอุณหภูมิติดลบ ชิมเกี๊ยวทอด ซาลาเปาร้อนๆ ขนมกล้วยทอด",
     ratingDescEn: "Harbin's liveliest morning food market: steam billowing in freezing morning air with freshly fried pancakes and buns",
-    coords: [45.7735, 126.6177],
+    coords: [45.77152, 126.61240],
     image: "https://images.unsplash.com/photo-1541544741938-0af808871cc0?auto=format&fit=crop&w=600&q=80",
     tags: ["ตลาดเช้าหงจวน", "สตรีทฟู้ดฮาร์บิน", "เกี๊ยวซ่า", "Hongzhuan Market", "Breakfast"],
     shortBulletsTh: [

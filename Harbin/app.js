@@ -5,7 +5,7 @@
 // - Sections 3 & 4: AMAP Harbin Interactive Map (English Labels, Pinning, Route Lines)
 // ============================================================================
 
-const STORAGE_KEY_TIMELINE = "harbin_planner_timeline_v14";
+const STORAGE_KEY_TIMELINE = "harbin_planner_timeline_v15";
 const STORAGE_KEY_CUSTOM_SPOTS = "harbin_planner_custom_spots_v11";
 const IS_READ_ONLY = true; // Public View-Only Mode: Disables edits, deletes, drag-and-drop, and pin additions
 
