@@ -20,7 +20,7 @@ const HARBIN_ATTRACTIONS = [
     ratingStars: "⭐⭐⭐⭐⭐",
     ratingDescTh: "สถานีรถไฟสถาปัตยกรรมอาร์ตนูโวยุโรปสุดคลาสสิก ดั่งสถานีรถไฟในปารีส สะอาด เชื่อมต่อรถไฟใต้ดิน Line 2",
     ratingDescEn: "Stunning European Art Nouveau architecture, modern HSR hub directly linked to Metro Line 2",
-    coords: [45.7611, 126.6309],
+    coords: [45.76354, 126.64327],
     image: "https://images.unsplash.com/photo-1517649763962-0c623266ddc0?auto=format&fit=crop&w=600&q=80",
     tags: ["รถไฟความเร็วสูง", "สถานีฮาร์บิน", "จุดต่อรถ", "Art Nouveau", "Harbin Station"],
     shortBulletsTh: [
@@ -1885,6 +1885,67 @@ const HARBIN_ATTRACTIONS = [
     ],
     descriptionTh: "ร้านหม้อไฟทะเลตักเอง หนิวฟู่กุ้ย (牛富贵海鲜火锅) ตั้งอยู่บนชั้น 3 ของอาคารเฉาเหรินกวั่งฉ่าง (潮人广场 3F) ริมถนนคนเดินหินร้อยปีจงหยาง เป็นร้านยอดนิยมสำหรับผู้ที่ชื่นชอบอาหารทะเลและเนื้อวัวสไลซ์ในหม้อไฟร้อนๆ จุดเด่นคือการเลือกตักวัตถุดิบสดใหม่ได้เองตามใจชอบ มีน้ำซุปหลากหลายให้เลือก และเปิดบริการยาวนานถึงตี 4 (11:00 - 04:00 น.) จึงเหมาะอย่างยิ่งสำหรับเป็นมื้อค่ำคืนแรกหลังเช็คอินเข้าที่พักถนนจงหยาง",
     descriptionEn: "Niu Fu Gui Seafood Hotpot (牛富贵海鲜火锅) is a popular self-selected seafood and hot pot establishment on the 3rd floor of Chaoren Square along Harbin's Central Street. Featuring an extensive selection of fresh seafood, quality beef, customizable sauces, and hearty broths, it opens until 4:00 AM—making it the ideal cozy culinary kickoff for Night 1 in Harbin."
+  },
+
+  {
+    id: 30,
+    nameTh: "สถานีรถไฟความเร็วสูงย่าปู้ลี่ซี",
+    nameZh: "亚布力西站",
+    pinyin: "Yàbùlì Xī Zhàn",
+    nameEn: "Yabuli West Railway Station (CRH Hub)",
+    category: "transit_hub",
+    activityType: "transit",
+    defaultDuration: 30,
+    categoryLabelTh: "สถานีรถไฟความเร็วสูง (การเดินทาง)",
+    categoryLabelEn: "High-Speed Rail Hub",
+    categoryColor: "#0284c7",
+    pastelBg: "#e0f2fe",
+    badgeColor: "#bae6fd",
+    doodleBorderColor: "#0369a1",
+    doodleIcon: "🚄",
+    rating: 4.8,
+    ratingStars: "⭐⭐⭐⭐⭐",
+    ratingDescTh: "สถานีรถไฟความเร็วสูงเชื่อมต่อสายฮาร์บิน-หมู่บ้านหิมะ จุดเปลี่ยนผ่านสู่ชัทเทิลบัสทางหลวงสายหิมะ (Yaxue Highway)",
+    ratingDescEn: "Key high-speed railway gateway to Yabuli and China Snow Town, direct interchange to scenic snow highway shuttle buses",
+    coords: [44.9100, 128.5868],
+    image: "https://images.unsplash.com/photo-1517649763962-0c623266ddc0?auto=format&fit=crop&w=600&q=80",
+    tags: ["รถไฟความเร็วสูง", "ย่าปู้ลี่ซี", "สถานีย่าปู้ลี่", "Yabuli West", "CRH Station", "Snow Highway"],
+    shortBulletsTh: [
+      "สถานีรถไฟความเร็วสูงบนเส้นทางฮาร์บิน-หมู่บ้านหิมะ (นั่ง CRH จากฮาร์บินเพียง 1 ชม. 12 นาที)",
+      "ประตูเชื่อมต่อสู่รถชัทเทิลบัสตรงสู่หมู่บ้านหิมะจีน (Snow Town Shuttle Bus) วิ่งบนทางหลวงสายหิมะ 85 กม.",
+      "ภายในสถานีมีฮีตเตอร์อุ่นสบาย จุดจำหน่ายตั๋วรถบัส และจุดบริการเรียกรถรับส่ง"
+    ],
+    shortBulletsEn: [
+      "Modern high-speed rail gateway: only 1h 12m from Harbin via CRH bullet train",
+      "Direct transfer point for the 85km scenic Snow Highway shuttle bus to China Snow Town",
+      "Heated waiting hall, direct shuttle bus ticket counters, and luggage assistance"
+    ],
+    openingHoursTh: "ทุกวัน 06:00 - 21:00 น. (ตามตารางเดินรถไฟ)",
+    openingHoursEn: "Daily 06:00 - 21:00 (according to train schedule)",
+    bestTimeTh: "08:50 - 09:30 น. (รอบเช้าเชื่อมต่อรถบัสไป Snow Town ทันที)",
+    bestTimeEn: "08:50 - 09:30 AM (morning transfer window for scenic shuttle bus)",
+    ticketPriceTh: "เข้าสู่สถานีฟรี (ตั๋วรถบัสไป Snow Town ประมาณ 70-85 หยวน)",
+    ticketPriceEn: "Free station access (shuttle bus to Snow Town ~70-85 RMB)",
+    transportTh: {
+      fromStation: "นั่งรถไฟความเร็วสูง CRH จากสถานีฮาร์บิน 1 ชม. 12 นาที (200 กม.)",
+      fromAirport: "นั่งรถไฟจากฮาร์บินสะดวกที่สุด",
+      inside: "มีเคาน์เตอร์จำหน่ายตั๋วรถชัทเทิลบัสตรงไปหมู่บ้านหิมะที่ลานจอดรถหน้าสถานี"
+    },
+    transportEn: {
+      fromStation: "CRH bullet train from Harbin Station ~1h 12m (200km)",
+      fromAirport: "Connected via Harbin HSR network",
+      inside: "Direct shuttle bus ticketing counter at station exit square"
+    },
+    highlightsTh: [
+      "จุดต่อรถที่สะดวก ปลอดภัย และเร็วที่สุดในการเดินทางจากฮาร์บินสู่หมู่บ้านหิมะ",
+      "ทางหลวงสายหิมะย่าเสวี่ย (Yaxue Highway) ที่สวยที่สุดในจีน"
+    ],
+    highlightsEn: [
+      "Fastest and most comfortable transit route connecting Harbin to China Snow Town",
+      "Scenic departure point for the legendary Yaxue Snow Highway"
+    ],
+    descriptionTh: "สถานีรถไฟความเร็วสูงย่าปู้ลี่ซี (亚布力西站) เป็นสถานีรถไฟความเร็วสูงหลักบนเส้นทางฮามู่ (Harbin-Mudanjiang HSR) สำหรับนักท่องเที่ยวที่จะมุ่งหน้าสู่ลานสกีย่าปู้ลี่และหมู่บ้านหิมะจีน (China Snow Town) การเดินทางด้วยรถไฟความเร็วสูงจากฮาร์บินมาลงที่นี่ใช้เวลาเพียง 1 ชม. 12 นาที จากนั้นสามารถต่อรถบัสท่องเที่ยวแล่นผ่านทางหลวงสายหิมะย่าเสวี่ยอันงดงามเพียง 1.5-2 ชั่วโมงถึงใจกลางหมู่บ้านหิมะได้ทันที",
+    descriptionEn: "Yabuli West Railway Station is the primary modern HSR station serving travelers headed to Yabuli Ski Resort and China Snow Town. Riding the CRH bullet train from Harbin takes just 1h 12m, followed by an easy 1.5-2 hour scenic shuttle along the picturesque Yaxue Snow Highway directly into the fairytale village."
   }
 ];
 
@@ -2149,7 +2210,8 @@ const DEFAULT_HARBIN_TIMELINE = {
       },
       {
         uid: "d3-crh-train",
-        spotId: 0,
+        spotId: 30,
+        customCoords: [44.9100, 128.5868],
         customNameEn: "CRH High-Speed Bullet Train: Harbin ➔ Yabuli West Station (亚布力西站)",
         customNameTh: "รถไฟความเร็วสูง CRH: สถานีฮาร์บิน ➔ สถานีย่าปู้ลี่ซี (ขบวน D8511 / G913 · วิ่ง 1 ชม. 12 นาที)",
         time: "07:45",
@@ -2164,7 +2226,7 @@ const DEFAULT_HARBIN_TIMELINE = {
         spotId: 20,
         customNameEn: "Snow Highway Direct Shuttle Bus: Yabuli West Station ➔ China Snow Town",
         customNameTh: "ต่อรถชัทเทิลบัสทางหลวงสายหิมะย่าเสวี่ย: สถานีย่าปู้ลี่ซี ➔ สู่หมู่บ้านหิมะจีน Snow Town",
-        customCoords: [44.9079, 128.5867],
+        customCoords: [44.3345, 128.2093],
         time: "09:15",
         timeLabel: "09:15 - 11:15 น.",
         duration: 120,

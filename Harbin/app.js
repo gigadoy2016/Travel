@@ -5,7 +5,7 @@
 // - Sections 3 & 4: AMAP Harbin Interactive Map (English Labels, Pinning, Route Lines)
 // ============================================================================
 
-const STORAGE_KEY_TIMELINE = "harbin_planner_timeline_v16";
+const STORAGE_KEY_TIMELINE = "harbin_planner_timeline_v17";
 const STORAGE_KEY_CUSTOM_SPOTS = "harbin_planner_custom_spots_v11";
 const IS_READ_ONLY = true; // Public View-Only Mode: Disables edits, deletes, drag-and-drop, and pin additions
 
@@ -1168,8 +1168,8 @@ function buildMultiModalPlansForStop(prevItem, currItem, prevCoords, currCoords,
     }
   } else if (distKm > 45) {
     // High-Speed Rail (Harbin Station <-> Yabuli West) + Highway Bus + Walk in Snow Town
-    const yabuliWestCoords = [44.7815, 128.4310];
-    const snowTownGateCoords = [44.3915, 128.2555];
+    const yabuliWestCoords = [44.9100, 128.5868];
+    const snowTownGateCoords = [44.3345, 128.2093];
     const goingToSnow = currCoords[0] < 45.0;
 
     if (goingToSnow) {
@@ -1215,7 +1215,7 @@ function buildMultiModalPlansForStop(prevItem, currItem, prevCoords, currCoords,
         ]
       };
     } else {
-      const harbinStnCoords = [45.7570, 126.6268];
+      const harbinStnCoords = [45.76354, 126.64327];
       railWalkPlan = {
         modeKey: "rail_walk",
         titleTh: `🚌 รถบัสหิมะ + 🚅 รถไฟความเร็วสูงกลับฮาร์บิน + 🚶 เดินเข้าจุดหมาย`,
