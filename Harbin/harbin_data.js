@@ -1599,12 +1599,12 @@ const HARBIN_ATTRACTIONS = [
     shortBulletsTh: [
       "ร้านชุนปิ่งชื่อดังที่สุดในฮาร์บิน แผ่นแป้งปิ่งบางนุ่มห่อหมูผัดซอสจิงเจี้ยง (京酱肉丝) และผัดถั่วงอก",
       "มีหม้อไฟทองเหลืองโบราณ ซุปผักกาดดองตงเป่ย (Suan Cai) ร้อนๆ ลวกเนื้อแกะสไลซ์",
-      "ทำเลสุดสะดวกบนถนนคนเดินจงหยาง เลขที่ 180 (ตรงข้ามอาคาร Jingu Mansion) เดินกลับโรงแรม Ritz ซอย West 3rd เพียง 2 นาที"
+      "ทำเลสุดสะดวกบนถนนคนเดินจงหยาง เลขที่ 180 (ตรงข้ามอาคาร Jingu Mansion) เดินกลับโรงแรม Mercure Sophia Church เพียง 5 นาที"
     ],
     shortBulletsEn: [
       "Harbin's most iconic Spring Pancake house: paper-thin pancakes wrapping sweet-savory shredded pork & bean sprouts",
       "Traditional charcoal brass chimney hot pot with pickled cabbage broth & tender sliced lamb",
-      "Prime location at No. 180 Central Avenue (opposite Jingu Mansion), just 2-min walk back to Ritz Hotel"
+      "Prime location at No. 180 Central Avenue (opposite Jingu Mansion), just 5-min walk back to Mercure Hotel"
     ],
     openingHoursTh: "ทุกวัน 10:00 - 21:00 น.",
     openingHoursEn: "Daily 10:00 - 21:00",
@@ -1613,12 +1613,12 @@ const HARBIN_ATTRACTIONS = [
     ticketPriceTh: "เฉลี่ย 48-80 หยวน/ท่าน (~240-400 บาท)",
     ticketPriceEn: "Average ~48-80 RMB per person",
     transportTh: {
-      fromStation: "ตั้งอยู่บนถนนคนเดินจงหยาง เลขที่ 180 (ตรงข้ามอาคาร Jingu Mansion) ใกล้ซอย West 3rd St เดินจากโรงแรม Ritz เพียง 2 นาที",
+      fromStation: "ตั้งอยู่บนถนนคนเดินจงหยาง เลขที่ 180 (ตรงข้ามอาคาร Jingu Mansion) เดินจากโรงแรม Mercure Sophia Church เพียง 5 นาที",
       fromAirport: "นั่งรถตู้/แท็กซี่ 45 นาที",
       inside: "ห้องอาหาร 2 ชั้นติดฮีตเตอร์อุ่นสบาย บริการรวดเร็ว"
     },
     transportEn: {
-      fromStation: "No. 180 Central Avenue (opposite Jingu Mansion) near West 3rd St, 2 mins walk from Ritz Hotel",
+      fromStation: "No. 180 Central Avenue (opposite Jingu Mansion), ~5 mins walk from Mercure Harbin Central Street Sophia Church",
       fromAirport: "Taxi ~45 mins",
       inside: "Warm 2-floor dining hall with comfortable booth seating"
     },
@@ -1760,66 +1760,66 @@ const HARBIN_ATTRACTIONS = [
 
   {
     id: 28,
-    nameTh: "โรงแรม LIZZY • Ritz Hotel ถนนจงหยาง (พัก 2 คืนแรก 4–6 ธ.ค.)",
-    nameZh: "哈尔滨大洋丽兹酒店(中央大街索菲亚教堂店) · 道里区西三道街19号",
-    pinyin: "Hā'ěrbīn Dàyáng Lìzī Jiǔdiàn (Xīsāndào Jiē 19 Hào)",
-    nameEn: "LIZZY • Ritz Hotel on Harbin Central Street (No. 19 West 3rd St)",
+    nameTh: "โรงแรมเมอร์เคียว ฮาร์บิน เซนทรัล สตรีท โซเฟีย เชิร์ช (พัก 2 คืนแรก 4–6 ธ.ค.)",
+    nameZh: "哈尔滨中央大街索菲亚美居酒店 · 道里区兆麟街92号",
+    pinyin: "Hā'ěrbīn Zhōngyāng Dàjiē Suǒfēiyà Měijū Jiǔdiàn (Zhàolín Jiē 92 Hào)",
+    nameEn: "Mercure Harbin Central Street Sophia Church (No. 92 Zhaolin St)",
     category: "russian_heritage",
     activityType: "visit",
     defaultDuration: 45,
-    categoryLabelTh: "โรงแรมที่พัก (คืนที่ 1 & 2 · ถนนจงหยาง)",
-    categoryLabelEn: "Hotel Stay (Nights 1 & 2 · Central St.)",
+    categoryLabelTh: "โรงแรมที่พัก (คืนที่ 1 & 2 · โบสถ์โซเฟีย/จงหยาง)",
+    categoryLabelEn: "Hotel Stay (Nights 1 & 2 · Sophia Church / Central St.)",
     categoryColor: "#7c3aed",
     pastelBg: "#f3e8ff",
     badgeColor: "#e9d5ff",
     doodleBorderColor: "#6d28d9",
     doodleIcon: "🏨",
-    rating: 4.9,
+    rating: 4.8,
     ratingStars: "⭐⭐⭐⭐⭐",
-    ratingDescTh: "โรงแรมหรูสไตล์พระราชวังยุโรปคลาสสิก เปิดใหม่ปี 2024 ติดถนนคนเดินจงหยาง (ซอย West 3rd Street เลขที่ 19) เดินไปแม่น้ำซงฮัว 5 นาที และโบสถ์เซนต์โซเฟีย 8 นาที",
-    ratingDescEn: "2024 European palace-inspired luxury boutique hotel right off Central Street (No. 19 West 3rd St, Daoli District), 5 mins walk to Songhua River & 8 mins to St. Sophia",
-    coords: [45.77606, 126.62103],
-    bookingUrl: "https://th.trip.com/hotels/w/detail/?cityid=5&hotelid=124049377&checkin=2026-12-04&checkout=2026-12-06&curr=THB&locale=en_th&fromShare=TripAppDetail&linkhub_token=sl_xeVM2GLAzW2",
+    ratingDescTh: "โรงแรม 4 ดาวมาตรฐานสากลเครือ Accor (Mercure) สไตล์ฝรั่งเศสโรแมนติก ตั้งอยู่เลขที่ 92 ถนนจ้าวหลิน (ติดห้าง Mykal) ห่างจากมหาวิหารเซนต์โซเฟียเพียง 290 เมตร (เดิน 3 นาที) และเดินไปถนนคนเดินจงหยางเพียง 5 นาที",
+    ratingDescEn: "4-star Accor Mercure French-inspired hotel at No. 92 Zhaolin Street (next to Mykal), just 290m (3 mins walk) from St. Sophia Cathedral & 5 mins walk to Central Street",
+    coords: [45.77273, 126.62442],
+    bookingUrl: "https://th.trip.com/hotels/w/detail/?cityid=5&hotelid=669461&checkin=2026-12-04&checkout=2026-12-09&curr=THB&locale=th-TH&fromShare=TripAppDetail&linkhub_token=sl_IEBzxd9x6X2",
     image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80",
-    tags: ["LIZZY Ritz Hotel", "哈尔滨大洋丽兹酒店", "ที่พักถนนจงหยาง", "West 3rd Street", "Central Street Hotel"],
+    tags: ["Mercure Harbin", "哈尔滨中央大街索菲亚美居酒店", "เมอร์เคียว ฮาร์บิน", "Zhaolin Street", "Sophia Church Hotel"],
     shortBulletsTh: [
-      "ตั้งอยู่เลขที่ 19 ถนนซีซานเต้าเจีย (No. 19 West 3rd Street / 西三道街19号) ติดถนนคนเดินจงหยาง",
-      "เข้าพัก 2 คืนแรก: เช็คอิน 4 ธ.ค. 2026 – เช็คเอาท์ 6 ธ.ค. 2026 (ฝากกระเป๋าใบใหญ่ก่อนไป Snow Town ได้)",
-      "เดินไปริมแม่น้ำซงฮัวเพียง 5 นาที, ตลาดเช้าหงจวน 4 นาที และมหาวิหารเซนต์โซเฟีย 8 นาที"
+      "ตั้งอยู่เลขที่ 92 ถนนจ้าวหลิน (No. 92 Zhaolin Street / 道里区兆麟街92号) ติดห้าง Mykal ใจกลางเขตเต้าหลี่",
+      "เข้าพัก 2 คืนแรก: เช็คอิน 4 ธ.ค. 2026 – เช็คเอาท์ 6 ธ.ค. 2026 (ฝากกระเป๋าใบใหญ่ก่อนไป Snow Town ได้ฟรี)",
+      "เดินไปมหาวิหารเซนต์โซเฟียเพียง 3 นาที (290 ม.), ตลาดเช้าหงจวน 5 นาที และถนนคนเดินจงหยาง 5 นาที"
     ],
     shortBulletsEn: [
-      "Located at No. 19 West 3rd Street (道里区西三道街19号), steps from Zhongyang Pedestrian Street",
-      "Confirmed 2-Night Stay: Check-in Dec 4, 2026 – Check-out Dec 6, 2026 (Luggage storage for Snow Town)",
-      "5-min walk to Songhua River & Flood Control Monument, 4-min walk to Hongzhuan Morning Market, 8-min walk to St. Sophia"
+      "Located at No. 92 Zhaolin Street (道里区兆麟街92号), right between St. Sophia Cathedral & Central Street",
+      "Confirmed 2-Night Stay: Check-in Dec 4, 2026 – Check-out Dec 6, 2026 (Free luggage storage for Snow Town)",
+      "3-min walk (290m) to St. Sophia Square, 5-min walk to Zhongyang Pedestrian Street & Hongzhuan Morning Market"
     ],
     openingHoursTh: "แผนกต้อนรับเปิดบริการ 24 ชั่วโมง (เช็คอิน 14:00 น. / เช็คเอาท์ 12:00 น.)",
     openingHoursEn: "24-Hour Front Desk (Check-in from 14:00 / Check-out until 12:00)",
-    bestTimeTh: "พักคืนที่ 1 (4 ธ.ค.) และ คืนที่ 2 (5 ธ.ค.) · ทำเลดีที่สุดใจกลางถนนจงหยาง",
-    bestTimeEn: "Stay Night 1 (Dec 4) & Night 2 (Dec 5) right at the heart of Central Street",
-    ticketPriceTh: "จองผ่าน Trip.com (Hotel ID: 124049377 · เช็คอิน 4 ธ.ค. - เช็คเอาท์ 6 ธ.ค. 2026)",
-    ticketPriceEn: "Booked via Trip.com (Hotel ID: 124049377 · Dec 4 – Dec 6, 2026)",
+    bestTimeTh: "พักคืนที่ 1 (4 ธ.ค.) และ คืนที่ 2 (5 ธ.ค.) · ทำเลใจกลางโบสถ์เซนต์โซเฟียและถนนจงหยาง",
+    bestTimeEn: "Stay Night 1 (Dec 4) & Night 2 (Dec 5) steps from St. Sophia Cathedral & Central Street",
+    ticketPriceTh: "จองผ่าน Trip.com (Hotel ID: 669461 · เครือ Accor Mercure)",
+    ticketPriceEn: "Booked via Trip.com (Hotel ID: 669461 · Accor Mercure)",
     transportTh: {
-      fromStation: "จากสนามบิน HRB นั่ง Airport Bus สาย 3 ลงป้าย Central Street หรือนั่งรถไฟใต้ดิน Line 2 ลงสถานี People's Square / Zhongyangdajie แล้วเดินเข้าซอย West 3rd St. (~350 ม.)",
-      fromAirport: "นั่ง DiDi / แท็กซี่จากสนามบินฮาร์บิน T2 ประมาณ 45 นาที (แจ้งคนขับว่า 哈尔滨大洋丽兹酒店 道里区西三道街19号)",
-      inside: "ตกแต่งสไตล์ยุโรปหรูหรา มีฮีตเตอร์อุ่นสบาย เครื่องชงกาแฟแคปซูล เลานจ์คาเฟ่ และบริการรับฝากสัมภาระฟรี"
+      fromStation: "ห่างจากสถานีรถไฟฮาร์บิน (哈尔滨站) เพียง 2.2 กม. นั่ง DiDi 8-10 นาที หรือนั่งรถไฟใต้ดิน Line 2 ลงสถานี Zhaolin Park / Central Street แล้วเดินเพียง 350 เมตร",
+      fromAirport: "นั่ง DiDi / แท็กซี่จากสนามบินฮาร์บิน T2 ประมาณ 45 นาที (แจ้งคนขับว่า 哈尔滨中央大街索菲亚美居酒店 道里区兆麟街92号)",
+      inside: "ตกแต่งสไตล์ฝรั่งเศสโมเดิร์น มีฮีตเตอร์อุ่นสบาย ไดร์เป่าผม Dyson มินิบาร์ฟรี ห้องฟิตเนส ห้องซักรีด และบริการรับฝากสัมภาระฟรี"
     },
     transportEn: {
-      fromStation: "Metro Line 2 to People's Square or Zhongyangdajie Station, then ~350m walk to No. 19 West 3rd Street",
-      fromAirport: "45 mins by DiDi/Taxi or Airport Bus Line 3 to Central Street",
-      inside: "Heated European-palace rooms, capsule coffee machines, lounge bar, and free luggage storage"
+      fromStation: "2.2 km from Harbin Railway Station (~8-10 mins by DiDi) or Metro Line 2 to Central Street Station (~350m walk)",
+      fromAirport: "45 mins by DiDi/Taxi or Airport Bus Line 3 to Central Street / St. Sophia",
+      inside: "French-elegance heated rooms, Dyson hair dryers, smart room controls, fitness center, laundry room, and free luggage storage"
     },
     highlightsTh: [
-      "ทำเลทองติดถนนคนเดินจงหยาง เดินออกจากโรงแรมเพียงไม่กี่ก้าวก็ถึงถนนหินร้อยปี",
-      "อยู่ใกล้ร้านอาหารหัวเหมย (Huamei), ไอศกรีมหม่าเตี๋ยเอ่อร์ และร้านเหล่าฉูเจีย (Laochujia)",
-      "สะดวกมากสำหรับฝากกระเป๋าเดินทางใบใหญ่ไว้ที่โรงแรมในเช้าวันที่ 3 ก่อนเดินทางไปค้าง Snow Town 2 คืน"
+      "โรงแรมมาตรฐานระดับโลกเครือ Accor (Mercure) บริการประทับใจและสิ่งอำนวยความสะดวกครบครัน",
+      "ทำเลกึ่งกลางที่ลงตัวที่สุด: เดินไปโบสถ์เซนต์โซเฟียแค่ 290 เมตร (3 นาที) และเดินทะลุไปถนนคนเดินจงหยางเพียง 5 นาที",
+      "สะดวกมากสำหรับฝากกระเป๋าเดินทางใบใหญ่ไว้ที่โรงแรมในเช้าวันที่ 3 ก่อนนั่งรถไฟความเร็วสูงไปค้าง Snow Town 2 คืน"
     ],
     highlightsEn: [
-      "Prime location at No. 19 West 3rd Street right next to Zhongyang Pedestrian Street",
-      "Steps away from Huamei Russian Restaurant, Madieer Popsicles, and Hongzhuan Morning Market",
-      "Ideal base to store large suitcases before heading to China Snow Town on Day 3"
+      "International 4-star Accor Mercure hotel offering French elegance and reliable winter comfort",
+      "Unbeatable location at No. 92 Zhaolin Street: 290m from St. Sophia Cathedral and 5 mins walk to Central Street",
+      "Ideal base to store large suitcases before taking the CRH bullet train to China Snow Town on Day 3"
     ],
-    descriptionTh: "LIZZY • Ritz Hotel on Harbin Central Street (哈尔滨大洋丽兹酒店 中央大街索菲亚教堂店) ตั้งอยู่ที่เลขที่ 19 ถนน West 3rd Street (西三道街19号) เขตเต้าหลี่ ติดกับถนนคนเดินจงหยาง ตกแต่งงดงามสไตล์พระราชวังยุโรปคลาสสิกผสานความทันสมัย เปิดใหม่ในปี 2024 เดินทางสะดวกมากทั้งการเดินเที่ยวถนนจงหยาง ตลาดเช้าหงจวน โบสถ์เซนต์โซเฟีย และริมแม่น้ำซงฮัว",
-    descriptionEn: "LIZZY • Ritz Hotel on Harbin Central Street (哈尔滨大洋丽兹酒店) is a newly opened (2024) European palace-style boutique hotel at No. 19 West 3rd Street, right beside Central Street. Its unbeatable walkable location puts St. Sophia Cathedral, Hongzhuan Morning Market, and the frozen Songhua River within a 4 to 8-minute stroll."
+    descriptionTh: "โรงแรมเมอร์เคียว ฮาร์บิน เซนทรัล สตรีท โซเฟีย เชิร์ช (Mercure Harbin Central Street Sophia Church / 哈尔滨中央大街索菲亚美居酒店) เป็นโรงแรมระดับ 4 ดาวในเครือ Accor ตั้งอยู่เลขที่ 92 ถนนจ้าวหลิน (道里区兆麟街92号) ติดกับห้างสรรพสินค้า Mykal และห่างจากลานมหาวิหารเซนต์โซเฟียเพียง 290 เมตร ตกแต่งสไตล์ฝรั่งเศสโรแมนติกผสานความทันสมัย ห้องพักอบอุ่นพร้อมไดร์เป่าผม Dyson และระบบสมาร์ทโฮม เดินทางท่องเที่ยวถนนคนเดินจงหยาง ตลาดเช้าหงจวน และโบสถ์เซนต์โซเฟียด้วยตัวเองได้อย่างง่ายดาย",
+    descriptionEn: "Mercure Harbin Central Street Sophia Church (哈尔滨中央大街索菲亚美居酒店) is an international 4-star Accor hotel at No. 92 Zhaolin Street in Daoli District. Located just 290 meters from St. Sophia Cathedral and a short 5-minute stroll from Zhongyang Pedestrian Street and Hongzhuan Morning Market, it features warm French-inspired rooms, Dyson hair dryers, fitness & laundry facilities, and luggage storage."
   },
 
   {
@@ -1862,12 +1862,12 @@ const HARBIN_ATTRACTIONS = [
     ticketPriceTh: "เฉลี่ย 88-128 หยวน/ท่าน (~450-650 บาท) ตักเองตามใจชอบ",
     ticketPriceEn: "Average ~88-128 RMB per person (Self-selection hot pot buffet)",
     transportTh: {
-      fromStation: "ตั้งอยู่บนถนนคนเดินจงหยาง (อาคารเฉาเหรินกวั่งฉ่าง ชั้น 3) เดินจากโรงแรม LIZZY • Ritz Hotel เพียง 3 นาที (~250 ม.)",
+      fromStation: "ตั้งอยู่บนถนนคนเดินจงหยาง (อาคารเฉาเหรินกวั่งฉ่าง ชั้น 3) เดินจากโรงแรม Mercure Sophia Church เพียง 4 นาที (~300 ม.)",
       fromAirport: "นั่งแท็กซี่/DiDi มาลงถนนจงหยาง (~45 นาที)",
       inside: "ขึ้นลิฟต์มาที่ชั้น 3 (3F) บรรยากาศกว้างขวาง อบอุ่น มีเคาน์เตอร์บาร์น้ำจิ้มและสเตชั่นซีฟู้ดสดใหม่"
     },
     transportEn: {
-      fromStation: "Located on Central Street (3F Chaoren Square); only a 3-minute walk (~250m) from LIZZY • Ritz Hotel",
+      fromStation: "Located on Central Street (3F Chaoren Square); only a 4-minute walk (~300m) from Mercure Harbin Central Street Sophia Church",
       fromAirport: "Taxi / DiDi ~45 mins from HRB Airport T2",
       inside: "Take elevator to 3F; spacious heated dining hall, sauce bar, and extensive fresh seafood stations"
     },
@@ -1875,13 +1875,13 @@ const HARBIN_ATTRACTIONS = [
       "ป้ายร้านไฟนีออนสีแดงทองโดดเด่น: '海鲜 牛富贵 火锅 3F' บนถนนคนเดินจงหยาง",
       "หม้อไฟสไตล์ตักเอง เลือกวัตถุดิบอาหารทะเลและเนื้อสัตว์สดๆ ได้ตามใจชอบ",
       "น้ำซุปร้อนเดือดปุดๆ ให้ความอบอุ่นสะใจหลังเผชิญความหนาวเหน็บภายนอก",
-      "ทำเลสุดสะดวก เดินจากโรงแรม LIZZY • Ritz Hotel และร้านไอศกรีมหม่าเตี๋ยเอ่อร์เพียง 2-3 นาที"
+      "ทำเลสุดสะดวก เดินจากโรงแรม Mercure Sophia Church และร้านไอศกรีมหม่าเตี๋ยเอ่อร์เพียง 3-4 นาที"
     ],
     highlightsEn: [
       "Prominent red & gold illuminated facade: '海鲜 牛富贵 火锅 3F' on Central Street",
       "Self-selection style: choose your favorite fresh seafood and premium meats",
       "Boiling hot broths providing instant comfort against Harbin's sub-zero winter temperatures",
-      "Superb location: just a 2-3 minute stroll from LIZZY • Ritz Hotel and Madieer Popsicles"
+      "Superb location: just a 3-4 minute stroll from Mercure Harbin Central Street Sophia Church and Madieer Popsicles"
     ],
     descriptionTh: "ร้านหม้อไฟทะเลตักเอง หนิวฟู่กุ้ย (牛富贵海鲜火锅) ตั้งอยู่บนชั้น 3 ของอาคารเฉาเหรินกวั่งฉ่าง (潮人广场 3F) ริมถนนคนเดินหินร้อยปีจงหยาง เป็นร้านยอดนิยมสำหรับผู้ที่ชื่นชอบอาหารทะเลและเนื้อวัวสไลซ์ในหม้อไฟร้อนๆ จุดเด่นคือการเลือกตักวัตถุดิบสดใหม่ได้เองตามใจชอบ มีน้ำซุปหลากหลายให้เลือก และเปิดบริการยาวนานถึงตี 4 (11:00 - 04:00 น.) จึงเหมาะอย่างยิ่งสำหรับเป็นมื้อค่ำคืนแรกหลังเช็คอินเข้าที่พักถนนจงหยาง",
     descriptionEn: "Niu Fu Gui Seafood Hotpot (牛富贵海鲜火锅) is a popular self-selected seafood and hot pot establishment on the 3rd floor of Chaoren Square along Harbin's Central Street. Featuring an extensive selection of fresh seafood, quality beef, customizable sauces, and hearty broths, it opens until 4:00 AM—making it the ideal cozy culinary kickoff for Night 1 in Harbin."
@@ -1955,8 +1955,8 @@ const DEFAULT_HARBIN_TIMELINE = {
   day1: {
     labelTh: "Day 1 (4 ธ.ค.)",
     labelEn: "Day 1 (Dec 4)",
-    titleTh: "Bangkok (BKK) ➔ เซี่ยงไฮ้ (PVG) ➔ ฮาร์บิน (HRB) • เช็คอิน LIZZY • Ritz Hotel • หม้อไฟทะเลตักเองหนิวฟู่กุ้ย (คืนที่ 1)",
-    titleEn: "Bangkok (BKK) ➔ Shanghai (PVG) ➔ Harbin (HRB) • LIZZY • Ritz Hotel • Niu Fu Gui Hotpot (Night 1)",
+    titleTh: "Bangkok (BKK) ➔ เซี่ยงไฮ้ (PVG) ➔ ฮาร์บิน (HRB) • เช็คอิน Mercure Harbin Sophia Church • หม้อไฟทะเลตักเองหนิวฟู่กุ้ย (คืนที่ 1)",
+    titleEn: "Bangkok (BKK) ➔ Shanghai (PVG) ➔ Harbin (HRB) • Mercure Harbin Central Street Sophia Church • Niu Fu Gui Hotpot (Night 1)",
     items: [
       {
         uid: "d1-bkk",
@@ -1997,32 +1997,32 @@ const DEFAULT_HARBIN_TIMELINE = {
         actType: "transit",
         isFlightStep: true,
         flightBadge: "🛬 ถึงฮาร์บิน 17:00 น. (รวม 10 ชม. 55 นาที)",
-        noteTh: "เดินทางถึงสนามบินฮาร์บินไท่ผิง T2 เวลา 17:00 น. รับสัมภาระ นั่ง DiDi หรือ Airport Bus สาย 3 มุ่งหน้าสู่โรงแรม LIZZY • Ritz Hotel ถนนจงหยาง (~45 นาที)",
-        noteEn: "Touch down at Harbin Taiping Airport T2 at 17:00, take DiDi or Airport Bus Line 3 to LIZZY • Ritz Hotel on Harbin Central Street"
+        noteTh: "เดินทางถึงสนามบินฮาร์บินไท่ผิง T2 เวลา 17:00 น. รับสัมภาระ นั่ง DiDi หรือ Airport Bus สาย 3 มุ่งหน้าสู่โรงแรม Mercure Harbin Central Street Sophia Church ถนนจ้าวหลิน (~45 นาที)",
+        noteEn: "Touch down at Harbin Taiping Airport T2 at 17:00, take DiDi or Airport Bus Line 3 to Mercure Harbin Central Street Sophia Church"
       },
       {
         uid: "d1-hotel",
         spotId: 28,
-        customNameTh: "เช็คอิน LIZZY • Ritz Hotel ถนนจงหยาง (พักคืนที่ 1 · ซอย West 3rd St.)",
-        customNameEn: "Check-in: LIZZY • Ritz Hotel on Harbin Central Street (Stay Night 1)",
+        customNameTh: "เช็คอินโรงแรมเมอร์เคียว ฮาร์บิน เซนทรัล สตรีท โซเฟีย เชิร์ช (พักคืนที่ 1 · ถนนจ้าวหลิน 92)",
+        customNameEn: "Check-in: Mercure Harbin Central Street Sophia Church (Stay Night 1)",
         time: "18:30",
         timeLabel: "18:30 - 19:15 น.",
         duration: 45,
         actType: "visit",
-        noteTh: "🏨 เช็คอินเข้าที่พัก LIZZY • Ritz Hotel on Harbin Central Street (哈尔滨大洋丽兹酒店 · 道里区西三道街19号) เก็บกระเป๋าเดินทาง สวมเสื้อกันหนาวจัดเต็ม แล้วเดินออกจากซอยโรงแรมเข้าสู่ถนนคนเดินจงหยางได้ทันที",
-        noteEn: "Check in at LIZZY • Ritz Hotel on Harbin Central Street (No. 19 West 3rd St), drop luggage & step right out onto Central Street"
+        noteTh: "🏨 เช็คอินเข้าที่พัก Mercure Harbin Central Street Sophia Church (哈尔滨中央大街索菲亚美居酒店 · 道里区兆麟街92号) โรงแรม 4 ดาวเครือ Accor ห่างโบสถ์เซนต์โซเฟียเพียง 290 ม. เก็บกระเป๋าเดินทาง สวมเสื้อกันหนาวจัดเต็ม แล้วเดินเชื่อมสู่ถนนคนเดินจงหยางเพียง 5 นาที",
+        noteEn: "Check in at Mercure Harbin Central Street Sophia Church (No. 92 Zhaolin St), drop luggage & walk 5 mins onto Central Street"
       },
       {
         uid: "d1-2",
         spotId: 2,
-        customNameTh: "เดินเล่นถนนคนเดินหินร้อยปีจงหยาง (หน้าปากซอยโรงแรม)",
-        customNameEn: "Zhongyang Pedestrian Street Stroll (Steps from LIZZY • Ritz Hotel)",
+        customNameTh: "เดินเล่นถนนคนเดินหินร้อยปีจงหยาง (เดินจากโรงแรมเมอร์เคียว ~5 นาที)",
+        customNameEn: "Zhongyang Pedestrian Street Stroll (5-min Walk from Mercure Hotel)",
         time: "19:15",
         timeLabel: "19:15 - 20:00 น.",
         duration: 45,
         actType: "walk",
-        noteTh: "เดินออกจากโรงแรม LIZZY • Ritz Hotel เพียงไม่กี่ก้าว ชมตึกยุโรปโบราณเปิดไฟสีทองบนถนนหินร้อยปีจงหยาง",
-        noteEn: "Walk steps from LIZZY • Ritz Hotel onto illuminated cobblestone Zhongyang Pedestrian Street"
+        noteTh: "เดินจากโรงแรม Mercure Sophia Church เพียง 5 นาที (~350 ม.) ชมตึกยุโรปโบราณเปิดไฟสีทองบนถนนหินร้อยปีจงหยาง",
+        noteEn: "Walk 5 mins from Mercure Harbin Central Street Sophia Church onto illuminated cobblestone Zhongyang Pedestrian Street"
       },
       {
         uid: "d1-3",
@@ -2051,52 +2051,52 @@ const DEFAULT_HARBIN_TIMELINE = {
       {
         uid: "d1-hotel-night1",
         spotId: 28,
-        customNameTh: "กลับเข้าที่พัก LIZZY • Ritz Hotel ถนนจงหยาง (พักค้างคืนที่ 1)",
-        customNameEn: "LIZZY • Ritz Hotel on Harbin Central Street (Return & Stay Night 1)",
+        customNameTh: "กลับเข้าที่พักโรงแรมเมอร์เคียว ฮาร์บิน โซเฟีย เชิร์ช (พักค้างคืนที่ 1)",
+        customNameEn: "Mercure Harbin Central Street Sophia Church (Return & Stay Night 1)",
         time: "22:00",
         timeLabel: "22:00 น. (พักคืนที่ 1)",
         duration: 60,
         actType: "visit",
-        noteTh: "🏨 เดินจากร้านหนิวฟู่กุ้ยกลับโรงแรม LIZZY • Ritz Hotel (西三道街19号) เพียง ~3 นาที พักผ่อนอย่างอบอุ่น · 🛌 พักค้างคืนที่ 1 (4 ธ.ค. 2026)",
-        noteEn: "Walk 3 mins back to LIZZY • Ritz Hotel on Harbin Central Street (No. 19 West 3rd St) · Overnight Stay Night 1 (Dec 4)"
+        noteTh: "🏨 เดินจากร้านหนิวฟู่กุ้ยกลับโรงแรม Mercure Harbin Central Street Sophia Church (兆麟街92号) เพียง ~4 นาที พักผ่อนอย่างอบอุ่น · 🛌 พักค้างคืนที่ 1 (4 ธ.ค. 2026)",
+        noteEn: "Walk 4 mins back to Mercure Harbin Central Street Sophia Church (No. 92 Zhaolin St) · Overnight Stay Night 1 (Dec 4)"
       }
     ]
   },
   day2: {
     labelTh: "Day 2 (5 ธ.ค.)",
     labelEn: "Day 2 (Dec 5)",
-    titleTh: "เริ่มจาก LIZZY • Ritz Hotel ➔ ตลาดเช้าหงจวน • โบสถ์เซนต์โซเฟีย • Harbin Music Gallery & ตุ๊กตาหิมะยักษ์ (11:00 น.) • หัวเหมย • ริมน้ำซงฮัว ➔ หม้อไฟทองเหลืองตงเป่ย ➔ กลับพัก LIZZY • Ritz Hotel (คืนที่ 2)",
-    titleEn: "Start at LIZZY • Ritz Hotel ➔ Morning Market • St. Sophia • Harbin Music Gallery (11:00 AM) • Huamei • Songhua River ➔ Dongbei Copper Pot Hot Pot ➔ LIZZY • Ritz Hotel (Night 2)",
+    titleTh: "เริ่มจากโรงแรมเมอร์เคียว ➔ ตลาดเช้าหงจวน • โบสถ์เซนต์โซเฟีย • Harbin Music Gallery & ตุ๊กตาหิมะยักษ์ (11:00 น.) • หัวเหมย • ริมน้ำซงฮัว ➔ โรตีชุนปิ่ง & หม้อไฟตงเป่ย ➔ กลับพักโรงแรมเมอร์เคียว (คืนที่ 2)",
+    titleEn: "Start at Mercure Hotel ➔ Morning Market • St. Sophia • Harbin Music Gallery (11:00 AM) • Huamei • Songhua River ➔ Lao Chang Spring Pancakes & Hot Pot ➔ Mercure Hotel (Night 2)",
     items: [
       {
         uid: "d2-hotel-start",
         spotId: 28,
-        customNameEn: "LIZZY • Ritz Hotel on Harbin Central Street (Start Day 2)",
-        customNameTh: "จุดเริ่มต้นวันที่ 2: ออกจากโรงแรม LIZZY • Ritz Hotel ถนนจงหยาง",
+        customNameEn: "Mercure Harbin Central Street Sophia Church (Start Day 2)",
+        customNameTh: "จุดเริ่มต้นวันที่ 2: ออกจากโรงแรมเมอร์เคียว ฮาร์บิน โซเฟีย เชิร์ช",
         time: "07:15",
         timeLabel: "07:15 - 07:30 น.",
         duration: 15,
         actType: "visit",
-        noteTh: "🏨 ออกเดินทางยามเช้าจากโรงแรม LIZZY • Ritz Hotel on Harbin Central Street (道里区西三道街19号) เตรียมเดินไปตลาดเช้าถนนหงจวนที่อยู่ห่างออกไปเพียง ~5 นาที",
-        noteEn: "Start Day 2 morning from LIZZY • Ritz Hotel on Harbin Central Street (No. 19 West 3rd St) and walk 5 mins to Hongzhuan Morning Market"
+        noteTh: "🏨 ออกเดินทางยามเช้าจากโรงแรม Mercure Harbin Central Street Sophia Church (道里区兆麟街92号) เตรียมเดินไปตลาดเช้าถนนหงจวนที่อยู่ห่างออกไปเพียง ~5 นาที (400 ม.)",
+        noteEn: "Start Day 2 morning from Mercure Harbin Central Street Sophia Church (No. 92 Zhaolin St) and walk 5 mins to Hongzhuan Morning Market"
       },
       {
         uid: "d2-1",
         spotId: 15,
-        customNameEn: "Hongzhuan Morning Street Food Market (Walk from LIZZY • Ritz Hotel)",
-        customNameTh: "เดินจาก LIZZY • Ritz Hotel ไปตลาดเช้าถนนหงจวน (~400 ม.)",
+        customNameEn: "Hongzhuan Morning Street Food Market (Walk from Mercure Hotel)",
+        customNameTh: "เดินจากโรงแรมเมอร์เคียว ไปตลาดเช้าถนนหงจวน (~400 ม.)",
         time: "07:30",
         timeLabel: "07:30 - 08:45 น.",
         duration: 75,
         actType: "eat",
-        noteTh: "เดินจากโรงแรม LIZZY • Ritz Hotel (ซอย West 3rd St.) เพียง ~5 นาที ก็ถึงตลาดเช้าหงจวน ชิมซาลาเปาทอด เกี๊ยวน้ำร้อนๆ และปาท่องโก๋ยักษ์ท่ามกลางไอควันยามเช้า",
-        noteEn: "Just a 5-minute walk from LIZZY • Ritz Hotel to steaming Hongzhuan Morning Street Food Market"
+        noteTh: "เดินจากโรงแรม Mercure Sophia Church (ถนนจ้าวหลิน 92) เพียง ~5 นาที ก็ถึงตลาดเช้าหงจวน ชิมซาลาเปาทอด เกี๊ยวน้ำร้อนๆ และปาท่องโก๋ยักษ์ท่ามกลางไอควันยามเช้า",
+        noteEn: "Just a 5-minute walk from Mercure Harbin Central Street Sophia Church to steaming Hongzhuan Morning Street Food Market"
       },
       {
         uid: "d2-2",
         spotId: 1,
-        customNameEn: "Saint Sophia Cathedral & Square (8-min Walk)",
-        customNameTh: "มหาวิหารเซนต์โซเฟีย (เดินจากตลาดเช้า/โรงแรม ~8 นาที)",
+        customNameEn: "Saint Sophia Cathedral & Square (290m from Mercure Hotel)",
+        customNameTh: "มหาวิหารเซนต์โซเฟีย (อยู่ใกล้โรงแรมเมอร์เคียวเพียง 290 ม. / เดิน ~3-5 นาที)",
         time: "09:15",
         timeLabel: "09:15 - 10:45 น.",
         duration: 90,
@@ -2120,13 +2120,13 @@ const DEFAULT_HARBIN_TIMELINE = {
         uid: "d2-3",
         spotId: 22,
         customNameEn: "Huamei Western Restaurant (1925 Russian Lunch near Hotel)",
-        customNameTh: "มื้อกลางวันอาหารรัสเซีย ร้านหัวเหมย 1925 (กลับมาถนนจงหยาง ใกล้ LIZZY • Ritz Hotel)",
+        customNameTh: "มื้อกลางวันอาหารรัสเซีย ร้านหัวเหมย 1925 (กลับมาถนนจงหยาง ใกล้โรงแรมเมอร์เคียว)",
         time: "13:00",
         timeLabel: "13:00 - 14:15 น.",
         duration: 75,
         actType: "eat",
-        noteTh: "นั่ง DiDi (~10 นาที) กลับมาที่ถนนจงหยาง ทานอาหารรัสเซียเก่าแก่ปี 1925 ร้านหัวเหมย (ซุปบอร์ชต์ & เนื้อตุ๋นอบโถขนมปัง) อยู่ใกล้โรงแรม LIZZY • Ritz Hotel แวะพักผ่อนได้สะดวกมาก",
-        noteEn: "Classic 1925 Russian lunch at Huamei Restaurant on Zhongyang Street, right near LIZZY • Ritz Hotel"
+        noteTh: "นั่ง DiDi (~10 นาที) กลับมาที่ถนนจงหยาง ทานอาหารรัสเซียเก่าแก่ปี 1925 ร้านหัวเหมย (ซุปบอร์ชต์ & เนื้อตุ๋นอบโถขนมปัง) อยู่ไม่ไกลจากโรงแรม Mercure แวะพักผ่อนได้สะดวกมาก",
+        noteEn: "Classic 1925 Russian lunch at Huamei Restaurant on Zhongyang Street, a short stroll from Mercure Hotel"
       },
       {
         uid: "d2-4",
@@ -2161,20 +2161,20 @@ const DEFAULT_HARBIN_TIMELINE = {
         timeLabel: "17:45 - 19:15 น.",
         duration: 90,
         actType: "eat",
-        noteTh: "มื้อค่ำเติมความอบอุ่นหลังชมพระอาทิตย์ตกแม่น้ำซงฮัว: แผ่นแป้งชุนปิ่งบางนุ่มห่อหมูผัดซอสจิงเจี้ยง ผัดถั่วงอก และซุปหม้อไฟร้อนๆ ร้านเหลาชางชุนปิ่ง สาขาถนนจงหยาง 180 (เดินกลับโรงแรม Ritz ซอย West 3rd เพียง 2 นาที)",
-        noteEn: "Cozy dinner at Lao Chang Spring Pancakes (Central Ave No. 180): warm thin spring pancakes wrapped with savory shredded pork & hot pot, just 2-min walk back to Ritz Hotel"
+        noteTh: "มื้อค่ำเติมความอบอุ่นหลังชมพระอาทิตย์ตกแม่น้ำซงฮัว: แผ่นแป้งชุนปิ่งบางนุ่มห่อหมูผัดซอสจิงเจี้ยง ผัดถั่วงอก และซุปหม้อไฟร้อนๆ ร้านเหลาชางชุนปิ่ง สาขาถนนจงหยาง 180 (เดินกลับโรงแรม Mercure ถนนจ้าวหลินเพียง ~5 นาที)",
+        noteEn: "Cozy dinner at Lao Chang Spring Pancakes (Central Ave No. 180): warm thin spring pancakes wrapped with savory shredded pork & hot pot, ~5-min walk back to Mercure Hotel"
       },
       {
         uid: "d2-hotel",
         spotId: 28,
-        customNameEn: "LIZZY • Ritz Hotel on Harbin Central Street (Return & Stay Night 2)",
-        customNameTh: "กลับเข้าที่พัก LIZZY • Ritz Hotel ถนนจงหยาง (พักค้างคืนที่ 2 · จัดกระเป๋าไป Snow Town)",
+        customNameEn: "Mercure Harbin Central Street Sophia Church (Return & Stay Night 2)",
+        customNameTh: "กลับเข้าที่พักโรงแรมเมอร์เคียว ฮาร์บิน โซเฟีย เชิร์ช (พักค้างคืนที่ 2 · จัดกระเป๋าไป Snow Town)",
         time: "19:30",
         timeLabel: "19:30 น. (พักคืนที่ 2)",
         duration: 120,
         actType: "visit",
-        noteTh: "🏨 เดินกลับโรงแรม LIZZY • Ritz Hotel (道里区西三道街19号) · 💡 เคล็ดลับ: จัดกระเป๋าใบเล็กสำหรับไปนอน Snow Town 2 คืน และเตรียมฝากกระเป๋าเดินทางใบใหญ่ไว้ที่เคาน์เตอร์โรงแรมในเช้าวันรุ่งขึ้น · ⏰ ตั้งนาฬิกาปลุก 05:00 น. เพื่อเช็คเอาท์และเดินไปขึ้นรถบัสทัวร์รอบ 06:00 น. ที่ลานโบสถ์เซนต์โซเฟีย (เดินเพียง 7-8 นาที) · 🛌 พักค้างคืนที่ 2 (5 ธ.ค. 2026)",
-        noteEn: "Return to LIZZY • Ritz Hotel on Harbin Central Street (Night 2) · Pack a 2-night bag for Snow Town & store big suitcases · Set alarm for 05:00 AM to catch 06:00 AM tour bus at St. Sophia Square (7-min walk)"
+        noteTh: "🏨 เดินกลับโรงแรม Mercure Harbin Central Street Sophia Church (道里区兆麟街92号) · 💡 เคล็ดลับ: จัดกระเป๋าใบเล็กสำหรับไปนอน Snow Town 2 คืน และเตรียมฝากกระเป๋าเดินทางใบใหญ่ไว้ที่เคาน์เตอร์โรงแรมในเช้าวันรุ่งขึ้น · ⏰ ตั้งนาฬิกาปลุก 05:45 น. เพื่อเช็คเอาท์เวลา 06:30 น. และเดินทางไปขึ้นรถไฟความเร็วสูง CRH ที่สถานีฮาร์บิน · 🛌 พักค้างคืนที่ 2 (5 ธ.ค. 2026)",
+        noteEn: "Return to Mercure Harbin Central Street Sophia Church (Night 2) · Pack a 2-night bag for Snow Town & store big suitcases · Set alarm for 05:45 AM for 06:30 AM check-out to Harbin Railway Station"
       }
     ]
   },
@@ -2187,13 +2187,13 @@ const DEFAULT_HARBIN_TIMELINE = {
       {
         uid: "d3-hotel-checkout",
         spotId: 28,
-        customNameEn: "LIZZY • Ritz Hotel on Harbin Central Street (Check-out 6 Dec & Store Luggage)",
-        customNameTh: "จุดเริ่มต้นวันที่ 3: เช็คเอาท์ LIZZY • Ritz Hotel & ฝากกระเป๋าเดินทางใบใหญ่",
+        customNameEn: "Mercure Harbin Central Street Sophia Church (Check-out 6 Dec & Store Luggage)",
+        customNameTh: "จุดเริ่มต้นวันที่ 3: เช็คเอาท์โรงแรมเมอร์เคียว ฮาร์บิน & ฝากกระเป๋าเดินทางใบใหญ่",
         time: "06:30",
         timeLabel: "06:30 - 06:55 น.",
         duration: 25,
         actType: "visit",
-        noteTh: "🏨 เช็คเอาท์จากโรงแรม LIZZY • Ritz Hotel (ซอย West 3rd St. ถนนคนเดินจงหยาง) ฝากกระเป๋าเดินทางใบใหญ่ไว้ที่เคาน์เตอร์โรงแรมฟรี พกเฉพาะเป้ Daypack เสื้อผ้ากันหนาวและของใช้จำเป็นสำหรับทริปหิมะ 2 คืน (Snow Town คืนที่ 3 และ 4) จากนั้นเตรียมออกเดินทางสู่สถานีรถไฟ",
+        noteTh: "🏨 เช็คเอาท์จากโรงแรม Mercure Harbin Central Street Sophia Church (เลขที่ 92 ถนนจ้าวหลิน ใกล้โบสถ์เซนต์โซเฟีย) ฝากกระเป๋าเดินทางใบใหญ่ไว้ที่เคาน์เตอร์โรงแรมฟรี พกเฉพาะเป้ Daypack เสื้อผ้ากันหนาวและของใช้จำเป็นสำหรับทริปหิมะ 2 คืน (Snow Town คืนที่ 3 และ 4) จากนั้นเตรียมออกเดินทางสู่สถานีรถไฟฮาร์บิน",
         noteEn: "Check out from hotel, store large suitcases at reception for free, pack only daypacks with 2-night winter essentials for Snow Town, and prepare for station transfer"
       },
       {
