@@ -2013,28 +2013,28 @@ const DEFAULT_HARBIN_TIMELINE = {
         noteEn: "Check in at Mercure Harbin Central Street Sophia Church (No. 92 Zhaolin St), drop luggage & walk 5 mins onto Central Street"
       },
       {
-        uid: "d1-2",
-        spotId: 2,
-        customNameTh: "เดินเล่นถนนคนเดินหินร้อยปีจงหยาง (เดินจากโรงแรมเมอร์เคียว ~5 นาที)",
-        customNameEn: "Zhongyang Pedestrian Street Stroll (5-min Walk from Mercure Hotel)",
-        time: "19:15",
-        timeLabel: "19:15 - 20:00 น.",
-        duration: 45,
-        actType: "walk",
-        noteTh: "เดินจากโรงแรม Mercure Sophia Church เพียง 5 นาที (~350 ม.) ชมตึกยุโรปโบราณเปิดไฟสีทองบนถนนหินร้อยปีจงหยาง",
-        noteEn: "Walk 5 mins from Mercure Harbin Central Street Sophia Church onto illuminated cobblestone Zhongyang Pedestrian Street"
-      },
-      {
         uid: "d1-3",
         spotId: 24,
-        customNameTh: "ไอศกรีมหม่าเตี๋ยเอ่อร์ (หน้าโรงแรม Modern ถนนจงหยาง)",
-        customNameEn: "Madieer Ice Popsicle (1906)",
-        time: "20:00",
-        timeLabel: "20:00 - 20:30 น.",
+        customNameTh: "ไอศกรีมหม่าเตี๋ยเอ่อร์ (หน้าโรงแรม Modern ถนนจงหยาง · เดินจากเมอร์เคียว ~5 นาที)",
+        customNameEn: "Madieer Ice Popsicle (1906 · 5-min Walk from Mercure Hotel)",
+        time: "19:15",
+        timeLabel: "19:15 - 19:45 น.",
         duration: 30,
         actType: "eat",
-        noteTh: "เดินเล่นตามถนนจงหยางประมาณ 350 เมตร ชิมไอศกรีมแท่งหม่าเตี๋ยเอ่อร์ท้าความหนาว -16°C และไส้กรอกแดงร้อนๆ",
-        noteEn: "Taste iconic 1906 Madieer vanilla popsicle in -16°C snow along Zhongyang Street"
+        noteTh: "เดินจากโรงแรม Mercure Sophia Church ตัดเข้าซอยสู่หน้าโรงแรม Modern บนถนนจงหยาง (~350 เมตร / 5 นาที) ประเดิมชิมไอศกรีมแท่งหม่าเตี๋ยเอ่อร์สูตรปี 1906 ท้าความหนาว -16°C และไส้กรอกแดงร้อนๆ",
+        noteEn: "Walk 5 mins (~350m) from Mercure Hotel to Modern Hotel on Central Street to taste the iconic 1906 Madieer vanilla popsicle in -16°C snow"
+      },
+      {
+        uid: "d1-2",
+        spotId: 2,
+        customNameTh: "เดินเล่นถนนคนเดินหินร้อยปีจงหยาง (ชมตึกยุโรปเปิดไฟยามค่ำคืน)",
+        customNameEn: "Zhongyang Pedestrian Street Evening Stroll",
+        time: "19:45",
+        timeLabel: "19:45 - 20:30 น.",
+        duration: 45,
+        actType: "walk",
+        noteTh: "เดินเล่นต่อเนื่องไปตามถนนคนเดินหินร้อยปีจงหยาง ชมสถาปัตยกรรมยุโรปโบราณเปิดไฟสีทองอร่ามและประติมากรรมน้ำแข็งริมทาง ก่อนเดินเชื่อมต่อไปยังร้านหม้อไฟหนิวฟู่กุ้ย",
+        noteEn: "Stroll along the illuminated 120-year-old cobblestone Zhongyang Pedestrian Street and admire glowing European baroque facades on the way to dinner"
       },
       {
         uid: "d1-4",
