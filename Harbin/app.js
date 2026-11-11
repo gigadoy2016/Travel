@@ -5,8 +5,8 @@
 // - Sections 3 & 4: AMAP Harbin Interactive Map (English Labels, Pinning, Route Lines)
 // ============================================================================
 
-const STORAGE_KEY_TIMELINE = "harbin_planner_timeline_v21";
-const STORAGE_KEY_CUSTOM_SPOTS = "harbin_planner_custom_spots_v12";
+const STORAGE_KEY_TIMELINE = "harbin_planner_timeline_v22";
+const STORAGE_KEY_CUSTOM_SPOTS = "harbin_planner_custom_spots_v13";
 const IS_READ_ONLY = true; // Public View-Only Mode: Disables edits, deletes, drag-and-drop, and pin additions
 
 // Detail Markdown File Mapping (for the original 22 Harbin docs)
@@ -73,11 +73,11 @@ const HARBIN_ENGLISH_GEO_LABELS = [
 // AMAP & English Tile Layer Configurations
 const MAP_TILE_LAYERS = {
   amap_en_hybrid: {
-    name: "AMAP Road + English Labels",
+    name: "AMAP Official Road Map (高德地图 ditu.amap.com) + EN Pins",
     isGcj: true,
-    baseUrl: "https://wprd0{s}.is.autonavi.com/appmaptile?x={x}&y={y}&z={z}&lang=en&size=1&scl=1&style=7",
+    baseUrl: "https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}",
     subdomains: "1234",
-    attribution: '&copy; <a href="https://www.amap.com/" target="_blank">AMAP (AutoNavi 高德地图)</a> · English Overlay'
+    attribution: '&copy; <a href="https://ditu.amap.com/" target="_blank">AMAP (AutoNavi 高德地图)</a> · Exact POI Match'
   },
   carto_en: {
     name: "English Clean Street Map (Carto Voyager)",
@@ -87,18 +87,18 @@ const MAP_TILE_LAYERS = {
     attribution: '&copy; <a href="https://carto.com/">CARTO</a> &copy; OpenStreetMap (English)'
   },
   amap_sat_en: {
-    name: "AMAP Satellite + English Pins",
+    name: "AMAP Satellite + Road Overlay",
     isGcj: true,
-    baseUrl: "https://wprd0{s}.is.autonavi.com/appmaptile?x={x}&y={y}&z={z}&lang=en&size=1&scl=1&style=6",
+    baseUrl: "https://webst0{s}.is.autonavi.com/appmaptile?style=6&x={x}&y={y}&z={z}",
     subdomains: "1234",
-    attribution: '&copy; <a href="https://www.amap.com/" target="_blank">AMAP Satellite (高德卫星)</a> · English'
+    attribution: '&copy; <a href="https://ditu.amap.com/" target="_blank">AMAP Satellite (高德卫星)</a>'
   },
   amap_bilingual: {
-    name: "AMAP Bilingual (EN / 中文)",
+    name: "AMAP English Tile Layer (Legacy EN)",
     isGcj: true,
-    baseUrl: "https://wprd0{s}.is.autonavi.com/appmaptile?x={x}&y={y}&z={z}&lang=zh_en&size=1&scl=1&style=7",
+    baseUrl: "https://wprd0{s}.is.autonavi.com/appmaptile?x={x}&y={y}&z={z}&lang=en&size=1&scl=1&style=7",
     subdomains: "1234",
-    attribution: '&copy; <a href="https://www.amap.com/" target="_blank">AMAP Bilingual (高德中英地图)</a>'
+    attribution: '&copy; <a href="https://www.amap.com/" target="_blank">AMAP English Tile Layer</a>'
   }
 };
 
@@ -2091,7 +2091,7 @@ function setMapTileLayer(layerKey) {
 
   // If satellite mode, add transparent hybrid road lines & labels on top
   if (layerKey === "amap_sat_en") {
-    satelliteOverlayInstance = L.tileLayer("https://wprd0{s}.is.autonavi.com/appmaptile?x={x}&y={y}&z={z}&lang=zh_en&size=1&scl=1&style=8", {
+    satelliteOverlayInstance = L.tileLayer("https://webst0{s}.is.autonavi.com/appmaptile?style=8&x={x}&y={y}&z={z}", {
       subdomains: "1234",
       maxZoom: 18,
       opacity: 0.92
@@ -2680,7 +2680,7 @@ function focusTimelineItemOnMap(index, dayKey = currentDayKey) {
 
   if (prevCoords) {
     const segDistKm = calcDistanceKm(prevCoords, targetCoords);
-    if (segDistKm > 0.005 && segDistKm < 380) {
+    if (segDistKm > 0.005 && segDistKm <= 25) {
       const ptPrev = getDisplayCoords(prevCoords);
       const ptCurr = getDisplayCoords(targetCoords);
       const bounds = L.latLngBounds([ptPrev, ptCurr]).pad(0.32);
@@ -2695,7 +2695,7 @@ function focusTimelineItemOnMap(index, dayKey = currentDayKey) {
   }
 
   const pos = getDisplayCoords(currCoords);
-  map.flyTo(pos, 16, { duration: 0.85 });
+  map.flyTo(pos, 17, { duration: 0.85 });
 }
 
 function fitCurrentTimelineRoute() {
