@@ -1,0 +1,1760 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Harbin &amp; China Snow Town 2026 — Trip Presentation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-deep: #071120;
+      --bg-card: rgba(15, 30, 54, 0.78);
+      --bg-card-light: rgba(255, 255, 255, 0.06);
+      --border-glass: rgba(148, 210, 255, 0.22);
+      --ice: #38bdf8;
+      --ice-soft: #bae6fd;
+      --gold: #fbbf24;
+      --rose: #fb7185;
+      --emerald: #34d399;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-soft: #cbd5e1;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      background: #040a14;
+      color: var(--text-main);
+      font-family: 'Sarabun', 'Inter', -apple-system, sans-serif;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    /* Stage & 16:9 Slide Container */
+    .stage {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at 20% 20%, #0f294a 0%, #06101f 55%, #030712 100%);
+      position: relative;
+    }
+
+    .deck-viewport {
+      width: min(96vw, calc(90vh * 16 / 9));
+      height: min(90vh, calc(96vw * 9 / 16));
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(148, 210, 255, 0.18);
+      background: var(--bg-deep);
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      padding: 36px 46px 54px;
+      display: none;
+      flex-direction: column;
+      background:
+        radial-gradient(circle at 88% 12%, rgba(56, 189, 248, 0.14), transparent 36%),
+        radial-gradient(circle at 12% 88%, rgba(251, 191, 36, 0.08), transparent 36%),
+        linear-gradient(145deg, #09172c 0%, #060f1e 100%);
+      animation: fadeSlide 0.28s ease-out;
+    }
+
+    .slide.active {
+      display: flex;
+    }
+
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Slide Header */
+    .slide-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(148, 210, 255, 0.16);
+      flex-shrink: 0;
+    }
+
+    .day-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 14px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      background: rgba(56, 189, 248, 0.16);
+      color: var(--ice-soft);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+    }
+
+    .day-pill.food {
+      background: rgba(251, 191, 36, 0.16);
+      color: #fde68a;
+      border-color: rgba(251, 191, 36, 0.38);
+    }
+
+    .day-pill.highlight {
+      background: rgba(251, 113, 133, 0.16);
+      color: #fecdd3;
+      border-color: rgba(251, 113, 133, 0.38);
+    }
+
+    .slide-title-group {
+      flex: 1;
+    }
+
+    .slide-title {
+      font-size: 1.55rem;
+      font-weight: 800;
+      line-height: 1.2;
+      color: #ffffff;
+    }
+
+    .slide-subtitle {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .slide-num-badge {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.05);
+      padding: 5px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    /* Slide Body Layouts */
+    .slide-body {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      height: 100%;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      height: 100%;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      height: 100%;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      border-radius: 14px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      backdrop-filter: blur(10px);
+    }
+
+    .card-img-wrap {
+      position: relative;
+      width: 100%;
+      height: 52%;
+      min-height: 120px;
+      background: linear-gradient(135deg, #0f2744, #1e3a5f);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .grid-2 .card-img-wrap {
+      height: 56%;
+    }
+
+    .card-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .time-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(7, 17, 32, 0.86);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.45);
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      backdrop-filter: blur(6px);
+    }
+
+    .type-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(7, 17, 32, 0.84);
+      color: #fde68a;
+      border: 1px solid rgba(251, 191, 36, 0.4);
+      padding: 4px 9px;
+      border-radius: 8px;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+
+    .type-badge.eat {
+      background: rgba(120, 53, 15, 0.88);
+      color: #fef3c7;
+      border-color: rgba(251, 191, 36, 0.65);
+    }
+
+    .type-badge.visit {
+      background: rgba(12, 74, 110, 0.88);
+      color: #e0f2fe;
+      border-color: rgba(56, 189, 248, 0.55);
+    }
+
+    .type-badge.transit {
+      background: rgba(88, 28, 135, 0.88);
+      color: #f3e8ff;
+      border-color: rgba(192, 132, 252, 0.55);
+    }
+
+    .card-content {
+      padding: 12px 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .card-title {
+      font-size: 1.02rem;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.25;
+    }
+
+    .card-zh {
+      font-size: 0.8rem;
+      color: var(--ice);
+      font-weight: 600;
+    }
+
+    .card-desc {
+      font-size: 0.83rem;
+      color: var(--text-soft);
+      line-height: 1.42;
+      margin-top: 2px;
+    }
+
+    .card-meta {
+      margin-top: auto;
+      padding-top: 6px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.76rem;
+      color: var(--gold);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    /* Cover Slide */
+    .cover-slide {
+      padding: 0;
+      position: relative;
+    }
+
+    .cover-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(5, 13, 26, 0.94) 0%, rgba(5, 13, 26, 0.78) 52%, rgba(5, 13, 26, 0.42) 100%),
+        url('assets/places/harbin_01_saint_sophia.jpg') center/cover no-repeat;
+    }
+
+    .cover-inner {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      padding: 48px 56px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .cover-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(56, 189, 248, 0.16);
+      border: 1px solid rgba(56, 189, 248, 0.45);
+      color: #bae6fd;
+      padding: 7px 16px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      width: fit-content;
+    }
+
+    .cover-title {
+      font-size: 3.1rem;
+      font-weight: 800;
+      line-height: 1.12;
+      letter-spacing: -0.01em;
+      background: linear-gradient(90deg, #ffffff 0%, #bae6fd 65%, #38bdf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 14px 0 10px;
+    }
+
+    .cover-sub {
+      font-size: 1.25rem;
+      color: #cbd5e1;
+      max-width: 680px;
+      line-height: 1.45;
+    }
+
+    .cover-stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(140px, 1fr));
+      gap: 14px;
+      max-width: 860px;
+    }
+
+    .stat-box {
+      background: rgba(10, 24, 46, 0.82);
+      border: 1px solid rgba(148, 210, 255, 0.25);
+      border-radius: 12px;
+      padding: 12px 16px;
+      backdrop-filter: blur(8px);
+    }
+
+    .stat-label {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .stat-val {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-top: 3px;
+    }
+
+    /* Overview / Roadmap */
+    .roadmap-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .roadmap-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      border-radius: 12px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .roadmap-day {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--ice);
+    }
+
+    .roadmap-title {
+      font-size: 0.94rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.3;
+    }
+
+    .roadmap-stay {
+      font-size: 0.78rem;
+      color: var(--gold);
+      margin-top: auto;
+      padding-top: 4px;
+    }
+
+    .info-banner-row {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 14px;
+    }
+
+    .info-panel {
+      background: rgba(15, 30, 54, 0.85);
+      border: 1px solid var(--border-glass);
+      border-radius: 12px;
+      padding: 13px 16px;
+    }
+
+    .info-panel h4 {
+      font-size: 0.92rem;
+      color: var(--ice-soft);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .info-panel p, .info-panel li {
+      font-size: 0.81rem;
+      color: var(--text-soft);
+      line-height: 1.45;
+      list-style: none;
+    }
+
+    /* Split Showcase Slide (for Ice & Snow World / Feature highlights) */
+    .split-hero {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 20px;
+      height: 100%;
+    }
+
+    .hero-photo-box {
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border-glass);
+      position: relative;
+      background: #0f2744;
+    }
+
+    .hero-photo-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-photo-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 18px 20px;
+      background: linear-gradient(transparent, rgba(4, 10, 20, 0.94));
+    }
+
+    .hero-details-col {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .detail-block {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      border-radius: 12px;
+      padding: 13px 16px;
+    }
+
+    .detail-block h4 {
+      font-size: 0.92rem;
+      color: var(--ice);
+      margin-bottom: 5px;
+    }
+
+    .detail-block ul {
+      padding-left: 16px;
+      font-size: 0.84rem;
+      color: var(--text-soft);
+      line-height: 1.5;
+    }
+
+    /* Food Gallery 4x2 */
+    .food-grid-8 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 12px;
+      height: 100%;
+    }
+
+    .food-mini-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(251, 191, 36, 0.28);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .food-mini-img {
+      height: 55%;
+      position: relative;
+      background: #1e293b;
+    }
+
+    .food-mini-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .food-mini-body {
+      padding: 8px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      flex: 1;
+    }
+
+    .food-mini-title {
+      font-size: 0.86rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.2;
+    }
+
+    .food-mini-sub {
+      font-size: 0.74rem;
+      color: #fde68a;
+    }
+
+    .food-mini-note {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      line-height: 1.3;
+    }
+
+    /* Bottom Navigation Bar inside Deck */
+    .deck-controls {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 44px;
+      background: rgba(4, 10, 20, 0.86);
+      border-top: 1px solid rgba(148, 210, 255, 0.14);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      z-index: 20;
+      backdrop-filter: blur(8px);
+    }
+
+    .progress-track {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #38bdf8, #818cf8);
+      transition: width 0.25s ease;
+    }
+
+    .ctrl-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ctrl-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: #e2e8f0;
+      padding: 5px 12px;
+      border-radius: 7px;
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .ctrl-btn:hover {
+      background: rgba(56, 189, 248, 0.22);
+      border-color: rgba(56, 189, 248, 0.5);
+      color: #fff;
+    }
+
+    .ctrl-btn.primary {
+      background: rgba(56, 189, 248, 0.22);
+      border-color: rgba(56, 189, 248, 0.45);
+      color: #bae6fd;
+    }
+
+    .slide-counter {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      min-width: 70px;
+      text-align: center;
+    }
+
+    /* Overview Grid Modal */
+    .overview-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(4, 10, 20, 0.94);
+      z-index: 100;
+      display: none;
+      flex-direction: column;
+      padding: 28px 36px;
+      overflow-y: auto;
+    }
+
+    .overview-overlay.open {
+      display: flex;
+    }
+
+    .overview-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 14px;
+    }
+
+    .overview-card {
+      background: #0f1e36;
+      border: 1px solid rgba(148, 210, 255, 0.22);
+      border-radius: 10px;
+      padding: 14px;
+      cursor: pointer;
+      transition: transform 0.15s, border-color 0.15s;
+    }
+
+    .overview-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--ice);
+    }
+
+    .overview-card.active {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 1px var(--gold);
+    }
+
+    /* Print / PDF Styles */
+    @media print {
+      @page {
+        size: landscape;
+        margin: 0;
+      }
+      html, body {
+        width: 100%;
+        height: auto;
+        overflow: visible;
+        background: #071120 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .stage {
+        display: block;
+        width: 100%;
+        height: auto;
+        background: none;
+      }
+      .deck-viewport {
+        width: 100%;
+        height: auto;
+        box-shadow: none;
+        border-radius: 0;
+        overflow: visible;
+      }
+      .slide {
+        position: relative !important;
+        display: flex !important;
+        width: 100vw;
+        height: 100vh;
+        page-break-after: always;
+        break-after: page;
+      }
+      .deck-controls, .overview-overlay {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="stage">
+  <div class="deck-viewport" id="deckViewport">
+
+    <!-- =====================================================================
+         SLIDE 1: COVER
+         ===================================================================== -->
+    <section class="slide cover-slide active" data-title="หน้าปก: Harbin &amp; China Snow Town 2026">
+      <div class="cover-bg"></div>
+      <div class="cover-inner">
+        <div>
+          <div class="cover-tag">❄️ WINTER TRIP PRESENTATION · 4 – 9 DECEMBER 2026</div>
+          <h1 class="cover-title">Harbin &amp; China Snow Town<br>Winter Wonderland 2026</h1>
+          <p class="cover-sub">
+            แผนการเดินทางฉบับสมบูรณ์ 6 วัน 5 คืน: นครน้ำแข็งฮาร์บิน – มหาวิหารเซนต์โซเฟีย –
+            ระเบียงดนตรีริมแม่น้ำซงฮัว – หมู่บ้านหิมะในฝัน เสวี่ยเซียง – โลกน้ำแข็ง Ice &amp; Snow World
+          </p>
+        </div>
+
+        <div class="cover-stats">
+          <div class="stat-box">
+            <div class="stat-label">📅 ระยะเวลาเดินทาง</div>
+            <div class="stat-val">6 วัน 5 คืน (4–9 ธ.ค.)</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">✈️ สายการบิน (Confirmed)</div>
+            <div class="stat-val">China Eastern (PVG)</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">🌡️ อุณหภูมิคาดการณ์</div>
+            <div class="stat-val">-10°C ถึง -25°C</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">🏨 ที่พักหลัก</div>
+            <div class="stat-val">Mercure &amp; Floral Hotel</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SLIDE 2: TRIP OVERVIEW & FLIGHTS
+         ===================================================================== -->
+    <section class="slide" data-title="ภาพรวม 6 วัน &amp; ตารางบินจริง">
+      <header class="slide-header">
+        <div class="slide-title-group">
+          <div class="day-pill">🗺️ TRIP OVERVIEW &amp; CONFIRMED FLIGHTS</div>
+          <h2 class="slide-title">ภาพรวมการเดินทาง 6 วัน 5 คืน &amp; เที่ยวบินจริง</h2>
+        </div>
+        <div class="slide-num-badge">SLIDE 2 / 15</div>
+      </header>
+      <div class="slide-body">
+        <div class="roadmap-grid">
+          <div class="roadmap-item">
+            <div class="roadmap-day">DAY 1 · 4 ธ.ค. 2026</div>
+            <div class="roadmap-title">BKK ➔ PVG ➔ HRB · ถนนคนเดินจงหยาง · ไอศกรีมหม่าเตี๋ยเอ่อร์ · หม้อไฟทะเลหนิวฟู่กุ้ย</div>
+            <div class="roadmap-stay">🏨 Mercure Harbin Sophia Church (คืนที่ 1)</div>
+          </div>
+          <div class="roadmap-item">
+            <div class="roadmap-day">DAY 2 · 5 ธ.ค. 2026</div>
+            <div class="roadmap-title">ตลาดเช้าหงจวน · Harbin Music Gallery · ร้านหัวเหมย · แม่น้ำซงฮัว · เหลาชางชุนปิ่ง · เซนต์โซเฟียกลางคืน</div>
+            <div class="roadmap-stay">🏨 Mercure Harbin Sophia Church (คืนที่ 2)</div>
+          </div>
+          <div class="roadmap-item">
+            <div class="roadmap-day">DAY 3 · 6 ธ.ค. 2026</div>
+            <div class="roadmap-title">CRH ฮาร์บิน ➔ ย่าปู้ลี่ซี ➔ ชัทเทิลบัสสู่ China Snow Town · ถนนเสวี่ยยวิ่น · Dream Home · เขาปั้งฉุย</div>
+            <div class="roadmap-stay">🏨 Floral Hotel·Dream Home (Snow Town คืน 1)</div>
+          </div>
+          <div class="roadmap-item">
+            <div class="roadmap-day">DAY 4 · 7 ธ.ค. 2026</div>
+            <div class="roadmap-title">สาดน้ำเดือดเป็นน้ำแข็ง · ยอดเขาหยางเฉ่าซาน · หม้อไฟเที่ยกัวตุน · ลานสกีเสวี่ยเป่า · ปาร์ตี้กองไฟหยางเกอ</div>
+            <div class="roadmap-stay">🏨 Floral Hotel·Dream Home (Snow Town คืน 2)</div>
+          </div>
+          <div class="roadmap-item">
+            <div class="roadmap-day">DAY 5 · 8 ธ.ค. 2026</div>
+            <div class="roadmap-title">กลับฮาร์บิน · กัวเปาโร่ว 100 ปี ร้านเหล่าฉูเจีย · ย่านบาโรกจีนเหล่าเต้าว่าย · Ice &amp; Snow World</div>
+            <div class="roadmap-stay">🏨 ตัวเมืองฮาร์บิน (คืนที่ 5)</div>
+          </div>
+          <div class="roadmap-item">
+            <div class="roadmap-day">DAY 6 · 9 ธ.ค. 2026</div>
+            <div class="roadmap-title">พิพิธภัณฑ์มณฑลเฮยหลงเจียง · ห้างชิวหลิน 1900 &amp; ต้าเลี่ยปา · สนามบิน HRB T2 ➔ PVG ➔ BKK</div>
+            <div class="roadmap-stay">✈️ ถึงกรุงเทพฯ 00:55 (+1) น.</div>
+          </div>
+        </div>
+
+        <div class="info-banner-row">
+          <div class="info-panel">
+            <h4>✈️ เที่ยวบินที่ยืนยันแล้ว (Booking: 1622932337344364 · China Eastern / Shanghai Airlines)</h4>
+            <ul>
+              <li>• <strong>ขาไป (4 ธ.ค.):</strong> 05:05 BKK ➔ 10:20 PVG T1 (FM848) · เปลี่ยนเครื่อง 3 ชม. 35 นาที (Check-through) ➔ 13:55 PVG T1 ➔ <strong>17:00 น. ฮาร์บิน (HRB T2)</strong></li>
+              <li>• <strong>ขากลับ (9 ธ.ค.):</strong> <strong>15:10 น. ฮาร์บิน (HRB T2)</strong> ➔ แวะเปลี่ยนเครื่องเซี่ยงไฮ้ PVG ➔ <strong>00:55 (+1) น. ถึงสุวรรณภูมิ (BKK)</strong></li>
+            </ul>
+          </div>
+          <div class="info-panel">
+            <h4>🏨 โรงแรมที่พักหลัก (ทำเลใจกลางแหล่งเที่ยว)</h4>
+            <ul>
+              <li>• <strong>คืนที่ 1–2 (ฮาร์บิน):</strong> Mercure Harbin Central Street Sophia Church (ถนนจ้าวหลิน 92 · ห่างโบสถ์เซนต์โซเฟีย 290 ม.)</li>
+              <li>• <strong>คืนที่ 3–4 (Snow Town):</strong> Floral Hotel · Dream Home (สาขาถนนเสวี่ยยวิ่น · ใกล้ลานสกีเสวี่ยเป่า &lt;100 ม.)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SLIDE 3: DAY 1 - ARRIVAL & ZHONGYANG STREET
+         ===================================================================== -->
+    <section class="slide" data-title="Day 1 (4 ธ.ค.): เดินทาง &amp; ถนนคนเดินจงหยาง">
+      <header class="slide-header">
+        <div class="slide-title-group">
+          <div class="day-pill">📅 DAY 1 · 4 ธันวาคม 2026 (ช่วงเดินทาง – หัวค่ำ)</div>
+          <h2 class="slide-title">ถึงฮาร์บิน · เช็คอิน Mercure · เดินถนนคนเดินร้อยปีจงหยาง</h2>
+        </div>
+        <div class="slide-num-badge">SLIDE 3 / 15</div>
+      </header>
+      <div class="slide-body">
+        <div class="grid-3">
+          <article class="card">
+            <div class="card-img-wrap">
+              <img src="assets/places/harbin_11_airport.jpg" alt="Harbin Taiping Airport">
+              <span class="time-badge">05:05 – 17:00 น.</span>
+              <span class="type-badge transit">✈️ เที่ยวบิน</span>
+            </div>
+            <div class="card-content">
+              <div class="card-title">BKK ➔ PVG ➔ ท่าอากาศยานฮาร์บินไท่ผิง T2</div>
+              <div class="card-zh">哈尔滨太平国际机场 T2</div>
+              <p class="card-desc">
+                ออกเดินทางจากสุวรรณภูมิ 05:05 น. ต่อเครื่องที่เซี่ยงไฮ้ PVG T1 (10:20–13:55 น.) ถึงฮาร์บิน 17:00 น. รับสัมภาระแล้วนั่ง Airport Bus สาย 3 หรือ DiDi เข้าเมือง (~45 นาที)
+              </p>
+              <div class="card-meta"><span>📍 ระยะทางเข้าเมือง ~37 กม.</span><span>~100–120 หยวน (DiDi)</span></div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-img-wrap">
+              <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80" alt="Mercure Harbin Hotel">
+              <span class="time-badge">18:30 – 19:15 น.</span>
+              <span class="type-badge visit">🏨 เช็คอิน</span>
+            </div>
+            <div class="card-content">
+              <div class="card-title">Mercure Harbin Central Street Sophia Church</div>
+              <div class="card-zh">哈尔滨中央大街索菲亚教堂美居酒店</div>
+              <p class="card-desc">
+                เช็คอินเข้าที่พักทำเลทอง ถนนจ้าวหลิน 92 (兆麟街92号) เก็บกระเป๋า สวมชุดกันหนาว 3 ชั้น พร้อมเดินออกสำรวจย่านใจกลางเมืองฮาร์บินได้ทันที
+              </p>
+              <div class="card-meta"><span>🛏️ พักคืนที่ 1 / 2</span><span>ใกล้เซนต์โซเฟีย 290 ม.</span></div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-img-wrap">
+              <img src="assets/places/harbin_02_zhongyang_street.jpg" alt="Zhongyang Pedestrian Street">
+              <span class="time-badge">19:45 – 20:30 น.</span>
+              <span class="type-badge visit">🚶 เดินเล่น</span>
+            </div>
+            <div class="card-content">
+              <div class="card-title">ถนนคนเดินหินร้อยปีจงหยาง (ยามค่ำคืน)</div>
+              <div class="card-zh">中央大街步行街 (Zhōngyāng Dàjiē)</div>
+              <p class="card-desc">
+                ถนนคนเดินปูหินแกรนิตเก่าแก่ตั้งแต่ปี 1898 ยาว 1.4 กม. ชมสถาปัตยกรรมยุโรปเรอเนสซองส์และบาโรกประดับไฟสีทองท่ามกลางลมหนาว -16°C
+              </p>
+              <div class="card-meta"><span>📍 เดินจากโรงแรม ~5 นาที</span><span>เปิดตลอด 24 ชม.</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SLIDE 4: DAY 1 - FOOD NIGHT 1
+         ===================================================================== -->
+    <section class="slide" data-title="Day 1 (4 ธ.ค.): อาหาร &amp; มื้อค่ำคืนแรก">
+      <header class="slide-header">
+        <div class="slide-title-group">
+          <div class="day-pill food">🍽️ DAY 1 FOOD · 4 ธันวาคม 2026 (ช่วงค่ำ)</div>
+          <h2 class="slide-title">ของกินซิกเนเจอร์ &amp; หม้อไฟทะเลมื้อค่ำคืนแรกบนถนนจงหยาง</h2>
+        </div>
+        <div class="slide-num-badge">SLIDE 4 / 15</div>
+      </header>
+      <div class="slide-body">
+        <div class="grid-2">
+          <article class="card">
+            <div class="card-img-wrap">
+              <img src="https://images.unsplash.com/photo-1501443762994-82bd5dace89a?auto=format&fit=crop&w=900&q=80" alt="Madieer Ice Popsicle">
+              <span class="time-badge">19:15 – 19:45 น.</span>
+              <span class="type-badge eat">🍦 ของกินห้ามพลาด</span>
+            </div>
+            <div class="card-content">
+              <div class="card-title">ไอศกรีมแท่งหม่าเตี๋ยเอ่อร์ (Modern Popsicle 1906)</div>
+              <div class="card-zh">马迭尔冰棍 (หน้าโรงแรม Modern ถนนจงหยาง)</div>
+              <p class="card-desc">
+                กิจกรรมบังคับคืนแรกที่ฮาร์บิน! ยืนทานไอศกรีมรสนมวานิลลาสูตรโบราณปี 1906 เนื้อแน่นหอมนมแท้ ท่ามกลางอากาศติดลบ -16°C ยิ่งกินยิ่งเย็นสะใจ คู่กับไส้กรอกแดงย่างร้อนๆ
+              </p>
+              <div class="card-meta"><span>🚶 เดินจากเมอร์เคียว ~5 นาที</span><span>ราคา ~5–10 หยวน</span></div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-img-wrap">
+              <img src="assets/places/harbin_29_niufugui_hotpot.jpg" alt="Niu Fu Gui Seafood Hotpot">
+              <span class="time-badge">20:30 – 22:00 น.</span>
+              <span class="type-badge eat">🍲 มื้อค่ำคืนที่ 1</span>
+            </div>
+            <div class="card-content">
+              <div class="card-title">หม้อไฟทะเลตักเอง หนิวฟู่กุ้ย (Niu Fu Gui Seafood Hotpot)</div>
+              <div class="card-zh">牛富贵自选海鲜火锅 (潮人广场店 3F ถนนจงหยาง)</div>
+              <p class="card-desc">
+                มื้อค่ำมื้อแรกคลายหนาว! หม้อไฟซีฟู้ดตักเองสดๆ กุ้ง หอย ปู ปลา และเนื้อวัวสไลซ์พรีเมียม น้ำซุปเข้มข้นหอมกรุ่น อยู่ชั้น 3 อาคารเฉาเหรินกวั่งฉ่าง เดินกลับ Mercure เพียง 5 นาที
+              </p>
+              <div class="card-meta"><span>⏰ เปิดบริการ 11:00 – 04:00 น.</span><span>🏨 22:00 น. กลับพักผ่อน Mercure</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SLIDE 5: DAY 2 - MORNING MARKET & MUSIC GALLERY
+         ===================================================================== -->
+    <section class="slide" data-title="Day 2 (5 ธ.ค.): ตลาดเช้าหงจวน &amp; Harbin Music Gallery">
+      <header class="slide-header">
+        <div class="slide-title-group">
+          <div class="day-pill">📅 DAY 2 · 5 ธันวาคม 2026 (ช่วงเช้า – สาย)</div>
+          <h2 class="slide-title">สตรีทฟู้ดตลาดเช้าหงจวน · ระเบียงดนตรี &amp; ตุ๊กตาหิมะยักษ์</h2>
+        </div>
+        <div class="slide-num-badge">SLIDE 5 / 15</div>
+      </header>
+      <div class="slide-body">
+        <div class="grid-2">
+          <article class="card">
+            <div class="card-img-wrap">
+              <img src="assets/places/harbin_15_hongzhuan_market.jpg" alt="Hongzhuan Morning Market">
+              <span class="time-badge">07:45 – 09:15 น.</span>
+              <span class="type-badge eat">🥟 อาหารเช้ายอดฮิต</span>
+            </div>
+            <div class="card-content">
+              <div class="card-title">ตลาดเช้าถนนหงจวน (Hongzhuan Morning Market)</div>
+              <div class="card-zh">红专街早市 (Hóngzhuān Jiē Zǎoshì)</div>
+              <p class="card-desc">
+                07:30 น. ออกจากโรงแรมเมอร์เคียว เดินเพียง ~400 ม. สัมผัสตลาดเช้าท้องถิ่นท่ามกลางไอควันยามเช้า ลิ้มลองซาลาเปาทอดแป้งกรอบ (油炸糕), ปาท่องโก๋ยักษ์, เกี๊ยวน้ำร้อนๆ และน้ำเต้าหู้สด
+              </p>
+              <div class="card-meta"><span>⏰ ตลาดเปิด 05:30 – 09:00 น.</span><span>💰 เข้าชมฟรี (ของกิน 2–15 หยวน)</span></div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-img-wrap">
+              <img src="assets/places/harbin_19_music_park.jpg" alt="Harbin Music Gallery Giant Snowman">
+              <span class="time-badge">09:45 – 11:30 น.</span>
+              <span class="type-badge visit">⛄ แลนด์มาร์กไวรัล</span>
+            </div>
+            <div class="card-content">
+              <div class="card-title">ระเบียงดนตรีฮาร์บิน &amp; ตุ๊กตาหิมะยักษ์ 18 เมตร</div>
+              <div class="card-zh">哈尔滨音乐长廊 · 巨型大雪人 (Harbin Music Gallery)</div>
+              <p class="card-desc">
+                นั่ง DiDi ~10–12 นาทีสู่ถนนโหยวอี้ตะวันตก ริมแม่น้ำซงฮัว ถ่ายรูปกับแนวระเบียงเสาโรมันยุโรปสุดอลังการ และ "ตุ๊กตาหิมะยักษ์" สูง 18 ม. สวมหมวกแดงผ้าพันคอแดง แลนด์มาร์กอันดับ 1 ประจำฤดูหนาว
+              </p>
+              <div class="card-meta"><span>🚗 DiDi จากตลาดเช้า ~12 นาที</span><span>🎫 เข้าชมฟรี 24 ชม.</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SLIDE 6: DAY 2 - HUAMEI LUNCH & SONGHUA RIVER
+         ===================================================================== -->
+    <section class="slide" data-title="Day 2 (5 ธ.ค.): ร้านหัวเหมย 1925 &amp; แม่น้ำซงฮัว">
+      <header class="slide-header">
+        <div class="slide-title-group">
+          <div class="day-pill">📅 DAY 2 · 5 ธันวาคม 2026 (กลางวัน – บ่าย)</div>
+          <h2 class="slide-title">อาหารรัสเซีย 1925 ร้านหัวเหมย · สวนสตาลิน · สะพานรถไฟปินโจว</h2>
+        </div>
+        <div class="slide-num-badge">SLIDE 6 / 15</div>
+      </header>
+      <div class="slide-body">
+        <div class="grid-3">
+          <article class="card">
+            <div class="card-img-wrap">
+              <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80" alt="Huamei Russian Food">
+              <span class="time-badge">12:00 – 13:30 น.</span>
+              <span class="type-badge eat">🍽️ มื้อกลางวัน</span>
+            </div>
+            <div class="card-content">
+              <div class="card-title">ร้านอาหารรัสเซีย หัวเหมย 1925</div>
+              <div class="card-zh">华梅西餐厅 (ถนนจงหยาง 112)</div>
+              <p class="card-desc">
+                นั่ง DiDi กลับมาถนนจงหยาง ลิ้มลองอาหารรัสเซียระดับตำนานอายุกว่า 100 ปี เมนูเด็ด: ซุปบอร์ชต์, เนื้อตุ๋นอบโถขนมปัง, ปลาค็อดอบครีม และขนมปังต้าเลี่ยปา
+              </p>
+              <div class="card-meta"><span>⭐ ภัตตาคารรัสเซียเก่าแก่ที่สุด</span><span>~120–160 หยวน/คน</span></div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-img-wrap">
+              <img src="assets/places/harbin_10_flood_control_monument.jpg" alt="Flood Control Monument">
+              <span class="time-badge">13:45 – 15:00 น.</span>
+              <span class="type-badge visit">🏛️ อนุสรณ์สถาน</span>
+            </div>
+            <div class="card-content">
+              <div class="card-title">อนุสาวรีย์ควบคุมอุทกภัย &amp; สวนสตาลิน</div>
+              <div class="card-zh">防洪纪念塔与斯大林公园</div>
+              <p class="card-desc">
+                เดินจากร้านหัวเหมยไปทิศเหนือเพียง 5 นาที พบแลนด์มาร์กสัญลักษณ์ของชาวฮาร์บินริมแม่น้ำซงฮัว และทางเดินเลียบริมฝั่งที่ประดับประติมากรรมหิมะ
+              </p>
+              <div class="card-meta"><span>🚶 เดินสุดถนนจงหยาง</span><span>🎫 เข้าชมฟรี</span></div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-img-wrap">
+              <img src="assets/places/harbin_06_binzhou_bridge.jpg" alt="Binzhou Railway Bridge">
+              <span class="time-badge">15:00 – 17:00 น.</span>
+              <span class="type-badge visit">🌅 Golden Hour</span>
+            </div>
+            <div class="card-content">
+              <div class="card-title">ลานน้ำแข็งซงฮัว &amp; สะพานรถไฟปินโจว</div>
+              <div class="card-zh">松花江冰雪嘉年华 · 滨州铁路桥</div>
+              <p class="card-desc">
+                ลงเดินบนแม่น้ำซงฮัวที่เป็นน้ำแข็งหนาราว 1 เมตร เล่นแคร่เลื่อนหิมะ แล้วเดินขึ้นสะพานเหล็กโบราณปินโจว (1901) ชมพระอาทิตย์ตกสีทองเหนือธารน้ำแข็ง
+              </p>
+              <div class="card-meta"><span>❄️ พื้นกระจกชมน้ำแข็ง</span><span>🎫 เดินสะพานฟรี</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SLIDE 7: DAY 2 - EVENING DINNER & NIGHT CATHEDRAL
+         ===================================================================== -->
+    <section class="slide" data-title="Day 2 (5 ธ.ค.): โรตีชุนปิ่ง &amp; เซนต์โซเฟียกลางคืน">
+      <header class="slide-header">
+        <div class="slide-title-group">
+          <div class="day-pill food">🌙 DAY 2 EVENING · 5 ธันวาคม 2026 (ช่วงค่ำ)</div>
+          <h2 class="slide-title">มื้อค่ำร้านเหลาชางชุนปิ่ง · มหาวิหารเซนต์โซเฟียประดับไฟยามค่ำ</h2>
+        </div>
+        <div class="slide-num-badge">SLIDE 7 / 15</div>
+      </header>
+      <div class="slide-body">
+        <div class="grid-2">
+          <article class="card">
+            <div class="card-img-wrap">
+              <img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=900&q=80" alt="Laochang Spring Pancakes">
+              <span class="time-badge">17:30 – 19:00 น.</span>
+              <span class="type-badge eat">🫓 มื้อค่ำคืนที่ 2</span>
+            </div>
+            <div class="card-content">
+              <div class="card-title">โรตีชุนปิ่ง &amp; หม้อไฟตงเป่ย ร้านเหลาชางชุนปิ่ง</div>
+              <div class="card-zh">老昌春饼 (สาขาถนนจงหยาง 180)</div>
+              <p class="card-desc">
+                เมนูตงเป่ยต้นตำรับยอดนิยม! แผ่นแป้งบางนุ่มร้อนๆ ห่อหมูเส้นผัดซอสหวาน ต้นหอมญี่ปุ่น ถั่วงอก และไข่เจียว ทานคู่ซุปตงเป่ยร้อนกรุ่น คลายหนาวหลังเดินริมแม่น้ำซงฮัว
+              </p>
+              <div class="card-meta"><span>📍 ถนนจงหยาง 180 (中央大街180号)</span><span>💰 ~60–90 หยวน/คน</span></div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-img-wrap">
+              <img src="assets/places/harbin_01_saint_sophia.jpg" alt="Saint Sophia Cathedral Night">
+              <span class="time-badge">19:15 – 20:15 น.</span>
+              <span class="type-badge visit">⛪ ไฮไลท์ยามค่ำ</span>
+            </div>
+            <div class="card-content">
+              <div class="card-title">มหาวิหารเซนต์โซเฟียประดับไฟยามค่ำคืน</div>
+              <div class="card-zh">圣·索菲亚大教堂 (Saint Sophia Cathedral)</div>
+              <p class="card-desc">
+                แวะชมโบสถ์ออร์โธดอกซ์โดมหัวหอมสีเขียวเข้มที่เปิดไฟสปอตไลท์สีทองอร่ามตัดกับหิมะยามค่ำคืน โรแมนติกที่สุดในฮาร์บิน แล้วเดินกลับ Mercure เพียง 290 ม. (20:30 น. จัดกระเป๋าไป Snow Town)
+              </p>
+              <div class="card-meta"><span>🚶 ห่างโรงแรมเมอร์เคียว 290 ม.</span><span>🏨 พักคืนที่ 2 / 2</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SLIDE 8: DAY 3 - CRH TRAIN TO SNOW TOWN
+         ===================================================================== -->
+    <section class="slide" data-title="Day 3 (6 ธ.ค.): รถไฟความเร็วสูง CRH สู่ Snow Town">
+      <header class="slide-header">
+        <div class="slide-title-group">
+          <div class="day-pill">🚅 DAY 3 TRANSIT · 6 ธันวาคม 2026 (ช่วงเช้า)</div>
+          <h2 class="slide-title">เช็คเอาท์ ➔ รถไฟความเร็วสูง CRH (ฮาร์บิน – ย่าปู้ลี่ซี) ➔ ชัทเทิลบัสสู่ Snow Town</h2>
+        </div>
+        <div class="slide-num-badge">SLIDE 8 / 15</div>
+      </header>
+      <div class="slide-body">
+        <div class="grid-3">
+          <article class="card">
+            <div class="card-img-wrap">
+              <img src="assets/places/harbin_00_station.jpg" alt="Harbin Railway Station">
+              <span class="time-badge">06:30 – 07:25 น.</span>
+              <span class="type-badge transit">🏨 ➔ 🚅</span>
+            </div>
+            <div class="card-content">
+              <div class="card-title">เช็คเอาท์ Mercure ➔ สถานีรถไฟฮาร์บิน</div>
+              <div class="card-zh">哈尔滨站 (Hā'ěrbīn Zhàn)</div>
+              <p class="card-desc">
+                06:30 น. เช็คเอาท์และฝากกระเป๋าเดินทางใบใหญ่ไว้ที่โรงแรมเมอร์เคียว พกเฉพาะกระเป๋าใบเล็กสำหรับ 2 คืน แล้วนั่ง DiDi/Metro (~8–15 นาที) ถึงสถานีฮาร์บิน
+              </p>
+              <div class="card-meta"><span>🧳 ฝากกระเป๋าใหญ่ไว้ที่ Mercure</span><span>⏰ เผื่อเวลาตรวจตั๋ว 20 นาที</span></div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-img-wrap">
+              <img src="https://images.unsplash.com/photo-1474487548417-781cb71495f3?auto=format&fit=crop&w=800&q=80" alt="China High Speed Rail CRH">
+              <span class="time-badge">07:45 – 09:00 น.</span>
+              <span class="type-badge transit">🚅 CRH Bullet Train</span>
+            </div>
+            <div class="card-content">
+              <div class="card-title">รถไฟความเร็วสูง CRH: ฮาร์บิน ➔ ย่าปู้ลี่ซี</div>
+              <div class="card-zh">哈尔滨站 ➔ 亚布力西站 (D8511 / G913)</div>
+              <p class="card-desc">
+                นั่งรถไฟหัวกระสุน CRH ความเร็วสูงมุ่งสู่สถานีย่าปู้ลี่ซี (Yabuli West) ใช้เวลาเพียง <strong>1 ชม. 12 นาที</strong> สะดวก รวดเร็ว นุ่มนวล ปลอดภัยกว่ารถบัสทางไกล
+              </p>
+              <div class="card-meta"><span>🚄 วิ่ง 1 ชม. 12 นาที</span><span>💰 ~70–85 หยวน/คน</span></div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-img-wrap">
+              <img src="https://images.unsplash.com/photo-1483921020237-2ff51e8e4b22?auto=format&fit=crop&w=800&q=80" alt="Snow Highway to Snow Town">
+              <span class="time-badge">09:15 – 11:15 น.</span>
+              <span class="type-badge transit">🚌 ทางหลวงสายหิมะ</span>
+            </div>
+            <div class="card-content">
+              <div class="card-title">ชัทเทิลบัสทางหลวงสายหิมะย่าเสวี่ย ➔ Snow Town</div>
+              <div class="card-zh">亚雪公路 ➔ 中国雪乡 (หมู่บ้านหิมะจีน)</div>
+              <p class="card-desc">
+                หน้าสถานีย่าปู้ลี่ซี ต่อรถชัทเทิลบัส/รถเหมารับส่งวิ่งผ่าน "ทางหลวงสายหิมะย่าเสวี่ย" (Yaxue Highway) ชมทิวทัศน์ป่าสนหิมะสุดอลังการ ใช้เวลา ~2 ชม.
+              </p>
+              <div class="card-meta"><span>🛣️ เส้นทางสายหิมะที่สวยที่สุด</span><span>ถึง Snow Town ~11:15 น.</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SLIDE 9: DAY 3 - CHINA SNOW TOWN ARRIVAL & NIGHT
+         ===================================================================== -->
+    <section class="slide" data-title="Day 3 (6 ธ.ค.): หมู่บ้านเห็ดหิมะ Snow Town">
+      <header class="slide-header">
+        <div class="slide-title-group">
+          <div class="day-pill highlight">🍄 DAY 3 · 6 ธันวาคม 2026 (กลางวัน – ค่ำ)</div>
+          <h2 class="slide-title">เช็คอิน Floral Hotel · ถนนเสวี่ยยวิ่น · บ้านเห็ดหิมะ Dream Home · เขาปั้งฉุย</h2>
+        </div>
+        <div class="slide-num-badge">SLIDE 9 / 15</div>
+      </header>
+      <div class="slide-body">
+        <div class="grid-3">
+          <article class="card">
+            <div class="card-img-wrap">
+              <img src="https://images.unsplash.com/photo-1517299321609-52687d1bc55a?auto=format&fit=crop&w=800&q=80" alt="Floral Hotel Dream Home Snow Town">
+              <span class="time-badge">11:30 – 14:00 น.</span>
+              <span class="type-badge visit">🏨 ที่พักในหมู่บ้าน</span>
+            </div>
+            <div class="card-content">
+              <div class="card-title">Floral Hotel·Dream Home (ถนนเสวี่ยยวิ่น)</div>
+              <div class="card-zh">花筑·雪乡梦想家园酒店 (雪韵大街店)</div>
+              <p class="card-desc">
+                เช็คอินโรงแรมใจกลางถนนเสวี่ยยวิ่น เดินสะดวกใกล้ลานสกีเสวี่ยเป่า &lt;100 ม. พักผ่อนและทานอาหารกลางวันตงเป่ยร้อนๆ เติมพลัง
+              </p>
+              <div class="card-meta"><span>🛏️ พักคืนที่ 1 / 2 ใน Snow Town</span><span>🎫 ค่าเข้าอุทยาน ~120 หยวน</span></div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-img-wrap">
+              <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=800&q=80" alt="Xueyun Street Snow Mushrooms">
+              <span class="time-badge">14:30 – 17:00 น.</span>
+              <span class="type-badge visit">🍄 เห็ดหิมะในฝัน</span>
+            </div>
+            <div class="card-content">
+              <div class="card-title">ถนนเสวี่ยยวิ่น &amp; บ้านเห็ดหิมะ Dream Home</div>
+              <div class="card-zh">雪韵大街 · 梦幻家园</div>
+              <p class="card-desc">
+                เดินชมบ้านไม้เรียงรายบนถนนเสวี่ยยวิ่น และเข้าชมโซน Dream Home ถ่ายรูป "เห็ดหิมะธรรมชาติ" ที่ทับถมหนาถึง 2 เมตรโค้งมนบนหลังคาบ้านไม้
+              </p>
+              <div class="card-meta"><span>❄️ หิมะฟูหนา 7 เดือน/ปี</span><span>📸 มุมถ่ายรูประดับโลก</span></div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-img-wrap">
+              <img src="https://images.unsplash.com/photo-1518182170546-07661fd94144?auto=format&fit=crop&w=800&q=80" alt="Bangchui Mountain Night Lanterns">
+              <span class="time-badge">17:30 – 20:15 น.</span>
+              <span class="type-badge visit">🏮 วิวกลางคืน</span>
+            </div>
+            <div class="card-content">
+              <div class="card-title">ทางเดินไม้เขาปั้งฉุย &amp; ทะเลโคมไฟแดง</div>
+              <div class="card-zh">棒槌山观光栈道 (Bangchui Boardwalk)</div>
+              <p class="card-desc">
+                เดินขึ้นทางเดินไม้ชมวิวมุมสูง ช่วง Blue Hour ยามค่ำคืน โคมไฟสีแดงนับพันดวงส่องสว่างตัดกับหิมะสีขาวโพลนทั่วหมู่บ้าน (20:30 น. กลับ Floral Hotel)
+              </p>
+              <div class="card-meta"><span>🌌 แสงสวยที่สุด 16:30–18:30 น.</span><span>🎫 ทางเดินไม้ชมฟรี</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SLIDE 10: DAY 4 - MORNING SPLASH & MT YANGCAO
+         ===================================================================== -->
+    <section class="slide" data-title="Day 4 (7 ธ.ค.): สาดน้ำเดือด &amp; ยอดเขาหยางเฉ่าซาน">
+      <header class="slide-header">
+        <div class="slide-title-group">
+          <div class="day-pill">🏔️ DAY 4 · 7 ธันวาคม 2026 (ช่วงเช้า – เที่ยง)</div>
+          <h2 class="slide-title">สาดน้ำร้อนกลายเป็นน้ำแข็ง (-25°C) &amp; ป่าสนยอดเขาหยางเฉ่าซาน</h2>
+        </div>
+        <div class="slide-num-badge">SLIDE 10 / 15</div>
+      </header>
+      <div class="slide-body">
+        <div class="grid-2">
+          <article class="card">
+            <div class="card-img-wrap">
+              <img src="https://images.unsplash.com/photo-1482192596544-9eb780fc7f66?auto=format&fit=crop&w=900&q=80" alt="Boiling Water Freeze Snow Town">
+              <span class="time-badge">07:30 – 09:00 น.</span>
+              <span class="type-badge visit">💦 กิจกรรมไฮไลท์</span>
+            </div>
+            <div class="card-content">
+              <div class="card-title">สาดน้ำร้อนกลายเป็นเกล็ดน้ำแข็งกลางหิมะ (泼水成冰)</div>
+              <div class="card-zh">中国雪乡晨景 · 泼水成冰</div>
+              <p class="card-desc">
+                07:15 น. ออกจาก Floral Hotel รับแสงอาทิตย์ยามเช้าท่ามกลางอุณหภูมิ -25°C สนุกกับกิจกรรมไวรัลสาดน้ำเดือดจากกระติกให้แตกตัวเป็นละอองน้ำแข็งสีทองกลางอากาศ
+              </p>
+              <div class="card-meta"><span>📸 ถ่าย Slow-motion สวยที่สุดตอนพระอาทิตย์ขึ้น</span><span>🌡️ ~-25°C</span></div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-img-wrap">
+              <img src="https://images.unsplash.com/photo-1491557345352-5929e343eb89?auto=format&fit=crop&w=900&q=80" alt="Mount Yangcao Rime Forest">
+              <span class="time-badge">09:30 – 13:00 น.</span>
+              <span class="type-badge visit">🏔️ ยอดเขา 1,235 ม.</span>
+            </div>
+            <div class="card-content">
+              <div class="card-title">ยอดเขาหยางเฉ่าซาน &amp; จุดชมวิวหุบเขาหิมะ เสวี่ยกู่</div>
+              <div class="card-zh">羊草山 · 中国雪谷 (Mount Yangcao &amp; Snow Valley)</div>
+              <p class="card-desc">
+                นั่งสโนว์โมบิล/รถลุยหิมะขึ้นสู่ยอดเขาหยางเฉ่าซาน สูง 1,235 ม. ชม "ป่าสนน้ำค้างแข็ง" (Rime Ice Forest) และวิวพาโนรามารอยต่อระหว่าง Snow Town และ Snow Valley
+              </p>
+              <div class="card-meta"><span>❄️ สวรรค์แห่งป่าสนหิมะ</span><span>🚗 สโนว์โมบิล/รถลุยหิมะขึ้นยอดเขา</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SLIDE 11: DAY 4 - TIEGUODUN, SKI & BONFIRE
+         ===================================================================== -->
+    <section class="slide" data-title="Day 4 (7 ธ.ค.): เที่ยกัวตุน &amp; ปาร์ตี้กองไฟหยางเกอ">
+      <header class="slide-header">
+        <div class="slide-title-group">
+          <div class="day-pill food">🔥 DAY 4 AFTERNOON &amp; NIGHT · 7 ธันวาคม 2026</div>
+          <h2 class="slide-title">หม้อไฟกระทะเหล็กเที่ยกัวตุน · ลานสกีเสวี่ยเป่า · ปาร์ตี้กองไฟ</h2>
+        </div>
+        <div class="slide-num-badge">SLIDE 11 / 15</div>
+      </header>
+      <div class="slide-body">
+        <div class="grid-3">
+          <article class="card">
+            <div class="card-img-wrap">
+              <img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=800&q=80" alt="Dongbei Iron Pot Stew">
+              <span class="time-badge">13:15 – 14:45 น.</span>
+              <span class="type-badge eat">🍲 มื้อเที่ยงตงเป่ย</span>
+            </div>
+            <div class="card-content">
+              <div class="card-title">หม้อไฟกระทะเหล็ก (เที่ยกัวตุน)</div>
+              <div class="card-zh">东北铁锅炖 (Tieguo Dun)</div>
+              <p class="card-desc">
+                เติมความอบอุ่นด้วยหม้อไฟกระทะเหล็กเตาฟืน ตุ๋นไก่บ้าน ซี่โครงหมู เห็ดป่า และมันฝรั่ง แปะแผ่นขนมปังข้าวโพดอบรอบขอบกระทะร้อนฉ่า
+              </p>
+              <div class="card-meta"><span>🔥 หอมกลิ่นเตาฟืนแท้ๆ</span><span>เมนูซิกเนเจอร์ Snow Town</span></div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-img-wrap">
+              <img src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?auto=format&fit=crop&w=800&q=80" alt="Snow Tubing Skiing">
+              <span class="time-badge">15:00 – 17:30 น.</span>
+              <span class="type-badge visit">🎿 กิจกรรมหิมะ</span>
+            </div>
+            <div class="card-content">
+              <div class="card-title">สไลเดอร์หิมะ ลานสกีเสวี่ยเป่า &amp; ชุดพื้นเมือง</div>
+              <div class="card-zh">雪宝滑雪场 · 雪圈 · 雪乡邮局</div>
+              <p class="card-desc">
+                สนุกกับลานสกีและสไลเดอร์ห่วงยางหิมะที่ลานเสวี่ยเป่า (อยู่ห่างจากโรงแรม Floral Hotel ไม่ถึง 100 ม.) ถ่ายภาพชุดพื้นเมือง และส่งโปสการ์ดจากไปรษณีย์หมู่บ้านหิมะ
+              </p>
+              <div class="card-meta"><span>📍 ห่างโรงแรม &lt;100 ม.</span><span>📮 แวะไปรษณีย์ Snow Town</span></div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-img-wrap">
+              <img src="https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80" alt="Snow Town Bonfire Party">
+              <span class="time-badge">19:00 – 20:45 น.</span>
+              <span class="type-badge visit">💃 ปาร์ตี้กลางคืน</span>
+            </div>
+            <div class="card-content">
+              <div class="card-title">ปาร์ตี้รอบกองไฟ &amp; ระบำหยางเกอ</div>
+              <div class="card-zh">雪韵大街篝火晚会 · 东北大秧歌</div>
+              <p class="card-desc">
+                ชมขบวนแห่ระบำหยางเกอพื้นบ้าน ร่วมเต้นรอบกองไฟกลางลานหิมะ ชิมลูกพลับแช่แข็งและถังหูลู่ (20:45 น. กลับพัก Floral Hotel คืนที่ 2 ใน Snow Town / คืนที่ 4)
+              </p>
+              <div class="card-meta"><span>🍡 ถังหูลู่ &amp; ลูกพลับแช่แข็ง</span><span>🛏️ พักคืนที่ 4</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SLIDE 12: DAY 5 - RETURN TO HARBIN, GUOBAOROU & LAO DAOWAI
+         ===================================================================== -->
+    <section class="slide" data-title="Day 5 (8 ธ.ค.): กลับฮาร์บิน · กัวเปาโร่ว 100 ปี &amp; เหล่าเต้าว่าย">
+      <header class="slide-header">
+        <div class="slide-title-group">
+          <div class="day-pill">📅 DAY 5 · 8 ธันวาคม 2026 (ช่วงเช้า – บ่าย)</div>
+          <h2 class="slide-title">กลับสู่ฮาร์บิน · กัวเปาโร่วร้านเหล่าฉูเจีย 100 ปี · ย่านบาโรกจีนเหล่าเต้าว่าย</h2>
+        </div>
+        <div class="slide-num-badge">SLIDE 12 / 15</div>
+      </header>
+      <div class="slide-body">
+        <div class="grid-3">
+          <article class="card">
+            <div class="card-img-wrap">
+              <img src="https://images.unsplash.com/photo-1517299321609-52687d1bc55a?auto=format&fit=crop&w=800&q=80" alt="Depart Snow Town">
+              <span class="time-badge">08:30 – 13:00 น.</span>
+              <span class="type-badge transit">🚌 เดินทางกลับ</span>
+            </div>
+            <div class="card-content">
+              <div class="card-title">เช็คเอาท์ Floral Hotel ➔ เดินทางกลับฮาร์บิน</div>
+              <div class="card-zh">雪乡 ➔ 返回哈尔滨市区</div>
+              <p class="card-desc">
+                เก็บภาพควันไฟปล่องบ้านไม้ยามเช้าครั้งสุดท้าย เช็คเอาท์ออกจากโรงแรมฟลอรัล·ดรีม โฮม โฮเต็ล นั่งรถเดินทางกลับสู่ตัวเมืองฮาร์บิน (~4 ชม.)
+              </p>
+              <div class="card-meta"><span>⏱️ ใช้เวลา ~4 ชม.</span><span>ถึงฮาร์บิน ~13:00 น.</span></div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-img-wrap">
+              <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80" alt="Laochushi Guobaorou">
+              <span class="time-badge">13:30 – 14:45 น.</span>
+              <span class="type-badge eat">🍖 มื้อบ่ายระดับตำนาน</span>
+            </div>
+            <div class="card-content">
+              <div class="card-title">ร้านเหล่าฉูเจีย ต้นกำเนิดกัวเปาโร่ว 100 ปี</div>
+              <div class="card-zh">老厨家 (Lǎochújiā · 锅包肉)</div>
+              <p class="card-desc">
+                ร้านต้นตำรับผู้คิดค้น "กัวเปาโร่ว" (หมูทอดซอสเปรี้ยวหวานกรอบนอกนุ่มใน) เมนูอันดับ 1 ของมณฑลเฮยหลงเจียง รสชาติกลมกล่อมระดับมิชลินท้องถิ่น
+              </p>
+              <div class="card-meta"><span>🏆 ต้นตำรับกว่า 100 ปี</span><span>💰 ~70–100 หยวน/คน</span></div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-img-wrap">
+              <img src="assets/places/harbin_08_chinese_baroque.jpg" alt="Chinese Baroque Lao Daowai">
+              <span class="time-badge">15:00 – 16:15 น.</span>
+              <span class="type-badge visit">🏮 สถาปัตยกรรม</span>
+            </div>
+            <div class="card-content">
+              <div class="card-title">ย่านบาโรกจีนโบราณ เหล่าเต้าว่าย</div>
+              <div class="card-zh">中华巴洛克历史文化区 (老道外)</div>
+              <p class="card-desc">
+                กลุ่มอาคารสไตล์บาโรกยุโรปผสมลวดลายมงคลจีน (ทับทิม ค้างคาว ดอกโบตั๋น) ที่สมบูรณ์ที่สุดในโลก พร้อมลานเรือนสี่ประสาน (Siheyuan) และร้านค้าย้อนยุค
+              </p>
+              <div class="card-meta"><span>📍 เขตเต้าว่าย (Lao Daowai)</span><span>🎫 เข้าชมฟรี</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SLIDE 13: DAY 5 - HARBIN ICE AND SNOW WORLD
+         ===================================================================== -->
+    <section class="slide" data-title="Day 5 (8 ธ.ค.): โลกน้ำแข็งและหิมะ Harbin Ice &amp; Snow World">
+      <header class="slide-header">
+        <div class="slide-title-group">
+          <div class="day-pill highlight">🏰 DAY 5 GRAND FINALE · 8 ธันวาคม 2026 (16:30 – 20:30 น.)</div>
+          <h2 class="slide-title">โลกน้ำแข็งและหิมะฮาร์บิน (Harbin Ice and Snow World)</h2>
+        </div>
+        <div class="slide-num-badge">SLIDE 13 / 15</div>
+      </header>
+      <div class="slide-body">
+        <div class="split-hero">
+          <div class="hero-photo-box">
+            <img src="assets/places/harbin_12_ice_and_snow_world.jpg" alt="Harbin Ice and Snow World">
+            <div class="hero-photo-caption">
+              <div style="font-size:1.15rem; font-weight:800; color:#fff;">哈尔滨冰雪大世界 · อาณาจักรน้ำแข็งใหญ่ที่สุดในโลก</div>
+              <div style="font-size:0.86rem; color:#bae6fd; margin-top:2px;">⏰ แนะนำเข้าชม 16:30 – 20:30 น. (ชมทั้งแสงทไวไลท์และไฟ LED เต็มรูปแบบ)</div>
+            </div>
+          </div>
+
+          <div class="hero-details-col">
+            <div class="detail-block">
+              <h4>✨ ไฮไลท์ห้ามพลาด</h4>
+              <ul>
+                <li><strong>ปราสาทน้ำแข็งยักษ์เรืองแสง:</strong> แกะสลักจากก้อนน้ำแข็งใสบริสุทธิ์ของแม่น้ำซงฮัว ประดับไฟ LED หลากสีตระการตา</li>
+                <li><strong>สไลเดอร์น้ำแข็งยักษ์ 500 ม. &amp; ชิงช้าสวรรค์เกล็ดหิมะ:</strong> สนุกกับเครื่องเล่นน้ำแข็งและชมวิวมุมสูงทั้งอาณาจักร</li>
+                <li><strong>การแสดงแสงสีเสียง &amp; เต้นรำกลางลานน้ำแข็ง:</strong> บรรยากาศเฟสติวัลระดับโลก</li>
+              </ul>
+            </div>
+            <div class="detail-block">
+              <h4>🚇 การเดินทาง &amp; เคล็ดลับความหนาว</h4>
+              <ul>
+                <li><strong>การเดินทาง:</strong> Metro Line 2 ลงสถานี <strong>Ice and Snow World (冰雪大世界站)</strong> ทางออก 3 ถึงหน้างานทันที หรือ DiDi</li>
+                <li><strong>ค่าเข้าชม:</strong> ประมาณ 328 หยวน/คน (จองล่วงหน้าผ่าน Trip.com / WeChat)</li>
+                <li><strong>คำแนะนำ:</strong> ช่วงค่ำอุณหภูมิ -20°C ควรแปะแผ่นร้อน (Warm Pad) หลังมือถือและในรองเท้าบูท</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SLIDE 14: DAY 6 - MUSEUM, SOUVENIRS & FLIGHT HOME
+         ===================================================================== -->
+    <section class="slide" data-title="Day 6 (9 ธ.ค.): พิพิธภัณฑ์ · ของฝาก &amp; บินกลับ BKK">
+      <header class="slide-header">
+        <div class="slide-title-group">
+          <div class="day-pill">🛫 DAY 6 · 9 ธันวาคม 2026 (วันเดินทางกลับ)</div>
+          <h2 class="slide-title">พิพิธภัณฑ์มณฑล · ช้อปปิ้งของฝากชิวหลิน 1900 · บินกลับกรุงเทพฯ</h2>
+        </div>
+        <div class="slide-num-badge">SLIDE 14 / 15</div>
+      </header>
+      <div class="slide-body">
+        <div class="grid-3">
+          <article class="card">
+            <div class="card-img-wrap">
+              <img src="assets/places/harbin_16_provincial_museum.jpg" alt="Heilongjiang Provincial Museum">
+              <span class="time-badge">09:15 – 10:15 น.</span>
+              <span class="type-badge visit">🏛️ พิพิธภัณฑ์</span>
+            </div>
+            <div class="card-content">
+              <div class="card-title">พิพิธภัณฑ์มณฑลเฮยหลงเจียง</div>
+              <div class="card-zh">黑龙江省博物馆 (สถานี Museum)</div>
+              <p class="card-desc">
+                อาคารสไตล์บารอกรัสเซีย (เดิมเป็น Moscow Market) ชมฟอสซิลโครงกระดูกช้างแมมมอธไซบีเรียขนาดมหึมาและประวัติศาสตร์เมืองฮาร์บิน
+              </p>
+              <div class="card-meta"><span>🚇 Metro สถานี Bowuguan</span><span>🎫 เข้าชมฟรี (ใช้พาสปอร์ต)</span></div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-img-wrap">
+              <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80" alt="Churin 1900 Dalieba Bread">
+              <span class="time-badge">10:30 – 11:45 น.</span>
+              <span class="type-badge eat">🥖 ของฝาก 1900</span>
+            </div>
+            <div class="card-content">
+              <div class="card-title">ห้างชิวหลิน 1900 &amp; ขนมปังรัสเซียต้าเลี่ยปา</div>
+              <div class="card-zh">秋林公司 1900 · 大列巴 · 哈尔滨红肠</div>
+              <p class="card-desc">
+                ช้อปของฝากระดับตำนานตั้งแต่ปี 1900: ขนมปังรัสเซียก้อนโต "ต้าเลี่ยปา", ไส้กรอกแดงรมควันฮาร์บิน (สุญญากาศ) และช็อกโกแลตรัสเซีย
+              </p>
+              <div class="card-meta"><span>🛍️ เดินช้อปใกล้โรงแรม/สถานี</span><span>🍞 อบสดใหม่ทุกเช้า</span></div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-img-wrap">
+              <img src="assets/places/harbin_11_airport.jpg" alt="Departure HRB T2">
+              <span class="time-badge">15:10 – 00:55 น.</span>
+              <span class="type-badge transit">🛫 เดินทางกลับ</span>
+            </div>
+            <div class="card-content">
+              <div class="card-title">สนามบิน HRB T2 ➔ เซี่ยงไฮ้ PVG ➔ กรุงเทพฯ BKK</div>
+              <div class="card-zh">哈尔滨太平国际机场 T2 ➔ 曼谷素万那普</div>
+              <p class="card-desc">
+                12:30 น. เดินทางถึงสนามบิน HRB T2 เช็คอินโหลดกระเป๋าตรงถึงไทย · เครื่องออก 15:10 น. แวะเปลี่ยนเครื่องที่เซี่ยงไฮ้ PVG · ถึงสุวรรณภูมิเวลา 00:55 (+1) น. โดยสวัสดิภาพ
+              </p>
+              <div class="card-meta"><span>⏰ ถึงสนามบิน 12:30–12:45 น.</span><span>🎉 จบทริปฮาร์บิน 2026</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SLIDE 15: FOOD GALLERY SUMMARY
+         ===================================================================== -->
+    <section class="slide" data-title="สรุปรวมเมนูอาหาร &amp; ของกินห้ามพลาดตลอดทริป">
+      <header class="slide-header">
+        <div class="slide-title-group">
+          <div class="day-pill food">🍜 HARBIN FOOD GALLERY · เรียงตามลำดับวัน</div>
+          <h2 class="slide-title">รวมเมนูอาหารและของกินห้ามพลาดตลอดทริป (Day 1 – Day 6)</h2>
+        </div>
+        <div class="slide-num-badge">SLIDE 15 / 15</div>
+      </header>
+      <div class="slide-body">
+        <div class="food-grid-8">
+          <div class="food-mini-card">
+            <div class="food-mini-img">
+              <img src="https://images.unsplash.com/photo-1501443762994-82bd5dace89a?auto=format&fit=crop&w=500&q=80" alt="Madieer">
+              <span class="time-badge" style="font-size:0.68rem; padding:2px 7px;">Day 1 · 19:15</span>
+            </div>
+            <div class="food-mini-body">
+              <div class="food-mini-title">ไอศกรีมหม่าเตี๋ยเอ่อร์</div>
+              <div class="food-mini-sub">马迭尔冰棍 (1906)</div>
+              <div class="food-mini-note">ไอศกรีมนมวานิลลากลางหิมะ -16°C ถนนจงหยาง</div>
+            </div>
+          </div>
+
+          <div class="food-mini-card">
+            <div class="food-mini-img">
+              <img src="assets/places/harbin_29_niufugui_hotpot.jpg" alt="Niu Fu Gui">
+              <span class="time-badge" style="font-size:0.68rem; padding:2px 7px;">Day 1 · 20:30</span>
+            </div>
+            <div class="food-mini-body">
+              <div class="food-mini-title">หม้อไฟทะเลหนิวฟู่กุ้ย</div>
+              <div class="food-mini-sub">牛富贵自选海鲜火锅 (3F)</div>
+              <div class="food-mini-note">ซีฟู้ดตักเอง &amp; เนื้อวัวพรีเมียม ถนนจงหยาง</div>
+            </div>
+          </div>
+
+          <div class="food-mini-card">
+            <div class="food-mini-img">
+              <img src="assets/places/harbin_15_hongzhuan_market.jpg" alt="Hongzhuan Market">
+              <span class="time-badge" style="font-size:0.68rem; padding:2px 7px;">Day 2 · 07:45</span>
+            </div>
+            <div class="food-mini-body">
+              <div class="food-mini-title">สตรีทฟู้ดตลาดเช้าหงจวน</div>
+              <div class="food-mini-sub">红专街早市</div>
+              <div class="food-mini-note">ซาลาเปาทอด ปาท่องโก๋ยักษ์ เกี๊ยวน้ำร้อนๆ</div>
+            </div>
+          </div>
+
+          <div class="food-mini-card">
+            <div class="food-mini-img">
+              <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=500&q=80" alt="Huamei">
+              <span class="time-badge" style="font-size:0.68rem; padding:2px 7px;">Day 2 · 12:00</span>
+            </div>
+            <div class="food-mini-body">
+              <div class="food-mini-title">อาหารรัสเซีย หัวเหมย 1925</div>
+              <div class="food-mini-sub">华梅西餐厅</div>
+              <div class="food-mini-note">ซุปบอร์ชต์ เนื้อตุ๋นอบโถขนมปัง สไตล์รัสเซีย</div>
+            </div>
+          </div>
+
+          <div class="food-mini-card">
+            <div class="food-mini-img">
+              <img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=500&q=80" alt="Laochang">
+              <span class="time-badge" style="font-size:0.68rem; padding:2px 7px;">Day 2 · 17:30</span>
+            </div>
+            <div class="food-mini-body">
+              <div class="food-mini-title">โรตีชุนปิ่ง เหลาชางชุนปิ่ง</div>
+              <div class="food-mini-sub">老昌春饼 (ถนนจงหยาง 180)</div>
+              <div class="food-mini-note">แป้งชุนปิ่งห่อหมูผัดซอสหวาน &amp; ซุปร้อนๆ</div>
+            </div>
+          </div>
+
+          <div class="food-mini-card">
+            <div class="food-mini-img">
+              <img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=500&q=80" alt="Tieguo Dun">
+              <span class="time-badge" style="font-size:0.68rem; padding:2px 7px;">Day 4 · 13:15</span>
+            </div>
+            <div class="food-mini-body">
+              <div class="food-mini-title">หม้อไฟกระทะเหล็ก เที่ยกัวตุน</div>
+              <div class="food-mini-sub">东北铁锅炖 (Snow Town)</div>
+              <div class="food-mini-note">ตุ๋นไก่/หมูเตาฟืน แปะแป้งข้าวโพดขอบกระทะ</div>
+            </div>
+          </div>
+
+          <div class="food-mini-card">
+            <div class="food-mini-img">
+              <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=500&q=80" alt="Guobaorou">
+              <span class="time-badge" style="font-size:0.68rem; padding:2px 7px;">Day 5 · 13:30</span>
+            </div>
+            <div class="food-mini-body">
+              <div class="food-mini-title">กัวเปาโร่ว 100 ปี เหล่าฉูเจีย</div>
+              <div class="food-mini-sub">老厨家 · 锅包肉</div>
+              <div class="food-mini-note">หมูทอดเปรี้ยวหวานกรอบนอกนุ่มใน สูตรต้นตำรับ</div>
+            </div>
+          </div>
+
+          <div class="food-mini-card">
+            <div class="food-mini-img">
+              <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=500&q=80" alt="Dalieba">
+              <span class="time-badge" style="font-size:0.68rem; padding:2px 7px;">Day 6 · 10:30</span>
+            </div>
+            <div class="food-mini-body">
+              <div class="food-mini-title">ขนมปังต้าเลี่ยปา &amp; ไส้กรอกแดง</div>
+              <div class="food-mini-sub">秋林 1900 · 大列巴 &amp; 红肠</div>
+              <div class="food-mini-note">ของฝากคลาสสิกคู่เมืองฮาร์บินตั้งแต่ปี 1900</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom Controls -->
+    <div class="deck-controls">
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill" style="width: 6.66%;"></div>
+      </div>
+      <div class="ctrl-group">
+        <button class="ctrl-btn" id="btnOverview" title="ดูภาพรวมสไลด์ทั้งหมด (กด G)">☰ สไลด์ทั้งหมด</button>
+        <button class="ctrl-btn" id="btnFullscreen" title="เต็มหน้าจอ (กด F)">⛶ เต็มจอ</button>
+        <button class="ctrl-btn" id="btnPrintPdf" title="บันทึกเป็น PDF / พิมพ์สไลด์ (Ctrl+P)">🖨️ Save PDF</button>
+      </div>
+      <div class="ctrl-group">
+        <button class="ctrl-btn" id="btnPrev" title="ย้อนกลับ (←)">◀ ก่อนหน้า</button>
+        <span class="slide-counter" id="slideCounter">1 / 15</span>
+        <button class="ctrl-btn primary" id="btnNext" title="ถัดไป (→ / Space)">ถัดไป ▶</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Overview Modal -->
+<div class="overview-overlay" id="overviewOverlay">
+  <div class="overview-header">
+    <h3 style="font-size:1.25rem; font-weight:800; color:#fff;">📑 สารบัญสไลด์ทั้งหมด (คลิกเพื่อข้ามไปยังหน้า)</h3>
+    <button class="ctrl-btn" id="btnCloseOverview">✕ ปิด (Esc)</button>
+  </div>
+  <div class="overview-grid" id="overviewGrid"></div>
+</div>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const totalSlides = slides.length;
+  let currentIndex = 0;
+
+  const progressFill = document.getElementById('progressFill');
+  const slideCounter = document.getElementById('slideCounter');
+  const overviewOverlay = document.getElementById('overviewOverlay');
+  const overviewGrid = document.getElementById('overviewGrid');
+  const deckViewport = document.getElementById('deckViewport');
+
+  function showSlide(index) {
+    if (index < 0) index = 0;
+    if (index >= totalSlides) index = totalSlides - 1;
+    currentIndex = index;
+
+    slides.forEach((s, i) => {
+      s.classList.toggle('active', i === currentIndex);
+    });
+
+    const pct = ((currentIndex + 1) / totalSlides) * 100;
+    progressFill.style.width = pct + '%';
+    slideCounter.textContent = `${currentIndex + 1} / ${totalSlides}`;
+    renderOverviewCards();
+  }
+
+  function nextSlide() {
+    if (currentIndex < totalSlides - 1) showSlide(currentIndex + 1);
+  }
+
+  function prevSlide() {
+    if (currentIndex > 0) showSlide(currentIndex - 1);
+  }
+
+  function renderOverviewCards() {
+    overviewGrid.innerHTML = slides.map((s, i) => `
+      <div class="overview-card ${i === currentIndex ? 'active' : ''}" onclick="jumpToSlide(${i})">
+        <div style="font-size:0.75rem; color:#38bdf8; font-weight:800; margin-bottom:4px;">SLIDE ${i + 1}</div>
+        <div style="font-size:0.9rem; color:#f8fafc; font-weight:700; line-height:1.35;">${s.dataset.title || ''}</div>
+      </div>
+    `).join('');
+  }
+
+  window.jumpToSlide = function(i) {
+    showSlide(i);
+    overviewOverlay.classList.remove('open');
+  };
+
+  document.getElementById('btnNext').addEventListener('click', nextSlide);
+  document.getElementById('btnPrev').addEventListener('click', prevSlide);
+  document.getElementById('btnOverview').addEventListener('click', () => {
+    renderOverviewCards();
+    overviewOverlay.classList.add('open');
+  });
+  document.getElementById('btnCloseOverview').addEventListener('click', () => {
+    overviewOverlay.classList.remove('open');
+  });
+  document.getElementById('btnPrintPdf').addEventListener('click', () => {
+    window.print();
+  });
+  document.getElementById('btnFullscreen').addEventListener('click', () => {
+    if (!document.fullscreenElement) {
+      deckViewport.requestFullscreen?.() || document.documentElement.requestFullscreen?.();
+    } else {
+      document.exitFullscreen?.();
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      overviewOverlay.classList.remove('open');
+      return;
+    }
+    if (overviewOverlay.classList.contains('open')) return;
+
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+      e.preventDefault();
+      nextSlide();
+    } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+      e.preventDefault();
+      prevSlide();
+    } else if (e.key === 'Home') {
+      showSlide(0);
+    } else if (e.key === 'End') {
+      showSlide(totalSlides - 1);
+    } else if (e.key.toLowerCase() === 'g') {
+      renderOverviewCards();
+      overviewOverlay.classList.toggle('open');
+    } else if (e.key.toLowerCase() === 'f') {
+      document.getElementById('btnFullscreen').click();
+    }
+  });
+
+  // Touch swipe support
+  let touchStartX = 0;
+  deckViewport.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+  deckViewport.addEventListener('touchend', e => {
+    const diff = e.changedTouches[0].screenX - touchStartX;
+    if (diff < -50) nextSlide();
+    if (diff > 50) prevSlide();
+  }, { passive: true });
+
+  showSlide(0);
+</script>
+</body>
+</html>
+
