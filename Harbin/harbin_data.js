@@ -2190,37 +2190,37 @@ const DEFAULT_HARBIN_TIMELINE = {
         spotId: 28,
         customNameEn: "Mercure Harbin Central Street Sophia Church (Check-out 6 Dec & Store Luggage)",
         customNameTh: "จุดเริ่มต้นวันที่ 3: เช็คเอาท์โรงแรมเมอร์เคียว ฮาร์บิน & ฝากกระเป๋าเดินทางใบใหญ่",
-        time: "06:30",
-        timeLabel: "06:30 - 06:55 น.",
+        time: "06:10",
+        timeLabel: "06:10 - 06:35 น.",
         duration: 25,
         actType: "visit",
-        noteTh: "🏨 เช็คเอาท์จากโรงแรม Mercure Harbin Central Street Sophia Church (เลขที่ 92 ถนนจ้าวหลิน ใกล้โบสถ์เซนต์โซเฟีย) ฝากกระเป๋าเดินทางใบใหญ่ไว้ที่เคาน์เตอร์โรงแรมฟรี พกเฉพาะเป้ Daypack เสื้อผ้ากันหนาวและของใช้จำเป็นสำหรับทริปหิมะ 2 คืน (Snow Town คืนที่ 3 และ 4) จากนั้นเตรียมออกเดินทางสู่สถานีรถไฟฮาร์บิน",
-        noteEn: "Check out from hotel, store large suitcases at reception for free, pack only daypacks with 2-night winter essentials for Snow Town, and prepare for station transfer"
+        noteTh: "🏨 เช็คเอาท์จากโรงแรม Mercure Harbin Central Street Sophia Church (เลขที่ 92 ถนนจ้าวหลิน ใกล้โบสถ์เซนต์โซเฟีย) ฝากกระเป๋าเดินทางใบใหญ่ไว้ที่เคาน์เตอร์โรงแรมฟรี พกเฉพาะเป้ Daypack เสื้อผ้ากันหนาวและของใช้จำเป็นสำหรับทริปหิมะ 2 คืน (Snow Town คืนที่ 3 และ 4) จากนั้นออกเดินทางสู่สถานีรถไฟฮาร์บินเพื่อขึ้นขบวน D7967 รอบ 07:24 น.",
+        noteEn: "Check out from hotel at 06:10, store large suitcases at reception for free, pack only daypacks with 2-night winter essentials for Snow Town, and depart for Harbin Railway Station for train D7967 (07:24)"
       },
       {
         uid: "d3-transit-station",
         spotId: 0,
-        customNameEn: "Transfer to Harbin Railway Station (哈尔滨站) · DiDi / Metro Line 2",
-        customNameTh: "เดินทางสู่สถานีรถไฟความเร็วสูงฮาร์บิน (Harbin Station) · ต่อรถ DiDi / Metro",
-        time: "06:55",
-        timeLabel: "06:55 - 07:25 น.",
+        customNameEn: "Transfer to Harbin Railway Station (哈尔滨站) · Gate 2 Check-in",
+        customNameTh: "เดินทางสู่สถานีรถไฟฮาร์บิน (哈尔滨站) · เข้าประตูตรวจตั๋ว 2",
+        time: "06:35",
+        timeLabel: "06:35 - 07:05 น.",
         duration: 30,
         actType: "transit",
-        noteTh: "🚕 เดินทางไปสถานีรถไฟฮาร์บิน (哈尔滨站 - Harbin Station ซึ่งตั้งอยู่ใจกลางเมือง ห่างเพียง 2.3 กม.):\n• ทางเลือกที่ 1 (สะดวกและเร็วที่สุด): เรียกรถ DiDi หรือแท็กซี่หน้าปากซอยถนนจงหยาง นั่งเพียง 8 – 12 นาทีถึงประตูทางเข้าทิศเหนือ (North Square / 北广场) ค่าโดยสารประมาณ 10 – 15 หยวน\n• ทางเลือกที่ 2: นั่งรถไฟใต้ดิน Harbin Metro Line 2 จากสถานี Zhongyang Street นั่งเพียง 2 สถานี ลงสถานี Harbin Station (哈尔滨站) ค่าตั๋ว 2 หยวน\n⚠️ เผื่อเวลาผ่านจุดตรวจความปลอดภัย (Security Check) และสแกนพาสปอร์ตจริงเข้าสู่ชานชาลาล่วงหน้าอย่างน้อย 30 นาที",
-        noteEn: "Transfer 2.3km from Central Street to Harbin Railway Station by DiDi/Taxi (~10 mins, 10-15 RMB) or Metro Line 2 (2 stops). Arrive 30 mins early for passport security scan and boarding."
+        noteTh: "🚕 เดินทางไปสถานีรถไฟฮาร์บิน (哈尔滨站 - Harbin Station ห่างเพียง 2.3 กม.):\n• ทางเลือกที่ 1 (แนะนำ - เร็วที่สุดสำหรับรอบเช้า): เรียกรถ DiDi หรือแท็กซี่หน้าโรงแรม นั่งเพียง 8 – 12 นาทีถึงประตูทางเข้าทิศเหนือ (North Square / 北广场) ค่าโดยสาร ~10 – 15 หยวน\n• ทางเลือกที่ 2: นั่งรถไฟใต้ดิน Harbin Metro Line 2 ลงสถานี Harbin Station (哈尔滨站)\n⚠️ ผ่านจุดตรวจความปลอดภัย (Security Check) และสแกนพาสปอร์ตจริงตรงไปที่ **ประตูตรวจตั๋ว 2 (Ticket Gate 2)** ก่อนเวลา 07:19 น. (ประตูตรวจตั๋วปิดก่อนรถออก 5 นาที)",
+        noteEn: "Transfer 2.3km to Harbin Railway Station by DiDi/Taxi (~10 mins, 10-15 RMB). Clear security and scan passports at Ticket Gate 2 (ประตูตรวจตั๋ว 2) before 07:19 (gates close 5 mins prior to 07:24 departure)."
       },
       {
         uid: "d3-crh-train",
         spotId: 30,
         customCoords: [44.91073, 128.58627],
-        customNameEn: "CRH High-Speed Bullet Train: Harbin ➔ Yabuli West Station (亚布力西站 · 进站口)",
-        customNameTh: "รถไฟความเร็วสูง CRH: สถานีฮาร์บิน ➔ สถานีย่าปู้ลี่ซี (亚布力西站 进站口 · ขบวน D8511 / G913 · วิ่ง 1 ชม. 12 นาที)",
-        time: "07:45",
-        timeLabel: "07:45 - 09:00 น.",
-        duration: 75,
+        customNameEn: "CRH Train D7967: Harbin (07:24) ➔ Yabuli West (08:49) · Confirmed",
+        customNameTh: "รถไฟความเร็วสูง CRH ขบวน D7967: ฮาเอ่อร์ปิน (07:24) ➔ ย่าปู้ลี่ซี (08:49) · จองแล้ว",
+        time: "07:24",
+        timeLabel: "07:24 - 08:49 น.",
+        duration: 85,
         actType: "transit",
-        noteTh: "🚄 นั่งรถไฟความเร็วสูงหัวกระสุนจีน (CRH High-Speed Train ขบวนช่วงเช้า เช่น D8511 หรือ G913):\n• ออกจากสถานีฮาร์บิน (哈尔滨站) เวลาประมาณ 07:46 น. ➔ ถึงสถานีย่าปู้ลี่ซี (Yabuli West / 亚布力西站) เวลา 08:58 น. (ใช้เวลาวิ่งเพียง 1 ชม. 12 นาที! ระยะทาง 200 กม.)\n• ข้อดีเหนือกว่านั่งรถบัสยาว: นั่งสบาย เบาะนุ่มปรับเอนได้ มีระบบฮีตเตอร์อุ่นเต็มพิกัด ปลอดภัยสูงจากสภาพถนนหิมะ มีห้องน้ำสะอาด ตู้น้ำร้อนชงกาแฟ/ชา และจุดชาร์จแบตเตอรี่โทรศัพท์\n• ค่าตั๋ว: ชั้น 2 ประมาณ 75 – 85 หยวน/ท่าน (จองผ่าน Trip.com หรือ 12306 ใช้พาสปอร์ตยืนยัน)",
-        noteEn: "Board high-speed CRH train (e.g. D8511/G913) departing Harbin Station ~07:46, arriving Yabuli West Station at 08:58 (only 1h 12m for 200km). Warm, safe, comfortable with phone chargers and clean amenities (~75-85 RMB)."
+        noteTh: "🚄 **ตั๋วรถไฟจองแล้ว (Trip.com Booking: 1622933380227997)**\n• **ขบวนรถ:** D7967 (วันอาทิตย์ที่ 6 ธ.ค. 2026)\n• **เส้นทาง:** ฮาเอ่อร์ปิน (哈尔滨 · ประตูตรวจตั๋ว 2) ออก **07:24 น.** ➔ ถึง ย่าปู้ลี่ซี (亚布力西 · Yabuli West) **08:49 น.** (ใช้เวลา 1 ชม. 25 นาที)\n• **ผู้โดยสาร (2 ท่าน):** MANUTMANACHAI RANGSAN, RATTANAYOTAWAN SUNISA\n• **ยอดชำระรวม:** ฿907.40 (สแกนพาสปอร์ตตัวจริงเข้าชานชาลาได้เลยไม่ต้องออกตั๋วกระดาษ)\n• ข้อดี: เบาะนุ่มมีฮีตเตอร์อุ่นเต็มพิกัด ปลอดภัยจากถนนหิมะ มีห้องน้ำ ตู้น้ำร้อน และจุดชาร์จแบต",
+        noteEn: "CONFIRMED CRH Train D7967 (Trip.com Booking: 1622933380227997). Departs Harbin Station (哈尔滨, Gate 2) at 07:24, arrives Yabuli West (亚布力西) at 08:49 (1h 25m). Passengers: MANUTMANACHAI RANGSAN & RATTANAYOTAWAN SUNISA. Total: ฿907.40."
       },
       {
         uid: "d3-yabuli-shuttle",
@@ -2228,12 +2228,12 @@ const DEFAULT_HARBIN_TIMELINE = {
         customNameEn: "Snow Highway Direct Shuttle Bus: Yabuli West Station ➔ China Snow Town",
         customNameTh: "ต่อรถชัทเทิลบัสทางหลวงสายหิมะย่าเสวี่ย: สถานีย่าปู้ลี่ซี ➔ สู่หมู่บ้านหิมะจีน Snow Town",
         customCoords: [44.3345, 128.2093],
-        time: "09:15",
-        timeLabel: "09:15 - 11:15 น.",
+        time: "09:05",
+        timeLabel: "09:05 - 11:05 น.",
         duration: 120,
         actType: "transit",
-        noteTh: "🚌 เดินออกจากสถานีรถไฟย่าปู้ลี่ซี (亚布力西站) ประตูทางออก เชื่อมต่อขึ้นรถชัทเทิลบัสตรงสู่หมู่บ้านหิมะ:\n• จุดขึ้นรถ: ลานจอดรถหน้าสถานีรถไฟ มีเคาน์เตอร์บริการตั๋วรถบัสตรงหมู่บ้านหิมะ (雪乡旅游直通车 - Yabuli West to Snow Town Shuttle Bus) ออกวิ่งรอบเช้า 09:15 – 09:30 น. (หรือรถตู้แชร์/รถเหมาท้องถิ่น)\n• เส้นทางวิ่ง: แล่นบน **ทางหลวงสายหิมะย่าเสวี่ย (Yaxue Highway - 亚雪公路)** ถนนที่ได้รับการยกย่องว่าสวยงามและโรแมนติกที่สุดในฤดูหนาว ลัดเลาะผ่านทิวเขาป่าสนหิมะขาวบริสุทธิ์ ระยะทางประมาณ 85 กิโลเมตร ใช้เวลาเดินทางเพียง 1.5 – 2 ชั่วโมง\n• ค่าโดยสารรถบัส: ประมาณ 70 – 85 หยวน/ท่าน",
-        noteEn: "Exit Yabuli West Station and board the scenic Snow Highway Direct Shuttle Bus (雪乡直通车) departing 09:15-09:30 AM along picturesque Yaxue Highway (~85km, 1.5 - 2 hrs ride, ~70-85 RMB)."
+        noteTh: "🚌 เดินออกจากสถานีรถไฟย่าปู้ลี่ซี (亚布力西站) หลังรถไฟ D7967 ถึงเวลา 08:49 น. เชื่อมต่อขึ้นรถชัทเทิลบัสตรงสู่หมู่บ้านหิมะ:\n• จุดขึ้นรถ: ลานจอดรถหน้าสถานีรถไฟ มีเคาน์เตอร์บริการตั๋วรถบัสตรงหมู่บ้านหิมะ (雪乡旅游直通车 - Yabuli West to Snow Town Shuttle Bus) ออกวิ่งรอบเช้า 09:05 – 09:30 น. (หรือรถตู้แชร์/รถเหมาท้องถิ่น)\n• เส้นทางวิ่ง: แล่นบน **ทางหลวงสายหิมะย่าเสวี่ย (Yaxue Highway - 亚雪公路)** ถนนที่ได้รับการยกย่องว่าสวยงามและโรแมนติกที่สุดในฤดูหนาว ลัดเลาะผ่านทิวเขาป่าสนหิมะขาวบริสุทธิ์ ระยะทางประมาณ 85 กิโลเมตร ใช้เวลาเดินทางเพียง 1.5 – 2 ชั่วโมง\n• ค่าโดยสารรถบัส: ประมาณ 70 – 85 หยวน/ท่าน",
+        noteEn: "Exit Yabuli West Station after D7967 arrives at 08:49 and board the scenic Snow Highway Direct Shuttle Bus (雪乡直通车) departing ~09:05-09:30 AM along picturesque Yaxue Highway (~85km, 1.5 - 2 hrs ride, ~70-85 RMB)."
       },
       {
         uid: "d3-snowtown-checkin",
