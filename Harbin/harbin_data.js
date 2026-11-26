@@ -1947,6 +1947,69 @@ const HARBIN_ATTRACTIONS = [
     ],
     descriptionTh: "สถานีรถไฟความเร็วสูงย่าปู้ลี่ซี (亚布力西站) เป็นสถานีรถไฟความเร็วสูงหลักบนเส้นทางฮามู่ (Harbin-Mudanjiang HSR) สำหรับนักท่องเที่ยวที่จะมุ่งหน้าสู่ลานสกีย่าปู้ลี่และหมู่บ้านหิมะจีน (China Snow Town) การเดินทางด้วยรถไฟความเร็วสูงจากฮาร์บินมาลงที่นี่ใช้เวลาเพียง 1 ชม. 12 นาที จากนั้นสามารถต่อรถบัสท่องเที่ยวแล่นผ่านทางหลวงสายหิมะย่าเสวี่ยอันงดงามเพียง 1.5-2 ชั่วโมงถึงใจกลางหมู่บ้านหิมะได้ทันที",
     descriptionEn: "Yabuli West Railway Station is the primary modern HSR station serving travelers headed to Yabuli Ski Resort and China Snow Town. Riding the CRH bullet train from Harbin takes just 1h 12m, followed by an easy 1.5-2 hour scenic shuttle along the picturesque Yaxue Snow Highway directly into the fairytale village."
+  },
+  {
+    id: 31,
+    nameTh: "โรงแรม FAN Blooming Flowers · 1908 (ย่านบาโรกจีนเหล่าเต้าว่าย · คืนที่ 5)",
+    nameZh: "FAN繁花·1908丨海派奢宿（中央大街中华巴洛克步行街店）",
+    pinyin: "FAN Fánhuā · 1908 Hǎipài Shēsù (Zhōnghuá Bāluòkè)",
+    nameEn: "FAN Blooming Flowers · 1908 | Shanghai Luxury Accommodation",
+    category: "accommodation",
+    activityType: "visit",
+    defaultDuration: 45,
+    categoryLabelTh: "ที่พักคืนที่ 5 (8-9 ธ.ค.)",
+    categoryLabelEn: "Confirmed Hotel (Night 5)",
+    categoryColor: "#9333ea",
+    pastelBg: "#f3e8ff",
+    badgeColor: "#e9d5ff",
+    doodleBorderColor: "#7e22ce",
+    doodleIcon: "🏨",
+    rating: 4.9,
+    ratingStars: "⭐⭐⭐⭐⭐",
+    ratingDescTh: "ที่พักคืนสุดท้าย (8-9 ธ.ค.) สไตล์เซี่ยงไฮ้คลาสสิก 1908 สุดหรู ติดย่านบาโรกจีนเหล่าเต้าว่าย ใกล้ Metro Line 3 สถานี Beimalu (เดิน 6 นาที)",
+    ratingDescEn: "Night 5 Boutique Hotel (Dec 8-9) in retro 1908 Shanghai luxury style, steps from Chinese Baroque Block & 6-min walk to Beimalu Metro (Line 3)",
+    coords: [45.7852, 126.6428],
+    bookingUrl: "https://th.trip.com/hotels/w/detail/?cityid=5&hotelid=134194978&checkin=2026-12-08&checkout=2026-12-09&curr=THB&locale=th-TH",
+    image: "assets/places/harbin_08_chinese_baroque.jpg",
+    tags: ["ที่พัก", "FAN Blooming Flowers", "1908", "FAN繁花", "บาโรกจีน", "คืนที่ 5", "Daowai"],
+    shortBulletsTh: [
+      "ที่อยู่: เลขที่ 325 ถนนจิ่งหยาง เขตเต้าว่าย (哈尔滨道外区景阳街325号) ติดย่านบาโรกจีนเหล่าเต้าว่าย",
+      "สไตล์บูทีคเซี่ยงไฮ้ยุค 1908 สุดหรู พร้อมระบบ Smart Room, ที่นอน De Rucci, โถสุขภัณฑ์อัจฉริยะ และไดร์เป่าผม Laifen",
+      "ใกล้สถานี Metro Line 3 (Beimalu / 北马路站 ทางออก 4) เดินเพียง ~380 ม. (6 นาที) และเดินไปร้านกัวเปาโร่ว Laochushi สะดวกมาก"
+    ],
+    shortBulletsEn: [
+      "Address: No. 325 Jingyang Street, Daowai District (steps from Chinese Baroque Historic Block)",
+      "Old Shanghai 1908 luxury boutique design with smart room controls, De Rucci mattress, smart toilet & Laifen dryer",
+      "6-min walk (~380m) to Beimalu Metro Station (Line 3 Exit 4) and close to Laochushi Guobaorou"
+    ],
+    openingHoursTh: "เช็คอิน 14:00 น. / เช็คเอาท์ 12:00 น. (พัก 8-9 ธ.ค. 2026)",
+    openingHoursEn: "Check-in 14:00 / Check-out 12:00 (Stay Dec 8-9, 2026)",
+    bestTimeTh: "เช็คอิน 16:00 น. (วันที่ 5 หลังกลับจาก Snow Town) & เดินเล่นย่านบาโรกจีนยามเช้าวันที่ 6",
+    bestTimeEn: "Check-in 16:00 on Day 5 & morning Chinese Baroque stroll on Day 6",
+    ticketPriceTh: "จองผ่าน Trip.com (Hotel ID: 134194978 · คืนที่ 5: 8-9 ธ.ค.)",
+    ticketPriceEn: "Trip.com Booking (Hotel ID: 134194978 · Night 5: Dec 8-9)",
+    transportTh: {
+      fromStation: "นั่ง DiDi จากสถานีฮาร์บิน (~10-12 นาที, 3 กม.) แวะรับกระเป๋าใหญ่ที่ Mercure ระหว่างทางได้สะดวกมาก",
+      fromAirport: "นั่ง DiDi ไปสนามบิน HRB T2 ประมาณ 45-50 นาที",
+      inside: "เดินถึงย่านบาโรกจีนเหล่าเต้าว่ายได้ทันที และเดิน 6 นาทีถึง Metro Line 3 สถานี Beimalu (北马路站)"
+    },
+    transportEn: {
+      fromStation: "DiDi ~10-12 mins (3km) from Harbin Station (easy quick stop at Mercure to pick up stored luggage)",
+      fromAirport: "DiDi ~45-50 mins to Harbin Taiping Airport T2",
+      inside: "Walkable directly into Chinese Baroque Block; 6-min walk to Beimalu Metro Station (Line 3)"
+    },
+    highlightsTh: [
+      "ที่พักคืนสุดท้ายของทริป (8-9 ธ.ค.) ตกแต่งสไตล์ Old Shanghai 1908 ถ่ายรูปสวยมาก (มีบริการชุดกี่เพ้าถ่ายรูป)",
+      "ทำเลติดย่านประวัติศาสตร์บาโรกจีนเหล่าเต้าว่าย (中华巴洛克) เดินเที่ยวได้ทั้งเย็นวันที่ 5 และเช้าวันที่ 6",
+      "สิ่งอำนวยความสะดวกระดับพรีเมียม: Smart Room, ที่นอน De Rucci, Smart Toilet, ไดร์ Laifen"
+    ],
+    highlightsEn: [
+      "Final night boutique stay (Dec 8-9) featuring iconic 1908 Shanghai Republican-era decor",
+      "Steps away from Chinese Baroque Historic Quarter for easy Day 5 evening & Day 6 morning walks",
+      "Premium in-room amenities: Smart controls, De Rucci mattress, smart toilet, Laifen hair dryer"
+    ],
+    descriptionTh: "โรงแรม FAN Blooming Flowers · 1908 (FAN繁花·1908丨海派奢宿) ตั้งอยู่เลขที่ 325 ถนนจิ่งหยาง เขตเต้าว่าย (哈尔滨道外区景阳街325号) ติดกับย่านประวัติศาสตร์สถาปัตยกรรมบาโรกจีนเหล่าเต้าว่าย และใกล้สถานีรถไฟใต้ดินสาย 3 สถานีเป่ยหม่าลู่ (北马路站 ทางออก 4 เดิน 6 นาที) โดดเด่นด้วยการตกแต่งสไตล์เซี่ยงไฮ้คลาสสิกยุค 1908 พร้อมเทคโนโลยีห้องพักอัจฉริยะ เหมาะอย่างยิ่งสำหรับเป็นจุดพักผ่อนคืนสุดท้ายของทริปก่อนบินกลับ",
+    descriptionEn: "FAN Blooming Flowers · 1908 (Shanghai Luxury Accommodation) is located at No. 325 Jingyang Street, Daowai District, right beside Harbin's Chinese Baroque Historic Quarter and a 6-minute walk from Beimalu Metro Station (Line 3). Featuring vintage 1908 Shanghai decor and modern smart-room luxuries, it is the perfect final-night retreat in Harbin."
   }
 ];
 
@@ -2350,67 +2413,92 @@ const DEFAULT_HARBIN_TIMELINE = {
   day5: {
     labelTh: "Day 5 (8 ธ.ค.)",
     labelEn: "Day 5 (Dec 8)",
-    titleTh: "เช็คเอาท์ Snow Town ➔ เดินทางกลับฮาร์บิน • ย่านสถาปัตยกรรมบาโรกจีน (เหล่าเต้าว่าย) • โลกน้ำแข็ง Ice & Snow World",
-    titleEn: "Check-out Snow Town ➔ Return to Harbin • Chinese Baroque Block (Lao Daowai) • Ice & Snow World",
+    titleTh: "เช็คเอาท์ Snow Town ➔ บัส 10:00 (ย่าปู้ลี่ซี) ➔ รถไฟ CRH 14:12 กลับฮาร์บิน • กัวเปาโร่ว 100 ปี • โลกน้ำแข็ง Ice & Snow World",
+    titleEn: "Check-out Snow Town ➔ 10:00 Shuttle to Yabuli West ➔ 14:12 CRH Train to Harbin • Guobaorou • Ice & Snow World",
     items: [
       {
-        uid: "d5-1",
+        uid: "d5-bus-yabuli",
         spotId: 20,
-        customNameEn: "Morning in China Snow Town & Check-out ➔ Return to Harbin",
-        customNameTh: "เก็บภาพบรรยากาศเช้าที่หมู่บ้านหิมะ Snow Town & เดินทางกลับฮาร์บิน",
-        time: "08:30",
-        timeLabel: "08:30 - 13:00 น.",
-        duration: 270,
+        customNameEn: "Snow Town Check-out & Direct Shuttle Bus (10:00) ➔ Yabuli West Station",
+        customNameTh: "เช็คเอาท์ Snow Town ➔ ขึ้นรถบัสตรงรอบ 10:00 น. สู่สถานีย่าปู้ลี่ซี (亚布力西站)",
+        time: "10:00",
+        timeLabel: "10:00 - 12:30 น.",
+        duration: 150,
         actType: "transit",
-        noteTh: "เดินเล่นชมควันไฟจากปล่องบ้านไม้ยามเช้าในหมู่บ้านหิมะ เช็คเอาท์และนั่งรถกลับสู่นครฮาร์บิน (~4 ชม.)",
-        noteEn: "Peaceful morning stroll in Snow Town, check out after 2 nights & transfer back to Harbin (~4h)"
+        noteTh: "🚌 เก็บภาพบรรยากาศยามเช้าในหมู่บ้านหิมะ เช็คเอาท์จาก Floral Hotel เวลา ~09:15 น. นั่งรถบัสไฟฟ้าอุทยานไปลานจอดรถประตูย่าเสวี่ย (亚雪山门)\n• **10:00 น. ขึ้นรถบัสตรง (雪乡旅游直通车):** Snow Town ➔ สถานีรถไฟย่าปู้ลี่ซี (亚布力西站) ใช้เวลาประมาณ 2 – 2.5 ชม. (ถึง ~12:00–12:30 น.) ค่าโดยสาร ~85 หยวน/ท่าน\n• มีเวลาพักผ่อนและทานมื้อกลางวันเบาๆ บริเวณหน้าสถานีย่าปู้ลี่ซีก่อนขึ้นรถไฟรอบ 14:12 น.",
+        noteEn: "Check out ~09:15, take park eco-bus to Yaxue Gate, and board the 10:00 AM direct shuttle bus from Snow Town to Yabuli West Station (~2–2.5h, ~85 RMB). Arrive ~12:00–12:30 with comfortable buffer for lunch before the 14:12 train."
+      },
+      {
+        uid: "d5-crh-return",
+        spotId: 30,
+        customCoords: [44.91073, 128.58627],
+        customNameEn: "CRH High-Speed Train (14:12): Yabuli West ➔ Harbin Station",
+        customNameTh: "รถไฟความเร็วสูง CRH รอบ 14:12 น.: ย่าปู้ลี่ซี (亚布力西) ➔ สถานีฮาร์บิน (哈尔滨)",
+        time: "14:12",
+        timeLabel: "14:12 - 15:35 น.",
+        duration: 83,
+        actType: "transit",
+        noteTh: "🚄 **รถไฟความเร็วสูงขากลับฮาร์บิน (บุ๊คแพลนรอบ 14:12 น.):**\n• ออกจากสถานีย่าปู้ลี่ซี (亚布力西站) เวลา **14:12 น.** ➔ ถึงสถานีฮาร์บิน (哈尔滨站) ประมาณ **15:35 น.** (ใช้เวลา ~1 ชม. 23 นาที)\n• ⚠️ สแกนพาสปอร์ตเข้าจุดตรวจความปลอดภัยล่วงหน้าอย่างน้อย 25–30 นาที (ประตูตรวจตั๋วปิดก่อนรถออก 5 นาทีที่ 14:07 น.)",
+        noteEn: "Board 14:12 CRH high-speed train from Yabuli West Station (亚布力西站) back to Harbin Station (哈尔滨站), arriving ~15:35 (~1h 23m). Clear security 25–30 mins prior."
+      },
+      {
+        uid: "d5-hotel-fan1908",
+        spotId: 31,
+        customNameEn: "Check-in: FAN Blooming Flowers · 1908 (Night 5 · Chinese Baroque Block)",
+        customNameTh: "รับกระเป๋าที่ Mercure ➔ เช็คอิน FAN Blooming Flowers · 1908 (ย่านบาโรกจีน · คืนที่ 5)",
+        time: "15:45",
+        timeLabel: "15:45 - 16:30 น.",
+        duration: 45,
+        actType: "visit",
+        noteTh: "🏨 นั่ง DiDi จากสถานีฮาร์บินแวะรับกระเป๋าใหญ่ที่ฝากไว้ที่ Mercure Harbin (~5 นาที) แล้วต่อไปเช็คอินที่พักคืนสุดท้าย **FAN Blooming Flowers · 1908 (FAN繁花·1908丨海派奢宿)** เลขที่ 325 ถนนจิ่งหยาง เขตเต้าว่าย (ติดย่านบาโรกจีนเหล่าเต้าว่าย · ใกล้ Metro Line 3 สถานี Beimalu เดิน 6 นาที) เก็บสัมภาระและเตรียมเสื้อผ้ากันหนาวเต็มพิกัดสำหรับ Ice & Snow World",
+        noteEn: "Quick DiDi stop at Mercure to collect stored luggage, then check in to final-night boutique hotel FAN Blooming Flowers · 1908 (No. 325 Jingyang St, right beside Chinese Baroque Block). Gear up for Ice & Snow World."
       },
       {
         uid: "d5-2",
         spotId: 23,
-        customNameEn: "Laochushi Restaurant (100-Yr Guobaorou Lunch)",
-        customNameTh: "กลับถึงฮาร์บิน · มื้อบ่ายร้านเหล่าฉูเจีย ต้นกำเนิดกัวเปาโร่ว 100 ปี",
-        time: "13:30",
-        timeLabel: "13:30 - 14:45 น.",
-        duration: 75,
+        customNameEn: "Laochushi Restaurant (100-Yr Guobaorou Early Dinner)",
+        customNameTh: "มื้อเย็นร้านเหล่าฉูเจีย ต้นกำเนิดกัวเปาโร่ว 100 ปี (ใกล้โรงแรมย่านบาโรกจีน)",
+        time: "16:30",
+        timeLabel: "16:30 - 17:30 น.",
+        duration: 60,
         actType: "eat",
-        noteTh: "เดินทางกลับถึงตัวเมืองฮาร์บิน แวะทานหมูทอดเปรี้ยวหวานกรอบนอกนุ่มใน 'กัวเปาโร่ว' สูตรต้นตำรับ 100 ปี",
-        noteEn: "Back in Harbin downtown for crispy sweet & sour Guobaorou at historic Laochushi"
-      },
-      {
-        uid: "d5-3",
-        spotId: 8,
-        customNameEn: "Chinese Baroque Historic Block (Lao Daowai)",
-        customNameTh: "ย่านประวัติศาสตร์สถาปัตยกรรมบาโรกจีน เหล่าเต้าว่าย (Lao Daowai)",
-        time: "15:00",
-        timeLabel: "15:00 - 16:15 น.",
-        duration: 75,
-        actType: "walk",
-        noteTh: "เดินชมกลุ่มอาคารบาโรกผสมผสานจีนโบราณที่สมบูรณ์ที่สุดในโลก ลานบ้านเรือนสี่ประสาน (Siheyuan) และร้านค้าเก่าแก่วินเทจ",
-        noteEn: "Explore world's largest Chinese Baroque historic architectural quarter with courtyard Siheyuan compound"
+        noteTh: "เดินจากโรงแรม FAN 1908 ไปทานมื้อเย็นอุ่นๆ ก่อนลุยอากาศหนาวที่ร้านต้นตำรับ 'กัวเปาโร่ว' หมูทอดเปรี้ยวหวานกรอบนอกนุ่มใน 100 ปี พร้อมชมบรรยากาศเปิดไฟเย็นย่านบาโรกจีนเหล่าเต้าว่าย",
+        noteEn: "Walk from FAN 1908 to enjoy warm early dinner of crispy sweet & sour Guobaorou at historic Laochushi before heading to Ice & Snow World"
       },
       {
         uid: "d5-4",
         spotId: 12,
-        customNameEn: "Harbin Ice and Snow World (Illuminated Ice Castles)",
-        customNameTh: "โลกน้ำแข็งและหิมะฮาร์บิน (Harbin Ice and Snow World) ยามค่ำคืน",
-        time: "16:30",
-        timeLabel: "16:30 - 20:30 น.",
-        duration: 240,
+        customNameEn: "Harbin Ice and Snow World (Illuminated Ice Castles) ➔ Return to FAN 1908",
+        customNameTh: "โลกน้ำแข็งและหิมะฮาร์บิน (Harbin Ice and Snow World) ➔ กลับพัก FAN 1908 (คืนที่ 5)",
+        time: "17:45",
+        timeLabel: "17:45 - 21:00 น.",
+        duration: 195,
         actType: "visit",
-        noteTh: "ปิดท้ายค่ำคืนด้วยไฮไลท์ระดับโลก ชมปราสาทน้ำแข็งเรืองแสงขนาดมหึมาและเล่นสไลเดอร์น้ำแข็งยักษ์",
-        noteEn: "Grand finale evening at Harbin Ice and Snow World among illuminated towering ice palaces"
+        noteTh: "ปิดท้ายค่ำคืนด้วยไฮไลท์ระดับโลก ชมปราสาทน้ำแข็งเรืองแสงขนาดมหึมาที่เปิดไฟเต็มที่ยามค่ำคืน และเล่นสไลเดอร์น้ำแข็งยักษ์ (21:15 น. นั่ง DiDi กลับพักผ่อนที่ FAN Blooming Flowers · 1908 คืนที่ 5)",
+        noteEn: "Grand finale evening at Harbin Ice and Snow World among illuminated towering ice palaces, then return to FAN Blooming Flowers · 1908 for Night 5"
       }
     ]
   },
   day6: {
     labelTh: "Day 6 (9 ธ.ค.)",
     labelEn: "Day 6 (Dec 9)",
-    titleTh: "ของฝากฮาร์บิน • ฮาร์บิน (HRB) ➔ เซี่ยงไฮ้ (PVG) ➔ Bangkok (BKK)",
-    titleEn: "Souvenirs • Harbin (HRB) ➔ Shanghai (PVG) ➔ Bangkok (BKK)",
+    titleTh: "เดินเล่นย่านบาโรกจีนหน้าโรงแรม FAN 1908 • พิพิธภัณฑ์ & ของฝากชิวหลิน 1900 • HRB ➔ PVG ➔ BKK",
+    titleEn: "Morning Chinese Baroque Block • Museum & Churin 1900 Souvenirs • HRB ➔ PVG ➔ BKK",
     items: [
-      { uid: "d6-1", spotId: 16, time: "09:15", timeLabel: "09:15 - 10:15 น.", duration: 60, actType: "visit", noteTh: "ชมโครงกระดูกช้างแมมมอธไซบีเรีย ณ พิพิธภัณฑ์มณฑลเฮยหลงเจียง", noteEn: "See woolly mammoth fossils at Heilongjiang Provincial Museum" },
-      { uid: "d6-2", spotId: 27, time: "10:30", timeLabel: "10:30 - 11:45 น.", duration: 75, actType: "eat", noteTh: "แวะห้างชิวหลิน 1900 ซื้อขนมปังรัสเซียต้าเลี่ยปา ไส้กรอกแดง และช็อกโกแลต", noteEn: "Shop for giant Dalieba bread & Red Sausages at Churin 1900 Bakery" },
+      {
+        uid: "d6-baroque",
+        spotId: 8,
+        customNameEn: "Morning Stroll: Chinese Baroque Historic Block (Steps from FAN 1908)",
+        customNameTh: "เช้าย่านบาโรกจีนเหล่าเต้าว่าย (ติดโรงแรม FAN 1908) & เช็คเอาท์",
+        time: "08:30",
+        timeLabel: "08:30 - 09:30 น.",
+        duration: 60,
+        actType: "walk",
+        noteTh: "ตื่นสบายๆ ถ่ายรูปสไตล์เซี่ยงไฮ้ 1908 ในโรงแรม FAN Blooming Flowers · 1908 และเดินเล่นชมกลุ่มอาคารบาโรกจีนโบราณ (中华巴洛克) หน้าโรงแรมยามเช้า จากนั้นเช็คเอาท์ออกเดินทาง",
+        noteEn: "Relaxed morning photo walk in Chinese Baroque Historic Quarter right outside FAN Blooming Flowers · 1908, then check out"
+      },
+      { uid: "d6-1", spotId: 16, time: "09:45", timeLabel: "09:45 - 10:35 น.", duration: 50, actType: "visit", noteTh: "ชมโครงกระดูกช้างแมมมอธไซบีเรีย ณ พิพิธภัณฑ์มณฑลเฮยหลงเจียง", noteEn: "See woolly mammoth fossils at Heilongjiang Provincial Museum" },
+      { uid: "d6-2", spotId: 27, time: "10:45", timeLabel: "10:45 - 11:45 น.", duration: 60, actType: "eat", noteTh: "แวะห้างชิวหลิน 1900 ซื้อขนมปังรัสเซียต้าเลี่ยปา ไส้กรอกแดง และช็อกโกแลต (12:00 น. นั่ง DiDi ไปสนามบิน HRB T2 ~45 นาที)", noteEn: "Shop for giant Dalieba bread & Red Sausages at Churin 1900 Bakery (depart 12:00 for HRB T2)" },
       {
         uid: "d6-hrb",
         spotId: 11,
